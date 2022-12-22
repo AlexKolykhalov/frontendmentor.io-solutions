@@ -6,8 +6,7 @@ This is a solution to the [3-column preview card component challenge on Frontend
 
 - [Overview](#overview)
   - [The challenge](#the-challenge)
-  - [Screenshot](#screenshot)
-  - [Links](#links)
+  - [Screenshot](#screenshot)  
 - [My process](#my-process)
   - [Built with](#built-with)
   - [What I learned](#what-i-learned)
@@ -26,11 +25,6 @@ Users should be able to:
 ### Screenshot
 
 ![](./design/desktop-preview.jpg)
-
-### Links
-
-- Solution URL: https://github.com/AlexKolykhalov/3-column-preview-card-component-main
-- Live Site URL: https://alexkolykhalov.github.io/3-column-preview-card-component-main
 
 ## My process
 
