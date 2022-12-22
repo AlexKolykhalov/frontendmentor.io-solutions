@@ -1,0 +1,205 @@
+@import url('https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;700&display=swap');
+
+:root {
+    --clr-primary-dark-cyan: hsl(185, 75%, 39%);
+    --clr-primary-very-dark-desaturated-blue: hsl(229, 23%, 23%);
+    --clr-primary-dark-grayish-blue: hsl(227, 10%, 46%);
+
+    --clr-neutral-dark-gray: hsl(0, 0%, 59%);
+
+    --ff: 'Kumbh Sans', sans-serif;
+    --fs: 18px;
+    --fw-400: 400;
+    --fw-700: 700;
+}
+
+/* ********************** */
+/* RESETS */
+/* ********************** */
+
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Remove default margin */
+* {
+    margin: 0;
+    padding: 0;
+    font: inherit;
+}
+
+/* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
+ul[role='list'],
+ol[role='list'] {
+    list-style: none;
+}
+
+/* Set core root defaults */
+html:focus-within {
+    scroll-behavior: smooth;
+}
+
+/* Set core body defaults */
+body {
+    min-height: 100vh;
+    text-rendering: optimizeSpeed;
+    line-height: 1.5;
+}
+
+/* A elements that don't have a class get default styles */
+a:not([class]) {
+    text-decoration-skip-ink: auto;
+}
+
+/* Make images easier to work with */
+img,
+picture {
+    max-width: 100%;
+    display: block;
+}
+
+/* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
+@media (prefers-reduced-motion: reduce) {
+    html:focus-within {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* ********************** */
+/* UTILITY CLASSES */
+/* ********************** */
+.clr-primary-400 {
+    color: var(--clr-primary-dark-grayish-blue);
+}
+
+.clr-primary-700 {
+    color: var(--clr-primary-very-dark-desaturated-blue);
+}
+
+.clr-neutral-400 {
+    color: var(--clr-neutral-dark-gray);
+}
+
+.clr-neutral-000 {
+    color: white;
+}
+
+.bg-clr-primary-400 {
+    background-color: var(--clr-primary-dark-grayish-blue);
+}
+
+.bg-clr-primary-700 {
+    background-color: var(--clr-primary-very-dark-desaturated-blue);
+}
+
+.bg-clr-neutral-400 {
+    background-color: var(--clr-neutral-dark-gray);
+}
+
+.bg-clr-neutral-000 {
+    background-color: white;
+}
+
+.fw-400 {
+    font-weight: var(--fw-400);
+}
+
+.fw-700 {
+    font-weight: var(--fw-700);
+}
+
+.fs-xs {
+    font-size: 60%;
+    letter-spacing: 2px;
+}
+
+.fs-s {
+    font-size: 80%;
+}
+
+.fs-l {
+    font-size: 120%;
+}
+
+/* ********************** */
+/* GENERAL STYLING */
+/* ********************** */
+body {
+    background:
+        no-repeat right 50vw bottom 50vh url(images/bg-pattern-top.svg),
+        no-repeat left 50vw top 50vh url(images/bg-pattern-bottom.svg);
+    background-color: var(--clr-primary-dark-cyan);
+    font-family: var(--ff);
+    font-size: var(--fs);
+    padding: 0 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.card {
+    border-radius: 1rem;
+    max-width: 25rem;
+    display: grid;
+    grid-template-rows: 1fr 1fr auto;
+    align-items: flex-end;
+    box-shadow: 0 0 20px 2px var(--clr-neutral-dark-gray);
+}
+
+.top-bg-card {
+    width: 100%;
+    height: 100%;
+    border-radius: 1rem 1rem 0 0;
+    object-fit: cover;
+}
+
+.personal-data {
+    text-align: center;
+    line-height: 2;
+    position: relative;
+    top: -50px;
+}
+
+.name-age{
+    display: inline-flex;
+    align-items: baseline;
+    gap: 10px;    
+}
+
+.photo {    
+    border-radius: 50%;
+    background-color: white;
+    margin: 0 auto;
+    padding: 5px;
+    margin-bottom: .8rem;    
+}
+
+.stats {
+    border-top: 1px solid var(--clr-neutral-dark-gray);
+    padding: 1.5rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.indicator {
+    text-align: center;
+}
+
+.attribution {
+    font-size: initial;
+    margin-top: 5rem;
+    text-align: center;
+}

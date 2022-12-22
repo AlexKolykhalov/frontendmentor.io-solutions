@@ -1,0 +1,159 @@
+:root {
+    --primary-violet: hsl(257, 40%, 49%);
+    --primary-soft-magenta: hsl(300, 69%, 71%);
+
+    --ff-heading: 'Poppins', sans-serif;
+    --ff-body: 'Open Sans', sans-serif;
+
+    --fw-regular: 400;
+    --fw-semi-bold: 600;
+}
+
+/** Reset **/
+
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Remove default margin */
+* {
+    margin: 0;
+    padding: 0;
+    font: inherit;
+}
+
+/* Make images easier to work with */
+img,
+picture {
+    max-width: 100%;
+    display: block;
+}
+
+/** Utility class **/
+
+/** General styling **/
+body {
+    background-color: var(--primary-violet);
+    background-image: url(images/bg-mobile.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    padding: 4vmax;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+header img {
+    width: 45%;
+}
+
+section {
+    display: grid;
+    gap: 50px;
+}
+
+.card {
+    color: white;
+    text-align: center;
+}
+
+h1 {
+    font-family: var(--ff-heading);
+    font-weight: var(--fw-semi-bold);
+    font-size: 150%;
+}
+
+p {
+    font-family: var(--ff-body);
+    font-weight: var(--fw-regular);
+    margin: 2vh 0;
+    line-height: 1.9;
+}
+
+button {
+    font-family: var(--ff-heading);
+    font-weight: var(--fw-semi-bold);
+    border-color: transparent;
+    color: var(--primary-violet);
+    background-color: white;
+    padding: .5rem 4rem;
+    margin-bottom: 1.5rem;
+    border-radius: 3rem;
+    cursor: pointer;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+button:hover {
+    color: white;
+    background-color: var(--primary-soft-magenta);
+    box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, 0.5);
+}
+
+footer {
+    display: flex;
+    justify-content: center;
+}
+
+footer>.icon-wrapper {
+    margin: 0 5px;
+}
+
+.icon-wrapper {
+    padding: 0.5rem;
+    border: 1px solid white;
+    border-radius: 50%;
+    display: flex;
+    fill: white
+}
+
+.icon {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+}
+
+.icon-wrapper:hover {
+    cursor: pointer;
+    border: 1px solid var(--primary-soft-magenta);
+    fill: var(--primary-soft-magenta);
+}
+
+@media (min-width:600px) {
+
+    body {
+        background-image: url(images/bg-desktop.svg);
+        background-size: cover;
+        max-width: 1440px;
+        margin: 0 auto;
+    }
+
+    header img {
+        width: 25%;
+        max-width: 200px;
+    }
+
+    section {
+        grid-auto-flow: column;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .card {
+        text-align: left;
+    }
+
+    h1 {
+        font-size: 250%;
+    }
+
+    p {
+        font-size: 120%;
+    }
+
+    footer {
+        justify-content: end;
+    }
+}

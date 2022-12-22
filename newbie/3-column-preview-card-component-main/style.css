@@ -1,0 +1,139 @@
+:root {
+    --clr-orange: hsl(31, 77%, 52%);
+    --clr-cyan: hsl(184, 100%, 22%);
+    --clr-dark-cyan: hsl(179, 100%, 13%);
+
+    --clr-neutral-100: hsla(0, 0%, 100%, 0.75);
+    --clr-neutral-400: 242, 242, 242;
+}
+
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Remove default margin */
+* {
+    margin: 0;
+    padding: 0;
+    font: inherit;
+}
+
+/* Make images easier to work with */
+img,
+picture {
+    max-width: 100%;
+    display: block;
+}
+
+/* Utility classes */
+.clr-orange {
+    color: var(--clr-orange);
+}
+
+.clr-cyan {
+    color: var(--clr-cyan);
+}
+
+.clr-dark-cyan {
+    color: var(--clr-dark-cyan);
+}
+
+.bg-clr-orange {
+    background-color: var(--clr-orange);
+}
+
+.bg-clr-cyan {
+    background-color: var(--clr-cyan);
+}
+
+.bg-clr-dark-cyan {
+    background-color: var(--clr-dark-cyan);
+}
+
+/* General styling */
+html {
+    font-size: 15px;
+}
+
+body {
+    min-height: 100vh;
+    background-color: var(--clr-neutral-400);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem 5vw;
+}
+
+li {
+    padding: 3rem;
+    display: grid;
+    grid-template-rows: auto auto 1fr auto;
+    gap: 50px;
+}
+
+li:first-child {
+    border-radius: 1rem 1rem 0 0;
+}
+
+li:last-child {
+    border-radius: 0 0 1rem 1rem;
+}
+
+h1 {    
+    font-family: 'Big Shoulders Display', cursive;
+    font-weight: 700;
+    font-size: 3rem;
+    text-transform: uppercase;
+    color: rgb(var(--clr-neutral-400));
+}
+
+p {
+    font-family: 'Lexend Deca', sans-serif;
+    font-weight: 400;
+    font-size: 1.1rem;
+    color: var(--clr-neutral-100);
+    line-height: 2.0;
+    margin-bottom: 1.5rem;
+}
+
+button {
+    font-family: 'Lexend Deca', sans-serif;
+    font-weight: 400;
+    font-size: 1rem;
+    background-color: rgb(var(--clr-neutral-400));
+    padding: 1rem 1.7rem;
+    border-radius: 3rem;
+    border: 1px solid transparent;
+    cursor: pointer;
+    width: 10rem;
+}
+
+button:hover {
+    color: rgb(var(--clr-neutral-400));
+    border: 1px solid rgb(var(--clr-neutral-400));
+    border-color: rgb(var(--clr-neutral-400));
+    background-color: rgba(var(--clr-neutral-400), 0.0);
+}
+
+@media (min-width: 600px) {
+
+    ul {
+        display: flex;
+        justify-content: center;
+    }
+
+    li {
+        flex-basis: 25rem;
+    }
+
+    li:first-child {
+        border-radius: 1rem 0 0 1rem;
+    }
+
+    li:last-child {
+        border-radius: 0 1rem 1rem 0;
+    }
+}
