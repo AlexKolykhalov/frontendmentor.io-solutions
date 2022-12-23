@@ -5,7 +5,7 @@ Any comments are welcome.
 
 | No | Challenge | Demo | Level |
 | :---: | :--- | :---: | :---: |
-| 01 | QR code component | [Demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/newbie/qr-code-component-main/){target="_blank"} | Newbie |
+| 01 | QR code component | [Demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/newbie/qr-code-component-main/?target=_blank) | Newbie |
 | 02 | 3 column preview card component | [Demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/newbie/3-column-preview-card-component-main) | Newbie |
 | 03 | Hunddle landing page | [Demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/newbie/huddle-landing-page-with-single-introductory-section-master) | Newbie |
 | 04 | Product preview card component | [Demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/newbie/product-preview-card-component-main) | Newbie |
