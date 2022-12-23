@@ -2,6 +2,8 @@
 
 This is a solution to the [Product preview card component challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/product-preview-card-component-GO7UmttRfa). Frontend Mentor challenges help you improve your coding skills by building realistic projects. 
 
+[__Live demo__](https://alexkolykhalov.github.io/frontendmentor.io-solutions/newbie/product-preview-card-component-main/)
+
 ## Table of contents
 
 - [Overview](#overview)
