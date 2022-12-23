@@ -1,4 +1,4 @@
-## frontendmentor.io--solutions-
+## frontendmentor.io-solutions
 Here you can watch my progress in solving challenges from frontendmentor.io.
 
 Any comments are welcome.
