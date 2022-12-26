@@ -1,0 +1,211 @@
+@import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@500;700;900&display=swap');
+
+:root {
+    --clr-primary-000: hsl(0, 0%, 100%);
+    --clr-primary-200: hsl(225, 100%, 94%);
+    --clr-primary-400: hsl(245, 75%, 52%);
+
+    --clr-neutral-100: hsl(225, 100%, 98%);
+    --clr-neutral-400: hsl(224, 23%, 55%);
+    --clr-neutral-600: hsl(223, 47%, 23%);
+
+    --ff: 'Red Hat Display', sans-serif;
+    --fw-500: 500;
+    --fw-700: 700;
+    --fw-900: 900;
+    --fs: 16px
+}
+
+/* ********************** */
+/* RESETS */
+/* ********************** */
+
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Remove default margin */
+* {
+    margin: 0;
+    padding: 0;
+    font: inherit;
+}
+
+/* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
+ul[role='list'],
+ol[role='list'] {
+    list-style: none;
+}
+
+/* Set core root defaults */
+html:focus-within {
+    scroll-behavior: smooth;
+}
+
+/* Set core body defaults */
+body {
+    min-height: 100vh;
+    text-rendering: optimizeSpeed;
+    line-height: 1.5;
+}
+
+/* A elements that don't have a class get default styles */
+a:not([class]) {
+    text-decoration-skip-ink: auto;
+}
+
+/* Make images easier to work with */
+img,
+picture {
+    max-width: 100%;
+    display: block;
+}
+
+/* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
+@media (prefers-reduced-motion: reduce) {
+    html:focus-within {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* ********************** */
+/* UTILITY CLASSES */
+/* ********************** */
+
+.clr-primary-200 {
+    color: var(--clr-primary-200);
+}
+
+.clr-primary-400 {
+    color: var(--clr-primary-400);
+}
+
+.clr-neutral-100 {
+    color: var(--clr-neutral-100);
+}
+
+.clr-neutral-400 {
+    color: var(--clr-neutral-400);
+}
+
+.clr-neutral-600 {
+    color: var(--clr-neutral-600);
+}
+
+.fs-l {
+    font-size: 150%;
+}
+
+.fs-s {
+    font-size: 90%;
+}
+
+.fw-500 {
+    font-weight: var(--fw-500);
+}
+
+.fw-700 {
+    font-weight: var(--fw-700);
+}
+
+.fw-900 {
+    font-weight: var(--fw-900);
+}
+
+/* ********************** */
+/* GENERAL STYLING */
+/* ********************** */
+body {
+    font-family: var(--ff);
+    font-size: var(--fs);
+    background: url(images/pattern-background-mobile.svg) no-repeat var(--clr-primary-200);
+    background-size: contain;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.card {
+    background-color: var(--clr-primary-000);
+    border-radius: 1rem;
+    max-width: 400px;
+    box-shadow: 0 0 20px var(--clr-neutral-400);
+}
+
+.illustration {
+    border-radius: 1rem 1rem 0 0;
+}
+
+.description {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap: 1.5rem;
+}
+
+.section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--clr-neutral-100);
+    padding: 1rem;
+    border-radius: 1rem;
+}
+
+.section__head {
+    display: flex;
+    gap: clamp(.2rem, 3vw, 1rem);
+}
+
+.section__plan {
+    display: flex;
+    flex-direction: column;
+}
+
+.attribution {
+    margin-top: 3rem;
+}
+
+a:hover {
+    opacity: 0.7;
+    text-decoration: none;
+}
+
+button {
+    cursor: pointer;
+    padding: .8rem;
+    background-color: var(--clr-primary-400);
+    color: var(--clr-primary-000);
+    border: none;
+    border-radius: .8rem;
+    box-shadow: 0px 3px 20px var(--clr-neutral-400);
+}
+
+button:hover {
+    opacity: 0.7;
+}
+
+@media screen and (min-width: 600px) {
+    body {
+        background: url(images/pattern-background-desktop.svg) no-repeat var(--clr-primary-200);
+    }
+
+    .description {
+        padding: 3rem;
+    }
+}
