@@ -11,3 +11,4 @@ Any comments are welcome.
 | 04 | Product preview card component | [Demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/newbie/product-preview-card-component-main/) | Newbie |
 | 05 | Single price grid component | [Demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/newbie/single-price-grid-component-master/) | Newbie |
 | 06 | Profile card component | [Demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/newbie/profile-card-component-main/) | Newbie |
+| 07 | Order summary component | [Demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/newbie/order-summary-component-main/) | Newbie |
