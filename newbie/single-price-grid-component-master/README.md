@@ -8,8 +8,7 @@ This is a solution to the [Single price grid component challenge on Frontend Men
 
 - [Overview](#overview)
   - [The challenge](#the-challenge)
-  - [Screenshot](#screenshot)
-  - [Links](#links)
+  - [Screenshot](#screenshot)  
 - [My process](#my-process)
   - [Built with](#built-with)  
 - [Author](#author)
@@ -26,11 +25,6 @@ Users should be able to:
 ### Screenshot
 
 ![](./design/desktop-preview.jpg)
-
-### Links
-
-- Solution URL: https://github.com/AlexKolykhalov/single-price-grid-component-master
-- Live Site URL: https://alexkolykhalov.github.io/single-price-grid-component-master
 
 ## My process
 
