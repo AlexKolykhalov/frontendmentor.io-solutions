@@ -8,8 +8,7 @@ This is a solution to the [Huddle landing page with single introductory section 
 
 - [Overview](#overview)
   - [The challenge](#the-challenge)
-  - [Screenshot](#screenshot)
-  - [Links](#links)
+  - [Screenshot](#screenshot)  
 - [My process](#my-process)
   - [Built with](#built-with)  
 - [Author](#author)
@@ -28,11 +27,6 @@ Users should be able to:
 ### Screenshot
 
 ![](./design/active-states.jpg)
-
-### Links
-
-- Solution URL: [Link to GitHub](https://github.com/AlexKolykhalov/huddle-landing-page-with-single-introductory-section-master)
-- Live Site URL: [Live example](https://alexkolykhalov.github.io/huddle-landing-page-with-single-introductory-section-master)
 
 ## My process
 
