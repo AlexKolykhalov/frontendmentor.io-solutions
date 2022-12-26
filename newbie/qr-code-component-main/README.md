@@ -7,8 +7,7 @@ This is a solution to the [QR code component challenge on Frontend Mentor](https
 ## Table of contents
 
 - [Overview](#overview)  
-  - [Screenshot](#screenshot)
-  - [Links](#links)
+  - [Screenshot](#screenshot)  
 - [My process](#my-process)
   - [Built with](#built-with)
   - [What I learned](#what-i-learned)
@@ -18,11 +17,6 @@ This is a solution to the [QR code component challenge on Frontend Mentor](https
 
 ### Screenshot
   ![Design preview for the QR code component coding challenge](./design/desktop-preview.jpg)
-
-### Links
-
-- Solution URL: https://github.com/AlexKolykhalov/qr-code-component-main
-- Live Site URL: https://alexkolykhalov.github.io/qr-code-component-main
 
 ## My process
 
