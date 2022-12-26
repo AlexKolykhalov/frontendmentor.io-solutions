@@ -181,9 +181,25 @@ body {
     margin-top: 3rem;
 }
 
-a:hover {
+.section__link {
+    color: var(--clr-primary-400);
+    font-size: 90%;
+    font-weight: var(--fw-700);
+}
+
+.section__link:hover {
     opacity: 0.7;
     text-decoration: none;
+}
+
+.cancel_order {    
+    color: var(--clr-neutral-400);
+    font-weight: var(--fw-900);
+    text-decoration: none;
+}
+
+.cancel_order:hover{
+    color: var(--clr-neutral-600);
 }
 
 button {
