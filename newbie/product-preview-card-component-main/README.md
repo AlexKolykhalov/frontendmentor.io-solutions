@@ -8,8 +8,7 @@ This is a solution to the [Product preview card component challenge on Frontend 
 
 - [Overview](#overview)
   - [The challenge](#the-challenge)
-  - [Screenshot](#screenshot)
-  - [Links](#links)
+  - [Screenshot](#screenshot)  
 - [My process](#my-process)
   - [Built with](#built-with)
 - [Author](#author)
@@ -26,11 +25,6 @@ Users should be able to:
 ### Screenshot
 
 ![](./design/desktop-preview.jpg)
-
-### Links
-
-- Solution URL: [GitHub](https://github.com/AlexKolykhalov/product-preview-card-component-main)
-- Live Site URL: [Link to live site](https://alexkolykhalov.github.io/product-preview-card-component-main/)
 
 ## My process
 
