@@ -127,7 +127,8 @@ body {
     height: 100%;
     grid-area: stack;
     opacity: 0;
-    border-radius: 0.5rem;    
+    border-radius: 0.5rem;
+    transition: opacity 0.3s ease-out;    
 }
 
 .card__image_icon {
@@ -135,20 +136,20 @@ body {
     place-self: center;
     opacity: 0;
     z-index: 1;
+    transition: opacity 0.3s ease-out;
 }
 
 .card__image:hover .card__image_filter {
-    opacity: 0.6;
-    transition: opacity 0.3s ease-out;
+    opacity: 0.6;    
 }
 
 .card__image:hover .card__image_icon {
-    opacity: 1;
-    transition: opacity 0.3s ease-out;
+    opacity: 1;    
 }
 
 .card__title {
     cursor: pointer;
+    width: fit-content;
     color: var(--clr-neutral-white);
     font-weight: var(--fw-600);
     font-size: 150%;
