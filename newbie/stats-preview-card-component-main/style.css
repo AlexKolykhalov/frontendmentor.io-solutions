@@ -115,7 +115,7 @@ h1 {
     color: var(--clr-neutral-white);
     font-size: 200%;
     font-weight: var(--fw-700);
-    line-height: 1.2;    
+    line-height: 1.2;
 }
 
 em {
@@ -127,25 +127,18 @@ em {
     border-radius: .5rem;
 }
 
-.card__image {
-    display: grid;
-    grid-template-areas: 'main';
+picture{    
+    background-color: var(--clr-primary-soft-violet);
+    border-radius: .5rem .5rem 0 0;
 }
 
-.card__image>img {
+img {    
+    mix-blend-mode: multiply;
+    opacity: 0.8;
+    border-radius: inherit;
+    object-fit: cover;    
     width: 100%;
     height: 100%;
-    object-fit: fill;
-    border-radius: .5rem .5rem 0 0;
-    grid-area: main;
-}
-
-.card__image::after {
-    content: '';
-    border-radius: .5rem .5rem 0 0;
-    background-color: var(--clr-primary-soft-violet);
-    grid-area: main;
-    opacity: 0.4;
 }
 
 .card__information {
@@ -156,29 +149,30 @@ em {
     gap: 1rem;
 }
 
-.card__information>p {    
+.card__information>p {
     letter-spacing: 1px;
 }
 
-.card__information_values{
+ul {
+    list-style: none;
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
     padding: 1.5rem 0 0;
 }
 
-.card__information_value>:first-child {
+li>:first-child {
     color: var(--clr-neutral-white);
     font-size: 150%;
     font-weight: var(--fw-700);
 }
 
 /* for 12M+ */
-.card__information_value:last-of-type {
+li:last-of-type {
     text-transform: uppercase;
 }
 
-.card__information_value>:nth-child(2) {
+li>:last-child {
     font-family: var(--ff-headings);
     text-transform: uppercase;
     font-size: 80%;
@@ -190,11 +184,11 @@ em {
     text-align: center;
 }
 
-a{
+a {
     color: var(--clr-neutral-white);
 }
 
-a:visited{
+a:visited {
     color: var(--clr-primary-soft-violet);
 }
 
@@ -203,33 +197,27 @@ a:visited{
         max-width: 1200px;
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 5rem;        
+        justify-items: end;
     }
 
-    .card__image {
-        grid-column: 2;
-        grid-row: 1;
-    }
-
-    .card__image>img {
+    picture {        
         border-radius: 0 .5rem .5rem 0;
     }
 
-    .card__image::after {
-        content: '';
-        border-radius: 0 .5rem .5rem 0;
+    img{
+        border-radius: inherit;
     }
 
     .card__information {
         grid-column: 1;
         grid-row: 1;
         text-align: left;
-        padding: 5rem;        
+        padding: 5rem;
     }
 
-    .card__information_values {
-        margin-top: auto;        
+    ul {
+        margin-top: auto;
         flex-direction: row;
-        gap: 4rem;        
+        gap: 4rem;
     }
 }
