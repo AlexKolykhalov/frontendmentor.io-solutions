@@ -1,0 +1,257 @@
+@import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;700&display=swap');
+
+:root {
+    --clr-primary-very-dark-magenta: hsl(300, 43%, 22%);
+    --clr-primary-soft-pink: hsl(333, 80%, 67%);
+
+    --clr-neutral-dark-grayish-magenta: hsl(303, 10%, 53%);
+    --clr-neutral-light-grayish-magenta: hsl(300, 24%, 96%);
+    --clr-neutral-white: hsl(0, 0%, 100%);
+
+    --fw-400: 400;
+    --fw-500: 500;
+    --fw-700: 700;
+
+    font-family: 'League Spartan', sans-serif;
+    font-size: 15px;
+}
+
+/* ********************** */
+/* RESETS */
+/* ********************** */
+
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Remove default margin */
+* {
+    margin: 0;
+    padding: 0;
+    font: inherit;
+}
+
+/* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
+ul[role='list'],
+ol[role='list'] {
+    list-style: none;
+}
+
+/* Set core root defaults */
+html:focus-within {
+    scroll-behavior: smooth;
+}
+
+/* Set core body defaults */
+body {
+    min-height: 100vh;
+    text-rendering: optimizeSpeed;
+    line-height: 1.5;
+}
+
+/* A elements that don't have a class get default styles */
+a:not([class]) {
+    text-decoration-skip-ink: auto;
+}
+
+/* Make images easier to work with */
+img,
+picture {
+    max-width: 100%;
+    display: block;
+}
+
+/* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
+@media (prefers-reduced-motion: reduce) {
+    html:focus-within {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* ********************** */
+/* UTILITY CLASSES */
+/* ********************** */
+
+
+/* ********************** */
+/* GENERAL STYLING */
+/* ********************** */
+body {
+    background:
+        url(images/bg-pattern-top-mobile.svg) no-repeat left top,
+        url(images/bg-pattern-bottom-mobile.svg) no-repeat right bottom;
+    background-color: var(--clr-neutral-white);
+    padding: 5rem 2rem;
+    text-align: center;
+    color: var(--clr-neutral-dark-grayish-magenta);
+    font-weight: var(--fw-500);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5rem;
+}
+
+h1 {
+    color: var(--clr-primary-very-dark-magenta);
+    font-weight: var(--fw-700);
+    font-size: 300%;
+    line-height: 0.8;
+    margin-bottom: 1.5rem;
+}
+
+.ratings {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 3rem 0;
+}
+
+.ratings li {
+    color: var(--clr-primary-very-dark-magenta);
+    font-weight: var(--fw-700);
+    background-color: var(--clr-neutral-light-grayish-magenta);
+    border-radius: .5rem;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    line-height: 1;
+}
+
+.stars {
+    display: flex;
+    justify-content: center;
+    align-items: center;        
+    gap: 0.5em;
+}
+
+.reviews {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.reviews li {
+    color: var(--clr-neutral-light-grayish-magenta);
+    background-color: var(--clr-primary-very-dark-magenta);
+    border-radius: .5rem;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    padding: 2rem;
+    gap: 1rem;
+    font-weight: var(--fw-400);
+    quotes: revert;
+}
+
+.personal-data {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.personal-data>img {
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+}
+
+.personal-data>div>h3 {
+    font-weight: var(--fw-700);
+    color: var(--clr-neutral-white);
+}
+
+.personal-data>div>p {
+    color: var(--clr-primary-soft-pink);
+    font-weight: var(--fw-400);
+}
+
+.sr-only {
+    position: absolute;
+    left: -10000px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+@media screen and (min-width:600px) {
+    body {
+        background:
+            url(images/bg-pattern-top-desktop.svg) no-repeat left top,
+            url(images/bg-pattern-bottom-desktop.svg) no-repeat right bottom;
+        text-align: left;
+    }
+
+    .page-content {
+        max-width: 1000px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        column-gap: clamp(1rem, 30%, 15rem);
+        row-gap: 8rem;
+        justify-items: end;
+
+    }
+
+    .third-part {
+        grid-column: 1/3;
+    }
+
+    .ratings {
+        margin: 0;
+    }
+
+    .ratings li {
+        flex-direction: row;        
+        gap: 2rem;        
+    }
+
+    .stars {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: .5rem;
+    }
+
+    .stars img {
+        width: clamp(5px, 15%, 1rem);
+    }
+
+    .ratings li:first-child {
+        position: relative;
+        right: 4rem;
+    }
+
+    .ratings li:nth-child(2) {
+        position: relative;
+        right: 2rem;
+    }
+
+    .reviews {
+        flex-direction: row;
+    }
+
+    .reviews li:first-child {
+        position: relative;
+        bottom: 2rem;
+    }
+
+    .reviews li:nth-child(2) {
+        position: relative;
+        bottom: 1rem;
+    }
+}
