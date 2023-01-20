@@ -1,0 +1,246 @@
+:root {
+    --clr-primary: hsl(25, 97%, 53%);
+
+    --clr-neutral-000: hsl(0, 0%, 100%);
+    --clr-neutral-300: hsl(217, 12%, 63%);
+    --clr-neutral-400: hsl(216, 12%, 54%);
+    --clr-neutral-700: hsl(213, 19%, 18%);
+    --clr-neutral-900: hsl(216, 12%, 8%);
+
+    --ff: 'Overpass', sans-serif;
+
+    --fw-400: 400;
+    --fw-700: 700;
+
+    --fs-300: calc(var(--fs-400) * 0.8);
+    --fs-400: 15px;
+    --fs-500: calc(var(--fs-400) * 1.33);
+    --fs-600: calc(var(--fs-400) * 1.77);
+    --fs-700: calc(var(--fs-400) * 2.4);
+}
+
+/* Utilities */
+
+.clr-p {
+    color: var(--clr-primary);
+}
+
+.clr-n-000 {
+    color: var(--clr-neutral-000);
+}
+
+.clr-n-100 {
+    color: hsla(0, 0%, 100%, 0.1);
+}
+
+.clr-n-300 {
+    color: var(--clr-neutral-300);
+}
+
+.clr-n-400 {
+    color: var(--clr-neutral-400);
+}
+
+.clr-n-700 {
+    color: var(--clr-neutral-700);
+}
+
+.clr-n-900 {
+    color: var(--clr-neutral-900);
+}
+
+.bg-clr-p {
+    background: var(--clr-primary);
+}
+
+.bg-clr-n-000 {
+    background: var(--clr-neutral-000);
+}
+
+.bg-clr-n-100 {
+    background: hsla(0, 0%, 100%, 0.1);
+}
+
+.bg-clr-n-300 {
+    background: var(--clr-neutral-300);
+}
+
+.bg-clr-n-400 {
+    background: var(--clr-neutral-400);
+}
+
+.bg-clr-n-700 {
+    background: var(--clr-neutral-700);
+}
+
+.bg-clr-n-900 {
+    background: var(--clr-neutral-900);
+}
+
+.fs-300 {
+    font-size: var(--fs-300);
+}
+
+.fs-400 {
+    font-size: var(--fs-400);
+}
+
+.fs-500 {
+    font-size: var(--fs-500);
+}
+
+.fs-600 {
+    font-size: var(--fs-600);
+}
+
+.fs-700 {
+    font-size: var(--fs-700);
+}
+
+.uppercase {
+    text-transform: uppercase;
+}
+
+.letter-spacing-xs {
+    letter-spacing: 1px;
+}
+
+.letter-spacing-s {
+    letter-spacing: 2px;
+}
+
+.letter-spacing-m {
+    letter-spacing: 3px;
+}
+
+.text-align-center {
+    text-align: center;
+}
+
+.text-align-left {
+    text-align: left;
+}
+
+.center {
+    justify-self: center;
+}
+
+.hide {
+    display: none !important;
+}
+
+.selected {
+    background: var(--clr-neutral-300);
+    color: var(--clr-neutral-000);
+    font-weight: var(--fw-700);
+}
+
+.warning {    
+    animation-name: warningAnimation;
+    animation-duration: 500ms;
+}
+
+.sr-only {
+    height: 1px;
+    left: -10000px;
+    overflow: hidden;
+    position: absolute;
+    top: auto;
+    width: 1px;
+}
+
+/* General styling */
+
+body {
+    align-items: center;
+    background-color: var(--clr-neutral-900);
+    color: var(--clr-neutral-300);
+    display: flex;
+    gap: 5em;
+    justify-content: center;
+    flex-direction: column;
+    font-family: var(--ff);
+    font-size: var(--fs-400);
+    font-weight: var(--fw-400);
+    padding: 1em;
+    text-align: center;
+}
+
+ul {
+    display: flex;
+    justify-content: space-between;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    color: var(--clr-neutral-000);
+}
+
+button {
+    border: transparent;
+}
+
+/* block */
+
+.card {
+    max-width: 375px;
+    border-radius: 1.5em;
+    padding: 1.8em;
+    display: grid;
+    gap: 1.8em;
+}
+
+.round-shape {
+    border-radius: 50%;
+    height: 3em;
+    padding: 1em;
+    width: 3em;
+}
+
+.stadium-shape {
+    border-radius: 30px;
+    height: 3em;
+    padding: 0.9em;
+}
+
+.pill-shape {
+    border-radius: 30px;
+    height: 2em;
+    padding: 0.45em 1em;
+    margin: auto;
+}
+
+/* Primary Input is a fine pointer device such as a mouse or stylus */
+@media (pointer:fine) {
+    button {
+        cursor: pointer;
+    }
+
+    button[class~='submit']:hover {
+        background: var(--clr-neutral-000);
+        color: var(--clr-primary);
+        font-weight: var(--fw-700);
+    }
+
+    button[class~='rating']:not(.not-hover):hover {
+        background: var(--clr-primary);
+        color: var(--clr-neutral-000);
+        font-weight: var(--fw-700);
+    }
+
+    button[class~='backarrow']:hover {
+        background: var(--clr-neutral-300);
+    }
+}
+
+@keyframes warningAnimation {
+    0% {
+        background: var(--clr-neutral-000);
+    }
+
+    50% {
+        background: var(--clr-neutral-700);
+    }   
+}
