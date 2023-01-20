@@ -39,4 +39,4 @@ Users should be able to:
 
 - Website - https://portfolio-77ca8.web.app
 - GitHub - https://github.com/AlexKolykhalov
-- Frontend Mentor - https://github.com/AlexKolykhalov
+- Frontend Mentor - https://www.frontendmentor.io/profile/AlexKolykhalov
