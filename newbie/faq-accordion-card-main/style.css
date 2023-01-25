@@ -1,0 +1,191 @@
+:root {
+    --clr-primary-400: hsl(14, 88%, 65%);
+    --clr-primary-700: hsl(273, 75%, 66%);
+    --clr-primary-800: hsl(240, 73%, 65%);
+    --clr-primary-900: hsl(238, 29%, 16%);
+
+    --clr-neutral-000: hsl(0, 0%, 100%);
+    --clr-neutral-100: hsl(240, 5%, 91%);
+    --clr-neutral-400: hsl(240, 6%, 50%);
+    --clr-neutral-600: hsl(237, 12%, 33%);
+
+    --ff: 'Kumbh Sans', sans-serif;
+
+    --base-size: 12px;
+
+    /* 5:6 */
+    --scale-300: calc(var(--base-size)*0.833);
+    --scale-400: var(--base-size);
+    --scale-500: calc(var(--base-size)*1.2);
+    --scale-600: calc(var(--base-size)*1.44);
+    --scale-700: calc(var(--base-size)*1.728);
+    --scale-800: calc(var(--base-size)*2.074);
+    --scale-900: calc(var(--base-size)*2.488);
+
+    /* font size */
+    --fs-400: var(--scale-400);
+    --fs-500: var(--scale-500);
+    --fs-600: var(--scale-600);
+    --fs-700: var(--scale-700);
+    --fs-800: var(--scale-800);
+    --fs-900: var(--scale-900);
+
+    /* font weight */
+    --fw-400: 400;
+    --fw-700: 700;
+
+    --indent-sm: calc(var(--indent-m)/2);
+    --indent-m: var(--scale-800);
+    --indent-l: calc(var(--indent-m)*3);
+    --indent-xl: calc(var(--indent-m)*6);
+}
+
+/* General styling */
+body {
+    background: linear-gradient(var(--clr-primary-700), var(--clr-primary-800));
+    color: var(--clr-neutral-400);
+    display: flex;
+    flex-direction: column;
+    font-size: var(--fs-400);
+    font-family: var(--ff);
+    font-weight: var(--fw-400);
+    gap: 3em;
+    justify-content: space-between;
+    padding: var(--indent-xl) var(--indent-m) var(--indent-m);
+}
+
+footer {
+    color: var(--clr-neutral-100);
+    text-align: center;
+}
+
+h1 {
+    color: var(--clr-primary-900);
+    font-size: var(--fs-900);
+    font-weight: var(--fw-700);
+    margin-bottom: var(--indent-m);
+    text-align: center;
+}
+
+p {
+    padding-right: var(--indent-sm);
+}
+
+details {
+    border-bottom: 1px solid var(--clr-neutral-100);
+    margin-bottom: var(--indent-sm);
+    padding-bottom: var(--indent-sm);
+}
+
+details:not(open) summary {
+    color: var(--clr-neutral-600);
+    transition: all 250ms ease-out;
+}
+
+details[open] summary {
+    color: var(--clr-primary-900);
+    font-weight: var(--fw-700);
+    margin-bottom: var(--indent-sm);
+    transition: all 350ms ease-in;
+}
+
+details[open] summary::after {
+    transform: rotate(0.5turn);
+}
+
+summary {
+    align-items: flex-start;
+    display: flex;
+    letter-spacing: -0.8px;
+    font-size: var(--fs-500);
+    gap: var(--indent-sm);
+    justify-content: space-between;
+}
+
+summary::after {
+    content: url('images/icon-arrow-down.svg');
+}
+
+a {
+    color: var(--clr-primary-900);
+    font-weight: var(--fw-700);
+}
+
+/* Utilities */
+
+/* Blocks */
+.faq-card {
+    background-color: var(--clr-neutral-000);
+    border-radius: 1.5em;
+    box-shadow: 0 1em 20px 0px var(--clr-primary-900);
+    max-width: 934px;
+    padding: var(--indent-m);
+    text-align: left;
+}
+
+.faq-card-image {
+    background: url(images/bg-pattern-mobile.svg) no-repeat center top;
+    background-size: contain;
+    height: 100px;
+    margin: 0 auto;
+    position: relative;
+    top: calc(var(--indent-m)*-1);
+    width: 220px;
+}
+
+/* correct woman-online-mobile.svg  */
+.faq-card-image>:first-child {
+    bottom: 35%;
+    position: absolute;
+    width: 220px;
+}
+
+@media (min-width: 800px) {
+    body {
+        padding: var(--indent-m);
+        justify-content: center;
+    }
+
+    h1 {
+        text-align: left;
+    }
+
+    article {
+        padding: var(--indent-l);
+    }
+
+    summary {
+        cursor: pointer;
+    }
+
+    summary:hover {
+        color: var(--clr-primary-400);
+    }
+
+    .faq-card {
+        display: flex;
+        padding: 0;
+        margin: 0 auto;
+    }
+
+    .faq-card>* {
+        flex: 1;
+    }
+
+    .faq-card-image {
+        background:
+            url(images/illustration-woman-online-desktop.svg) no-repeat right var(--indent-l),
+            url(images/bg-pattern-desktop.svg) no-repeat right -300px;
+        height: auto;
+        top: auto;
+        width: auto;
+    }
+
+    /* correct box-desktop.svg */
+    .faq-card-image>:first-child {
+        height: 100px;
+        right: 285px;
+        top: 210px;
+        width: 200px;
+    }
+}
