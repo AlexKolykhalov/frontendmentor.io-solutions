@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- displays site properly based on user's device -->
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+
+  <title>Frontend Mentor | Base Apparel coming soon page</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="reset.css">
+  <link rel="stylesheet" href="style.css">
+
+  <script src="main.js" defer></script>
+</head>
+
+<body>
+  <header>
+    <a href=""><img class="logo" src="images/logo.svg" alt="logo img"></a>
+  </header>
+  <main>
+    <picture class="photo">
+      <source media="(min-width: 1000px)" srcset="images/hero-desktop.jpg">
+      <img src="images/hero-mobile.jpg" alt="photo of girl">
+    </picture>
+    <div class="context">
+      <h1><span class="fw-300 clr-pr-300">We're</span> coming soon</h1>
+      <p>
+        Hello fellow shoppers! We're currently building our new fashion store.
+        Add your email below to stay up-to-date with announcements and our launch deals.
+      </p>
+      <form novalidate>
+        <div class="textfield">
+          <label class="sr-only" for="email">Email</label>
+          <input type="email" id="email" placeholder="Email Address">
+          <button title="Submit" type="submit"><img src="images/icon-arrow.svg" alt=""></button>
+          <span class="warning-icon" aria-live="polite" hidden><img src="images/icon-error.svg" alt=""></span>
+          <span class="warning-text" hidden>Please provide a valid email</span>
+        </div>
+      </form>
+    </div>
+  </main>
+  <footer>
+    <p class="attribution">
+      Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>.
+      Coded by <a href="https://github.com/AlexKolykhalov">Alex Ko</a>.
+    </p>
+  </footer>
+</body>
+
+</html>

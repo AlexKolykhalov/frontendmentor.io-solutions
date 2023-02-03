@@ -1,0 +1,243 @@
+:root {
+    --clr-primary-300: hsl(0, 36%, 70%);
+    --clr-primary-400: hsl(0, 93%, 68%);
+
+    --clr-neutral-000: hsl(0, 0%, 100%);
+    --clr-neutral-100: hsl(0, 100%, 98%);
+    --clr-neutral-300: hsl(0, 80%, 86%);
+    --clr-neutral-400: hsl(0, 74%, 74%);
+    --clr-neutral-800: hsl(0, 6%, 24%);
+
+    --ff: 'Josefin Sans', sans-serif;
+
+    --base-size: 16px;
+
+    /* 3:4 1.125*/
+    --scale-300: calc(var(--base-size)*0.889);
+    --scale-400: var(--base-size);
+    --scale-500: calc(var(--base-size)*1.125);
+    --scale-600: calc(var(--base-size)*1.266);
+    --scale-700: calc(var(--base-size)*1.424);
+    --scale-800: calc(var(--base-size)*1.602);
+    --scale-900: calc(var(--base-size)*1.802);
+    --scale-1000: calc(var(--base-size)*2.027);
+    --scale-1100: calc(var(--base-size)*2.281);
+    --scale-1200: calc(var(--base-size)*2.566);
+    --scale-1300: calc(var(--base-size)*2.887);
+    --scale-1400: calc(var(--base-size)*3.247);
+    --scale-1500: calc(var(--base-size)*3.653);
+    --scale-1600: calc(var(--base-size)*4.11);
+
+    /* font size */
+    --fs-300: var(--scale-300);
+    --fs-400: var(--scale-400);
+    --fs-500: var(--scale-500);
+    --fs-600: var(--scale-600);
+    --fs-700: var(--scale-700);
+    --fs-800: var(--scale-800);
+    --fs-900: var(--scale-900);
+    --fs-1000: var(--scale-1000);
+    --fs-1100: var(--scale-1100);
+    --fs-1200: var(--scale-1200);
+    --fs-1300: var(--scale-1300);
+    --fs-1400: var(--scale-1400);
+    --fs-1500: var(--scale-1500);
+    --fs-1600: var(--scale-1600);
+
+    /* font weight */
+    --fw-300: 300;
+    --fw-400: 400;
+    --fw-600: 600;
+}
+
+
+/* Composition */
+
+body {
+    background: linear-gradient(135deg, var(--clr-neutral-000), var(--clr-neutral-100));
+    font-family: var(--ff);
+    font-size: var(--fs-300);
+    font-weight: var(--fw-400);
+    color: var(--clr-primary-300);
+}
+
+h1 {
+    color: var(--clr-neutral-800);
+    font-size: var(--fs-1100);
+    font-weight: var(--fw-600);
+    letter-spacing: 14px;
+    line-height: 1.1;
+    margin-bottom: 0.5em;
+    text-transform: uppercase;
+}
+
+header {
+    padding: 2em;
+}
+
+footer {
+    color: var(--clr-neutral-800);
+    font-size: var(--fs-400);
+    padding: 2em;
+    text-align: center;
+}
+
+/* Utilities */
+
+.clr-pr-300 {
+    color: var(--clr-primary-300);
+}
+
+.fw-300 {
+    font-weight: var(--fw-300);
+}
+
+.sr-only {
+    height: 1px;
+    left: -10000px;
+    overflow: hidden;
+    position: absolute;
+    top: auto;
+    width: 1px;
+}
+
+/* Blocks */
+
+.logo {
+    height: 1.5em;
+}
+
+.context {
+    padding: 4em 2em;
+    text-align: center;
+}
+
+.photo>img {
+    height: 250px;
+    width: 100%;
+    object-fit: cover;
+}
+
+.textfield {
+    align-items: center;
+    display: flex;
+    margin-top: 2em;
+    position: relative;
+}
+
+.textfield>input {
+    background: transparent;
+    border: 1px solid var(--clr-primary-300);
+    border-radius: 1.5em;
+    padding: 0.6em 1em;
+    width: 100%;
+}
+
+.textfield>input::placeholder {
+    color: var(--clr-primary-300);
+}
+
+.textfield>button {
+    background: linear-gradient(135deg, var(--clr-neutral-300), var(--clr-neutral-400));
+    border: none;
+    border-radius: 1.5em;
+    box-shadow: 0 0 15px var(--clr-neutral-300);
+    height: 100%;
+    right: 0px;
+    padding: 0 1.4em;
+    position: absolute;
+}
+
+.textfield>button>img {
+    height: 15px;
+}
+
+.warning-icon {
+    border-radius: 50%;
+    height: 20px;
+    position: absolute;
+    right: 60px;
+    width: 20px;
+}
+
+.warning-text {
+    position: absolute;
+    left: 1em;
+    bottom: -30px;
+    color: var(--clr-primary-400);
+}
+
+/* Exceptions */
+
+
+/* Primary Input is a fine pointer device such as a mouse or stylus */
+@media (pointer:fine) {
+    .textfield>button {
+        cursor: pointer;
+        padding: 0 2em;
+        transition: padding 100ms ease-in;
+    }
+
+    .textfield>button:hover {
+        background: var(--clr-neutral-300);
+        box-shadow: 0 3px 15px var(--clr-neutral-400);
+        padding: 0em 2.25em;
+    }
+
+    .warning-icon {
+        right: 75px;
+    }
+}
+
+
+@media (min-width:1000px) {
+
+    /* Composition */
+
+    body {
+        background: url('images/bg-pattern-desktop.svg') no-repeat;
+        background-size: cover;
+        display: grid;
+        grid-template-columns: 1fr 10fr;
+    }
+
+    h1 {
+        font-size: var(--fs-1400);
+    }
+
+    header {
+        grid-column: 2;
+    }
+
+    main {
+        grid-column: 2;
+    }
+
+    footer {
+        grid-column: 2;
+        margin-top: auto;
+        text-align: left;
+    }
+
+    /* Blocks */
+
+    .logo {
+        height: 2em;
+    }
+
+    .photo>img {
+        height: 100%;
+        width: 40%;
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+
+    .context {
+        max-width: 500px;
+        text-align: left;
+    }
+
+    /* Exception */
+
+}
