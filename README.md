@@ -4,7 +4,7 @@ Here you can watch my progress in solving challenges from frontendmentor.io.
 Any comments are welcome.
 
 <details>
-<summary>Newbie [v] (Free, Free++)</summary>
+<summary>Newbie [17/17] (Free, Free++)</summary>
 
 | No | Challenge | Live demo | Source |
 | :---: | :--- | :---: | :--- |
@@ -29,7 +29,7 @@ Any comments are welcome.
 </details>
 
 <details>
-<summary>Junior (Free, Free++)</summary>
+<summary>Junior [1/17] (Free, Free++)</summary>
 
 | No | Challenge | Live demo | Source |
 | :---: | :--- | :---: | :--- |
