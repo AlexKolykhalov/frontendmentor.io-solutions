@@ -29,9 +29,9 @@ Any comments are welcome.
 </details>
 
 <details>
-<summary>Junior [1/17] (Free, Free++)</summary>
+<summary>Junior [1/25] (Free, Free++)</summary>
 
 | No | Challenge | Live demo | Source |
 | :---: | :--- | :---: | :--- |
-| 01 | QR code component | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/newbie/qr-code-component-main/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/newbie/qr-code-component-main) |
+| 01 | News homepage | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/junior/news-homepage-main/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/junior/news-homepage-main) |
 </details>
