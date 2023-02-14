@@ -14,15 +14,16 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="reset.css">
   <link rel="stylesheet" href="style.css">
   <script src="main.js" defer></script>
 </head>
 
 <body>
   <header class="header">
-    <img class="header-logo" src="assets/images/logo.svg" alt="site logo">
+    <a href=""><img class="header-logo" src="assets/images/logo.svg" alt="W. home"></a>
     <nav>
+      <button class="mob-nav-toggle" title="toggle" data-visible="false" aria-controls="mob-nav"
+        aria-expanded="false"></button>
       <div class="filter" data-visible="false"></div>
       <ul id="mob-nav" class="mob-nav" data-visible="false">
         <li><a href="#">Home</a></li>
@@ -32,8 +33,6 @@
         <li><a href="#">Categories</a></li>
       </ul>
     </nav>
-    <button class="mob-nav-toggle" title="toggle" data-visible="false" aria-controls="mob-nav"
-      aria-expanded="false"></button>
   </header>
 
   <main>
@@ -41,7 +40,7 @@
     <section class="current-article">
       <picture>
         <source srcset="assets/images/image-web-3-desktop.jpg" media="(min-width: 40em)">
-        <img src="assets/images/image-web-3-mobile.jpg" alt="bright image with diffrent colors and shapes">
+        <img src="assets/images/image-web-3-mobile.jpg" alt="">
       </picture>
       <h1>The Bright Future of Web 3.0?</h1>
       <div class="content">
@@ -59,7 +58,7 @@
     <aside class="new-articles">
       <header>
         <h2>New</h2>
-      </header>      
+      </header>
       <div class="content">
         <section>
           <h3><a href="#">Hydrogen VS Electric Cars</a></h3>
@@ -78,7 +77,7 @@
 
     <div class="top-articles">
       <article class="article">
-        <img src="assets/images/image-retro-pcs.jpg" alt="retro pc">
+        <img src="assets/images/image-retro-pcs.jpg" alt="">
         <div>
           <p>01</p>
           <h2><a href="#">Reviving Retro PCs</a></h2>
@@ -86,7 +85,7 @@
         </div>
       </article>
       <article class="article">
-        <img src="assets/images/image-top-laptops.jpg" alt="laptop">
+        <img src="assets/images/image-top-laptops.jpg" alt="">
         <div>
           <p>02</p>
           <h2><a href="#">Top 10 Laptops of 2022</a></h2>
@@ -94,7 +93,7 @@
         </div>
       </article>
       <article class="article">
-        <img src="assets/images/image-gaming-growth.jpg" alt="game controller">
+        <img src="assets/images/image-gaming-growth.jpg" alt="">
         <div>
           <p>03</p>
           <h2><a href="#">The Growth of Gaming</a></h2>
