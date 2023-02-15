@@ -29,7 +29,7 @@ Any comments are welcome.
 </details>
 
 <details>
-<summary>Junior [1/25] (Free, Free++)</summary>
+<summary>Junior [2/25] (Free, Free++)</summary>
 
 | No | Challenge | Live demo | Source |
 | :---: | :--- | :---: | :--- |
