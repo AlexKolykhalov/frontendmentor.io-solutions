@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- displays site properly based on user's device -->
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
+
+  <title>Frontend Mentor | Notifications page</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+  <script src="main.js" defer></script>
+</head>
+
+<body class="flow">
+  
+  <main>
+    <section>
+      <header>
+        <div class="header-flow">
+          <div class="header-notifications-outputs">
+            <h1>Notifications</h1><span class="output">3</span>
+          </div>
+          <button aria-controls="list-of-notifications">Mark all as read</button>
+        </div>
+      </header>
+      <ul class="flow" id="list-of-notifications">
+        <li>
+          <article class="notification" data-status="unreaded">
+            <h2 class="sr-only">Notification from Mark Webber</h2>
+            <img class="avatar" src="assets/images/avatar-mark-webber.webp" alt="mark webber's photo">
+            <div>
+              <div class="info">
+                <a class="author-link" href="">Mark Webber</a>
+                <span>reacted to your recent post</span>
+                <a class="post-link" href="">My first tournament today!</a>
+              </div>
+              <time datetime="2023-02-14 14:59">1m ago</time>
+            </div>
+          </article>
+        </li>
+        <li>
+          <article class="notification" data-status="unreaded">
+            <h2 class="sr-only">Notification from Angela Gray</h2>
+            <img class="avatar" src="assets/images/avatar-angela-gray.webp" alt="angela gray's photo">
+            <div>
+              <div class="info">
+                <a class="author-link" href="">Angela Gray</a>
+                <span>followed you</span>
+              </div>
+              <time datetime="2023-02-14 14:55">5m ago</time>
+            </div>
+          </article>
+        </li>
+        <li>
+          <article class="notification" data-status="unreaded">
+            <h2 class="sr-only">Notification from Jacob Thompson</h2>
+            <img class="avatar" src="assets/images/avatar-jacob-thompson.webp" alt="jacob thompson's photo">
+            <div>
+              <div class="info">
+                <a class="author-link" href="">Jacob Thompson</a>
+                <span>has joined your group</span>
+                <a class="group-link" href="">Chess Club</a>
+              </div>
+              <time datetime="2023-02-13 15:00">1 day ago</time>
+            </div>
+          </article>
+        </li>
+        <li>
+          <article class="notification">
+            <h2 class="sr-only">Notification from Rizky Hasanuddin</h2>
+            <img class="avatar" src="assets/images/avatar-rizky-hasanuddin.webp" alt="rizky hasanuddin's photo">
+            <div>
+              <div class="info">
+                <a class="author-link" href="">Rizky Hasanuddin</a>
+                <span>sent you a private message</span>
+              </div>
+              <time datetime="2023-02-09 15:00">5 days ago</time>
+              <p class="private-message">
+                Hello, thanks for setting up the Chess Club. I've been a member for a few weeks now and
+                I'm already having lots of fun and improving my game.
+              </p>
+            </div>
+          </article>
+        </li>
+        <li>
+          <article class="notification">
+            <h2 class="sr-only">Notification from Kimberly Smith</h2>
+            <img class="avatar" src="assets/images/avatar-kimberly-smith.webp" alt="kimberly smith's photo">
+            <div>
+              <div class="info">
+                <a class="author-link" href="">Kimberly Smith</a>
+                <span>commented on your picture</span>
+              </div>
+              <time datetime="2023-02-07 15:00">1 week ago</time>
+            </div>
+            <a class="picture-link" href=""><img src="assets/images/image-chess.webp" alt="girl playing chess"></a>
+          </article>
+        </li>
+        <li>
+          <article class="notification">
+            <h2 class="sr-only">Notification from Nathan Peterson</h2>
+            <img class="avatar" src="assets/images/avatar-nathan-peterson.webp" alt="nathan peterson's photo">
+            <div>
+              <div class="info">
+                <a class="author-link" href="">Nathan Peterson</a>
+                <span>reacted to your recent post</span>
+                <a class="post-link" href="">5 end-game strategies to increase your win rate</a>
+              </div>
+              <time datetime="2023-02-01 15:00">2 weeks ago</time>
+            </div>
+          </article>
+        </li>
+        <li>
+          <article class="notification">
+            <h2 class="sr-only">Notification from Anna Kim</h2>
+            <img class="avatar" src="assets/images/avatar-anna-kim.webp" alt="anna kim's photo">
+            <div>
+              <div class="info">
+                <a class="author-link" href="">Anna Kim</a>
+                <span>left the group</span>
+                <a class="group-link" href="">Chess Club</a>
+              </div>
+              <time datetime="2023-02-01 10:37">2 weeks ago</time>
+            </div>
+          </article>
+        </li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <div class="attribution">
+      Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>.
+      Coded by <a href="https://github.com/AlexKolykhalov">Alex Ko</a>.
+    </div>
+  </footer>
+
+</body>
+
+</html>
