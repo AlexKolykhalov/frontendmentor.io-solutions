@@ -34,4 +34,6 @@ Any comments are welcome.
 | No | Challenge | Live demo | Source |
 | :---: | :--- | :---: | :--- |
 | 01 | News homepage | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/junior/news-homepage-main/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/junior/news-homepage-main) |
+| 02 | Notifications page | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/junior/notifications-page-main/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/junior/notifications-page-main) |
+
 </details>
