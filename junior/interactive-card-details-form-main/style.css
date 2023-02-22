@@ -1,0 +1,405 @@
+/* ************************* */
+/*           Reset           */
+/* ************************* */
+
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Remove default margin */
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote,
+dl,
+dd {
+    margin: 0;
+}
+
+/* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
+ul[role='list'],
+ol[role='list'] {
+    list-style: none;
+}
+
+/* Set core root defaults */
+html:focus-within {
+    scroll-behavior: smooth;
+}
+
+/* Set core body defaults */
+body {
+    min-height: 100vh;
+    text-rendering: optimizeSpeed;
+    line-height: 1.5;
+}
+
+/* A elements that don't have a class get default styles */
+a:not([class]) {
+    text-decoration-skip-ink: auto;
+}
+
+/* Make images easier to work with */
+img,
+picture {
+    max-width: 100%;
+    display: block;
+}
+
+/* Inherit fonts for inputs and buttons */
+input,
+button,
+textarea,
+select {
+    font: inherit;
+}
+
+/* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
+@media (prefers-reduced-motion: reduce) {
+    html:focus-within {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* ************************* */
+/*         Variables         */
+/* ************************* */
+
+:root {
+
+    --clr-primary-400: hsl(0, 100%, 66%);
+    --clr-primary-600: hsl(249, 99%, 64%);
+    --clr-primary-700: hsl(278, 94%, 30%);
+
+    --clr-neutral-000: hsl(0, 0%, 100%);
+    --clr-neutral-100: hsl(270, 3%, 87%);
+    --clr-neutral-400: hsl(279, 6%, 55%);
+    --clr-neutral-900: hsl(278, 68%, 11%);
+
+    --ff: 'Space Grotesk', sans-serif;
+
+    --base-size: 18px;
+
+    /* 3:4 <-> 1.125*/
+    --scale-90: calc(var(--base-size)*0.624);
+    --scale-100: calc(var(--base-size)*0.702);
+    --scale-200: calc(var(--base-size)*0.79);
+    --scale-300: calc(var(--base-size)*0.889);
+    --scale-400: var(--base-size);
+    --scale-500: calc(var(--base-size)*1.125);
+    --scale-600: calc(var(--base-size)*1.266);
+    --scale-700: calc(var(--base-size)*1.424);
+    --scale-800: calc(var(--base-size)*1.602);
+    --scale-900: calc(var(--base-size)*1.802);
+    --scale-1000: calc(var(--base-size)*2.027);
+    --scale-1100: calc(var(--base-size)*2.281);
+    --scale-1200: calc(var(--base-size)*2.566);
+    --scale-1300: calc(var(--base-size)*2.887);
+    --scale-1400: calc(var(--base-size)*3.247);
+    --scale-1500: calc(var(--base-size)*3.653);
+    --scale-1600: calc(var(--base-size)*4.11);
+
+    /* font size */
+    --fs-90: var(--scale-90);
+    --fs-100: var(--scale-100);
+    --fs-100: var(--scale-100);
+    --fs-200: var(--scale-200);
+    --fs-300: var(--scale-300);
+    --fs-400: var(--scale-400);
+    --fs-500: var(--scale-500);
+    --fs-600: var(--scale-600);
+    --fs-700: var(--scale-700);
+    --fs-800: var(--scale-800);
+    --fs-900: var(--scale-900);
+    --fs-1000: var(--scale-1000);
+    --fs-1100: var(--scale-1100);
+    --fs-1200: var(--scale-1200);
+    --fs-1300: var(--scale-1300);
+    --fs-1400: var(--scale-1400);
+    --fs-1500: var(--scale-1500);
+    --fs-1600: var(--scale-1600);
+
+    /* font weight */
+    /* --fw-400: 400; */
+    --fw-500: 500;
+    /* --fw-600: 600; */
+    /* --fw-700: 700; */
+    /* --fw-800: 800; */
+
+    /* --br-sm: 36em;
+    --br-md: 48em;
+    --br-lg: 62em; */
+}
+
+/* ************************* */
+/*        Composition        */
+/* ************************* */
+
+body {
+    color: var(--clr-neutral-900);
+    font-family: var(--ff);
+    font-size: var(--fs-400);
+    font-weight: var(--fw-500);
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+}
+
+main>section {
+    background: url(images/bg-main-mobile.png) no-repeat;
+    background-size: 100% auto;
+}
+
+form {
+    padding: 1em;
+}
+
+label,
+legend {
+    text-transform: uppercase;
+    font-size: var(--fs-100);
+    letter-spacing: 1.5px;
+
+}
+
+fieldset {
+    display: flex;
+    gap: 0.5em;
+    text-transform: uppercase;
+    border: 0;
+    padding: 0;
+    margin: 0;
+}
+
+input {
+    padding: 0.5em 1em;
+    border: 1px solid var(--clr-neutral-100);
+    border-radius: 0.3em;
+    width: 100%;
+}
+
+input::placeholder {
+    color: var(--clr-neutral-100);
+}
+
+input:focus,
+input:active {
+    outline: none;
+    background:
+        linear-gradient(var(--clr-neutral-000), var(--clr-neutral-000)) padding-box,
+        linear-gradient(90deg, var(--clr-primary-600), var(--clr-primary-700)) border-box;
+    border: 1px solid transparent;
+}
+
+button {
+    border: none;
+    color: var(--clr-neutral-000);
+    background: var(--clr-neutral-900);
+    padding: 0.7em 2em;
+    border-radius: 0.3em;
+    transition: box-shadow 100ms ease-out;
+}
+
+footer {
+    text-align: center;
+    margin-top: 3em;
+}
+
+/* ************************* */
+/*         Utilities         */
+/* ************************* */
+
+.sr-only {
+    height: 1px;
+    left: -10000px;
+    overflow: hidden;
+    position: absolute;
+    top: auto;
+    width: 1px;
+}
+
+.error-message {
+    color: var(--clr-primary-400);
+    font-size: var(--fs-100);
+    margin-top: 3px;
+    min-height: 1.5em;
+}
+
+/* ************************* */
+/*          Blocks           */
+/* ************************* */
+
+.form-composition-set {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1em;
+    align-items: flex-end;
+}
+
+.card-composition-set {
+    display: flex;
+    justify-content: space-between;
+    text-transform: uppercase;
+    font-size: var(--fs-90);
+    letter-spacing: 2px;
+    margin-top: min(2vw, 1em);
+}
+
+.card-number {
+    font-size: min(5vw, 28px);
+    letter-spacing: clamp(1px, 0.5vw, 4px);
+}
+
+.card {    
+    height: min(calc(9.5 * 4.5vw), 250px);
+    width: min(calc(17.5 * 4.5vw), 450px);
+    border-radius: 0.5em;
+    color: var(--clr-neutral-000);
+    box-shadow: 0 0 20px var(--clr-neutral-900);
+}
+
+.front {
+    background: url(images/bg-card-front.png) no-repeat center;
+    background-size: cover;
+    padding: min(5vw, 1.5em);
+    display: grid;
+    align-content: space-between;
+    position: relative;
+    left: 1rem;
+    bottom: 2rem;    
+}
+
+.front img {
+    height: min(2.5em, 8vw);
+}
+
+.back {
+    align-items: center;
+    background: url(images/bg-card-back.png) no-repeat center;
+    background-size: cover;
+    display: grid;
+    justify-content: end;
+    font-size: var(--fs-90);
+    letter-spacing: 2px;
+    padding-right: min(8vw, 4em);
+    position: relative;
+    right: 1rem;
+    margin-left: auto;
+    bottom: calc(calc(min(calc(9.5 * 4.5vw), 250px)/-2.5) + 2rem);
+}
+
+.form-fill {
+    display: grid;
+    gap: 1em;
+}
+
+.complited {
+    display: grid;
+    gap: 2em;
+    text-align: center;
+}
+
+.complited img {
+    justify-self: center;
+}
+
+.complited-text>:first-child {
+    font-size: var(--fs-800);
+    text-transform: uppercase;
+    letter-spacing: 4px;
+}
+
+.complited-text>:last-child {
+    color: var(--clr-neutral-400);
+}
+
+/* ************************* */
+/*        Exceptions         */
+/* ************************* */
+
+input[data-status="error"] {
+    border: 1px solid var(--clr-primary-400);
+}
+
+section[data-visibility="false"] {
+    display: none;
+}
+
+/* Primary Input is a fine pointer device such as a mouse or stylus */
+@media (pointer:fine) {
+    button {
+        cursor: pointer;
+    }
+
+    button:hover {
+        box-shadow: 0 0 10px var(--clr-neutral-900);
+    }
+}
+
+@media (max-width: 36em) {}
+
+@media (min-width: 36em) and (max-width: 48em) {}
+
+@media (min-width: 48em) and (max-width: 62em) {}
+
+@media (min-width: 62em) {
+    main {
+        height: 100vh;
+        display: flex;
+        flex-direction: row;
+    }
+
+    main>section {
+        background: url(images/bg-main-desktop.png) no-repeat;
+        background-size: cover;
+    }
+
+    main>section {
+        flex: 1;
+    }
+
+    main>form {
+        flex: 2;
+        display: grid;
+        place-content: center;
+    }
+
+    footer{
+        position: absolute;
+        bottom: 1rem;
+        right: 1rem;
+    }
+
+    .form-fill,
+    .complited {
+        max-width: 30em;
+    }
+
+    .front {
+        left: 1rem;
+    }
+
+    .back {
+        left: 1rem;
+        top: 50%;
+        margin: 0;
+    }
+}
