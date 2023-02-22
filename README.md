@@ -29,11 +29,12 @@ Any comments are welcome.
 </details>
 
 <details>
-<summary>Junior [2/25] (Free, Free++)</summary>
+<summary>Junior [3/25] (Free, Free++)</summary>
 
 | No | Challenge | Live demo | Source |
 | :---: | :--- | :---: | :--- |
 | 01 | News homepage | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/junior/news-homepage-main/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/junior/news-homepage-main) |
 | 02 | Notifications page | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/junior/notifications-page-main/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/junior/notifications-page-main) |
+| 03 | Interactive card details form | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/junior/interactive-card-details-form-main/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/junior/interactive-card-details-form-main) |
 
 </details>
