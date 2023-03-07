@@ -29,7 +29,7 @@ Any comments are welcome.
 </details>
 
 <details>
-<summary>Junior [4/25] (Free, Free++)</summary>
+<summary>Junior [5/25] (Free, Free++)</summary>
 
 | No | Challenge | Live demo | Source |
 | :---: | :--- | :---: | :--- |
@@ -37,5 +37,6 @@ Any comments are welcome.
 | 02 | Notifications page | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/junior/notifications-page-main/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/junior/notifications-page-main) |
 | 03 | Interactive card details form | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/junior/interactive-card-details-form-main/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/junior/interactive-card-details-form-main) |
 | 04 | Expenses chart component | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/junior/expenses-chart-component-main/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/junior/expenses-chart-component-main) |
+| 05 | Intro section with dropdown navigation | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/junior/intro-section-with-dropdown-navigation-main/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/junior/intro-section-with-dropdown-navigation-main) |
 
 </details>
