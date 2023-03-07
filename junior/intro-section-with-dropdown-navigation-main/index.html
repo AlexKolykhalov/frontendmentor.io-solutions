@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- displays site properly based on user's device -->
+
+  <meta name="author" content="Alex Kolykhalov">
+  <meta name="description" content="Intro section with dropdown navigation challenge on Frontend Mentor">
+  <meta name="keywords"
+    content="Frontend Mentor, Frontend, Mentor, Intro section with dropdown navigation, dropdown navigation, HTML, CSS, Responsive, Mobile, Desktop, Challenge, Solution, Alex Kolykhalov">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+    
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@500;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+
+  <script src="main.js" defer></script>
+
+  <title>Frontend Mentor | Intro section with dropdown navigation</title>
+
+</head>
+
+<body>
+
+  <header>
+    <a href="#"><img src="images/logo.svg" alt="snap home"></a>
+    <nav>
+      <button class="navigation-toggle" title="toggle" data-visible="false" aria-controls="navigation"
+        aria-expanded="false"></button>
+      <div class="filter" data-visible="false"></div>
+      <ul id="navigation" class="navigation" data-visible="false">
+        <li>
+          <input type="checkbox" id="features">
+          <details class="features" open>
+            <summary>
+              <label for="features">Features</label>
+            </summary>
+            <ul class="ul-features fs-sm">
+              <li><a href="#"><img src="images/icon-todo.svg" width="14" height="16" alt="">Todo List</a></li>
+              <li><a href="#"><img src="images/icon-calendar.svg" width="16" height="16" alt="">Calendar</a></li>
+              <li><a href="#"><img src="images/icon-reminders.svg" width="13" height="17" alt="">Reminders</a></li>
+              <li><a href="#"><img src="images/icon-planning.svg" width="16" height="16" alt="">Planning</a></li>
+            </ul>
+          </details>
+        </li>
+        <li>
+          <input type="checkbox" id="company">
+          <details class="company" open>
+            <summary>
+              <label for="company">Company</label>
+            </summary>
+            <ul class="ul-company fs-sm">
+              <li><a href="#">History</a></li>
+              <li><a href="#">Our Team</a></li>
+              <li><a href="#">Blog</a></li>
+            </ul>
+          </details>
+        </li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">About</a></li>
+        <li>
+          <div class="auth-buttons">
+            <button class="auth-buttons-login">Login</button>
+            <button class="auth-buttons-reg">Register</button>
+          </div>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <picture>
+      <source media="(min-width: 48em)" srcset="images/image-hero-desktop.png">
+      <img src="images/image-hero-mobile.png" alt="">
+    </picture>
+    <div class="main-content">
+      <h1 class="clr-n-900 | fs-x-l">Make remote work</h1>
+      <p class="fs-sm">
+        Get your team in sync, no matter your location. Streamline processes,
+        create team rituals, and watch productivity soar.
+      </p>
+      <button class="main-button | bg-clr-n-900 clr-n-000 | fw-bold">Learn more</button>
+    </div>
+    <ul class="clients-logos" aria-label="client's logos">
+      <li><img src="images/client-databiz.svg" width="114" height="20" alt=""></li>
+      <li><img src="images/client-audiophile.svg" width="73" height="36" alt=""></li>
+      <li><img src="images/client-meet.svg" width="90" height="20" alt=""></li>
+      <li><img src="images/client-maker.svg" width="83" height="24" alt=""></li>
+    </ul>
+  </main>
+
+  <footer>
+    <div class="attribution">
+      Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>.
+      Coded by <a href="https://github.com/AlexKolykhalov">Alex Ko</a>.
+    </div>
+  </footer>
+
+</body>
+
+</html>
