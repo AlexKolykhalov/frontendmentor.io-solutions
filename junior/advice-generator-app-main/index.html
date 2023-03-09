@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- displays site properly based on user's device -->
+  <meta name="description" content="Advice generator app challenge on Frontend Mentor">
+  <meta name="keywords"
+    content="Frontend Mentor, Frontend, Mentor, Advice generator app, HTML, CSS, Responsive, Mobile, Desktop, Challenge, Solution, Alex Kolykhalov">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+
+  <title>Frontend Mentor | Advice generator app</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+  <script src="main.js" defer></script>
+
+</head>
+
+<body>
+
+  <main>
+    <h1 class="sr-only">Advice generator app</h1>
+    <article>
+      <div class="advice-card">
+        <div class="flow">
+          <h2 class="advice-card-title">Advice # <span class="advice-number">0</span></h2>
+          <p class="advice-card-text">Advice is cached for 2 seconds. Any repeat-request within 2 seconds will return
+            the same piece of advice.</p>
+          <picture>
+            <source media="(min-width: 48em)" srcset="images/pattern-divider-desktop.svg">
+            <img src="images/pattern-divider-mobile.svg" alt="">
+          </picture>
+        </div>
+        <button class="advice-card-button">
+          <img src="images/icon-dice.svg" alt="">
+          <span class="sr-only">Click to get advice</span>
+        </button>
+      </div>
+    </article>
+  </main>
+
+  <footer>
+    <div class="attribution">
+      Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>.
+      Coded by <a href="https://github.com/AlexKolykhalov">Alex Ko</a>.
+    </div>
+  </footer>
+
+</body>
+
+</html>
