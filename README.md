@@ -39,6 +39,6 @@ Any comments are welcome.
 | 04 | Expenses chart component | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/junior/expenses-chart-component-main/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/junior/expenses-chart-component-main) |
 | 05 | Intro section with dropdown navigation | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/junior/intro-section-with-dropdown-navigation-main/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/junior/intro-section-with-dropdown-navigation-main) |
 | 06 | Advice generator app | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/junior/advice-generator-app-main/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/junior/advice-generator-app-main) |
-| 07 | Time tracking dashboard | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/time-tracking-dashboard-main/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/junior/time-tracking-dashboard-main) |
+| 07 | Time tracking dashboard | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/junior/time-tracking-dashboard-main/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/junior/time-tracking-dashboard-main) |
 
 </details>
