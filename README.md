@@ -29,7 +29,7 @@ Any comments are welcome.
 </details>
 
 <details>
-<summary>Junior [7/25] (Free, Free++)</summary>
+<summary>Junior [8/25] (Free, Free++)</summary>
 
 | No | Challenge | Live demo | Source |
 | :---: | :--- | :---: | :--- |
@@ -40,5 +40,6 @@ Any comments are welcome.
 | 05 | Intro section with dropdown navigation | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/junior/intro-section-with-dropdown-navigation-main/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/junior/intro-section-with-dropdown-navigation-main) |
 | 06 | Advice generator app | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/junior/advice-generator-app-main/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/junior/advice-generator-app-main) |
 | 07 | Time tracking dashboard | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/junior/time-tracking-dashboard-main/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/junior/time-tracking-dashboard-main) |
+| 08 | Tip calculator app | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/junior/tip-calculator-app-main/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/junior/tip-calculator-app-main) |
 
 </details>
