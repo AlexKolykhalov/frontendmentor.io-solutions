@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- displays site properly based on user's device -->
+  <meta name="description" content="Tip calculator app challenge on Frontend Mentor">
+  <meta name="keywords"
+    content="Frontend Mentor, Frontend, Mentor, Tip calculator app, HTML, CSS, Responsive, Mobile, Desktop, Challenge, Solution, Alex Kolykhalov">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+
+  <title>Frontend Mentor | Tip calculator app</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+  <script src="main.js" defer></script>
+</head>
+
+<body>
+  <main>
+    <h1 class="sr-only">Splitter app</h1>
+    <div class="logo">
+      <a href="#"><img src="images/logo.svg" width="" height="" alt="logo home"></a>
+    </div>
+    <form>
+      <h2 class="sr-only">Bill calculator</h2>
+      <section class="input-data">
+        <h3 class="sr-only">Inputs</h3>
+        <div>
+          <label for="bill" class="clr-n-500">Bill</label>
+          <div class="input-bill">
+            <input id="bill" class="fs-l" placeholder="0" autocomplete="off">
+          </div>
+        </div>
+        <section>
+          <h4 class="sr-only">Tips range</h4>
+          <p class="clr-n-500">Select Tip %</p>
+          <ul id="tips" class="tips | fs-l">
+            <li><button type="button" value="5">5%</button></li>
+            <li><button type="button" value="10">10%</button></li>
+            <li><button type="button" value="15">15%</button></li>
+            <li><button type="button" value="25">25%</button></li>
+            <li><button type="button" value="50">50%</button></li>
+            <li>
+              <label for="custom-tip" class="sr-only">Custom tip</label>
+              <input id="custom-tip" placeholder="Custom" autocomplete="off">
+            </li>
+          </ul>
+        </section>
+        <div>
+          <label for="number-of-people" class="clr-n-500">Number of People</label>
+          <div class="input-number-of-people">
+            <p class="warning | clr-p-200" aria-live="polite">Can't be zero</p>
+            <input id="number-of-people" class="fs-l" placeholder="0" autocomplete="off">
+          </div>
+        </div>
+      </section>
+      <section class="totals | bg-clr-n-800">
+        <h3 class="sr-only">Totals</h3>
+        <div class="totals-item">
+          <div>
+            <p class="clr-n-000">Tip Amount</p>
+            <p class="fs-sm clr-n-400">/ person</p>
+          </div>
+          <output class="tip-amount | fs-x-l clr-p-400" for="bill tips number-of-people">$0.00</output>
+        </div>
+        <div class="totals-item">
+          <div>
+            <p class="clr-n-000">Total</p>
+            <p class="fs-sm clr-n-400">/ person</p>
+          </div>
+          <output class="total | fs-x-l clr-p-400" for="bill tips number-of-people">$0.00</output>
+        </div>
+        <button type="reset" class="fs-l bg-clr-p-400 clr-n-800 | uppercase">Reset</button>
+      </section>
+    </form>
+  </main>
+
+  <footer>
+    <div class="attribution">
+      Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>.
+      Coded by <a href="https://github.com/AlexKolykhalov">Alex Ko</a>.
+    </div>
+  </footer>
+</body>
+
+</html>
