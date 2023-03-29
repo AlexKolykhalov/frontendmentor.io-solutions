@@ -1,0 +1,1005 @@
+/* ************************* */
+/*           Reset           */
+/* ************************* */
+
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Remove default margin */
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote,
+dl,
+dd {
+    margin: 0;
+}
+
+/* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
+ul[role='list'],
+ol[role='list'] {
+    list-style: none;
+}
+
+/* Set core root defaults */
+html:focus-within {
+    scroll-behavior: smooth;
+}
+
+/* Set core body defaults */
+body {
+    min-height: 100vh;
+    text-rendering: optimizeSpeed;
+    line-height: 1.5;
+}
+
+/* A elements that don't have a class get default styles */
+a:not([class]) {
+    text-decoration-skip-ink: auto;
+}
+
+/* Make images easier to work with */
+img,
+picture {
+    max-width: 100%;
+    display: block;
+}
+
+/* Inherit fonts for inputs and buttons */
+input,
+button,
+textarea,
+select {
+    font: inherit;
+}
+
+/* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
+@media (prefers-reduced-motion: reduce) {
+    html:focus-within {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* ************************* */
+/*         Variables         */
+/* ************************* */
+
+:root {
+    --clr-primary-300: hsl(355, 100%, 74%);
+    --clr-primary-400: hsl(356, 100%, 66%);
+    --clr-primary-600: hsl(208, 49%, 24%);
+
+    --clr-neutral-000: hsl(0, 0%, 100%);
+    --clr-neutral-100: hsl(240, 2%, 79%);
+    --clr-neutral-400: hsl(207, 13%, 34%);
+    --clr-neutral-900: hsl(240, 10%, 16%);
+
+    --clr-gr-mob-nav-1: hsl(13, 100%, 72%);
+    --clr-gr-mob-nav-2: hsl(353, 100%, 62%);
+
+    --clr-gr-body-1: hsl(237, 17%, 21%);
+    --clr-gr-body-2: hsl(237, 23%, 32%);
+
+    --ff-overpass: 'Overpass', sans-serif;
+    --ff-ubuntu: 'Ubuntu', sans-serif;
+
+    --base-size: 16px;
+
+    /* 3:4 <-> 1.125*/
+    --scale-90: calc(var(--base-size)*0.624);
+    --scale-100: calc(var(--base-size)*0.702);
+    --scale-200: calc(var(--base-size)*0.79);
+    --scale-300: calc(var(--base-size)*0.889);
+    --scale-400: var(--base-size);
+    --scale-500: calc(var(--base-size)*1.125);
+    --scale-600: calc(var(--base-size)*1.266);
+    --scale-700: calc(var(--base-size)*1.424);
+    --scale-800: calc(var(--base-size)*1.602);
+    --scale-900: calc(var(--base-size)*1.802);
+    --scale-1000: calc(var(--base-size)*2.190);
+    --scale-1100: calc(var(--base-size)*2.281);
+    --scale-1200: calc(var(--base-size)*2.566);
+    --scale-1300: calc(var(--base-size)*2.887);
+    --scale-1400: calc(var(--base-size)*3.247);
+    --scale-1500: calc(var(--base-size)*3.530);
+    --scale-1600: calc(var(--base-size)*4.11);
+
+    /* font size */
+    --fs-90: var(--scale-90);
+    --fs-100: var(--scale-100);
+    --fs-200: var(--scale-200);
+    --fs-300: var(--scale-300);
+    --fs-400: var(--scale-400);
+    --fs-500: var(--scale-500);
+    --fs-600: var(--scale-600);
+    --fs-700: var(--scale-700);
+    --fs-800: var(--scale-800);
+    --fs-900: var(--scale-900);
+    --fs-1000: var(--scale-1000);
+    --fs-1100: var(--scale-1100);
+    --fs-1200: var(--scale-1200);
+    --fs-1300: var(--scale-1300);
+    --fs-1400: var(--scale-1400);
+    --fs-1500: var(--scale-1500);
+    --fs-1600: var(--scale-1600);
+
+    /* font weight */
+    --fw-o-300: 300;
+    --fw-u-400: 400;
+    --fw-u-500: 500;
+    --fw-o-600: 600;
+    --fw-u-700: 700;
+
+    /* --br-sm: 36em; */
+    /* --br-md: 48em; */
+    /* --br-lg: 62em; */
+}
+
+/* ************************* */
+/*        Composition        */
+/* ************************* */
+
+header {
+    background-image: url(images/bg-pattern-intro-mobile.svg), linear-gradient(var(--clr-gr-mob-nav-1), var(--clr-gr-mob-nav-2));
+    background-repeat: no-repeat;
+    background-size: 330%;
+    background-position: 40% 40%;
+
+    border-bottom-left-radius: 5rem;
+}
+
+@media (min-width: 36em) {
+    header {
+        background-image: url(images/bg-pattern-intro-desktop.svg), linear-gradient(to right, var(--clr-gr-mob-nav-1) 40%, var(--clr-gr-mob-nav-2));
+        background-repeat: no-repeat;
+        background-size: 150%;
+        background-position: 40% center, center;
+    }
+}
+
+footer {
+    background: var(--clr-neutral-900);
+
+    border-top-right-radius: 5rem;
+}
+
+h2 {
+    line-height: 1.1;
+}
+
+ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+button {
+    border: 1px solid transparent;
+
+    padding: 1rem;
+    border-radius: 2rem;
+
+    line-height: 1;
+
+    width: clamp(100px, 40vw, 150px);
+}
+
+@media (pointer:fine) {
+    button {
+        cursor: pointer;
+    }
+}
+
+a {
+    text-decoration: none;
+}
+
+/* ************************* */
+/*         Utilities         */
+/* ************************* */
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+.border {
+    border: 1px solid var(--clr-neutral-000);
+}
+
+.border-radius {
+    border-radius: 0.5rem;
+}
+
+.ff-o {
+    font-family: var(--ff-overpass);
+}
+
+.ff-u {
+    font-family: var(--ff-ubuntu);
+}
+
+.fs-x-sm {
+    font-size: var(--fs-100);
+}
+
+.fs-sm {
+    font-size: var(--fs-300);
+}
+
+.fs-m {
+    font-size: var(--fs-400);
+}
+
+@media (min-width: 36em) {
+    .fs-m {
+        font-size: var(--fs-400);
+    }
+}
+
+.fs-l {
+    font-size: var(--fs-500);
+}
+
+.fs-x-l {
+    font-size: var(--fs-800);
+}
+
+.fs-xx-l {
+    font-size: var(--fs-800);
+}
+
+@media (min-width: 36em) {
+    .fs-xx-l {
+        font-size: var(--fs-1200);
+    }
+}
+
+.fs-xxx-l {
+    font-size: var(--fs-1200);
+}
+
+.fs-xxxx-l {
+    font-size: var(--fs-1000);
+}
+
+@media (min-width: 36em) {
+    .fs-xxxx-l {
+        font-size: var(--fs-1100);
+    }
+}
+
+@media (min-width: 48em) {
+    .fs-xxxx-l {
+        font-size: var(--fs-1600);
+    }
+}
+
+.fw-o-light {
+    font-weight: var(--fw-o-300);
+}
+
+.fw-u-regular {
+    font-weight: var(--fw-u-400);
+}
+
+.fw-u-medium {
+    font-weight: var(--fw-u-500);
+}
+
+.fw-o-semibold {
+    font-weight: var(--fw-o-600);
+}
+
+.fw-u-bold {
+    font-weight: var(--fw-u-700);
+}
+
+.clr-p-300 {
+    color: var(--clr-primary-300);
+}
+
+.clr-p-400 {
+    color: var(--clr-primary-400);
+}
+
+.clr-p-600 {
+    color: var(--clr-primary-600);
+}
+
+.clr-n-000 {
+    color: var(--clr-neutral-000);
+}
+
+.clr-n-100 {
+    color: var(--clr-neutral-100);
+}
+
+.clr-n-400 {
+    color: var(--clr-neutral-400);
+}
+
+.clr-n-900 {
+    color: var(--clr-neutral-900);
+}
+
+.bg-transparent {
+    background: transparent;
+}
+
+.bg-linear {
+    background: linear-gradient(to right, var(--clr-gr-mob-nav-1), var(--clr-gr-mob-nav-2));
+}
+
+.bg-clr-n-000 {
+    background: var(--clr-neutral-000);
+}
+
+.bg-clr-n-100 {
+    background: var(--clr-neutral-100);
+}
+
+.bg-clr-n-400 {
+    background: var(--clr-neutral-400);
+}
+
+.bg-clr-n-900 {
+    background: var(--clr-neutral-900);
+}
+
+/* ************************* */
+/*          Blocks           */
+/* ************************* */
+
+/* ---------------------------------------------------- */
+
+.header-wrapper {
+    height: 70vh;
+
+    padding: 3rem 1.5rem;
+
+    display: grid;
+
+    max-width: 1440px;
+}
+
+@media (min-width: 36em) {
+    .header-wrapper {
+        margin-inline: auto;
+        height: 50vh;
+
+        padding: 3rem clamp(2rem, 5vw, 8rem);
+    }
+}
+
+/* ---------------------------------------------------- */
+
+.header-nav-wrapper {
+    display: grid;
+    gap: 3rem;
+    grid-template-columns: repeat(2, auto);
+    justify-content: space-between;
+}
+
+@media (min-width: 48em) {
+    .header-nav-wrapper {
+        grid-template-columns: auto 1fr;
+        justify-content: flex-start;
+    }
+}
+
+.nav-logo-link {
+    width: 85%;
+
+    display: block;
+}
+
+/* ---------------------------------------------------- */
+
+.header-nav-list {
+    background: var(--clr-neutral-000);
+    border-radius: 0.5rem;
+    box-shadow: 0 0 15px var(--clr-neutral-900);
+
+    padding: 2rem 1rem;
+
+    position: absolute;
+    top: 7rem;
+    left: 1.5rem;
+    right: 1.5rem;
+    z-index: 1000;
+
+    text-align: center;
+
+    display: grid;
+    align-items: baseline;
+    gap: 1rem;
+
+    opacity: 1;
+    transform: translate(0, -10px);
+
+    transition: all 300ms ease-in-out;
+
+}
+
+.header-nav-list[data-visible="false"] {
+    visibility: hidden;
+
+    opacity: 0;
+    transform: translate(0, 0);
+}
+
+@media (min-width: 48em) {
+    .header-nav-list {
+        background: none;
+        box-shadow: none;
+
+        padding: 0;
+
+        position: static;
+
+        gap: 2rem;
+        grid-template-columns: auto auto auto 1fr;
+    }
+
+    .header-nav-list>:nth-child(4) {
+        justify-self: end;
+    }
+}
+
+/* ---------------------------------------------------- */
+
+/* ---------------------------------------------------- */
+
+.header-nav-list-element {
+    max-height: 50px;
+    overflow: hidden;
+
+    transition: max-height 300ms ease-in-out;
+}
+
+.header-nav-list-element[open] {
+    max-height: 500px;
+
+}
+
+.header-nav-list-element summary {
+    font-family: var(--ff-overpass);
+    font-weight: var(--fw-o-600);
+    color: var(--clr-neutral-900);
+
+    margin-bottom: 1rem;
+
+    list-style: none;
+    line-height: 1;
+
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.header-nav-list-element[open] summary {
+    color: var(--clr-neutral-400);
+}
+
+.header-nav-list-element[open] summary::after {
+    transform: rotate(0.5turn);
+}
+
+.header-nav-list-element summary::after {
+    content: url(images/icon-arrow-dark.svg);
+
+    display: inline-block;
+    transform: rotate(0turn);
+
+    transition: transform 300ms ease;
+}
+
+.header-nav-list-element ul {
+    background: var(--clr-neutral-100);
+    border-radius: 0.5rem;
+    box-shadow: none;
+
+    padding: 1rem;
+
+    display: grid;
+    gap: 1rem;
+}
+
+.header-nav-list-element a {
+    color: var(--clr-neutral-400);
+    font-weight: var(--fw-o-600);
+}
+
+@media (min-width: 48em) {
+    .header-nav-list-element {
+        position: relative;
+
+        overflow: visible;
+
+        text-align: left;
+    }
+
+    .header-nav-list-element summary {
+        font-family: var(--ff-ubuntu);
+        font-weight: var(--fw-u-700);
+
+        color: var(--clr-neutral-000);
+    }
+
+    .header-nav-list-element[open] summary {
+        color: var(--clr-neutral-000);
+    }
+
+    .header-nav-list-element summary::after {
+        content: url(images/icon-arrow-light.svg);
+    }
+
+    .header-nav-list-element ul {
+        background: var(--clr-neutral-000);
+        box-shadow: 0 0 15px var(--clr-neutral-900);
+
+        position: absolute;
+        top: 2.5rem;
+
+        padding: 2rem 2rem;
+        width: 10rem;
+    }
+
+    .header-nav-list-element[open] ul {
+        animation: slide 300ms ease-in-out;
+    }
+
+    @keyframes slide {
+        0% {
+            opacity: 0;
+            transform: translate(0, -10px);
+        }
+
+        100% {
+            opacity: 1;
+            transform: translate(0, 0);
+        }
+    }
+
+    .header-nav-list-element a {
+        color: var(--clr-neutral-900);
+        font-weight: var(--fw-o-300);
+    }
+
+
+}
+
+/* Primary Input is a fine pointer device such as a mouse or stylus */
+@media (pointer:fine) {
+    .header-nav-list-element summary {
+        cursor: pointer;
+    }
+
+    @media (min-width: 48em) {
+        .header-nav-list-element summary:hover {
+            text-decoration: underline;
+            text-decoration-thickness: 2px;
+        }
+
+        .header-nav-list-element a:hover {
+            font-weight: var(--fw-o-600);
+        }
+    }
+}
+
+/* ---------------------------------------------------- */
+
+/* ---------------------------------------------------- */
+
+.header-nav-auth-btns {
+    display: grid;
+    justify-content: center;
+    gap: 0.5rem;
+
+    padding-top: 1rem;
+
+    border-top: 1px solid var(--clr-neutral-100);
+}
+
+.header-nav-auth-btns button {
+    font-family: var(--ff-overpass);
+    font-weight: var(--fw-o-600);
+}
+
+.header-nav-auth-btns button:nth-of-type(1) {
+    color: var(--clr-neutral-900);
+    background: transparent;
+}
+
+.header-nav-auth-btns button:nth-of-type(2) {
+    color: var(--clr-neutral-000);
+    background: linear-gradient(to right, var(--clr-gr-mob-nav-1), var(--clr-gr-mob-nav-2));
+}
+
+@media (min-width: 48em) {
+    .header-nav-auth-btns {
+        grid-template-columns: repeat(2, auto);
+
+        padding-top: 0;
+
+        border-top: 1px solid transparent;
+    }
+
+    .header-nav-auth-btns button {
+        font-family: var(--ff-ubuntu);
+        font-weight: var(--fw-u-700);
+    }
+
+    .header-nav-auth-btns button:nth-of-type(1) {
+        color: var(--clr-neutral-000);
+        width: clamp(50px, 10vw, 75px);
+        padding-inline: 0;
+    }
+
+    .header-nav-auth-btns button:nth-of-type(2) {
+        color: var(--clr-primary-400);
+        background: var(--clr-neutral-000);
+
+        transition: color 300ms ease, background-color 300ms ease;
+    }
+}
+
+/* Primary Input is a fine pointer device such as a mouse or stylus */
+@media (pointer:fine) {
+    @media (min-width: 48em) {
+        .header-nav-auth-btns button:nth-of-type(2):hover {
+            background: var(--clr-primary-300);
+            color: var(--clr-neutral-000);
+        }
+    }
+}
+
+/* ---------------------------------------------------- */
+
+/* ---------------------------------------------------- */
+
+.header-nav-btn {
+    background: url(images/icon-hamburger.svg) no-repeat;
+    background-position: right;
+    border-radius: 0;
+
+    padding: 0;
+
+    width: 50px;
+}
+
+.header-nav-btn[data-visible="false"] {
+    display: none;
+}
+
+.header-nav-btn[data-status="open"] {
+    background: url(images/icon-close.svg) no-repeat;
+    background-position: right;
+}
+
+/* ---------------------------------------------------- */
+
+/* ---------------------------------------------------- */
+
+.header-content-wrapper {
+    text-align: center;
+}
+
+.header-content-wrapper>:nth-child(1) {
+    line-height: 1.2;
+
+    margin-bottom: 1rem;
+}
+
+/* ---------------------------------------------------- */
+
+/* ---------------------------------------------------- */
+
+.header-content-btns {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+
+    margin-top: 3rem;
+
+}
+
+.header-content-btns button:nth-of-type(1):hover {
+    transition: color 300ms ease, background-color 300ms ease;
+}
+
+.header-content-btns button:nth-of-type(2):hover {
+    transition: color 300ms ease, background-color 300ms ease;
+}
+
+/* Primary Input is a fine pointer device such as a mouse or stylus */
+@media (pointer:fine) {
+    .header-content-btns button:nth-of-type(1):hover {
+        background: var(--clr-primary-300);
+        color: var(--clr-neutral-000);
+    }
+
+    .header-content-btns button:nth-of-type(2):hover {
+        background: var(--clr-neutral-000);
+        color: var(--clr-primary-300);
+    }
+}
+
+/* ---------------------------------------------------- */
+
+/* ---------------------------------------------------- */
+
+.main-wrapper {
+    padding: 6rem 0rem;
+
+    text-align: center;
+
+    display: grid;
+    gap: 3rem;
+}
+
+.main-wrapper section {
+    display: grid;
+    gap: 1.5rem;
+    align-content: center;
+
+    padding-inline: 2rem;
+}
+
+.main-wrapper section:nth-of-type(3) {
+    background-image: url(images/bg-pattern-circles.svg), linear-gradient(var(--clr-gr-body-1), var(--clr-gr-body-2));
+    background-repeat: no-repeat;
+    background-position: bottom 200px left 50%, center;
+    background-size: 160%, 100%;
+
+    border-top-right-radius: 5rem;
+    border-bottom-left-radius: 5rem;
+
+    position: relative;
+    isolation: isolate;
+
+    height: 80vh;
+
+    margin-top: 15rem;
+    padding-top: 9rem;
+}
+
+.main-wrapper section:nth-of-type(3)>img {
+    position: absolute;
+    top: -50vw;
+    left: 0;
+}
+
+@media (min-width: 36em) {
+    .main-wrapper {
+        padding: 10rem 0rem;
+
+        grid-template-columns: 1fr 1fr;
+
+        position: relative;
+        overflow: hidden;
+        max-width: 1440px;
+
+        margin-inline: auto;
+    }
+
+    .main-wrapper img {
+        width: 800px;
+        width: clamp(600px, 45vw, 800px);
+    }
+
+    .main-wrapper>:nth-child(2) {
+        grid-column: span 2;
+    }
+
+    .main-wrapper>:nth-child(3) {
+        position: absolute;
+        top: calc(230px - clamp(40px, 10vw, 190px));
+        right: -250px;
+    }
+
+    .main-wrapper>:nth-child(4) {
+        grid-column: 1;
+
+        padding-left: clamp(2rem, 5vw, 8rem);
+    }
+
+    .main-wrapper>:nth-child(5) {
+        grid-column: 1;
+
+        padding-left: clamp(2rem, 5vw, 8rem);
+    }
+
+    .main-wrapper>:nth-child(6) {
+        grid-column: span 2;
+    }
+
+    .main-wrapper>:nth-child(7) {
+        position: absolute;
+        bottom: 10px;
+        bottom: calc(200px - clamp(10px, 10vw, 190px));
+        /* bottom: 190px; */
+        left: -250px;
+    }
+
+    .main-wrapper>:nth-child(8) {
+        grid-column: 2;
+
+        padding-right: clamp(2rem, 5vw, 8rem);
+    }
+
+    .main-wrapper>:nth-child(9) {
+        grid-column: 2;
+
+        padding-right: clamp(2rem, 5vw, 8rem);
+    }
+
+    .main-wrapper section {
+        gap: 1.5rem;
+        align-content: center;
+
+        text-align: left;
+
+        padding-inline: 0;
+    }
+
+    .main-wrapper section:nth-of-type(3) {
+        background-image: url(images/bg-pattern-circles.svg), linear-gradient(var(--clr-gr-body-1), var(--clr-gr-body-2));
+        background-repeat: no-repeat;
+        background-position: -50% 80%, center;
+        background-size: 70%, 100%;
+
+        position: relative;
+        isolation: isolate;
+
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+
+        height: 40vh;
+
+        margin-block: 15rem;
+        padding-top: 0rem;
+    }
+
+    .main-wrapper section:nth-of-type(3)>img {
+        position: static;
+        grid-row: 1/3;
+
+        width: 550px;
+
+        margin-left: 5rem;
+    }
+
+    .main-wrapper section:nth-of-type(3)>h2 {
+        align-self: flex-end;
+
+        grid-column: 2;
+        grid-row: 1;
+
+        padding-right: clamp(2rem, 5vw, 8rem);
+    }
+
+    .main-wrapper section:nth-of-type(3)>p {
+        grid-column: 2;
+        grid-row: 2;
+
+        padding-right: clamp(2rem, 5vw, 8rem);
+    }
+}
+
+/* ---------------------------------------------------- */
+
+/* ---------------------------------------------------- */
+
+.footer-wrapper {
+    padding: 3rem 1.5rem;
+
+    text-align: center;
+
+    display: grid;
+    gap: 4rem;
+    justify-items: center;
+    align-items: center;
+
+    max-width: 1440px;
+    margin-inline: auto;
+}
+
+@media (min-width: 36em) {
+    .footer-wrapper {
+        padding: 3rem clamp(2rem, 5vw, 8rem);
+
+        align-items: flex-start;
+    }
+}
+
+/* ---------------------------------------------------- */
+
+/* ---------------------------------------------------- */
+
+.footer-nav-wrapper {
+    display: grid;
+    gap: 3rem;
+
+    justify-items: center;
+}
+
+@media (min-width: 36em) {
+    .footer-nav-wrapper {
+        grid-template-columns: auto 1fr;
+        gap: clamp(2rem, 10vw, 10rem);
+    }
+}
+
+/* ---------------------------------------------------- */
+
+
+/* ---------------------------------------------------- */
+
+.footer-nav-list {
+    display: grid;
+    gap: 3rem;
+}
+
+.footer-nav-list p {
+    margin-bottom: 1.5rem;
+}
+
+.footer-nav-list a {
+    line-height: 2;
+}
+
+@media (min-width: 36em) {
+    .footer-nav-list {
+        grid-template-columns: auto auto auto;
+        gap: clamp(2rem, 10vw, 10rem);
+
+        text-align: left;
+    }
+}
+
+/* Primary Input is a fine pointer device such as a mouse or stylus */
+@media (pointer:fine) {
+    .footer-nav-list a:hover {
+        text-decoration: underline;
+    }
+}
+
+/* ---------------------------------------------------- */
+
+/* ---------------------------------------------------- */
+
+/* Primary Input is a fine pointer device such as a mouse or stylus */
+@media (pointer:fine) {
+    .attribution a:hover {
+        text-decoration: underline;
+    }
+}
+
+/* ---------------------------------------------------- */
