@@ -479,7 +479,7 @@ a {
     max-height: 50px;
     overflow: hidden;
 
-    transition: max-height 300ms ease-in-out;
+    transition: max-height 300ms ease;
 }
 
 .header-nav-list-element[open] {
