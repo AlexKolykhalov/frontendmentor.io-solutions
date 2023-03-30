@@ -61,9 +61,10 @@ window.addEventListener('resize', () => {
         if (hasClickChecking === true) {
             document.removeEventListener('click', clickChecking);
             hasClickChecking = false;
+            closeNavList();
         }
         headerNavListBtn?.removeAttribute('data-visible');
-        closeNavList();
+        // closeNavList();
     }
 });
 
@@ -120,9 +121,9 @@ function closeNavList() {
     headerNavListBtn?.setAttribute('aria-expanded', 'false');
     headerNavListBtn?.setAttribute('data-status', 'close');
 
-    // headerNavListElements?.forEach(element => {
-    //     element.open = false;
-    // });
+    headerNavListElements?.forEach(element => {
+        element.open = false;
+    });
 }
 
 /**
