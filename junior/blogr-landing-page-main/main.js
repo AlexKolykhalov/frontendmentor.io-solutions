@@ -45,8 +45,7 @@ window.addEventListener('load', () => {
             hasClickChecking = true;
         }
     } else {
-        // closeNavList();
-        headerNavList?.setAttribute('data-visible', 'false');
+        closeNavList();        
     }
 });
 
@@ -64,7 +63,7 @@ window.addEventListener('resize', () => {
             hasClickChecking = false;
         }
         headerNavListBtn?.removeAttribute('data-visible');
-        // closeNavList();
+        closeNavList();
     }
 });
 
@@ -121,9 +120,9 @@ function closeNavList() {
     headerNavListBtn?.setAttribute('aria-expanded', 'false');
     headerNavListBtn?.setAttribute('data-status', 'close');
 
-    headerNavListElements?.forEach(element => {
-        element.open = false;
-    });
+    // headerNavListElements?.forEach(element => {
+    //     element.open = false;
+    // });
 }
 
 /**
