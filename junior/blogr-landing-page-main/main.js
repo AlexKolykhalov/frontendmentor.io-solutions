@@ -46,6 +46,7 @@ window.addEventListener('load', () => {
         }
     } else {
         // closeNavList();
+        headerNavList?.setAttribute('data-visible', 'false');
     }
 });
 
