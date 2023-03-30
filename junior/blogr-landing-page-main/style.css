@@ -475,16 +475,18 @@ a {
 
 /* ---------------------------------------------------- */
 
-.header-nav-list-element {
-    max-height: 50px;
-    overflow: hidden;
-
-    transition: max-height 300ms ease;
+.header-nav-list-element[open] ul {
+    animation: opacity 300ms ease-in-out both;
 }
 
-.header-nav-list-element[open] {
-    max-height: 500px;
+@keyframes opacity {
+    0% {
+        opacity: 0;
+    }
 
+    100% {
+        opacity: 1;
+    }
 }
 
 .header-nav-list-element summary {
@@ -591,8 +593,6 @@ a {
         color: var(--clr-neutral-900);
         font-weight: var(--fw-o-300);
     }
-
-
 }
 
 /* Primary Input is a fine pointer device such as a mouse or stylus */
