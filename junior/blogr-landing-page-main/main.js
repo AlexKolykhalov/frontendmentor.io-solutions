@@ -45,7 +45,7 @@ window.addEventListener('load', () => {
             hasClickChecking = true;
         }
     } else {
-        closeNavList();
+        // closeNavList();
     }
 });
 
@@ -63,7 +63,7 @@ window.addEventListener('resize', () => {
             hasClickChecking = false;
         }
         headerNavListBtn?.removeAttribute('data-visible');
-        //closeNavList();
+        // closeNavList();
     }
 });
 
