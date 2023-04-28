@@ -49,7 +49,7 @@ Began to apply primitive components (like row and column) for basic layout purpo
 
 ### Useful resources
 
-- [Every layout](https://every-layout.dev/) - This helled me to understand primitive components.
+- [Every layout](https://every-layout.dev/) - This helped me to understand primitive components.
 
 ## Author
 
