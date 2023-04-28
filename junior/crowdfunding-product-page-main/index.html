@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- displays site properly based on user's device -->
+  <meta name="description" content="Crowdfunding product page challenge on Frontend Mentor">
+  <meta name="keywords"
+    content="Frontend Mentor, Frontend, Mentor, Landing page, HTML, CSS, Responsive, Mobile, Desktop, Challenge, Solution, Alex Kolykhalov">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+
+  <title>Frontend Mentor | Crowdfunding product page</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Commissioner:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+  <script src="main.js" defer></script>
+</head>
+
+<body>
+  <header>
+    <div class="header { row main-axis-space-between cross-axis-center pad-m }" data-status="z-index-0">
+      <div class="filter" data-visible="false"></div>
+      <a class="logo-link" href="#"><img src="images/logo.svg" alt="Crowdfund home"></a>
+      <nav aria-label="primary">
+        <button class="burger-btn" aria-controls="header_nav_list" aria-expanded="false">
+          <span class="sr-only">Toggle</span>
+        </button>
+        <ul id="header_nav_list" class="header-nav-list { row gap-zero break-1 md:break-none }" data-visible="false">
+          <li class="pad-m"><a href="#">About</a></li>
+          <li class="pad-m"><a href="#">Discover</a></li>
+          <li class="pad-m"><a href="#">Get Started</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <article class="main-content { center gutters-m }">
+      <h1 class="sr-only">Crowdfunding platform</h1>
+      <div class="column">
+        <section class="relative center-text pad-l with-border-radius bg-n-000">
+          <img class="circle-logo" src="images/logo-mastercraft.svg" alt="Mastercraft logo">
+          <div class="column pad-top-m">
+            <h2 class="fw-bold fs-600 clr-n-900">Mastercraft Bamboo Monitor Riser</h2>
+            <p>A beautiful & handcrafted monitor stand to reduce neck and eye strain.</p>
+            <div class="row main-axis-space-between cross-axis-stretch">
+              <button class="flex-1 md:flex-none | button { fw-medium  bg-p-400 clr-n-000 }">Back this project</button>
+              <button class="bookmark-btn bg-n-100 | row cross-axis-center">
+                <!-- <div class="row cross-axis-center"> -->
+                  <svg class="clr-n-200" width="56" height="56" viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg">
+                    <g>
+                      <circle cx="28" cy="28" r="28" />
+                      <path d="M23 19v18l5-5.058L33 37V19z" />
+                    </g>
+                  </svg>
+                  <span class="sr-only fw-bold clr-n-400">Bookmark</span>
+                <!-- </div> -->
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <section class="center-text with-border-radius bg-n-000 md:left-text">
+          <h2 class="sr-only">Statistics</h2>
+          <ul class="statistics { row break-1 gap-zero main-axis-space-between }">
+            <li class="pad-l">
+              <p class="fw-bold fs-800 clr-n-900">$89,914</p>
+              <p class="fw-medium">of $100,000 backed</p>
+            </li>
+            <li class="pad-l">
+              <p class="fw-bold fs-800 clr-n-900">5,007</p>
+              <p class="fw-medium">total backers</p>
+            </li>
+            <li class="pad-l">
+              <p class="fw-bold fs-800 clr-n-900">56</p>
+              <p class="fw-medium">days left</p>
+            </li>
+          </ul>
+          <div class="center gutters-l pad-bottom-l">
+            <progress value="89914" max="100000"></progress>
+          </div>
+        </section>
+        <section class="column gap-l pad-l with-border-radius bg-n-000">
+          <h2 class="clr-n-900">About this project</h2>
+          <p>
+            The Mastercraft Bamboo Monitor Riser is a sturdy and stylish platform that elevates your screen
+            to a more comfortable viewing height. Placing your monitor at eye level has the potential to improve
+            your posture and make you more comfortable while at work, helping you stay focused on the task at hand.
+          </p>
+          <p>
+            Featuring artisan craftsmanship, the simplicity of design creates extra desk space below your computer
+            to allow notepads, pens, and USB sticks to be stored under the stand.
+          </p>
+          <ul class="column" aria-label="Type of stands">
+            <li class="column with-border with-border-radius pad-l" aria-labelledby="bamboo_stand">
+              <div class="row break-2 gap-zero">
+                <h3 id="bamboo_stand" class="fs-400 fw-bold clr-n-900">Bamboo Stand</h3>
+                <div class="row">
+                  <p class="fw-medium clr-p-400">Pledge $25 or more</p>
+                </div>
+              </div>
+              <p>
+                You get an ergonomic stand made of natural bamboo. You've helped us launch our promotional
+                campaign,
+                and
+                you’ll be added to a special Backer member list.
+              </p>
+              <div class="row break-2">
+                <div>
+                  <div class="row cross-axis-center">
+                    <span class="fs-800 fw-bold clr-n-900">101</span>
+                    left
+                  </div>
+                </div>
+                <div class="row md:main-axis-end">
+                  <button class="button fw-medium bg-p-400 clr-n-000">Select Reward</button>
+                </div>
+              </div>
+            </li>
+            <li class="column with-border with-border-radius pad-l" aria-labelledby="black_stand">
+              <div class="row break-2 gap-zero">
+                <h3 id="black_stand" class="fs-400 fw-bold clr-n-900">Black Edition Stand</h3>
+                <div class="row">
+                  <p class="fw-medium clr-p-400">Pledge $75 or more</p>
+                </div>
+              </div>
+              <p>
+                You get a Black Special Edition computer stand and a personal thank you. You’ll be added to our
+                Backer
+                member list. Shipping is included.
+              </p>
+              <div class="row break-2">
+                <div>
+                  <div class="row cross-axis-center">
+                    <span class="fs-800 fw-bold clr-n-900">64</span>
+                    left
+                  </div>
+                </div>
+                <div class="row md:main-axis-end">
+                  <button class="button fw-medium bg-p-400 clr-n-000">Select Reward</button>
+                </div>
+              </div>
+            </li>
+            <li class="column with-border with-border-radius pad-l" aria-labelledby="mahogany_stand"
+              data-status="disable">
+              <div class="row break-2 gap-zero">
+                <h3 id="mahogany_stand" class="fs-400 fw-bold clr-n-900">Mahogany Special Edition</h3>
+                <div class="row">
+                  <p class="fw-medium clr-p-400">Pledge $200 or more</p>
+                </div>
+              </div>
+              <p>
+                You get two Special Edition Mahogany stands, a Backer T-Shirt, and a personal thank you. You’ll be
+                added
+                to our Backer member list. Shipping is included.
+              </p>
+              <div class="row break-2">
+                <div>
+                  <div class="row cross-axis-center">
+                    <span class="fs-800 fw-bold clr-n-900">0</span>
+                    left
+                  </div>
+                </div>
+                <div class="row md:main-axis-end">
+                  <button class="button fw-medium bg-p-400 clr-n-000">Out of Stock</button>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </section>
+      </div>
+      <div class="row main-axis-center pad-block-l">
+        <p>Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend
+            Mentor</a>.</p>
+        <p>Coded by <a href="https://github.com/AlexKolykhalov">Alex Ko</a>.</p>
+      </div>
+    </article>
+
+    <dialog id="back_project_dialog" class="with-border-radius with-border">
+      <div class="column pad-m bg-n-000">
+        <div class="row main-axis-space-between">
+          <h2 class="clr-n-900">Back this project</h2>
+          <button class="close-btn">
+            <span class="sr-only">Close</span>
+            <svg class="" fill="currentColor" width="15" height="15" viewBox="0 0 15 15"
+              xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M11.314 0l2.828 2.828L9.9 7.071l4.243 4.243-2.828 2.828L7.07 9.9l-4.243 4.243L0 11.314 4.242 7.07 0 2.828 2.828 0l4.243 4.242L11.314 0z">
+              </path>
+            </svg>
+          </button>
+        </div>
+        <p>Want to support us in bringing Mastercraft Bamboo Monitor Riser out in the world?</p>
+        <fieldset class="column" role="radiogroup">
+          <legend class="sr-only">Type of pledge</legend>
+          <template id="radiogroup_type_pledges">
+            <div class="pledge pad-block-l { column gap-l with-border-radius with-border }" data-status="unselected">
+              <div class="pledge__title { row cross-axis-center pad-inline-l }">
+                <input type="radio" name="pledge">
+                <div class="flex-1 | row gap-zero">
+                  <label class="fs-400 fw-bold clr-n-900 pad-right-m"></label>
+                  <p class="fw-medium clr-p-400"></p>
+                </div>
+                <div class="pledge__item-left { row cross-axis-center display-none md:display-flex }">
+                  <p class="fs-600 fw-bold clr-n-900"></p>left
+                </div>
+              </div>
+              <p class="pledge__description pad-inline-l md:mar-left"></p>
+              <div class="pledge__item-left { row cross-axis-center pad-inline-l md:display-none }">
+                <p class="fs-800 fw-bold clr-n-900"></p>left
+              </div>
+              <!-- Selected pledge start -->
+              <div
+                class="pledge__input { row main-axis-center cross-axis-center pad-inline-l md:main-axis-space-between }"
+                data-visible="false">
+                <label class="fw-medium">Enter your pledge</label>
+                <div class="pledge__input__buttons {gt row md:flex-none }">
+                  <input type="text" class="flex-1 | fw-bold clr-n-900">
+                  <button class="flex-1 | button { fw-medium bg-p-400 clr-n-000 }">Continue</button>
+                </div>
+              </div>
+              <!-- Selected pledge end -->
+            </div>
+          </template>
+        </fieldset>
+      </div>
+    </dialog>
+
+    <dialog id="success_dialog" class="with-border with-border-radius center-text bg-n-000 pad-l">
+      <div class="column cross-axis-center">
+        <h2 class="sr-only">Success pledge</h2>
+        <img src="images/icon-check.svg" alt="">
+        <p class="fw-bold fs-600 clr-n-900">Thanks for your support!</p>
+        <p>
+          Your pledge brings us one step closer to sharing Mastercraft Bamboo Monitor Riser worldwide. You will get
+          an email once our campaign is completed.
+        </p>
+        <button class="button { fw-medium bg-p-400 clr-n-000 }">Got it!</button>
+      </div>
+    </dialog>
+
+  </main>
+
+</body>
+
+</html>
