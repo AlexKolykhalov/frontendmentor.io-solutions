@@ -1,0 +1,586 @@
+/* ************************* */
+/*           Reset           */
+/* ************************* */
+
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Remove default margin */
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+ul[class] ol[class] figure,
+blockquote,
+dl,
+dd {
+    margin: 0;
+}
+
+/* Remove default padding */
+ul[class] ol[class] {
+    padding: 0;
+}
+
+/* Remove list styles on ul, ol elements with a class attribute */
+ul[class],
+ol[class] {
+    list-style: none;
+}
+
+/* Set core root defaults */
+html:focus-within {
+    scroll-behavior: smooth;
+}
+
+/* Set core body defaults */
+body {
+    min-height: 100vh;
+    text-rendering: optimizeSpeed;
+    line-height: 1.5;
+}
+
+/* A elements that don't have a class get default styles */
+a:not([class]) {
+    text-decoration-skip-ink: auto;
+}
+
+/* Make images easier to work with */
+img,
+picture {
+    max-width: 100%;
+    display: block;
+}
+
+/* Inherit fonts for inputs and buttons */
+input,
+button,
+textarea,
+select {
+    font: inherit;
+}
+
+/* Blur images when they have no alt attribute */
+img:not([alt]) {
+    border: 1px solid hsl(0, 100%, 50%);
+}
+
+/* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
+@media (prefers-reduced-motion: reduce) {
+    html:focus-within {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* ************************* */
+/*         Variables         */
+/* ************************* */
+
+:root {
+    /* Full Slider Bar */
+    --clr-soft-cyan: hsl(174, 77%, 80%);
+    /* Slider Backround */
+    --clr-cyan: hsl(174, 86%, 45%);
+    /* Discount Background */
+    --clr-graylish-red: hsl(14, 92%, 95%);
+    /* Discount Text */
+    --clr-red: hsl(15, 100%, 70%);
+    /* CTA Text */
+    --clr-blue: hsl(226, 100%, 87%);
+
+    /* Pricing Component Background */
+    --clr-neutral-000: hsl(0, 0%, 100%);
+    /* Main Background */
+    --clr-neutral-100: hsl(230, 100%, 99%);
+    /* Empty Slider Bar */
+    --clr-neutral-200: hsl(224, 65%, 95%);
+    /* Toggle Background */
+    --clr-neutral-400: hsl(223, 50%, 87%);
+    /* Text */
+    --clr-neutral-600: hsl(225, 20%, 60%);
+    /* Text & CTA Background */
+    --clr-neutral-900: hsl(227, 35%, 25%);
+
+    --ff: 'Manrope', sans-serif;
+    --base-size: 15px;
+
+    /* fluid typography */
+    /* https://fluid-typography.netlify.app/ */
+    /* https://fluidtypography.com/ */
+
+    /* minor third */
+    /* 5:6 <-> 1.2 */
+    --scale-100: calc(var(--base-size)*0.579);
+    --scale-200: calc(var(--base-size)*0.694);
+    --scale-300: calc(var(--base-size)*0.833);
+    --scale-400: var(--base-size);
+    --scale-500: calc(var(--base-size)*1.2);
+    --scale-600: calc(var(--base-size)*1.44);
+    --scale-700: calc(var(--base-size)*1.728);
+    --scale-800: calc(var(--base-size)*2.074);
+    --scale-900: calc(var(--base-size)*2.488);
+
+    --br-sm: 36em;
+    --br-md: 48em;
+    --br-lg: 62em;
+}
+
+/* ************************* */
+/*       General style       */
+/* ************************* */
+
+body {
+    font-family: var(--ff);
+    font-size: var(--scale-400);
+    font-weight: 600;
+    background-image: url('images/bg-pattern.svg');
+    background-size: auto;
+    background-repeat: no-repeat;
+    background-color: var(--clr-neutral-100);
+    color: var(--clr-neutral-600);
+
+    display: flex;
+    gap: 2rem;
+    flex-direction: column;
+    justify-content: center;
+}
+
+button {
+    border: none;
+}
+
+ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+/********** Range Input Styles **********/
+/*Range Reset*/
+input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    width: 100%;
+}
+
+/***** Chrome, Safari, Opera and Edge Chromium styles *****/
+/* slider track */
+input[type="range"]::-webkit-slider-runnable-track {
+    background: linear-gradient(to right, var(--clr-soft-cyan) var(--p, 50%), var(--clr-neutral-200) var(--p, 50%));
+    border-radius: 0.5rem;
+    height: 0.5rem;
+}
+
+/* slider thumb */
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    /* Override default look */
+    appearance: none;
+    /* Centers thumb on the track */
+    margin-top: -20px;
+
+    /*custom styles*/
+    background: url('images/icon-slider.svg') no-repeat center;
+    background-color: var(--clr-cyan);
+    height: 3rem;
+    width: 3rem;
+    border-radius: 50%;
+    box-shadow: 0 10px 20px 9px var(--clr-soft-cyan);
+}
+
+input[type="range"]:focus::-webkit-slider-thumb {
+    background-color: var(--clr-cyan);
+}
+
+/******** Firefox styles ********/
+/* slider progress */
+input[type="range"]::-moz-range-progress {
+    background-color: var(--clr-soft-cyan);
+    border-radius: 0.5rem;
+    height: 0.5rem;
+}
+
+/* slider track */
+input[type="range"]::-moz-range-track {
+    background-color: var(--clr-neutral-200);
+    border-radius: 0.5rem;
+    height: 0.5rem;
+}
+
+/* slider thumb */
+input[type="range"]::-moz-range-thumb {
+    /*Removes extra border that FF applies*/
+    border: none;
+    /*Removes default border-radius that FF applies*/
+    border-radius: 0;
+
+    /*custom styles*/
+    background: url('images/icon-slider.svg') no-repeat center;
+    background-color: var(--clr-cyan);
+    height: 3rem;
+    width: 3rem;
+    border-radius: 50%;
+    box-shadow: 0 10px 20px 9px var(--clr-soft-cyan);
+}
+
+input[type="range"]:focus::-moz-range-thumb {
+    background-color: var(--clr-cyan);
+}
+/* Primary Input is a fine pointer device such as a mouse or stylus */
+@media (pointer:fine) {
+    input[type="range"] {
+        cursor: pointer;
+    }
+
+    input[type="range"]:active {
+        cursor: grabbing;
+    }
+
+    input[type="range"]::-webkit-slider-thumb:hover {
+        background-color: hsl(174, 77%, 70%);
+    }
+
+    input[type="range"]::-webkit-slider-thumb:active {
+        background-color: hsl(174, 77%, 40%);
+    }
+
+    input[type="range"]::-moz-range-thumb:hover {
+        background-color: hsl(174, 77%, 70%);
+    }
+
+    input[type="range"]::-moz-range-thumb:active {
+        background-color: hsl(174, 77%, 40%);
+    }
+}
+
+/* ---------------------------------------------------- */
+
+/* ************************* */
+/*        Composition        */
+/* ************************* */
+
+.center {
+    box-sizing: content-box;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 70ch;
+}
+
+.gutters-m {
+    padding-inline: 1rem;
+}
+
+/* ---------------------------------------------------- */
+
+.column {
+    display: flex;
+    flex-direction: column;
+}
+
+.column:only-child {
+    block-size: 100%;
+}
+
+/* ---------------------------------------------------- */
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+
+    --flex-grow: 0;
+    --break: 0;
+}
+
+.row>* {
+    /* ↓ Disallow children to grow */
+    flex-grow: var(--flex-grow, 0);
+    /* ↓ Switch the layout at the --break */
+    flex-basis: calc((var(--break) - 100%) * 999);
+}
+
+/* ************************* */
+/*          Blocks           */
+/* ************************* */
+
+.cta {
+    background-color: var(--clr-neutral-900);
+    border-radius: 3rem;
+    color: var(--clr-blue);
+    padding-block: 0.8rem;
+    padding-inline: 3rem;
+
+    transition: color 0.2s ease-in;
+}
+
+/* Primary Input is a fine pointer device such as a mouse or stylus */
+@media (pointer:fine) {
+    .cta {
+        cursor: pointer;
+    }
+
+    .cta:hover,
+    .cta:focus {
+        color: var(--clr-neutral-000);
+    }
+}
+
+/* ---------------------------------------------------- */
+
+.price[data-visible="false"] {
+    display: none;
+}
+
+/* ---------------------------------------------------- */
+
+.discount {
+    font-size: var(--scale-300);
+    font-weight: 800;
+    background-color: var(--clr-graylish-red);
+    color: var(--clr-red);
+    border-radius: 3rem;
+    padding-inline: 0.5rem;
+    padding-block: 0.2rem;
+}
+
+/* ---------------------------------------------------- */
+
+.toggle {
+    position: relative;
+    display: inline-block;
+
+    width: 48px;
+    height: 25px;
+}
+
+/* Hide default HTML checkbox */
+.toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    background-color: var(--clr-neutral-400);
+    border-radius: 3rem;
+
+    -webkit-transition: 0.2s;
+    transition: 0.2s;
+}
+
+.toggle-background:before {
+    content: "";
+
+    position: absolute;
+    left: 4px;
+    bottom: 4px;
+
+    /* toggle thumb */
+    height: 17px;
+    width: 17px;
+    border-radius: 50%;
+    background-color: var(--clr-neutral-000);
+
+    -webkit-transition: 0.2s;
+    transition: 0.2s;
+}
+
+input:checked+.toggle-background {
+    background-color: var(--clr-cyan);
+}
+
+input:checked+.toggle-background:before {
+    -webkit-transform: translateX(23px);
+    -ms-transform: translateX(23px);
+    transform: translateX(23px);
+}
+
+/* Primary Input is a fine pointer device such as a mouse or stylus */
+@media (pointer:fine) {
+    .toggle-background {
+        cursor: pointer;
+    }
+
+    .toggle-background:hover {
+        background-color: var(--clr-soft-cyan);
+    }
+
+    input:focus-visible+.toggle-background {
+        box-shadow: 0 0 0 2px black;
+    }
+
+    @supports (-moz-appearance:none) {
+        input:focus-visible+.toggle-background {
+            box-shadow: 0 0 0 2px rgb(17, 97, 247);
+        }
+    }
+}
+
+/* ************************* */
+/*         Utilities         */
+/* ************************* */
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+.absolute {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+}
+
+.relative {
+    position: relative;
+}
+
+.pad-b-l {
+    padding-block: calc(2rem + 1.5vw);
+}
+
+.pad-b-xl {
+    padding-block: 5rem;
+}
+
+.pad-i-m {
+    padding-inline: calc(1rem + 1.5vw);
+}
+
+.with-border-radius {
+    border-radius: 0.5rem;
+}
+
+.border-top {
+    border-top: 1px solid var(--clr-neutral-400);
+}
+
+.gap-sm {
+    gap: 0.8rem;
+}
+
+.gap-m {
+    gap: 1rem;
+}
+
+.gap-l {
+    gap: 2rem;
+    gap: calc(2rem + 1vw);
+}
+
+.main-axis-center {
+    justify-content: center;
+}
+
+.main-axis-space-between {
+    justify-content: space-between;
+}
+
+.cross-axis-center {
+    align-items: center;
+}
+
+.center-text {
+    text-align: center;
+}
+
+.uppercase {
+    text-transform: uppercase;
+}
+
+.letter-spacing {
+    letter-spacing: 0.1em;
+}
+
+.shadow {
+    box-shadow: 0 10px 30px var(--clr-neutral-400);
+}
+
+.fw-semibold {
+    font-weight: 600;
+}
+
+.fw-extrabold {
+    font-weight: 800;
+}
+
+.fs-300 {
+    font-size: var(--scale-300);
+}
+
+.fs-500 {
+    font-size: var(--scale-500);
+}
+
+.fs-600 {
+    font-size: calc(var(--scale-600) + 0.5vw);
+}
+
+.fs-900 {
+    font-size: var(--scale-900);
+}
+
+.bg-n-000 {
+    background-color: var(--clr-neutral-000);
+}
+
+.bg-p-gr-red {
+    background-color: var(--clr-graylish-red);
+}
+
+.clr-p-red {
+    color: var(--clr-red);
+}
+
+.clr-n-900 {
+    color: var(--clr-neutral-900);
+}
+
+@media (min-width: 36em) {
+    .md\:row {
+        flex-direction: row;
+    }
+
+    .md\:display-none {
+        display: none;
+    }
+
+    .md\:main-axis-space-between {
+        justify-content: space-between;
+    }
+
+    .md\:cross-axis-start {
+        align-items: flex-start;
+    }
+}

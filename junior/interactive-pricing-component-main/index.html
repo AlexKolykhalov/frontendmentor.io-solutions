@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- displays site properly based on user's device -->
+  <meta name="description" content="Interactive pricing component challenge on Frontend Mentor">
+  <meta name="keywords"
+    content="Frontend Mentor, Frontend, Mentor, Interactive component, HTML, CSS, Responsive, Mobile, Desktop, Challenge, Solution, Alex Kolykhalov">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+
+  <title>Frontend Mentor | Interactive pricing component</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+  <script src="main.js" defer></script>
+</head>
+
+<body>
+
+  <main>
+    <div class="center gutters-m center-text">
+      <div class="relative column gap-sm pad-b-xl">
+        <h1 class="fs-600 fw-extrabold clr-n-900">Simple, traffic-based pricing</h1>
+        <p>Sign-up for our 30-day trial.<br class="md:display-none"> No credit card required.</p>
+        <img class="absolute" src="images/pattern-circles.svg" alt="">
+      </div>
+      <div class="column center-text bg-n-000 with-border-radius shadow">
+        <div class="column gap-l pad-b-l pad-i-m">
+          <div class="row main-axis-center md:main-axis-space-between cross-axis-center">
+            <p class="uppercase fw-extrabold letter-spacing"><span class="pageviews">100k</span> Pageviews</p>
+            <div class="price { row gap-sm main-axis-center cross-axis-center }" data-visible="false">
+              <span class="fs-900 fw-extrabold clr-n-900">$16.00</span><span class="fs-500">/ month</span>
+            </div>
+          </div>
+          <label class="sr-only" for="slider_bar">Slider bar</label>
+          <input type="range" id="slider_bar" min="0" max="100" step="25">
+          <div class="price { row gap-sm main-axis-center cross-axis-center }">
+            <span class="fs-900 fw-extrabold clr-n-900">$16.00</span><span class="fs-500">/ month</span>
+          </div>
+          <div class="row gap-sm main-axis-center cross-axis-center">
+            <p class="fs-300">Monthly Billing</p>
+            <label class="toggle" for="monthly_billing">
+              <span class="sr-only">Toggle</span>
+              <input type="checkbox" id="monthly_billing">
+              <span class="toggle-background round"></span>
+            </label>
+            <p class="fs-300">Yearly Billing <span class="discount">-25%</span></p>
+          </div>
+        </div>
+        <div class="column md:row gap-l pad-b-l pad-i-m main-axis-space-between cross-axis-center border-top">
+          <ul class="column gap-sm cross-axis-center md:cross-axis-start">
+            <li>
+              <div class="row gap-sm cross-axis-center">
+                <img src="images/icon-check.svg" alt="" width="10" height="10">
+                Unlimited websites
+              </div>
+            </li>
+            <li>
+              <div class="row gap-sm cross-axis-center">
+                <img src="images/icon-check.svg" alt="" width="10" height="10">
+                100% data ownership
+              </div>
+            </li>
+            <li>
+              <div class="row gap-sm cross-axis-center">
+                <img src="images/icon-check.svg" alt="" width="10" height="10">
+                Email reports
+              </div>
+            </li>
+          </ul>
+          <div class="row">
+            <button class="cta">Start my trial</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="center gutters-m">
+      <div class="row gap-sm main-axis-center">
+        <p>Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>.</p>
+        <p>Coded by <a href="https://github.com/AlexKolykhalov">Alex Ko</a>.</p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>
