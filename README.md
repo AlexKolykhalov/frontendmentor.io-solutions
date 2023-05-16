@@ -29,7 +29,7 @@ Any comments are welcome.
 </details>
 
 <details>
-<summary>Junior [12/25] (Free, Free++)</summary>
+<summary>Junior [13/25] (Free, Free++)</summary>
 
 | No | Challenge | Live demo | Source |
 | :---: | :--- | :---: | :--- |
@@ -45,5 +45,6 @@ Any comments are welcome.
 | 10 | Blogr landing page | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/junior/blogr-landing-page-main/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/junior/blogr-landing-page-main) |
 | 11 | Crowdfunding product page | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/junior/crowdfunding-product-page-main/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/junior/crowdfunding-product-page-main) |
 | 12 | Interactive pricing component | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/junior/interactive-pricing-component-main/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/junior/interactive-pricing-component-main) |
+| 13 | Loopstudios landing page | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/junior/loopstudios-landing-page-main/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/junior/loopstudios-landing-page-main) |
 
 </details>
