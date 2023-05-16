@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- displays site properly based on user's device -->
+  <meta name="description" content="Interactive pricing component challenge on Frontend Mentor">
+  <meta name="keywords"
+    content="Frontend Mentor, Frontend, Mentor, Interactive component, HTML, CSS, Responsive, Mobile, Desktop, Challenge, Solution, Alex Kolykhalov">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+
+  <title>Frontend Mentor | Loopstudios landing page</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alata&family=Josefin+Sans:wght@300&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+  <script src="main.js" defer></script>
+</head>
+
+<body>
+  <header class="relative">
+    <picture>
+      <source srcset="images/desktop/image-hero.jpg" media="(min-width: 36em)">
+      <img class="header-background-image" src="images/mobile/image-hero.jpg" alt="">
+    </picture>
+    <div class="center gutters-m">
+      <div class="relative row pad-block-m main-axis-space-between cross-axis-center">
+        <a href="#"><img class="logo" src="images/logo.svg" alt="Home link"></a>
+        <nav aria-label="Header">
+          <button class="header-nav-btn" aria-controls="header_nav_list" aria-expanded="false"><span
+              class="sr-only">Toggle</span></button>
+          <ul id="header_nav_list" class="header-nav-list { row break-300px gap-m }" data-visible="false">
+            <li><a class="auto-underscore" href="#">About</a></li>
+            <li><a class="auto-underscore" href="#">Careers</a></li>
+            <li><a class="auto-underscore" href="#">Events</a></li>
+            <li><a class="auto-underscore" href="#">Products</a></li>
+            <li><a class="auto-underscore" href="#">Support</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="hero { with-border pad-m }">
+        <span class="ff-2 fw-light fs-700 fw-light clr-n-000 uppercase line-height">Immersive experiences that
+          deliver</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="center gutters-m pad-block-l">
+      <div class="column gap-xl">
+        <div class="column gap-m relative">
+          <picture>
+            <source srcset="images/desktop/image-interactive.jpg" media="(min-width: 36em)">
+            <img src="images/mobile/image-interactive.jpg" alt="">
+          </picture>
+          <div class="description-section { column gap-m center-text md:left-text pad-m md:pad-top-left }">
+            <h1 class="ff-2 fw-light fs-600 clr-n-900 uppercase line-height">The leader in interactive VR</h1>
+            <p>
+              Founded in 2011, Loopstudios has been producing world-class virtual reality
+              projects for some of the best companies around the globe. Our award-winning
+              creations have transformed businesses through digital experiences that bind
+              to their brand.
+            </p>
+          </div>
+        </div>
+        <div class="column gap-l">
+          <div class="row main-axis-center md:main-axis-space-between cross-axis-center">
+            <h2 class="ff-2 fw-light fs-600 clr-n-900 uppercase line-height">Our creations</h2>
+            <button class="button" data-visible="false">See all</button>
+          </div>
+          <ul class="grid">
+            <li>
+              <a href="#">
+                <div class="relative">
+                  <picture>
+                    <source srcset="images/desktop/image-deep-earth.jpg" media="(min-width: 36em)">
+                    <img src="images/mobile/image-deep-earth.jpg" alt="">
+                  </picture>
+                  <p class="ff-2 fw-light fs-500 clr-n-000 uppercase line-height">Deep<br>earth</p>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <div class="relative">
+                  <picture>
+                    <source srcset="images/desktop/image-night-arcade.jpg" media="(min-width: 36em)">
+                    <img src="images/mobile/image-night-arcade.jpg" alt="">
+                  </picture>
+                  <p class="ff-2 fw-light fs-500 clr-n-000 uppercase line-height">Night<br>arcade</p>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <div class="relative">
+                  <picture>
+                    <source srcset="images/desktop/image-soccer-team.jpg" media="(min-width: 36em)">
+                    <img src="images/mobile/image-soccer-team.jpg" alt="">
+                  </picture>
+                  <p class="ff-2 fw-light fs-500 clr-n-000 uppercase line-height">Soccer<br>team VR</p>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <div class="relative">
+                  <picture>
+                    <source srcset="images/desktop/image-grid.jpg" media="(min-width: 36em)">
+                    <img src="images/mobile/image-grid.jpg" alt="">
+                  </picture>
+                  <p class="ff-2 fw-light fs-500 clr-n-000 uppercase line-height">The<br>grid</p>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <div class="relative">
+                  <picture>
+                    <source srcset="images/desktop/image-from-above.jpg" media="(min-width: 36em)">
+                    <img src="images/mobile/image-from-above.jpg" alt="">
+                  </picture>
+                  <p class="ff-2 fw-light fs-500 clr-n-000 uppercase line-height">From up<br>above VR</p>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <div class="relative">
+                  <picture>
+                    <source srcset="images/desktop/image-pocket-borealis.jpg" media="(min-width: 36em)">
+                    <img src="images/mobile/image-pocket-borealis.jpg" alt="">
+                  </picture>
+                  <p class="ff-2 fw-light fs-500 clr-n-000 uppercase line-height">Pocket<br>borealis</p>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <div class="relative">
+                  <picture>
+                    <source srcset="images/desktop/image-curiosity.jpg" media="(min-width: 36em)">
+                    <img src="images/mobile/image-curiosity.jpg" alt="">
+                  </picture>
+                  <p class="ff-2 fw-light fs-500 clr-n-000 uppercase line-height">The<br>curiosity</p>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <div class="relative">
+                  <picture>
+                    <source srcset="images/desktop/image-fisheye.jpg" media="(min-width: 36em)">
+                    <img src="images/mobile/image-fisheye.jpg" alt="">
+                  </picture>
+                  <p class="ff-2 fw-light fs-500 clr-n-000 uppercase line-height">Make it<br>fisheye</p>
+                </div>
+              </a>
+            </li>
+          </ul>
+          <button class="button { cross-axis-center-self }">See all</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="center gutters-m pad-block-l">
+      <div class="row break-770px gap-l main-axis-center md:main-axis-space-between">
+        <div class="column gap-l md:gap-m cross-axis-center md:cross-axis-start">
+          <img class="logo" src="images/logo.svg" alt="">
+          <nav aria-label="Footer">
+            <ul class="row break-770px md:break-300px gap-m center-text">
+              <li><a class="auto-underscore clr-n-000" href="#">About</a></li>
+              <li><a class="auto-underscore clr-n-000" href="#">Careers</a></li>
+              <li><a class="auto-underscore clr-n-000" href="#">Events</a></li>
+              <li><a class="auto-underscore clr-n-000" href="#">Products</a></li>
+              <li><a class="auto-underscore clr-n-000" href="#">Support</a></li>
+            </ul>
+          </nav>
+        </div>
+        <div class="column gap-m cross-axis-center md:cross-axis-end">
+          <ul class="row gap-m" aria-label="Social links">
+            <li>
+              <a class="auto-underscore" href="#">
+                <img src="images/icon-facebook.svg" alt="Facebook">
+              </a>
+            </li>
+            <li>
+              <a class="auto-underscore" href="#">
+                <img src="images/icon-twitter.svg" alt="Twitter">
+              </a>
+            </li>
+            <li>
+              <a class="auto-underscore" href="#">
+                <img src="images/icon-pinterest.svg" alt="Pinterest">
+              </a>
+            </li>
+            <li>
+              <a class="auto-underscore" href="#">
+                <img src="images/icon-instagram.svg" alt="Instagram">
+              </a>
+            </li>
+          </ul>
+          <small class="fs-400">© 2021 Loopstudios. All rights reserved.</small>
+        </div>
+      </div>
+      <div class="column gap-sm center-text pad-block-m">
+        <p>Challenge by <a class="auto-underscore clr-n-000" href="https://www.frontendmentor.io?ref=challenge"
+            target="_blank">Frontend Mentor</a>.</p>
+        <p>Coded by <a class="auto-underscore clr-n-000" href="https://github.com/AlexKolykhalov">Alex Ko</a>.</p>
+      </div>
+    </div>
+  </footer>
+</body>
+
+</html>
