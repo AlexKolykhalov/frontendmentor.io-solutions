@@ -29,7 +29,7 @@ Any comments are welcome.
 </details>
 
 <details>
-<summary>Junior [14/25] (Free, Free++)</summary>
+<summary>Junior [15/25] (Free, Free++)</summary>
 
 | No | Challenge | Live demo | Source |
 | :---: | :--- | :---: | :--- |
@@ -47,5 +47,5 @@ Any comments are welcome.
 | 12 | Interactive pricing component | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/junior/interactive-pricing-component-main/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/junior/interactive-pricing-component-main) |
 | 13 | Loopstudios landing page | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/junior/loopstudios-landing-page-main/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/junior/loopstudios-landing-page-main) |
 | 14 | Testimonials grid section | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/junior/testimonials-grid-section-main/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/junior/testimonials-grid-section-main) |
-
+| 15 | Fylo data storage component | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/junior/fylo-data-storage-component-master/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/junior/fylo-data-storage-component-master) |
 </details>
