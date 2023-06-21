@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- displays site properly based on user's device -->
+
+  <meta name="description" content="Fylo data storage component challenge on Frontend Mentor">
+  <meta name="keywords"
+    content="Frontend Mentor, Frontend, Mentor, HTML, CSS, Responsive, Mobile, Desktop, Challenge, Solution, Alex Kolykhalov">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+
+  <title>Frontend Mentor | Fylo data storage component</title>
+
+  <!-- google fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+  <script src="main.js" defer></script>
+</head>
+
+<body>
+  <main>
+    <div class="center gutters-m">
+      <div class="cover">
+        <div class="row break-m gap-m cross-axis-end">
+          <div class="column gap-l border-radius border-top-right-radius pad-l clr-n-200 bg-n-700">
+            <img src="images/logo.svg" width="150" alt="company's logo">
+            <ul class="row gap-m">
+              <li class="column main-axis-center bg-n-900 pad-m border-radius">
+                <img src="images/icon-document.svg" alt="documents">
+              </li>
+              <li class="column main-axis-center bg-n-900 pad-m border-radius">
+                <img src="images/icon-folder.svg" alt="folders">
+              </li>
+              <li class="column main-axis-center bg-n-900 pad-m border-radius">
+                <img src="images/icon-upload.svg" alt="uploads">
+              </li>
+            </ul>
+          </div>
+          <div class="flex-2 | relative column gap-m sm:center-text sm:pad-bottom border-radius pad-l clr-n-200 bg-n-700">
+            <p>You’ve used <span class="used-gb { fw-bold }">815 GB</span> of your storage</p>
+            <div class="badge">
+              <output class="fs-900 fw-bold clr-n-900">185</output> 
+              <span class="uppercase fw-bold clr-n-400">GB Left</span>
+            </div>
+            <div class="row">
+              <label for="slider_bar"><span class="sr-only">Gigabytes</span></label>
+              <input type="range" id="slider_bar" max="1000">
+            </div>
+            <div class="row main-axis-space-between">
+              <p class="fw-bold clr-n-200">0 GB</p>
+              <p class="fw-bold clr-n-200">1000 GB</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="center gutters-m center-text">
+    <p class="clr-n-200">Challenge by <a class="fw-bold clr-n-400" href="https://www.frontendmentor.io?ref=challenge"
+        target="_blank">Frontend Mentor</a>.</p>
+    <p class="clr-n-200">Coded by <a class="fw-bold clr-n-400" href="https://github.com/AlexKolykhalov">Alex Ko</a>.</p>
+  </footer>
+</body>
+
+</html>
