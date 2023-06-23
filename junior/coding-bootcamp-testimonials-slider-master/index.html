@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- displays site properly based on user's device -->
+
+  <meta name="description" content="Coding bootcamp testimonials slider challenge on Frontend Mentor">
+  <meta name="keywords"
+    content="Frontend Mentor, Frontend, Mentor, HTML, CSS, Responsive, Carousel, Slider, Mobile, Desktop, Challenge, Solution, Alex Kolykhalov">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+
+  <title>Frontend Mentor | Coding Bootcamp Testimonials Slider</title>
+
+  <!-- google fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+  <script src="main.js" defer></script>
+</head>
+
+<body>
+  <main>
+    <h1 class="sr-only">Coding bootcamp testimonials</h1>
+    <div class="center gutters-m">
+      <div class="cover">
+        <article>
+          <h2 class="sr-only">Testimonial</h2>
+          <div class="relative pad-top row gap-l sm:row-reverse m:main-axis-center cross-axis-center">
+            <div class="slider { relative }">
+              <img class="slider-photo" src="images/image-tanya.jpg" alt="Tanya Sinclair's photo">
+              <div class="slider-controller { row }">
+                <button class="button-left bg-p-000"><span class="sr-only">Left</span></button>
+                <button class="button-right bg-p-000"><span class="sr-only">Right</span></button>
+              </div>
+            </div>
+            <div class="testimonial-block { column gap-m m:cross-axis-center m:center-text }">
+              <p class="testimonial-text { relative fw-light clr-p-900 }"></p>
+              <div class="testimonial-author { row gap-sm m:break m:main-axis-center line-height-normal }">
+                <p class="fs-300 fw-bold clr-p-900"></p>
+                <p class="fs-300 fw-medium clr-p-200"></p>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </main>
+
+  <footer class="center gutters-m center-text pad-sm">
+    <p class="fs-200">Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend
+        Mentor</a>.</p>
+    <p class="fs-200">Coded by <a href="https://github.com/AlexKolykhalov">Alex Ko</a>.</p>
+  </footer>
+</body>
+
+</html>
