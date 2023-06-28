@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- displays site properly based on user's device -->
+
+  <meta name="description" content="Social media dashboard with theme switcher challenge on Frontend Mentor">
+  <meta name="keywords"
+    content="Frontend Mentor, Frontend, Mentor, HTML, CSS, Responsive, Dashboard, Dark mode, Mobile, Desktop, Challenge, Solution, Alex Kolykhalov">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+
+  <title>Frontend Mentor | Media dashboard</title>
+
+  <!-- google fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+  <script src="main.js" defer></script>
+</head>
+
+<body data-theme="light">
+
+  <main>
+    <div class="center gutters-m">
+      <div class="column gap-l">
+        <div class="row break-m cross-axis-center">
+          <div class="pad-block-m m:border-bottom">
+            <h1 class="fs-600 clr-n-900">Social Media Dashboard</h1>
+            <p class="fw-bold clr-n-400">Total Followers: 23,004</p>
+          </div>
+          <div class="m:flex-1 | row gap-m main-axis-space-between pad-block-m">
+            <p class="fw-bold clr-n-400">Dark Mode</p>
+            <label class="toggle" for="toggle_button">
+              <span class="sr-only">Toggle dark mode</span>
+              <input type="checkbox" id="toggle_button">
+              <span class="toggle-background"></span>
+            </label>
+          </div>
+        </div>
+        <article>
+          <h2 class="sr-only">For all time</h2>
+          <div class="totals { grid grid-gap-m }">
+            <template id="totals">
+              <section class="border-top">
+                <div class="column gap-m center-text">
+                  <div class="top { row gap-sm main-axis-center cross-axis-center }">
+                    <img src="" alt="">
+                    <p class="fs-300 fw-bold clr-n-400"></p>
+                  </div>
+                  <div class="middle">
+                    <p class="line-height-normal fs-1000 fw-bold clr-n-900"></p>
+                    <p class="uppercase letter-spacing clr-n-400"></p>
+                  </div>
+                  <div class="bottom { row gap-sm main-axis-center cross-axis-center }">
+                    <img src="" width="8" height="5" alt="">
+                    <p class="line-height-normal fs-300 fw-bold"></p>
+                  </div>
+                </div>
+              </section>
+            </template>
+          </div>
+        </article>
+        <article>
+          <h2 class="pad-block-m fs-600 clr-n-600">Overview - Today</h2>
+          <div class="today { grid grid-gap-sm md:grid-4-columns }">
+            <template id="today">
+              <section>
+                <div class="column gap-m">
+                  <div class="top-row { row main-axis-space-between }">
+                    <p class="fw-bold clr-n-400"></p>
+                    <img src="" alt="">
+                  </div>
+                  <div class="bottom-row { row main-axis-space-between cross-axis-end }">
+                    <p class="line-height-normal fs-800 fw-bold clr-n-900"></p>
+                    <div class="row gap-sm cross-axis-center">
+                      <img src="" width="8" height="5" alt="">
+                      <p class="fs-300 fw-bold"></p>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            </template>
+          </div>
+        </article>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="center gutters-m center-text pad-m">
+      <p class="fw-bold clr-n-900">Challenge by <a href="https://www.frontendmentor.io?ref=challenge"
+          target="_blank">Frontend Mentor</a>.</p>
+      <p class="fw-bold clr-n-900">Coded by <a href="https://github.com/AlexKolykhalov">Alex Ko</a>.</p>
+    </div>
+  </footer>
+</body>
+
+</html>
