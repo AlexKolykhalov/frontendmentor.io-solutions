@@ -29,7 +29,7 @@ Any comments are welcome.
 </details>
 
 <details>
-<summary>Junior [16/25] (Free, Free++)</summary>
+<summary>Junior [17/25] (Free, Free++)</summary>
 
 | No | Challenge | Live demo | Source |
 | :---: | :--- | :---: | :--- |
@@ -49,4 +49,5 @@ Any comments are welcome.
 | 14 | Testimonials grid section | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/junior/testimonials-grid-section-main/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/junior/testimonials-grid-section-main) |
 | 15 | Fylo data storage component | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/junior/fylo-data-storage-component-master/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/junior/fylo-data-storage-component-master) |
 | 16 | Coding bootcamp testimonials slider | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/junior/coding-bootcamp-testimonials-slider-master/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/junior/coding-bootcamp-testimonials-slider-master) |
+| 17 | Social media dashboard with theme switcher | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/junior/social-media-dashboard-with-theme-switcher-master/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/junior/social-media-dashboard-with-theme-switcher-master) |
 </details>
