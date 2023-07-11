@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- displays site properly based on user's device -->
+
+  <meta name="description" content="Pricing component with toggle challenge on Frontend Mentor">
+  <meta name="keywords"
+    content="Frontend Mentor, Frontend, Mentor, HTML, CSS, Responsive, Toggle button, Mobile, Desktop, Challenge, Solution, Alex Kolykhalov">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+
+  <title>Frontend Mentor | Pricing component with toggle</title>
+
+  <!-- google fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+  <script src="main.js" defer></script>
+</head>
+
+<body>
+  <main>
+    <div class="center gutters-m">
+      <div class="cover">
+        <div class="column gap-l m:mar-block">
+          <div class="column cross-axis-center gap-m center-text">
+            <h1 class="clr-n-500">Our Pricing</h1>
+            <div class="row gap-m cross-axis-center">
+              <p class="clr-n-400">Annually</p>
+              <label class="toggle" for="monthly_billing">
+                <span class="sr-only">Toggle</span>
+                <input type="checkbox" id="monthly_billing">
+                <span class="toggle-background"></span>
+              </label>
+              <p class="clr-n-400">Monthly</p>
+            </div>
+          </div>
+          <div class="row gap-m lg:gap-m break-m main-axis-center cross-axis-center">
+            <section>
+              <div class="card { column center-text }" data-theme="default">
+                <h2>Basic</h2>
+                <p class="price { row main-axis-center cross-axis-center }" data-visible="false">
+                  <span>&dollar;</span>19.99
+                </p>
+                <p class="price { row main-axis-center cross-axis-center }"><span>&dollar;</span>199.99</p>
+                <div class="border mar-block">
+                  <p class="pad-block">500 GB Storage</p>
+                  <p class="pad-block border">2 Users Allowed</p>
+                  <p class="pad-block">Send up to 3 GB</p>
+                </div>
+                <a href="#">Learn More</a>
+              </div>
+            </section>
+            <section>
+              <div class="card { column center-text }" data-theme="main">
+                <h2>Professional</h2>
+                <p class="price { row main-axis-center cross-axis-center }" data-visible="false">
+                  <span>&dollar;</span>24.99
+                </p>
+                <p class="price { row main-axis-center cross-axis-center }">
+                  <span>&dollar;</span>249.99
+                </p>
+                <div class="border mar-block">
+                  <p class="pad-block">1 TB Storage</p>
+                  <p class="pad-block border">5 Users Allowed</p>
+                  <p class="pad-block">Send up to 10 GB</p>
+                </div>
+                <a href="#">Learn More</a>
+              </div>
+            </section>
+            <section>
+              <div class="card { column center-text }" data-theme="default">
+                <h2>Master</h2>
+                <p class="price { row main-axis-center cross-axis-center }" data-visible="false">
+                  <span>&dollar;</span>39.99
+                </p>
+                <p class="price { row main-axis-center cross-axis-center }"><span>&dollar;</span>399.99</p>
+                <div class="border mar-block">
+                  <p class="pad-block">2 TB Storage</p>
+                  <p class="pad-block border">10 Users Allowed</p>
+                  <p class="pad-block">Send up to 20 GB</p>
+                </div>
+                <a href="#">Learn More</a>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="center gutters-m center-text pad-block">
+      <p>Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. </p>
+      <p>Coded by <a href="https://github.com/AlexKolykhalov">Alex Ko</a>.</p>
+    </div>
+  </footer>
+</body>
+
+</html>
