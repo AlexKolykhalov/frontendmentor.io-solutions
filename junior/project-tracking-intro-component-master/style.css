@@ -483,3 +483,7 @@ ul {
 .clr-n-900 {
   color: var(--clr-neutral-900);
 }
+
+.clr-p-400 {
+  color: var(--clr-primary-400);
+}
