@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- displays site properly based on user's device -->
+
+  <meta name="description" content="Project tracking intro component challenge on Frontend Mentor">
+  <meta name="keywords"
+    content="Frontend Mentor, Frontend, Mentor, HTML, CSS, Responsive, Mobile, Desktop, Challenge, Solution, Alex Kolykhalov">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+
+  <title>Frontend Mentor | Project tracking intro component</title>
+
+  <!-- google fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow&family=Barlow+Condensed:wght@400;700&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+  <script src="main.js" defer></script>
+</head>
+
+<body>
+  <header>
+    <div class="center gutters-m">
+      <div class="relative row main-axis-space-between cross-axis-center pad-block">
+        <a href="#"><img class="logo-image" src="images/logo.svg" width="25" height="25" alt="Home"></a>
+        <nav aria-label="Header">
+          <button class="header-nav-btn" aria-controls="header_nav_list" aria-expanded="false"><span
+              class="sr-only">Toggle</span></button>
+          <ul id="header_nav_list" class="header-nav-list { row m:break gap-m cross-axis-center center-text }">
+            <li><a href="#">Product</a></li>
+            <li><a href="#">Features</a></li>
+            <li><a href="#">Pricing</a></li>
+            <li><a href="#">Login</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="center gutters-m overflow-hidden">
+      <div class="cover">
+        <img class="hero-image" src="images/illustration-devices.svg" alt="Mobile & desktop">
+        <div class="box-m { column gap-sm split-after-3 }">
+          <h1 class="uppercase ff-2 fs-400">
+            <span class="badge">New</span>
+            <span class="letter-spacing-m fw-regular fs-300 clr-n-400">Monograph Dashboard</span>
+          </h1>
+          <p class="uppercase line-height ff-2 fw-bold fs-800 clr-n-900">Powerful insights into your team</p>
+          <p class="box-sm { clr-n-900 }">Project planning and time tracking for agile teams</p>
+          <div class="uppercase ff-2 fs-300 pad-top">
+            <a class="cta" href="#">Schedule a demo</a>
+            <span class="word-spacing letter-spacing-sm fw-regular clr-n-400">to see a preview</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="center gutters-m center-text pad-m">
+      <p class="clr-n-900">Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend
+          Mentor</a>.</p>
+      <p class="clr-n-900">Coded by <a href="https://github.com/AlexKolykhalov">Alex Ko</a>.</p>
+    </div>
+  </footer>
+</body>
+
+</html>
