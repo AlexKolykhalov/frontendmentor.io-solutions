@@ -29,7 +29,7 @@ Any comments are welcome.
 </details>
 
 <details>
-<summary>Junior [21/25] (Free, Free++)</summary>
+<summary>Junior [22/25] (Free, Free++)</summary>
 
 | No | Challenge | Live demo | Source |
 | :---: | :--- | :---: | :--- |
@@ -54,4 +54,5 @@ Any comments are welcome.
 | 19 | Pricing component with toggle | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/junior/pricing-component-with-toggle-master/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/junior/pricing-component-with-toggle-master) |
 | 20 | Project tracking intro component | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/junior/project-tracking-intro-component-master/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/junior/project-tracking-intro-component-master) |
 | 21 | Clipboard landing page | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/junior/clipboard-landing-page-master/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/junior/clipboard-landing-page-master) |
+| 22 | Huddle landing page with alternating feature blocks | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/junior/huddle-landing-page-with-alternating-feature-blocks-master/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/junior/huddle-landing-page-with-alternating-feature-blocks-master) |
 </details>
