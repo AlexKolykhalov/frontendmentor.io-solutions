@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- displays site properly based on user's device -->
+
+  <meta name="description" content="Clipboard landing page challenge on Frontend Mentor">
+  <meta name="keywords"
+    content="Frontend Mentor, Frontend, Mentor, HTML, CSS, Responsive, Mobile, Desktop, Landing page, Dark theme, Challenge, Alex Kolykhalov">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+
+  <title>Frontend Mentor | Fylo landing page with dark theme and features grid</title>
+
+  <!-- google fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Raleway:wght@400;700&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+  <script src="main.js" defer></script>
+</head>
+
+<body>
+  <header>
+    <div class="center gutters-m pad-block-m">
+      <div class="row main-axis-space-between cross-axis-center">
+        <img class="logo-image" src="images/logo.svg" alt="Logo picture">
+        <nav aria-label="Header">
+          <ul class="row gap-d-m">
+            <li><a class="ff-2" href="#" data-title="Features">Features</a></li>
+            <li><a class="ff-2" href="#" data-title="Team">Team</a></li>
+            <li><a class="ff-2" href="#" data-title="Sign In">Sign In</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="box-m center column gap-d-m center-text pad-block-l">
+        <img src="images/illustration-intro.png" alt="Intro illustration">
+        <div class="intro-text-part { column gap-d-m cross-axis-center }">
+          <h1 class="ff-2 fw-bold fs-800">All your files in one secure location, accessible anywhere.</h1>
+          <div class="box-sm column gap-m cross-axis-center">
+            <p class="fs-d-400">
+              Fylo stores all your most important files in one secure location. Access them wherever
+              you need, share and collaborate with friends family, and co-workers.
+            </p>
+            <a class="cta" data-theme="intro" href="#">Get Started</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="center gutters-m">
+      <section>
+        <h2 class="sr-only">Features</h2>
+        <ul class="box-l center grid cross-axis-end center-text">
+          <li>
+            <div class="column gap-m main-axis-end cross-axis-center">
+              <img class="features-icon" src="images/icon-access-anywhere.svg" alt="">
+              <div class="column gap-sm">
+                <h3 class="ff-2 fw-bold fs-500">Access your files, anywhere</h3>
+                <p>
+                  The ability to use a smartphone, tablet, or computer to access your account means your
+                  files follow you everywhere.
+                </p>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="column gap-m cross-axis-center">
+              <img class="features-icon" src="images/icon-security.svg" alt="">
+              <div class="column gap-sm">
+                <h3 class="ff-2 fw-bold fs-500">Security you can trust</h3>
+                <p>
+                  2-factor authentication and user-controlled encryption are just a couple of the security
+                  features we allow to help secure your files.
+                </p>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="column gap-m cross-axis-center">
+              <img class="features-icon" src="images/icon-collaboration.svg" alt="">
+              <div class="column gap-sm">
+                <h3 class="ff-2 fw-bold fs-500">Real-time collaboration</h3>
+                <p>
+                  Securely share files and folders with friends, family and colleagues for live collaboration.
+                  No email attachments required.
+                </p>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="column gap-m cross-axis-center">
+              <img class="features-icon" src="images/icon-any-file.svg" alt="">
+              <div class="column gap-sm">
+                <h3 class="ff-2 fw-bold fs-500">Store any type of file</h3>
+                <p>
+                  Whether you're sharing holidays photos or work documents, Fylo has you covered allowing for all
+                  file types to be securely stored and shared.
+                </p>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </section>
+      <section>
+        <div class="row break-m gap-l cross-axis-center pad-block-l">
+          <img src="images/illustration-stay-productive.png" alt="Stay productive illustration">
+          <div class="column gap-m cross-axis-start">
+            <h2 class="ff-2 fw-bold fs-700">Stay productive, wherever you are</h2>
+            <p>
+              Never let location be an issue when accessing your files. Fylo has you covered for all of your file
+              storage needs.
+            </p>
+            <p>
+              Securely share files and folders with friends, family and colleagues for live collaboration. No email
+              attachments required.
+            </p>
+            <a class="cta-link" href="#">
+              <div class="row gap-sm cross-axis-center">
+                See how Fylo works
+                <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink">
+                  <defs>
+                    <circle id="b" cx="6" cy="6" r="6" />
+                    <filter x="-25%" y="-25%" width="150%" height="150%" filterUnits="objectBoundingBox" id="a">
+                      <feOffset in="SourceAlpha" result="shadowOffsetOuter1" />
+                      <feGaussianBlur stdDeviation="1" in="shadowOffsetOuter1" result="shadowBlurOuter1" />
+                      <feColorMatrix
+                        values="0 0 0 0 0.384313725 0 0 0 0 0.878431373 0 0 0 0 0.850980392 0 0 0 0.811141304 0"
+                        in="shadowBlurOuter1" />
+                    </filter>
+                  </defs>
+                  <g fill="none" fill-rule="evenodd">
+                    <g transform="translate(2 2)">
+                      <use fill="#000" filter="url(#a)" xlink:href="#b" />
+                      <use fill="currentColor" xlink:href="#b" />
+                    </g>
+                    <path d="M8.582 6l-.363.35 1.452 1.4H5.333v.5h4.338L8.22 9.65l.363.35 2.074-2z" fill="#1B2330" />
+                  </g>
+                </svg>
+              </div>
+            </a>
+          </div>
+        </div>
+      </section>
+      <article>
+        <h2 class="sr-only">Testimonials</h2>
+        <div class="row break-m gap-d-m pad-block-m pad-inline-m">
+          <article>
+            <h3 class="sr-only">Satish Patel's testimonial </h3>
+            <div class="testimonial { relative column gap-m }">
+              <p class="fs-d-300">
+                Fylo has improved our team productivity by an order of magnitude. Since making the switch our team has
+                become a well-oiled collaboration machine.
+              </p>
+              <div class="row gap-sm">
+                <img src="images/profile-1.jpg" alt="Satish's photo">
+                <div class="column main-axis-center">
+                  <p class="fw-bold">Satish Patel</p>
+                  <p class="fs-300">Founder & CEO, Huddle</p>
+                </div>
+              </div>
+            </div>
+          </article>
+          <article>
+            <h3 class="sr-only">Bruce McKenzie's testimonial </h3>
+            <div class="testimonial { column gap-m }">
+              <p class="fs-d-300">
+                Fylo has improved our team productivity by an order of magnitude. Since making the switch our team has
+                become a well-oiled collaboration machine.
+              </p>
+              <div class="row gap-sm">
+                <img src="images/profile-2.jpg" alt="Bruce's photo">
+                <div class="column main-axis-center">
+                  <p class="fw-bold">Bruce McKenzie</p>
+                  <p class="fs-300">Founder & CEO, Huddle</p>
+                </div>
+              </div>
+            </div>
+          </article>
+          <article>
+            <h3 class="sr-only">Iva Boyd's testimonial </h3>
+            <div class="testimonial { column gap-m }">
+              <p class="fs-d-300">
+                Fylo has improved our team productivity by an order of magnitude. Since making the switch our team has
+                become a well-oiled collaboration machine.
+              </p>
+              <div class="row gap-sm">
+                <img src="images/profile-3.jpg" alt="Iva's photo">
+                <div class="column main-axis-center">
+                  <p class="fw-bold">Iva Boyd</p>
+                  <p class="fs-300">Founder & CEO, Huddle</p>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </article>
+      <form class="email-signup { box-m center column gap-m center-text }">
+        <h2 class="ff-2 fw-bold fs-600">Get early access today</h2>
+        <p>
+          It only takes a minute to sign up and our free starter tier is extremely generous. If you have any
+          questions, our support team would be happy to help you.
+        </p>
+        <div class="row break-m gap-m main-axis-center">
+          <div class="flex-2 relative">
+            <label class="sr-only" for="email">Email</label>
+            <input type="email" id="email" placeholder="email@example.com">
+          </div>
+          <button class="cta" type="button" data-theme="form">Get Started For Free</button>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <footer>
+    <div class="center gutters-m pad-top-l">
+      <div class="column gap-m pad-top-l">
+        <img class="logo-image" src="images/logo.svg" alt="Logo picture">
+        <div class="row break-m gap-d-l">
+          <div class="box-xsm row cross-axis-start no-wrap gap-m">
+            <img class="pad-top-xsm" src="images/icon-location.svg" alt="Location icon">
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+              dolore magna aliqua
+            </p>
+          </div>
+          <div class="column gap-m">
+            <div class="row gap-m cross-axis-center">
+              <img src="images/icon-phone.svg" width="18" height="18" alt="Phone icon">
+              <p>+1-543-123-4567</p>
+            </div>
+            <div class="row gap-m cross-axis-center">
+              <img src="images/icon-email.svg" width="20" height="16" alt="Email icon">
+              <p>example@fylo.com</p>
+            </div>
+          </div>
+          <nav aria-label="Footer">
+            <ul class="footer-nav-list { grid }">
+              <li><a href="#" data-title="About Us">About Us</a></li>
+              <li><a href="#" data-title="Jobs">Jobs</a></li>
+              <li><a href="#" data-title="Press">Press</a></li>
+              <li><a href="#" data-title="Blog">Blog</a></li>
+              <li><a href="#" data-title="Contact Us">Contact Us</a></li>
+              <li><a href="#" data-title="Terms">Terms</a></li>
+              <li><a href="#" data-title="Privacy">Privacy</a></li>
+            </ul>
+          </nav>
+          <ul class="center row gap-m cross-axis-start">
+            <li class="social-media-icon">
+              <a href="#">
+                <span class="sr-only">Facebook</span>
+                <svg class="" fill="currentColor" width="18" height="18" viewBox="0 0 32 32"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path d="M19 6h5v-6h-5c-3.86 0-7 3.14-7 7v3h-4v6h4v16h6v-16h5l1-6h-6v-3c0-0.542 0.458-1 1-1z">
+                  </path>
+                </svg>
+              </a>
+            </li>
+            <li class="social-media-icon">
+              <a href="#">
+                <span class="sr-only">Twitter</span>
+                <svg class="" fill="currentColor" width="18" height="18" viewBox="0 0 32 32"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M32 7.075c-1.175 0.525-2.444 0.875-3.769 1.031 1.356-0.813 2.394-2.1 2.887-3.631-1.269 0.75-2.675 1.3-4.169 1.594-1.2-1.275-2.906-2.069-4.794-2.069-3.625 0-6.563 2.938-6.563 6.563 0 0.512 0.056 1.012 0.169 1.494-5.456-0.275-10.294-2.888-13.531-6.862-0.563 0.969-0.887 2.1-0.887 3.3 0 2.275 1.156 4.287 2.919 5.463-1.075-0.031-2.087-0.331-2.975-0.819 0 0.025 0 0.056 0 0.081 0 3.181 2.263 5.838 5.269 6.437-0.55 0.15-1.131 0.231-1.731 0.231-0.425 0-0.831-0.044-1.237-0.119 0.838 2.606 3.263 4.506 6.131 4.563-2.25 1.762-5.075 2.813-8.156 2.813-0.531 0-1.050-0.031-1.569-0.094 2.913 1.869 6.362 2.95 10.069 2.95 12.075 0 18.681-10.006 18.681-18.681 0-0.287-0.006-0.569-0.019-0.85 1.281-0.919 2.394-2.075 3.275-3.394z">
+                  </path>
+                </svg>
+              </a>
+            </li>
+            <li class="social-media-icon">
+              <a href="#">
+                <span class="sr-only">Instagram</span>
+                <svg class="" fill="currentColor" width="18" height="18" viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z">
+                  </path>
+                </svg>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="center center-text pad-block-m">
+          <p>Challenge by <a class="clr-p-cyan" data-title="Frontend Mentor"
+              href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>.</p>
+          <p>Coded by <a class="clr-p-cyan" data-title="Alex Ko" href="https://github.com/AlexKolykhalov">Alex Ko</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+
+</html>
