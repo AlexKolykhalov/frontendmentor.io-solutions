@@ -29,7 +29,7 @@ Any comments are welcome.
 </details>
 
 <details>
-<summary>Junior [22/25] (Free, Free++)</summary>
+<summary>Junior [23/25] (Free, Free++)</summary>
 
 | No | Challenge | Live demo | Source |
 | :---: | :--- | :---: | :--- |
@@ -55,4 +55,5 @@ Any comments are welcome.
 | 20 | Project tracking intro component | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/junior/project-tracking-intro-component-master/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/junior/project-tracking-intro-component-master) |
 | 21 | Clipboard landing page | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/junior/clipboard-landing-page-master/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/junior/clipboard-landing-page-master) |
 | 22 | Huddle landing page with alternating feature blocks | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/junior/huddle-landing-page-with-alternating-feature-blocks-master/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/junior/huddle-landing-page-with-alternating-feature-blocks-master) |
+| 23 | Fylo dark theme landing page | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/junior/fylo-dark-theme-landing-page-master/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/junior/fylo-dark-theme-landing-page-master) |
 </details>
