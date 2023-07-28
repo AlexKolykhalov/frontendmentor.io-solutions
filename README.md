@@ -29,7 +29,7 @@ Any comments are welcome.
 </details>
 
 <details>
-<summary>Junior [24/25] (Free, Free++)</summary>
+<summary>Junior [25/25] (Free, Free++)</summary>
 
 | No | Challenge | Live demo | Source |
 | :---: | :--- | :---: | :--- |
@@ -57,4 +57,13 @@ Any comments are welcome.
 | 22 | Huddle landing page with alternating feature blocks | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/junior/huddle-landing-page-with-alternating-feature-blocks-master/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/junior/huddle-landing-page-with-alternating-feature-blocks-master) |
 | 23 | Fylo dark theme landing page | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/junior/fylo-dark-theme-landing-page-master/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/junior/fylo-dark-theme-landing-page-master) |
 | 24 | Fylo landing page with two column | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/junior/fylo-landing-page-with-two-column-layout-master/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/junior/fylo-landing-page-with-two-column-layout-master) |
+| 25 | Huddle landing page with curved sections | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/junior/huddle-landing-page-with-curved-sections-master/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/junior/huddle-landing-page-with-curved-sections-master) |
 </details>
+
+<!-- <details>
+<summary>Intermediate [0/14] (Free, Free++)</summary>
+
+| No | Challenge | Live demo | Source |
+| :---: | :--- | :---: | :--- |
+| 01 | News homepage | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/intermediate/news-homepage-main/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/intermediate/news-homepage-main) |
+</details> -->
