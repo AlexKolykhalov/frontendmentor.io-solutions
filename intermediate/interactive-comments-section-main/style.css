@@ -276,6 +276,8 @@ button {
 #comment_board {
     height: 60vh;
     overflow-y: auto;
+
+    position: relative;
 }
 
 #form_send[data-visible="false"] {
@@ -371,18 +373,79 @@ button {
 }
 
 .cta {
+    --svg-clr: var(--clr-neutral-000);
+    --svg-bg: var(--clr-primary-blue);
+
     background-color: var(--clr-primary-blue);
     color: var(--clr-neutral-000);
     text-transform: uppercase;
     padding-block: 0.5rem;
     padding-inline: 1.5rem;
-    max-width: 160px;
+    max-width: 155px;
 
     transition: background-color 0.2s ease-in;
 }
 
 .cta:disabled {
     background-color: var(--clr-neutral-400);
+}
+
+.lds-ring {
+    display: inline-block;
+    position: relative;
+    width: 32px;
+    height: 32px;
+}
+
+.lds-ring div {
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    margin: 6px;
+    border: 2px solid var(--clr-neutral-000);
+    border-radius: 50%;
+    border-color: var(--clr-neutral-000) var(--clr-neutral-000) var(--clr-neutral-000) transparent;
+
+    animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+}
+
+@keyframes lds-ring {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.firebase-logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+}
+
+.firebase-logo img {
+    animation: scaling 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+}
+
+
+@keyframes scaling {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.5);
+    }
+
+    100% {
+        transform: scale(1);
+    }
 }
 
 /* ************************* */
@@ -405,9 +468,9 @@ button {
     flex-wrap: nowrap;
 }
 
-/* .main-axis-center {
+.main-axis-center {
     justify-content: center;
-} */
+}
 
 .main-axis-end {
     justify-content: flex-end;

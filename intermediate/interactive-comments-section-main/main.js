@@ -44,6 +44,11 @@ const textareaMobileSendFormHTML = document.querySelector('#send_mobile');
 */
 const textareaDesktopSendFormHTML = document.querySelector('#send_desktop');
 
+/**
+* @type {HTMLDivElement|null}
+*/
+const firebaseLogo = document.querySelector('.firebase-logo');
+
 let currentUser = null;
 
 // **********************************************************************//
@@ -75,11 +80,15 @@ function smoothScroll(div, block) {
 
 window.addEventListener('load', async () => {
     try {
+        firebaseLogo?.removeAttribute('data-visible');
         const data = await getComments();
         currentUser = getCurrentUser();
         if (sendFormHTML && currentUser) {
             sendFormHTML.removeAttribute('data-visible');
-            loginBtn.textContent = 'Log out';
+            const p = loginBtn?.querySelector('p');
+            if (p) {
+                p.textContent = 'Log out';
+            }
             /**
              * @type {HTMLImageElement|null}
              */
@@ -91,6 +100,7 @@ window.addEventListener('load', async () => {
         data.forEach(obj => {
             const commentHTML = createHtmlFromObject(obj);
             if (commentHTML) {
+                firebaseLogo?.setAttribute('data-visible', 'false')
                 commentBoardHTML?.appendChild(commentHTML);
             }
         });
@@ -101,9 +111,10 @@ window.addEventListener('load', async () => {
 
 loginBtn?.addEventListener('click', async () => {
     try {
-        if (loginBtn.textContent === 'Log out') {
+        const p = loginBtn.querySelector('p');
+        if (p && p.textContent === 'Log out') {
             await signOut();
-            loginBtn.textContent = 'Log in';
+            p.textContent = 'Log in';
             if (sendFormHTML) {
                 sendFormHTML?.setAttribute('data-visible', 'false');
                 /**
@@ -118,19 +129,16 @@ loginBtn?.addEventListener('click', async () => {
             listEditable.forEach(el => {
                 el.removeAttribute('data-status');
             });
+            const listBtnSwitcherEdit = document.querySelectorAll('.switcher_reply');
+            listBtnSwitcherEdit.forEach(el => {
+                el.setAttribute('data-visible', 'false');
+            });
         } else {
+            const loader = loginBtn.querySelector('.lds-ring');
+            const svg = loginBtn.querySelector('svg');
+            svg?.setAttribute('data-visible', 'false');
+            loader?.removeAttribute('data-visible');
             currentUser = await signIn();
-            if (sendFormHTML && currentUser) {
-                sendFormHTML?.removeAttribute('data-visible');
-                /**
-                 * @type {HTMLImageElement|null}
-                 */
-                const avatar = sendFormHTML?.querySelector('.avatar');
-                if (avatar) {
-                    avatar.src = currentUser.photoURL;
-                }
-            }
-            loginBtn.textContent = 'Log out';
         }
     } catch (error) {
         console.log(`error: ${error}`);
@@ -289,7 +297,7 @@ function createHtmlTemplate(obj) {
             const listScore = clone.querySelectorAll('.score');
             const username = clone.querySelector('.username');
             const component = clone.querySelector('.component');
-            const avatar = clone.querySelector('#user_photo');
+            const sendFormAvatar = clone.querySelector('#user_photo');
 
             h3.textContent = `${obj.user.username}'s comment`;
             content.innerHTML = processText(obj.content);
@@ -297,10 +305,9 @@ function createHtmlTemplate(obj) {
             listScore.forEach(score => {
                 score.textContent = obj.score;
             });
-            avatar.src = obj.user.photoURL;
+            sendFormAvatar.src = obj.user.photoURL;
             username.textContent = obj.user.username;
             if (currentUser && currentUser.id === obj.user.id) {
-                console.log(currentUser);
                 component.setAttribute('data-status', 'editable');
             }
 
@@ -313,6 +320,10 @@ function createHtmlTemplate(obj) {
             textareaFormUpdate.textContent = obj.content;
 
             const formReply = clone.querySelector('form:nth-child(2)');
+            const formReplyAvatar = formReply.querySelector('.avatar');
+            if (currentUser) {
+                formReplyAvatar.src = currentUser.photoURL;
+            }
             const labelFormReplyMobile = formReply.querySelector('.sm\\:display-none>label');
             const textareaFormReplyMobile = formReply.querySelector('.sm\\:display-none>textarea');
             const labelFormReplyDesktop = formReply.querySelector('.m\\:display-none>label');
@@ -356,13 +367,15 @@ function createHtmlTemplate(obj) {
 
             listBtnScorePlus.forEach(btn => {
                 btn.addEventListener('click', async () => {
-                    await changeScore(obj.id, '+');
+                    const id = clone.getAttribute('id');
+                    await changeScore(id, '+');
                 });
             });
 
             listBtnScoreMinus.forEach(btn => {
                 btn.addEventListener('click', async () => {
-                    await changeScore(obj.id, '-');
+                    const id = clone.getAttribute('id');
+                    await changeScore(id, '-');
                 });
             });
 
@@ -381,6 +394,9 @@ function createHtmlTemplate(obj) {
             });
 
             listBtnSwitcherReply.forEach(btn => {
+                if (currentUser === null) {
+                    btn.setAttribute('data-visible', 'false');
+                }
                 btn?.addEventListener('click', () => {
                     if (formReply?.hasAttribute('data-visible') === true) {
                         const listFormReply = document.querySelectorAll('form:nth-child(2)');
@@ -448,8 +464,8 @@ function createHtmlTemplate(obj) {
                 formUpdate.setAttribute('data-visible', 'false');
                 try {
                     const id = clone.getAttribute('id');
-                    await updateComment(id, { 'content': textareaFormUpdate.value });
                     content.textContent = textareaFormUpdate.value;
+                    await updateComment(id, { 'content': textareaFormUpdate.value });
                 } catch (error) {
                     console.log(error);
                 }
@@ -469,13 +485,11 @@ function createHtmlTemplate(obj) {
                         null,
                         createCommentRef(id),
                         null,
-                        null,
-                        'John'
+                        currentUser,
                     );
                     const newCommentHTML = createHtmlFromObject(newObj);
                     formReply.setAttribute('data-visible', 'false');
                     if (newCommentHTML) {
-                        smoothScroll(newCommentHTML, 'end');
                         newCommentHTML.setAttribute('data-status', 'in progress');
 
                         const replies = clone.querySelector('.replies');
@@ -487,6 +501,7 @@ function createHtmlTemplate(obj) {
                             div.appendChild(newCommentHTML);
                             clone.appendChild(div);
                         }
+                        smoothScroll(newCommentHTML, 'end');
 
                         const newId = await createComment(newObj);
                         const doc = await getComment(id);

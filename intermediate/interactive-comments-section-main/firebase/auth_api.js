@@ -20,10 +20,16 @@ function getAuthUser() {
 }
 
 const provider = new GithubAuthProvider();
+/**
+ * @returns {Promise<void>}
+ */
 async function signInGitHub() {
     await signInWithRedirect(auth, provider);
 }
 
+/**
+ * @returns {Promise<void>}
+ */
 async function signOutFirebase() {
     await signOut(auth);
 }
