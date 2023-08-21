@@ -104,6 +104,9 @@ window.addEventListener('load', async () => {
                 commentBoardHTML?.appendChild(commentHTML);
             }
         });
+        if (loginBtn) {
+            loginBtn.disabled = false;
+        }
     } catch (error) {
         console.log(error);
     }

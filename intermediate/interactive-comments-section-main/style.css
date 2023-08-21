@@ -387,6 +387,9 @@ button {
 }
 
 .cta:disabled {
+    --svg-clr: var(--clr-neutral-000);
+    --svg-bg: var(--clr-neutral-400);
+
     background-color: var(--clr-neutral-400);
 }
 
