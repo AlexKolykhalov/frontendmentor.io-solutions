@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-app-compat.js"></script> -->
+    <!-- <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-auth-compat.js"></script> -->
+    <!-- <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyBDTCh1P_wW8qsbSClQoCS_hXfL158T4nA",
+            authDomain: "comment-board-79ea9.firebaseapp.com",
+            projectId: "comment-board-79ea9",
+            storageBucket: "comment-board-79ea9.appspot.com",
+            messagingSenderId: "308161992454",
+            appId: "1:308161992454:web:5b57dedcd76c1fab7cf087",
+            measurementId: "G-878464LEFH"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+    </script> -->
+    <!-- <script src="https://www.gstatic.com/firebasejs/ui/6.1.0/firebase-ui-auth.js"></script> -->
+    <!-- <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/6.1.0/firebase-ui-auth.css" /> -->
+    <!-- <script type="text/javascript">
+        // FirebaseUI config.
+        var uiConfig = {
+            signInSuccessUrl: '<url-to-redirect-to-on-success>',
+            signInOptions: [
+                // Leave the lines as is for the providers you want to offer your users.
+                firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+                firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+                firebase.auth.TwitterAuthProvider.PROVIDER_ID,
+                firebase.auth.GithubAuthProvider.PROVIDER_ID,
+                firebase.auth.EmailAuthProvider.PROVIDER_ID,
+                firebase.auth.PhoneAuthProvider.PROVIDER_ID,
+                firebaseui.auth.AnonymousAuthProvider.PROVIDER_ID
+            ],
+            // tosUrl and privacyPolicyUrl accept either url string or a callback
+            // function.
+            // Terms of service url/callback.
+            tosUrl: '<your-tos-url>',
+            // Privacy policy url/callback.
+            privacyPolicyUrl: function () {
+                window.location.assign('<your-privacy-policy-url>');
+            }
+        };
+
+        // Initialize the FirebaseUI Widget using Firebase.
+        var ui = new firebaseui.auth.AuthUI(firebase.auth());
+        // The start method will wait until the DOM is loaded.
+        ui.start('#firebaseui-auth-container', uiConfig);
+    </script> -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- displays site properly based on user's device -->
+
+    <meta name="description" content="Interactive comments section challenge on Frontend Mentor">
+    <meta name="keywords"
+        content="Frontend Mentor, Frontend, Mentor, HTML, CSS, Responsive, Mobile, Desktop, Interactive chat, Firebase, Alex Kolykhalov">
+
+    <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+
+    <title>Frontend Mentor | Interactive comments section</title>
+
+    <!-- google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+    <script src="firebase/init.js" type="module" defer></script>
+    <script src="firebase/auth_api.js" type="module" defer></script>
+    <script src="repository.js" type="module" defer></script>
+    <script src="auth.js" type="module" defer></script>
+</head>
+
+<body>
+    <main>
+        <div class="cover">
+            <div class="center gutters-m">
+                <div class="column gap-m">
+                    <!-- <button>Email</button> -->
+                    <!-- <button>Google</button> -->
+                    <button>GitHub</button>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <div class="center gutters-m center-text">
+            <p>Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>.
+            </p>
+            <p>Coded by <a href="https://github.com/AlexKolykhalov">Alex Ko</a>.</p>
+        </div>
+    </footer>
+</body>
+
+</html>

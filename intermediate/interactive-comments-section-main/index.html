@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- displays site properly based on user's device -->
+
+  <meta name="description" content="Interactive comments section challenge on Frontend Mentor">
+  <meta name="keywords"
+    content="Frontend Mentor, Frontend, Mentor, HTML, CSS, Responsive, Mobile, Desktop, Interactive chat, Firebase, Alex Kolykhalov">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+
+  <title>Frontend Mentor | Interactive comments section</title>
+
+  <!-- google fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+  <script src="firebase/init.js" type="module" defer></script>
+  <script src="firebase/firestore_api.js" type="module" defer></script>
+  <script src="repository.js" type="module" defer></script>
+  <script src="main.js" type="module" defer></script>
+</head>
+
+<body>
+  <main>
+    <div class="cover">
+      <div class="center gutters-m">
+        <div class="column gap-m">
+          <h1 class="sr-only">Interactive component section</h1>
+          <article>
+            <h2 class="sr-only">A comment board</h2>
+            <div class="column gap-m">
+              <button id="login_btn" class="cta">Log in</button>
+              <div id="comment_board" class="column gap-m">
+              </div>
+            </div>
+          </article>
+          <form id="form_send" data-visible="false">
+            <div class="component { column gap-m }">
+              <div class="sm:display-none">
+                <label class="sr-only" for="send_mobile">Comment</label>
+                <textarea id="send_mobile" cols="100" rows="3" placeholder="Add a comment..."></textarea>
+              </div>
+              <div class="row no-wrap gap-m main-axis-space-between cross-axis-center sm:cross-axis-start">
+                <img class="avatar" src="images/avatars/image-juliusomo.webp" alt="">
+                <div class="m:display-none">
+                  <label class="sr-only" for="send_desktop">Comment</label>
+                  <textarea id="send_desktop" cols="100" rows="3" placeholder="Add a comment..."></textarea>
+                </div>
+                <button class="cta" disabled>Send</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="center gutters-m center-text">
+      <p>Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>.</p>
+      <p>Coded by <a href="https://github.com/AlexKolykhalov">Alex Ko</a>.</p>
+    </div>
+  </footer>
+
+  <template id="comment_template">
+    <div class="column gap-m">
+      <div class="column gap-sm">
+        <article>
+          <h3 class="sr-only">{Someone}'s comment</h3>
+          <div class="component { grid sm:cross-axis-start }">
+            <!-- X -->
+            <div class="score-counter { column cross-axis-center m:display-none }">
+              <button class="score-plus">
+                <span class="sr-only">Plus</span>
+                <img src="images/icon-plus.svg" alt="Plus">
+              </button>
+              <output class="score"></output>
+              <button class="score-minus">
+                <span class="sr-only">Minus</span>
+                <img src="images/icon-minus.svg" alt="Minus">
+              </button>
+            </div>
+            <div class="column gap-m">
+              <div class="row gap-m main-axis-space-between cross-axis-center">
+                <div class="row gap-m cross-axis-center">
+                  <img id="user_photo" src="images/avatars/image-juliusomo.webp" width="35" height="35" alt="">
+                  <div class="row gap-sm cross-axis-center">
+                    <p class="username { fw-medium clr-p-800 }">juliusomo</p>
+                    <p class="badge">you</p>
+                  </div>
+                  <p class="createdAt">2 days ago</p>
+                </div>
+                <div class="row gap-m m:display-none">
+                  <button class="delete">
+                    <div class="row gap-sm cross-axis-center">
+                      <img src="images/icon-delete.svg" alt="">
+                      <span class="fw-medium clr-p-red">Delete</span>
+                    </div>
+                  </button>
+                  <button class="switcher_edit">
+                    <div class="row gap-sm cross-axis-center">
+                      <img src="images/icon-edit.svg" alt="">
+                      <span class="fw-medium clr-p-blue">Edit</span>
+                    </div>
+                  </button>
+                  <button class="switcher_reply">
+                    <div class="row gap-sm cross-axis-center">
+                      <img src="images/icon-reply.svg" alt="">
+                      <span class="fw-medium clr-p-blue">Reply</span>
+                    </div>
+                  </button>
+                </div>
+              </div>
+              <p class="content"></p>
+              <form data-visible="false">
+                <div class="column gap-m cross-axis-end">
+                  <label class="sr-only" for="update_">Edit</label>
+                  <textarea id="update_" rows="3" cols="100"></textarea>
+                  <button class="cta" disabled>Update</button>
+                </div>
+              </form>
+              <div class="row main-axis-space-between sm:display-none">
+                <div class="score-counter { row main-axis-space-between cross-axis-center }">
+                  <button class="score-plus">
+                    <span class="sr-only">Plus</span>
+                    <img src="images/icon-plus.svg" alt="Plus">
+                  </button>
+                  <output class="score"></output>
+                  <button class="score-minus">
+                    <span class="sr-only">Minus</span>
+                    <img src="images/icon-minus.svg" alt="Minus">
+                  </button>
+                </div>
+                <div class="row gap-m">
+                  <button class="delete">
+                    <div class="row gap-sm cross-axis-center">
+                      <img src="images/icon-delete.svg" alt="">
+                      <span class="fw-medium clr-p-red">Delete</span>
+                    </div>
+                  </button>
+                  <button class="switcher_edit">
+                    <div class="row gap-sm cross-axis-center">
+                      <img src="images/icon-edit.svg" alt="">
+                      <span class="fw-medium clr-p-blue">Edit</span>
+                    </div>
+                  </button>
+                  <button class="switcher_reply">
+                    <div class="row gap-sm cross-axis-center">
+                      <img src="images/icon-reply.svg" alt="">
+                      <span class="fw-medium clr-p-blue">Reply</span>
+                    </div>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+        <form data-visible="false">
+          <div class="component { column gap-m }">
+            <div class="sm:display-none">
+              <label for="reply_mobile_">Reply</label>
+              <textarea id="reply_mobile_" cols="100" rows="3"></textarea>
+            </div>
+            <div class="row gap-m no-wrap main-axis-space-between cross-axis-center sm:cross-axis-start">
+              <img class="avatar" src="images/avatars/image-juliusomo.webp" alt="">
+              <div class="m:display-none">
+                <label class="sr-only" for="reply_desktop_">Reply</label>
+                <textarea id="reply_desktop_" cols="100" rows="3"></textarea>
+              </div>
+              <button class="cta" disabled>Reply</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </template>
+</body>
+
+</html>
