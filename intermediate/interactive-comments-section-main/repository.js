@@ -91,31 +91,32 @@ async function deleteComment(id) {
     await remove(id);
 }
 
+/**
+ * @returns {Promise<void>}
+ */
 async function signInAnonymously() {
     await signInAnonymous();
-    // const anonymous = await signInAnonymous();
-    // return anonymous;
 }
 
+/**
+ * @returns {Promise<void>}
+ */
 async function signIn() {
     await signInGitHub();
-    // const result = await signInGitHub();
-    // if (result.user.reloadUserInfo.providerUserInfo.length > 0) {
-    //     return {
-    //         id: result.user.reloadUserInfo.providerUserInfo[0].rawId,
-    //         username: result.user.reloadUserInfo.providerUserInfo[0].screenName,
-    //         photoURL: result.user.reloadUserInfo.providerUserInfo[0].photoUrl,
-    //     };
-    // }
-    // return null;
 }
 
+/**
+ * @returns {Promise<void>}
+ */
 async function signOut() {
     return await signOutFirebase();
 }
 
 const observerAuthState = observerAuthStateChanged;
 
+/**
+ * @returns {Promise<void>}
+ */
 async function deleteUser(user) {
     await deleteFirebaseUser(user);
 }

@@ -3,6 +3,7 @@
 import {
     onAuthStateChanged,
     signInWithRedirect,
+    getRedirectResult,
     signInAnonymously,
     signOut,
     deleteUser,
@@ -14,6 +15,7 @@ import { auth } from "./init.js"
 
 /**
  * Curry function
+ * https://learn.javascript.ru/currying-partials
  * @param {(arg0: any, arg1: any) => any} func
  * @returns
  */
@@ -50,6 +52,9 @@ async function signOutFirebase() {
     await signOut(auth);
 }
 
+/**
+ * @returns {Promise<void>}
+ */
 async function deleteFirebaseUser(user) {
     await deleteUser(user);
 }

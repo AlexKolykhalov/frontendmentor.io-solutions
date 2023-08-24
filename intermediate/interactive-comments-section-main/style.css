@@ -168,7 +168,12 @@ button {
     border: none;
     border-radius: 0.4rem;
 
-    background-color: var(--clr-neutral-000);
+    /* background-color: var(--clr-neutral-000); */
+    background-color: transparent;
+}
+
+dialog::backdrop {
+    background-color: hsla(212, 24%, 26%, 0.6);
 }
 
 /* ************************* */
@@ -189,6 +194,10 @@ button {
     flex-direction: column;
     align-items: center;
 } */
+
+.box-sm {
+    max-width: 40ch;
+}
 
 .gutters-m {
     padding-inline: 1rem;
@@ -394,6 +403,12 @@ button {
     background-color: var(--clr-neutral-400);
 }
 
+.cta[data-theme="secondary"] {
+    background-color: var(--clr-neutral-000);
+    box-shadow: 0 0 1px 1px var(--clr-primary-blue);
+    color: var(--clr-primary-blue);
+}
+
 .lds-ring {
     display: inline-block;
     position: relative;
@@ -469,6 +484,11 @@ button {
     transform: translate(-50%, -50%);
 }
 
+#logout_btn {
+    background-color: transparent;
+    /* padding: 1rem; */
+}
+
 /* ************************* */
 /*         Utilities         */
 /* ************************* */
@@ -521,6 +541,10 @@ button {
     gap: 1rem;
 }
 
+.gap-l {
+    gap: 3rem;
+}
+
 .mar-left-sm {
     margin-left: 2rem;
 }
@@ -535,9 +559,9 @@ button {
     margin-top: 1rem;
 } */
 
-/* .pad-m {
-    padding: 1rem;
-} */
+.pad-m {
+    padding: 2rem;
+}
 
 /* .pad-left {
     padding-left: clamp(1rem, 3vw, 2rem);
@@ -546,6 +570,11 @@ button {
 /* .border-left {
     border-left: 2px solid var(--clr-neutral-200);
 } */
+
+.border {
+    border: none;
+    border-radius: 0.5rem;
+}
 
 .border-radius {
     border-radius: 50%;
@@ -595,9 +624,9 @@ button {
     font-size: var(--scale-500);
 } */
 
-/* .fs-600 {
+.fs-600 {
     font-size: var(--scale-600);
-} */
+}
 
 /* .fs-700 {
     font-size: var(--scale-700);
@@ -619,12 +648,24 @@ button {
     color: var(--clr-primary-red);
 }
 
-.clr-p-800 {
+.clr-n-400 {
+    color: var(--clr-neutral-400);
+}
+
+.clr-n-800 {
     color: var(--clr-neutral-800);
 }
 
 .bg-n-100 {
     background-color: var(--clr-neutral-100);
+}
+
+.bg-n-800 {
+    background-color: var(--clr-neutral-800);
+}
+
+.bg-p-red {
+    background-color: var(--clr-primary-red);
 }
 
 @media (max-width: 36em) {

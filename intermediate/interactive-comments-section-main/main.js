@@ -76,13 +76,33 @@ const firebaseLogo = document.querySelector('.firebase-logo img');
 */
 const emptyBoxImg = document.querySelector('.empty-box');
 
+/**
+* @type {HTMLDialogElement|null}
+*/
+const modalDialog = document.querySelector('#modal_dialog');
+
+/**
+* @type {HTMLButtonElement|null}
+*/
+const modalDialogCancelBtn = document.querySelector('#modal_dialog_cancel_btn');
+
+/**
+* @type {HTMLButtonElement|null}
+*/
+const modalDialogDeleteBtn = document.querySelector('#modal_dialog_delete_btn');
+
 let currentUser = null;
+
+/**
+ * For deleting anonymous user from AuthenticationFirebase
+ */
 let currentFirebaseUser = null;
-// const currentUser = {
-//     id: '',
-//     username: 'Anonymous',
-//     photoURL: 'images/anonim-user.svg',
-// };
+
+/**
+ * Keep id of deleting comment
+ * @type {string|null}
+ */
+let currentId = null;
 
 // ************************** 1. Events *********************************//
 
@@ -197,8 +217,65 @@ logOutBtn?.addEventListener('click', async () => {
                 }
             });
         }
-        await deleteUser(currentFirebaseUser);
+        if (currentFirebaseUser.isAnonymous) {
+            await deleteUser(currentFirebaseUser);
+        }
         await signOut();
+    } catch (error) {
+        console.log(error);
+    }
+});
+
+modalDialogCancelBtn?.addEventListener('click', () => {
+    modalDialog?.close();
+});
+
+modalDialogDeleteBtn?.addEventListener('click', async () => {
+    modalDialog?.close();
+    try {
+        if (currentId) {
+            const comment = document.getElementById(currentId);
+            if (comment) {
+                comment.setAttribute('data-status', 'in progress');
+                const doc = await getComment(currentId);
+                if (doc.replyingTo === null) {
+                    if (doc.replies.length > 0) {
+                        deleteRecursive(doc.replies);
+                    }
+                    await deleteComment(doc.id)
+                    commentBoardHTML?.removeChild(comment);
+                }
+                if (doc.replyingTo != null) {
+                    if (doc.replies.length > 0) {
+                        deleteRecursive(doc.replies);
+                    }
+                    await deleteComment(doc.id)
+
+                    //update list of replies in replying to Doc
+                    const replyingToDoc = await getComment(doc.replyingTo);
+                    let array = replyingToDoc.replies;
+                    const index = array.findIndex((element) => {
+                        return element.id === doc.id;
+                    });
+                    array.splice(index, 1);
+                    await updateComment(doc.replyingTo, { 'replies': array });
+
+                    const replies = comment.closest('.replies');
+                    if (replies) {
+                        if (replies.children.length === 1) {
+                            const topComment = replies.closest('div[id].column');
+                            if (topComment) {
+                                topComment.removeChild(replies);
+                            }
+                        }
+                        if (replies.children.length > 1) {
+                            replies.removeChild(comment);
+                        }
+                    }
+                }
+            }
+        }
+        currentId = null;
     } catch (error) {
         console.log(error);
     }
@@ -368,7 +445,7 @@ function createHtmlTemplate(obj) {
                 userPhoto.src = obj.user.photoUrl;
             }
             username.textContent = obj.user.username;
-            if (currentUser && currentUser.id === obj.user.id) {
+            if (currentUser.id && currentUser.id === obj.user.id) {
                 component.setAttribute('data-status', 'editable');
             }
 
@@ -474,48 +551,8 @@ function createHtmlTemplate(obj) {
 
             listBtnDelete.forEach(btn => {
                 btn?.addEventListener('click', async () => {
-                    try {
-                        const id = clone.getAttribute('id');
-                        clone.setAttribute('data-status', 'in progress');
-                        const doc = await getComment(id);
-                        if (doc.replyingTo === null) {
-                            if (doc.replies.length > 0) {
-                                deleteRecursive(doc.replies);
-                            }
-                            await deleteComment(doc.id)
-                            commentBoardHTML?.removeChild(clone);
-                        }
-                        if (doc.replyingTo != null) {
-                            if (doc.replies.length > 0) {
-                                deleteRecursive(doc.replies);
-                            }
-                            await deleteComment(doc.id)
-
-                            //update list of replies in replying to Doc
-                            const replyingToDoc = await getComment(doc.replyingTo);
-                            let array = replyingToDoc.replies;
-                            const index = array.findIndex((element) => {
-                                return element.id === doc.id;
-                            });
-                            array.splice(index, 1);
-                            await updateComment(doc.replyingTo, { 'replies': array });
-
-                            const replies = clone.closest('.replies');
-                            if (replies) {
-                                if (replies.children.length === 1) {
-                                    const comment = replies.closest('div[id].column');
-                                    if (comment) {
-                                        comment.removeChild(replies);
-                                    }
-                                }
-                                if (replies.children.length > 1) {
-                                    replies.removeChild(clone);
-                                }
-                            }
-                        }
-                    } catch (error) {
-                        console.log(error);
-                    }
+                    modalDialog?.showModal();
+                    currentId = clone.getAttribute('id');
                 });
             });
 
