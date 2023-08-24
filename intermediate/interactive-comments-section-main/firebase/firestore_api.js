@@ -51,9 +51,9 @@ function convert(obj) {
         replyingTo: obj.replyingTo ?? null,
         score: obj.score ?? 0,
         user: {
-            id: obj.user.id ?? '',
-            photoURL: obj.user.photoURL ?? '',
-            username: obj.user.username ?? '',
+            id: obj.user.id ?? null,
+            photoUrl: obj.user.photoUrl ?? null,
+            username: obj.user.username ?? null,
         }
     };
 }

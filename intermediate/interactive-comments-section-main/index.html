@@ -35,34 +35,61 @@
           <article>
             <h2 class="sr-only">A comment board</h2>
             <div class="column gap-m">
-              <button id="login_btn" class="cta" disabled>
-                <div class="row gap-sm main-axis-center cross-axis-center">
-                  <p>Log in</p>
-                  <div class="lds-ring" data-visible="false">
-                    <div></div>
-                  </div>
-                  <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="32" height="32" viewBox="0,0,256,256"
-                    style="fill:#000000;">
-                    <g fill="var(--svg-bg)" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt"
-                      stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0"
-                      font-family="none" font-weight="none" font-size="none" text-anchor="none"
-                      style="mix-blend-mode: normal">
-                      <path d="M0,256v-256h256v256z" id="bgRectangle"></path>
-                    </g>
-                    <g fill="var(--svg-clr)" fill-rule="evenodd" stroke="none" stroke-width="1" stroke-linecap="butt"
-                      stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0"
-                      font-family="none" font-weight="none" font-size="none" text-anchor="none"
-                      style="mix-blend-mode: normal">
-                      <g transform="scale(8,8)">
-                        <path
-                          d="M16,4c-6.62891,0 -12,5.37109 -12,12c0,5.30078 3.4375,9.80078 8.20703,11.38672c0.60156,0.10938 0.82031,-0.25781 0.82031,-0.57812c0,-0.28516 -0.01172,-1.03906 -0.01562,-2.03906c-3.33984,0.72266 -4.04297,-1.60937 -4.04297,-1.60937c-0.54687,-1.38672 -1.33203,-1.75781 -1.33203,-1.75781c-1.08984,-0.74219 0.08203,-0.72656 0.08203,-0.72656c1.20313,0.08594 1.83594,1.23438 1.83594,1.23438c1.07031,1.83594 2.80859,1.30469 3.49219,1c0.10938,-0.77734 0.42188,-1.30469 0.76172,-1.60547c-2.66406,-0.30078 -5.46484,-1.33203 -5.46484,-5.92969c0,-1.3125 0.46875,-2.38281 1.23438,-3.22266c-0.12109,-0.30078 -0.53516,-1.52344 0.11719,-3.17578c0,0 1.00781,-0.32031 3.30078,1.23047c0.95703,-0.26562 1.98438,-0.39844 3.00391,-0.40234c1.01953,0.00391 2.04688,0.13672 3.00391,0.40234c2.29297,-1.55078 3.29688,-1.23047 3.29688,-1.23047c0.65625,1.65234 0.24609,2.875 0.12109,3.17578c0.76953,0.83984 1.23047,1.91016 1.23047,3.22266c0,4.60938 -2.80469,5.62109 -5.47656,5.92188c0.42969,0.36719 0.8125,1.10156 0.8125,2.21875c0,1.60547 -0.01172,2.89844 -0.01172,3.29297c0,0.32031 0.21484,0.69531 0.82422,0.57813c4.76563,-1.58984 8.19922,-6.08594 8.19922,-11.38672c0,-6.62891 -5.37109,-12 -12,-12z">
-                        </path>
-                      </g>
-                    </g>
-                  </svg>
+              <div class="fix-height">
+                <div id="user_info" class="row gap-m cross-axis-center" data-visible="false">
+                  <img class="border-radius" src="images/anonim-user.svg" width="40" height="40" alt="">
+                  <p></p>
+                  <button id="logout_btn">
+                    <span class="sr-only">Log out</span>
+                    <img src="images/logout.svg" width="25" height="25" alt="">
+                  </button>
                 </div>
-              </button>
+              </div>
               <div id="comment_board" class="column gap-m">
+                <div class="login-btns { row gap-m }" data-visible="false">
+                  <button id="github_login_btn" class="cta">
+                    <div class="row gap-sm main-axis-center cross-axis-center">
+                      <p>Log in</p>
+                      <div class="lds-ring" data-visible="false">
+                        <div></div>
+                      </div>
+                      <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="32" height="32"
+                        viewBox="0,0,256,256" style="fill:#000000;">
+                        <g fill="var(--svg-bg)" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt"
+                          stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0"
+                          font-family="none" font-weight="none" font-size="none" text-anchor="none"
+                          style="mix-blend-mode: normal">
+                          <path d="M0,256v-256h256v256z" id="bgRectangle"></path>
+                        </g>
+                        <g fill="var(--svg-clr)" fill-rule="evenodd" stroke="none" stroke-width="1"
+                          stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray=""
+                          stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none"
+                          text-anchor="none" style="mix-blend-mode: normal">
+                          <g transform="scale(8,8)">
+                            <path
+                              d="M16,4c-6.62891,0 -12,5.37109 -12,12c0,5.30078 3.4375,9.80078 8.20703,11.38672c0.60156,0.10938 0.82031,-0.25781 0.82031,-0.57812c0,-0.28516 -0.01172,-1.03906 -0.01562,-2.03906c-3.33984,0.72266 -4.04297,-1.60937 -4.04297,-1.60937c-0.54687,-1.38672 -1.33203,-1.75781 -1.33203,-1.75781c-1.08984,-0.74219 0.08203,-0.72656 0.08203,-0.72656c1.20313,0.08594 1.83594,1.23438 1.83594,1.23438c1.07031,1.83594 2.80859,1.30469 3.49219,1c0.10938,-0.77734 0.42188,-1.30469 0.76172,-1.60547c-2.66406,-0.30078 -5.46484,-1.33203 -5.46484,-5.92969c0,-1.3125 0.46875,-2.38281 1.23438,-3.22266c-0.12109,-0.30078 -0.53516,-1.52344 0.11719,-3.17578c0,0 1.00781,-0.32031 3.30078,1.23047c0.95703,-0.26562 1.98438,-0.39844 3.00391,-0.40234c1.01953,0.00391 2.04688,0.13672 3.00391,0.40234c2.29297,-1.55078 3.29688,-1.23047 3.29688,-1.23047c0.65625,1.65234 0.24609,2.875 0.12109,3.17578c0.76953,0.83984 1.23047,1.91016 1.23047,3.22266c0,4.60938 -2.80469,5.62109 -5.47656,5.92188c0.42969,0.36719 0.8125,1.10156 0.8125,2.21875c0,1.60547 -0.01172,2.89844 -0.01172,3.29297c0,0.32031 0.21484,0.69531 0.82422,0.57813c4.76563,-1.58984 8.19922,-6.08594 8.19922,-11.38672c0,-6.62891 -5.37109,-12 -12,-12z">
+                            </path>
+                          </g>
+                        </g>
+                      </svg>
+                    </div>
+                  </button>
+                  <button id="anonymous_login_btn" class="cta">
+                    <div class="row gap-sm main-axis-center cross-axis-center">
+                      <p>Log in</p>
+                      <div class="lds-ring" data-visible="false">
+                        <div></div>
+                      </div>
+                      <!-- Don't forget display: block in CSS -->
+                      <svg class="" fill="currentColor" width="32" height="32" viewBox="0 0 25 25"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                          d="M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12ZM15 9C15 10.6569 13.6569 12 12 12C10.3431 12 9 10.6569 9 9C9 7.34315 10.3431 6 12 6C13.6569 6 15 7.34315 15 9ZM12 20.5C13.784 20.5 15.4397 19.9504 16.8069 19.0112C17.4108 18.5964 17.6688 17.8062 17.3178 17.1632C16.59 15.8303 15.0902 15 11.9999 15C8.90969 15 7.40997 15.8302 6.68214 17.1632C6.33105 17.8062 6.5891 18.5963 7.19296 19.0111C8.56018 19.9503 10.2159 20.5 12 20.5Z" />
+                      </svg>
+                    </div>
+                  </button>
+                </div>
+                <img class="empty-box" src="images/empty-box.svg" width="" height="" alt="" data-visible="false">
                 <div class="firebase-logo">
                   <img src="images/firebase-logo-logomark.svg" width="50" height="50" alt="">
                 </div>
@@ -76,7 +103,7 @@
                 <textarea id="send_mobile" cols="100" rows="3" placeholder="Add a comment..."></textarea>
               </div>
               <div class="row no-wrap gap-m main-axis-space-between cross-axis-center sm:cross-axis-start">
-                <img class="avatar" src="images/avatars/image-juliusomo.webp" alt="">
+                <img class="avatar { border-radius }" src="images/anonim-user.svg" alt="">
                 <div class="m:display-none">
                   <label class="sr-only" for="send_desktop">Comment</label>
                   <textarea id="send_desktop" cols="100" rows="3" placeholder="Add a comment..."></textarea>
@@ -118,7 +145,7 @@
             <div class="column gap-m">
               <div class="row gap-m main-axis-space-between cross-axis-center">
                 <div class="row gap-m cross-axis-center">
-                  <img id="user_photo" src="images/avatars/image-juliusomo.webp" width="35" height="35" alt="">
+                  <img id="user_photo" class="border-radius" src="images/anonim-user.svg" width="35" height="35" alt="">
                   <div class="row gap-sm cross-axis-center">
                     <p class="username { fw-medium clr-p-800 }">juliusomo</p>
                     <p class="badge">you</p>
@@ -197,7 +224,7 @@
               <textarea id="reply_mobile_" cols="100" rows="3"></textarea>
             </div>
             <div class="row gap-m no-wrap main-axis-space-between cross-axis-center sm:cross-axis-start">
-              <img class="avatar" src="" alt="">
+              <img class="avatar" src="images/anonim-user.svg" alt="">
               <div class="m:display-none">
                 <label class="sr-only" for="reply_desktop_">Reply</label>
                 <textarea id="reply_desktop_" cols="100" rows="3"></textarea>

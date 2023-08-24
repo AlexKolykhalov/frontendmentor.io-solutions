@@ -1,7 +1,7 @@
 // @ts-check
 
 import { timeAgo, convert, executeQuery, read, createRef, create, update, remove } from "./firebase/firestore_api.js"
-import { getAuthUser, signInGitHub, signOutFirebase } from "./firebase/auth_api.js"
+import { observerAuthStateChanged, signInAnonymous, signInGitHub, signOutFirebase, deleteFirebaseUser } from "./firebase/auth_api.js"
 
 /**
  * Convert timestamp format to string:
@@ -39,11 +39,6 @@ function convertToObj(
             replyingTo: replyingTo,
             score: score,
             user: user,
-            // user: {
-            //     id: id,
-            //     photoURL: photoURL,
-            //     username: username,
-            // },
         }
     );
 }
@@ -96,38 +91,39 @@ async function deleteComment(id) {
     await remove(id);
 }
 
+async function signInAnonymously() {
+    await signInAnonymous();
+    // const anonymous = await signInAnonymous();
+    // return anonymous;
+}
+
 async function signIn() {
-    const result = await signInGitHub();
-    if (result.user.reloadUserInfo.providerUserInfo.length > 0) {
-        return {
-            id: result.user.reloadUserInfo.providerUserInfo[0].rawId,
-            username: result.user.reloadUserInfo.providerUserInfo[0].screenName,
-            photoURL: result.user.reloadUserInfo.providerUserInfo[0].photoUrl,
-        };
-    }
-    return null;
+    await signInGitHub();
+    // const result = await signInGitHub();
+    // if (result.user.reloadUserInfo.providerUserInfo.length > 0) {
+    //     return {
+    //         id: result.user.reloadUserInfo.providerUserInfo[0].rawId,
+    //         username: result.user.reloadUserInfo.providerUserInfo[0].screenName,
+    //         photoURL: result.user.reloadUserInfo.providerUserInfo[0].photoUrl,
+    //     };
+    // }
+    // return null;
 }
 
 async function signOut() {
     return await signOutFirebase();
 }
 
-function getCurrentUser() {
-    const user = getAuthUser();
-    if (user === null || user.reloadUserInfo.providerUserInfo.length === 0) {
-        return null;
-    }
-    return {
-        id: user.reloadUserInfo.providerUserInfo[0].rawId,
-        username: user.reloadUserInfo.providerUserInfo[0].screenName,
-        photoURL: user.reloadUserInfo.providerUserInfo[0].photoUrl,
-    };
+const observerAuthState = observerAuthStateChanged;
+
+async function deleteUser(user) {
+    await deleteFirebaseUser(user);
 }
 
 export {
+    signInAnonymously,
     signIn,
     signOut,
-    getCurrentUser,
     timestampToString,
     convertToObj,
     getComments,
@@ -135,5 +131,7 @@ export {
     createComment,
     createCommentRef,
     updateComment,
-    deleteComment
+    deleteComment,
+    observerAuthState,
+    deleteUser,
 }

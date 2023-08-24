@@ -1,17 +1,19 @@
 // @ts-check
 
 import {
+    observerAuthState,
     timestampToString,
     convertToObj,
-    getCurrentUser,
+    signInAnonymously,
     signIn,
+    signOut,
     getComments,
     getComment,
     createCommentRef,
     createComment,
     updateComment,
     deleteComment,
-    signOut
+    deleteUser,
 } from "./repository.js";
 
 /**
@@ -30,9 +32,29 @@ const commentTemplateHTML = document.querySelector('#comment_template');
 const sendFormHTML = document.querySelector('#form_send');
 
 /**
+* @type {HTMLDivElement|null}
+*/
+const loginBtns = document.querySelector('.login-btns');
+
+/**
+* @type {HTMLDivElement|null}
+*/
+const userInfo = document.querySelector('#user_info');
+
+/**
 * @type {HTMLButtonElement|null}
 */
-const loginBtn = document.querySelector('#login_btn');
+const githubLoginBtn = document.querySelector('#github_login_btn');
+
+/**
+* @type {HTMLButtonElement|null}
+*/
+const anonymousLoginBtn = document.querySelector('#anonymous_login_btn');
+
+/**
+* @type {HTMLButtonElement|null}
+*/
+const logOutBtn = document.querySelector('#logout_btn');
 
 /**
 * @type {HTMLTextAreaElement|null}
@@ -47,19 +69,20 @@ const textareaDesktopSendFormHTML = document.querySelector('#send_desktop');
 /**
 * @type {HTMLDivElement|null}
 */
-const firebaseLogo = document.querySelector('.firebase-logo');
+const firebaseLogo = document.querySelector('.firebase-logo img');
+
+/**
+* @type {HTMLImageElement|null}
+*/
+const emptyBoxImg = document.querySelector('.empty-box');
 
 let currentUser = null;
-
-// **********************************************************************//
-// ***********************  Table of content  ***************************//
-// **********************************************************************//
-// 
-// 1. Events
-//  1.1 Form
-//  
-// 2. Functions
-
+let currentFirebaseUser = null;
+// const currentUser = {
+//     id: '',
+//     username: 'Anonymous',
+//     photoURL: 'images/anonim-user.svg',
+// };
 
 // ************************** 1. Events *********************************//
 
@@ -78,73 +101,106 @@ function smoothScroll(div, block) {
     div.scrollIntoView({ behavior: "smooth", block: block });
 }
 
-window.addEventListener('load', async () => {
+function getCurrentUserData(user) {
+    if (user.isAnonymous) {
+        return {
+            id: null,
+            username: 'Anonymous',
+            photoUrl: null,
+        }
+    }
+    return {
+        id: user.reloadUserInfo.providerUserInfo[0].rawId,
+        username: user.reloadUserInfo.providerUserInfo[0].screenName,
+        photoUrl: user.reloadUserInfo.providerUserInfo[0].photoUrl,
+    }
+}
+
+window.addEventListener('load', () => {
+    observerAuthState(async (user) => {
+        if (user) {
+            console.log('log in');
+            try {
+                currentFirebaseUser = user;
+                currentUser = getCurrentUserData(user);
+                firebaseLogo?.removeAttribute('data-visible');
+                const data = await getComments();
+                if (data.length === 0) {
+                    firebaseLogo?.setAttribute('data-visible', 'false')
+                    emptyBoxImg?.removeAttribute('data-visible');
+                } else {
+                    data.forEach(obj => {
+                        const commentHTML = createHtmlFromObject(obj);
+                        if (commentHTML) {
+                            firebaseLogo?.setAttribute('data-visible', 'false')
+                            commentBoardHTML?.appendChild(commentHTML);
+                        }
+                    });
+                }
+                const username = userInfo?.querySelector('p');
+                const userimage = userInfo?.querySelector('img');
+                if (username && userimage) {
+                    username.textContent = currentUser.username;
+                    if (currentUser.photoUrl) {
+                        userimage.src = currentUser.photoUrl;
+                    }
+                }
+                userInfo?.removeAttribute('data-visible');
+                const sendFormImg = sendFormHTML?.querySelector('.avatar')
+                if (sendFormImg && currentUser.photoUrl) {
+                    sendFormImg.src = currentUser.photoUrl;
+                }
+                sendFormHTML?.removeAttribute('data-visible');
+            } catch (error) {
+                console.log(error);
+            }
+        } else {
+            console.log('log out');
+            currentUser = null;
+            firebaseLogo?.setAttribute('data-visible', 'false');
+            loginBtns?.removeAttribute('data-visible');
+        }
+    });
+});
+
+anonymousLoginBtn?.addEventListener('click', async () => {
     try {
         firebaseLogo?.removeAttribute('data-visible');
-        const data = await getComments();
-        currentUser = getCurrentUser();
-        if (sendFormHTML && currentUser) {
-            sendFormHTML.removeAttribute('data-visible');
-            const p = loginBtn?.querySelector('p');
-            if (p) {
-                p.textContent = 'Log out';
-            }
-            /**
-             * @type {HTMLImageElement|null}
-             */
-            const avatar = sendFormHTML?.querySelector('.avatar');
-            if (avatar) {
-                avatar.src = currentUser.photoURL;
-            }
-        }
-        data.forEach(obj => {
-            const commentHTML = createHtmlFromObject(obj);
-            if (commentHTML) {
-                firebaseLogo?.setAttribute('data-visible', 'false')
-                commentBoardHTML?.appendChild(commentHTML);
-            }
-        });
-        if (loginBtn) {
-            loginBtn.disabled = false;
-        }
+        loginBtns?.setAttribute('data-visible', 'false');
+        await signInAnonymously();
     } catch (error) {
-        console.log(error);
+        console.log(`error: ${error}`);
     }
 });
 
-loginBtn?.addEventListener('click', async () => {
+githubLoginBtn?.addEventListener('click', async () => {
     try {
-        const p = loginBtn.querySelector('p');
-        if (p && p.textContent === 'Log out') {
-            await signOut();
-            p.textContent = 'Log in';
-            if (sendFormHTML) {
-                sendFormHTML?.setAttribute('data-visible', 'false');
-                /**
-                 * @type {HTMLImageElement|null}
-                 */
-                const avatar = sendFormHTML?.querySelector('.avatar');
-                if (avatar) {
-                    avatar.src = '';
-                }
-            }
-            const listEditable = document.querySelectorAll('[data-status="editable"]');
-            listEditable.forEach(el => {
-                el.removeAttribute('data-status');
-            });
-            const listBtnSwitcherEdit = document.querySelectorAll('.switcher_reply');
-            listBtnSwitcherEdit.forEach(el => {
-                el.setAttribute('data-visible', 'false');
-            });
-        } else {
-            const loader = loginBtn.querySelector('.lds-ring');
-            const svg = loginBtn.querySelector('svg');
-            svg?.setAttribute('data-visible', 'false');
-            loader?.removeAttribute('data-visible');
-            currentUser = await signIn();
-        }
+        firebaseLogo?.removeAttribute('data-visible');
+        loginBtns?.setAttribute('data-visible', 'false');
+        await signIn();
     } catch (error) {
         console.log(`error: ${error}`);
+    }
+});
+
+logOutBtn?.addEventListener('click', async () => {
+    try {
+        firebaseLogo?.removeAttribute('data-visible');
+        userInfo?.setAttribute('data-visible', 'false');
+        sendFormHTML?.setAttribute('data-visible', 'false');
+        if (commentBoardHTML) {
+            const array = [...commentBoardHTML.children];
+            array.forEach(elem => {
+                const id = elem.getAttribute('id');
+                if (id !== null && id.length === 20) {
+                    commentBoardHTML.removeChild(elem);
+                }
+            });
+        }
+        await deleteUser(currentFirebaseUser);
+        await signOut();
+    } catch (error) {
+        console.log(error);
     }
 });
 
@@ -178,7 +234,6 @@ textareaDesktopSendFormHTML?.addEventListener('input', () => {
     }
 });
 
-
 sendFormHTML?.addEventListener('submit', async (e) => {
     e.preventDefault();
 
@@ -201,6 +256,7 @@ sendFormHTML?.addEventListener('submit', async (e) => {
         );
         const commentHTML = createHtmlFromObject(obj);
         if (commentHTML) {
+            emptyBoxImg?.setAttribute('data-visible', 'false');
             commentHTML.setAttribute('data-status', 'in progress');
             commentBoardHTML?.appendChild(commentHTML);
             smoothScroll(commentHTML, "end");
@@ -300,7 +356,7 @@ function createHtmlTemplate(obj) {
             const listScore = clone.querySelectorAll('.score');
             const username = clone.querySelector('.username');
             const component = clone.querySelector('.component');
-            const sendFormAvatar = clone.querySelector('#user_photo');
+            const userPhoto = clone.querySelector('#user_photo');
 
             h3.textContent = `${obj.user.username}'s comment`;
             content.innerHTML = processText(obj.content);
@@ -308,7 +364,9 @@ function createHtmlTemplate(obj) {
             listScore.forEach(score => {
                 score.textContent = obj.score;
             });
-            sendFormAvatar.src = obj.user.photoURL;
+            if (obj.user.photoUrl) {
+                userPhoto.src = obj.user.photoUrl;
+            }
             username.textContent = obj.user.username;
             if (currentUser && currentUser.id === obj.user.id) {
                 component.setAttribute('data-status', 'editable');
@@ -324,8 +382,8 @@ function createHtmlTemplate(obj) {
 
             const formReply = clone.querySelector('form:nth-child(2)');
             const formReplyAvatar = formReply.querySelector('.avatar');
-            if (currentUser) {
-                formReplyAvatar.src = currentUser.photoURL;
+            if (currentUser.photoUrl) {
+                formReplyAvatar.src = currentUser.photoUrl;
             }
             const labelFormReplyMobile = formReply.querySelector('.sm\\:display-none>label');
             const textareaFormReplyMobile = formReply.querySelector('.sm\\:display-none>textarea');
@@ -397,7 +455,7 @@ function createHtmlTemplate(obj) {
             });
 
             listBtnSwitcherReply.forEach(btn => {
-                if (currentUser === null) {
+                if (currentUser.id === null) {
                     btn.setAttribute('data-visible', 'false');
                 }
                 btn?.addEventListener('click', () => {
