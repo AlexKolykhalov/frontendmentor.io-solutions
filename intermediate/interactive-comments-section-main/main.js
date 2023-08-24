@@ -138,6 +138,7 @@ function getCurrentUserData(user) {
 
 window.addEventListener('load', () => {
     observerAuthState(async (user) => {
+        console.log(user);
         if (user) {
             console.log('log in');
             try {
@@ -296,6 +297,22 @@ textareaMobileSendFormHTML?.addEventListener('input', () => {
     }
 });
 
+// set custom border style for textarea in send form (mobile)
+textareaMobileSendFormHTML?.addEventListener('focusin', () => {
+    const listWrappers = sendFormHTML?.querySelectorAll('.wrapper');
+    listWrappers?.forEach(elem => {
+        elem.setAttribute('data-status', 'focus');
+    });
+});
+
+// remove custom border style for textarea in send form (mobile)
+textareaMobileSendFormHTML?.addEventListener('focusout', () => {
+    const listWrappers = sendFormHTML?.querySelectorAll('.wrapper');
+    listWrappers?.forEach(elem => {
+        elem.removeAttribute('data-status');
+    });
+});
+
 textareaDesktopSendFormHTML?.addEventListener('input', () => {
     if (sendFormHTML) {
         /**
@@ -309,6 +326,22 @@ textareaDesktopSendFormHTML?.addEventListener('input', () => {
                 btn.disabled = true;
         }
     }
+});
+
+// set custom border style for textarea in send form (desktop)
+textareaDesktopSendFormHTML?.addEventListener('focusin', () => {
+    const listWrappers = sendFormHTML?.querySelectorAll('.wrapper');
+    listWrappers?.forEach(elem => {
+        elem.setAttribute('data-status', 'focus');
+    });
+});
+
+// remove custom border style for textarea in send form (desktop)
+textareaDesktopSendFormHTML?.addEventListener('focusout', () => {
+    const listWrappers = sendFormHTML?.querySelectorAll('.wrapper');
+    listWrappers?.forEach(elem => {
+        elem.removeAttribute('data-status');
+    });
 });
 
 sendFormHTML?.addEventListener('submit', async (e) => {
@@ -452,6 +485,7 @@ function createHtmlTemplate(obj) {
             // forms
             const formUpdate = clone.querySelector('.grid form');
             const labelFormUpdate = formUpdate.querySelector('label');
+            const wrapperTextareaFormUpdate = formUpdate.querySelector('.wrapper');
             const textareaFormUpdate = formUpdate.querySelector('textarea');
             labelFormUpdate.setAttribute('for', labelFormUpdate.getAttribute('for') + obj.id);
             textareaFormUpdate.setAttribute('id', textareaFormUpdate.getAttribute('id') + obj.id);
@@ -466,6 +500,7 @@ function createHtmlTemplate(obj) {
             const textareaFormReplyMobile = formReply.querySelector('.sm\\:display-none>textarea');
             const labelFormReplyDesktop = formReply.querySelector('.m\\:display-none>label');
             const textareaFormReplyDesktop = formReply.querySelector('.m\\:display-none>textarea');
+            const wrapperTextareaFormReply = formReply.querySelectorAll('.wrapper');
             labelFormReplyMobile.setAttribute('for', labelFormReplyMobile.getAttribute('for') + obj.id);
             textareaFormReplyMobile.setAttribute('id', textareaFormReplyMobile.getAttribute('id') + obj.id);
             labelFormReplyDesktop.setAttribute('for', labelFormReplyDesktop.getAttribute('for') + obj.id);
@@ -487,6 +522,20 @@ function createHtmlTemplate(obj) {
                     btn.disabled = true;
             });
 
+            // set custom border style for textarea (mobile)
+            textareaFormReplyMobile.addEventListener('focusin', () => {
+                wrapperTextareaFormReply.forEach(elem => {
+                    elem.setAttribute('data-status', 'focus');
+                });
+            });
+
+            // remove custom border style for textarea (mobile)
+            textareaFormReplyMobile.addEventListener('focusout', () => {
+                wrapperTextareaFormReply.forEach(elem => {
+                    elem.removeAttribute('data-status');
+                });
+            });
+
             textareaFormReplyDesktop.addEventListener('input', () => {
                 // reply btn
                 const btn = clone.querySelector('.column.gap-sm>form .cta');
@@ -495,12 +544,36 @@ function createHtmlTemplate(obj) {
                     btn.disabled = true;
             });
 
+            // set custom border style for textarea (desktop)
+            textareaFormReplyDesktop.addEventListener('focusin', () => {
+                wrapperTextareaFormReply.forEach(elem => {
+                    elem.setAttribute('data-status', 'focus');
+                });
+            });
+
+            // remove custom border style for textarea (desktop)
+            textareaFormReplyDesktop.addEventListener('focusout', () => {
+                wrapperTextareaFormReply.forEach(elem => {
+                    elem.removeAttribute('data-status');
+                });
+            });
+
             textareaFormUpdate.addEventListener('input', () => {
                 // update btn
                 const btn = clone.querySelector('.column.gap-sm>article .cta');
                 (textareaFormUpdate.value.trim() != '') ?
                     btn.disabled = false :
                     btn.disabled = true;
+            });
+
+            //set custom border style of textarea when focus
+            textareaFormUpdate?.addEventListener('focusin', () => {
+                wrapperTextareaFormUpdate.setAttribute('data-status', 'focus');
+            });
+
+            //remove custom border style of textarea when focus
+            textareaFormUpdate?.addEventListener('focusout', () => {
+                wrapperTextareaFormUpdate.removeAttribute('data-status');
             });
 
             listBtnScorePlus.forEach(btn => {
@@ -538,13 +611,17 @@ function createHtmlTemplate(obj) {
                 btn?.addEventListener('click', () => {
                     if (formReply?.hasAttribute('data-visible') === true) {
                         const listFormReply = document.querySelectorAll('form:nth-child(2)');
+                        // close all open form reply
                         listFormReply.forEach(form => {
                             form.setAttribute('data-visible', 'false');
                         });
+                        // open this one
                         formReply.removeAttribute('data-visible');
                         smoothScroll(formReply, "end");
                     } else {
                         formReply.setAttribute('data-visible', 'false');
+                        textareaFormReplyMobile.value = '';
+                        textareaFormReplyDesktop.value = '';
                     }
                 });
             });

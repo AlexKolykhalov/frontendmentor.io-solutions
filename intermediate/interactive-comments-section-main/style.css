@@ -156,10 +156,40 @@ body {
     overflow: hidden;
 }
 
+.wrapper {
+    padding-block: 0.75rem;
+    /* padding-left: 1rem; */
+    border-radius: 0.4rem;
+    border: 1px solid var(--clr-neutral-200);
+}
+
+.wrapper[data-status="focus"] {
+    border: 1px solid var(--clr-neutral-800);
+    /* box-shadow: 0 0 0 2px var(--clr-neutral-800); */
+}
+
 textarea {
     width: 100%;
     resize: none;
     /* padding: 1rem; */
+    /* scroll-padding-top: 1.75rem; */
+    /* scroll-padding-bottom: 1.75rem; */
+    /* padding-block: 1rem; */
+    padding-inline: 1rem;
+    /* border-radius: 0.4rem; */
+    /* border-top: 32px solid white; */
+    border: none;
+    /* border: 1px solid var(--clr-neutral-800); */
+    /* border-radius: 0.4rem; */
+    /* padding: 1rem; */
+}
+
+textarea:focus,
+textarea:focus-visible,
+textarea:active {
+    /* border: 4px solid transparent; */
+    /* outline-color: transparent; */
+    outline: none;
 }
 
 button {
@@ -405,7 +435,7 @@ dialog::backdrop {
 
 .cta[data-theme="secondary"] {
     background-color: var(--clr-neutral-000);
-    box-shadow: 0 0 1px 1px var(--clr-primary-blue);
+    box-shadow: 0 0 0px 1px var(--clr-primary-blue);
     color: var(--clr-primary-blue);
 }
 
