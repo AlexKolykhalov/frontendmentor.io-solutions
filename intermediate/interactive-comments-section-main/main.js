@@ -219,6 +219,10 @@ logOutBtn?.addEventListener('click', async () => {
         firebaseLogo?.removeAttribute('data-visible');
         userInfo?.setAttribute('data-visible', 'false');
         sendFormHTML?.setAttribute('data-visible', 'false');
+        const sendFormImg = sendFormHTML?.querySelector('.avatar')
+        if (sendFormImg) {
+            sendFormImg.src = 'images/anonim-user.svg';
+        }
         if (textareaMobileSendFormHTML && textareaDesktopSendFormHTML) {
             textareaMobileSendFormHTML.value = '';
             textareaDesktopSendFormHTML.value = '';
