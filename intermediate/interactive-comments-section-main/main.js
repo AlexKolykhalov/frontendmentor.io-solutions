@@ -299,6 +299,7 @@ textareaMobileSendFormHTML?.addEventListener('input', () => {
 
 // set custom border style for textarea in send form (mobile)
 textareaMobileSendFormHTML?.addEventListener('focusin', () => {
+    closeOthersForm();
     const listWrappers = sendFormHTML?.querySelectorAll('.textarea-wrapper');
     listWrappers?.forEach(elem => {
         elem.setAttribute('data-status', 'focus');
@@ -330,6 +331,7 @@ textareaDesktopSendFormHTML?.addEventListener('input', () => {
 
 // set custom border style for textarea in send form (desktop)
 textareaDesktopSendFormHTML?.addEventListener('focusin', () => {
+    closeOthersForm();
     const listWrappers = sendFormHTML?.querySelectorAll('.textarea-wrapper');
     listWrappers?.forEach(elem => {
         elem.setAttribute('data-status', 'focus');
@@ -406,6 +408,10 @@ function closeOthersForm() {
     array.forEach(form => {
         form.setAttribute('data-visible', 'false');
         const listTextarea = form.querySelectorAll('textarea');
+        const btn = form.querySelector('button');
+        if (btn) {
+            btn.disabled = true;
+        }
         listTextarea.forEach(textarea => {
             textarea.value = '';
         });
@@ -619,7 +625,11 @@ function createHtmlTemplate(obj) {
                         smoothScroll(clone, "end");
                     } else {
                         content.removeAttribute('data-visible');
-                        formUpdate.setAttribute('data-visible', 'false');
+                        formUpdate.setAttribujjjjte('data-visible', 'false');
+                        const updateBtn = formUpdate.querySelector('button');
+                        if (updateBtn) {
+                            updateBtn.disabled = true;
+                        }
                     }
                 });
             });
@@ -639,6 +649,10 @@ function createHtmlTemplate(obj) {
                         formReply.setAttribute('data-visible', 'false');
                         textareaFormReplyMobile.value = '';
                         textareaFormReplyDesktop.value = '';
+                        const replyBtn = formReply.querySelector('button');
+                        if (replyBtn) {
+                            replyBtn.disabled = true;
+                        }
                     }
                 });
             });

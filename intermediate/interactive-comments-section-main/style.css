@@ -334,6 +334,22 @@ dialog::backdrop {
     padding-inline: 1rem;
 }
 
+.component .delete,
+.component .switcher_edit,
+.component .switcher_reply {
+    transition: opacity 0.1s ease-in;
+}
+
+@media (pointer:fine) {
+
+    .component .delete:hover,
+    .component .switcher_edit:hover,
+    .component .switcher_reply:hover {
+        opacity: 0.3;
+    }
+}
+
+
 .component .badge,
 .component .delete,
 .component .switcher_edit {
@@ -384,6 +400,16 @@ dialog::backdrop {
     background-color: inherit;
     color: var(--clr-primary-light-blue);
     height: 1.5rem;
+
+    transition: color 0.1s ease-in;
+}
+
+@media (pointer:fine) {
+
+    .score-plus:hover,
+    .score-minus:hover {
+        color: var(--clr-primary-blue);
+    }
 }
 
 .cta {
@@ -397,13 +423,10 @@ dialog::backdrop {
     padding-inline: 1.5rem;
     max-width: 155px;
 
-    transition: background-color 0.2s ease-in;
+    transition: background-color 0.1s ease-in, opacity 0.1s ease-in;
 }
 
 .cta:disabled {
-    --svg-clr: var(--clr-neutral-000);
-    --svg-bg: var(--clr-neutral-400);
-
     cursor: default;
     background-color: var(--clr-neutral-400);
 }
@@ -412,6 +435,17 @@ dialog::backdrop {
     background-color: var(--clr-neutral-000);
     box-shadow: 0 0 0px 1px var(--clr-primary-blue);
     color: var(--clr-primary-blue);
+}
+
+@media (pointer:fine) {
+    .cta:hover {
+        opacity: 0.5;
+    }
+
+    .cta:disabled:hover {
+        opacity: 1;
+        background-color: var(--clr-neutral-400);
+    }
 }
 
 .lds-ring {
