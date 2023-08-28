@@ -153,7 +153,6 @@ body {
     font-weight: 400;
     background-color: var(--clr-neutral-100);
     color: var(--clr-neutral-400);
-    overflow: hidden;
 }
 
 
@@ -593,22 +592,12 @@ dialog::backdrop {
     gap: 3rem;
 }
 
-.mar-left-sm {
-    margin-left: 2rem;
+.pad-l {
+    padding: clamp(1rem, 3vw, 2rem);
 }
 
-/* @media (min-width: 36em) {
-   .replies {
-    margin-left: 2rem;
-   }
-} */
-
-/* .mar-top-m {
-    margin-top: 1rem;
-} */
-
-.pad-m {
-    padding: 2rem;
+.pad-block-m {
+    padding-block: 1rem;
 }
 
 /* .pad-left {
@@ -721,6 +710,14 @@ dialog::backdrop {
 }
 
 @media (max-width: 36em) {
+    .m\:pad-l {
+        padding: 2rem;
+    }
+
+    .m\:mar-inline-m {
+        margin-inline: 1rem;
+    }
+
     .m\:display-none {
         display: none;
     }

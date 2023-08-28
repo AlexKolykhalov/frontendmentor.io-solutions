@@ -3,9 +3,9 @@
 <!-- 2. [x] Make padding in textareas -->
 <!-- 3. [x] Close reply or update form when one of them is open -->
 <!-- 4. [x] Overflow error with very long content string -->
-<!-- 5. [] Active state -->
-<!-- 6. [] Testing mobile mode -->
-<!-- 7. [] Testing CRUD -->
+<!-- 5. [x] Active state -->
+<!-- 6. [x] Testing mobile mode -->
+<!-- 7. [x] Testing CRUD -->
 <!-- 8. [] Problem with github auth in Mozila  -->
 
 <!DOCTYPE html>
@@ -44,7 +44,7 @@
           <h1 class="sr-only">Interactive component section</h1>
           <article>
             <h2 class="sr-only">A comment board</h2>
-            <div class="column gap-m">
+            <div class="column gap-m pad-block-m">
               <div class="fix-height">
                 <div id="user_info" class="row gap-m cross-axis-center" data-visible="false">
                   <div class="row gap-sm cross-axis-center">
@@ -94,24 +94,24 @@
                     </div>
                   </button>
                 </div>
-                <img class="empty-box" src="images/empty-box.svg" width="" height="" alt="" data-visible="false">
+                <img class="empty-box" src="images/empty-box.svg" alt="" data-visible="false">
                 <div class="firebase-logo">
                   <img src="images/firebase-logo-logomark.svg" width="50" height="50" alt="">
                 </div>
               </div>
             </div>
           </article>
-          <form id="form_send" data-visible="">
+          <form id="form_send" data-visible="false">
             <div class="component { column gap-m }">
               <div class="textarea-wrapper { sm:display-none }">
                 <label class="sr-only" for="send_mobile">Comment</label>
-                <textarea id="send_mobile" cols="100" rows="3" placeholder="Add a comment..."></textarea>
+                <textarea id="send_mobile" cols="100" rows="3" placeholder="Add a comment..." disabled></textarea>
               </div>
               <div class="row no-wrap gap-m main-axis-space-between cross-axis-center sm:cross-axis-start">
                 <img class="avatar { border-radius }" src="images/anonim-user.svg" alt="">
                 <div class="textarea-wrapper { m:display-none }">
                   <label class="sr-only" for="send_desktop">Comment</label>
-                  <textarea id="send_desktop" cols="100" rows="3" placeholder="Add a comment..."></textarea>
+                  <textarea id="send_desktop" cols="100" rows="3" placeholder="Add a comment..." disabled></textarea>
                 </div>
                 <button class="cta" disabled>Send</button>
               </div>
@@ -120,7 +120,7 @@
         </div>
       </div>
     </div>
-    <dialog id="modal_dialog" class="box-sm pad-m border">
+    <dialog id="modal_dialog" class="box-sm m:mar-inline-m pad-l border">
       <div class="column gap-m">
         <p class="fw-medium fs-600 clr-n-800">Delete comment</p>
         <p class="clr-n-400">Are you sure you want to delete this comment? This will remove the comment and can't be
@@ -135,7 +135,7 @@
   </main>
 
   <footer>
-    <div class="center gutters-m center-text">
+    <div class="center gutters-m m:pad-l center-text">
       <p>Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>.</p>
       <p>Coded by <a href="https://github.com/AlexKolykhalov">Alex Ko</a>.</p>
     </div>

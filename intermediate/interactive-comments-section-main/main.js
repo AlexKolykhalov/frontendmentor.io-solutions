@@ -138,7 +138,6 @@ function getCurrentUserData(user) {
 
 window.addEventListener('load', () => {
     observerAuthState(async (user) => {
-        console.log(user);
         if (user) {
             console.log('log in');
             try {
@@ -164,20 +163,31 @@ window.addEventListener('load', () => {
                     username.textContent = currentUser.username;
                     if (currentUser.photoUrl) {
                         userimage.src = currentUser.photoUrl;
+                    } else {
+                        userimage.src = 'images/anonim-user.svg';
                     }
                 }
                 userInfo?.removeAttribute('data-visible');
                 const sendFormImg = sendFormHTML?.querySelector('.avatar')
-                if (sendFormImg && currentUser.photoUrl) {
-                    sendFormImg.src = currentUser.photoUrl;
+                if (sendFormImg) {
+                    if (currentUser.photoUrl) {
+                        sendFormImg.src = currentUser.photoUrl;
+                    } else {
+                        sendFormImg.src = 'images/anonim-user.svg';
+                    }
                 }
                 sendFormHTML?.removeAttribute('data-visible');
+                if (textareaMobileSendFormHTML && textareaDesktopSendFormHTML) {
+                    textareaMobileSendFormHTML.disabled = false;
+                    textareaDesktopSendFormHTML.disabled = false;
+                }
             } catch (error) {
                 console.log(error);
             }
         } else {
             console.log('log out');
             currentUser = null;
+            emptyBoxImg?.setAttribute('data-visible', 'false');
             firebaseLogo?.setAttribute('data-visible', 'false');
             loginBtns?.removeAttribute('data-visible');
         }
@@ -209,6 +219,16 @@ logOutBtn?.addEventListener('click', async () => {
         firebaseLogo?.removeAttribute('data-visible');
         userInfo?.setAttribute('data-visible', 'false');
         sendFormHTML?.setAttribute('data-visible', 'false');
+        if (textareaMobileSendFormHTML && textareaDesktopSendFormHTML) {
+            textareaMobileSendFormHTML.value = '';
+            textareaDesktopSendFormHTML.value = '';
+            textareaMobileSendFormHTML.disabled = true;
+            textareaDesktopSendFormHTML.disabled = true;
+            const btn = sendFormHTML?.querySelector('.cta');
+            if (btn) {
+                btn.disabled = true;
+            }
+        }
         if (commentBoardHTML) {
             const array = [...commentBoardHTML.children];
             array.forEach(elem => {
@@ -245,6 +265,11 @@ modalDialogDeleteBtn?.addEventListener('click', async () => {
                     }
                     await deleteComment(doc.id)
                     commentBoardHTML?.removeChild(comment);
+                    // add empty-box if commentBoard is empty
+                    const allComments = commentBoardHTML?.querySelectorAll('div[id].column');
+                    if (allComments && allComments.length === 0) {
+                        emptyBoxImg?.removeAttribute('data-visible');
+                    }
                 }
                 if (doc.replyingTo != null) {
                     if (doc.replies.length > 0) {
@@ -625,7 +650,7 @@ function createHtmlTemplate(obj) {
                         smoothScroll(clone, "end");
                     } else {
                         content.removeAttribute('data-visible');
-                        formUpdate.setAttribujjjjte('data-visible', 'false');
+                        formUpdate.setAttribute('data-visible', 'false');
                         const updateBtn = formUpdate.querySelector('button');
                         if (updateBtn) {
                             updateBtn.disabled = true;
