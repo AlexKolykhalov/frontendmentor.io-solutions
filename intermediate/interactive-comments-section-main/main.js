@@ -396,6 +396,23 @@ sendFormHTML?.addEventListener('submit', async (e) => {
 // ************************* 2. Functions *******************************//
 
 /**
+ *Close all recently opened update or reply forms
+ * @returns {void}
+ */
+function closeOthersForm() {
+    const listFormReply = document.querySelectorAll('form:nth-child(2):not([data-visible])');
+    const listFormUpdate = document.querySelectorAll('.component.grid form:not([data-visible])');
+    const array = [...listFormReply, ...listFormUpdate];
+    array.forEach(form => {
+        form.setAttribute('data-visible', 'false');
+        const listTextarea = form.querySelectorAll('textarea');
+        listTextarea.forEach(textarea => {
+            textarea.value = '';
+        });
+    });
+}
+
+/**
  * @param {string} id id-key of current comment
  * @param {string} operator '+' or '-'
  * @returns {Promise<void>}
@@ -483,7 +500,7 @@ function createHtmlTemplate(obj) {
             }
 
             // forms
-            const formUpdate = clone.querySelector('.grid form');
+            const formUpdate = clone.querySelector('.component.grid form');
             const labelFormUpdate = formUpdate.querySelector('label');
             const wrapperTextareaFormUpdate = formUpdate.querySelector('.wrapper');
             const textareaFormUpdate = formUpdate.querySelector('textarea');
@@ -593,7 +610,10 @@ function createHtmlTemplate(obj) {
             listBtnSwitcherEdit.forEach(btn => {
                 btn.addEventListener('click', () => {
                     if (formUpdate?.hasAttribute('data-visible') === true) {
+                        // close all opened update or reply forms
+                        closeOthersForm();
                         content.setAttribute('data-visible', 'false');
+                        // and open this one
                         formUpdate.removeAttribute('data-visible');
                         textareaFormUpdate.value = content.textContent;
                         smoothScroll(clone, "end");
@@ -610,12 +630,9 @@ function createHtmlTemplate(obj) {
                 }
                 btn?.addEventListener('click', () => {
                     if (formReply?.hasAttribute('data-visible') === true) {
-                        const listFormReply = document.querySelectorAll('form:nth-child(2)');
-                        // close all open form reply
-                        listFormReply.forEach(form => {
-                            form.setAttribute('data-visible', 'false');
-                        });
-                        // open this one
+                        // close all opened update or reply forms
+                        closeOthersForm();
+                        // and open this one
                         formReply.removeAttribute('data-visible');
                         smoothScroll(formReply, "end");
                     } else {
