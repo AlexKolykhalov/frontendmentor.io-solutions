@@ -2,7 +2,7 @@
 <!-- 1. [x] Clean text in reply textarea when close or open -->
 <!-- 2. [x] Make padding in textareas -->
 <!-- 3. [x] Close reply or update form when one of them is open -->
-<!-- 4. [] Overflow error with very long content string -->
+<!-- 4. [x] Overflow error with very long content string -->
 <!-- k. [] Testing mobile mode -->
 <!-- 6. [] Testing CRUD -->
 <!-- 7. [] Problem with github auth in Mozila  -->
@@ -102,13 +102,13 @@
           </article>
           <form id="form_send" data-visible="">
             <div class="component { column gap-m }">
-              <div class="wrapper { sm:display-none }">
+              <div class="textarea-wrapper { sm:display-none }">
                 <label class="sr-only" for="send_mobile">Comment</label>
                 <textarea id="send_mobile" cols="100" rows="3" placeholder="Add a comment..."></textarea>
               </div>
               <div class="row no-wrap gap-m main-axis-space-between cross-axis-center sm:cross-axis-start">
                 <img class="avatar { border-radius }" src="images/anonim-user.svg" alt="">
-                <div class="wrapper { m:display-none }">
+                <div class="textarea-wrapper { m:display-none }">
                   <label class="sr-only" for="send_desktop">Comment</label>
                   <textarea id="send_desktop" cols="100" rows="3" placeholder="Add a comment..."></textarea>
                 </div>
@@ -188,10 +188,10 @@
                   </button>
                 </div>
               </div>
-              <p class="content"></p>
+              <p class="content { word-break }"></p>
               <form data-visible="false">
                 <div class=" column gap-m cross-axis-end">
-                  <div class="wrapper">
+                  <div class="textarea-wrapper">
                     <label class="sr-only" for="update_">Edit</label>
                     <textarea id="update_" rows="3" cols="100"></textarea>
                   </div>
@@ -236,13 +236,13 @@
         </article>
         <form data-visible="false">
           <div class="component { column gap-m }">
-            <div class="wrapper { sm:display-none }">
+            <div class="textarea-wrapper { sm:display-none }">
               <label class="sr-only" for="reply_mobile_">Reply</label>
               <textarea id="reply_mobile_" cols="100" rows="3"></textarea>
             </div>
             <div class="row gap-m no-wrap main-axis-space-between cross-axis-center sm:cross-axis-start">
               <img class="avatar" src="images/anonim-user.svg" alt="">
-              <div class="wrapper { m:display-none }">
+              <div class="textarea-wrapper { m:display-none }">
                 <label class="sr-only" for="reply_desktop_">Reply</label>
                 <textarea id="reply_desktop_" cols="100" rows="3"></textarea>
               </div>

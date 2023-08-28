@@ -156,39 +156,17 @@ body {
     overflow: hidden;
 }
 
-.wrapper {
-    padding-block: 0.75rem;
-    /* padding-left: 1rem; */
-    border-radius: 0.4rem;
-    border: 1px solid var(--clr-neutral-200);
-}
-
-.wrapper[data-status="focus"] {
-    border: 1px solid var(--clr-neutral-800);
-    /* box-shadow: 0 0 0 2px var(--clr-neutral-800); */
-}
 
 textarea {
     width: 100%;
     resize: none;
-    /* padding: 1rem; */
-    /* scroll-padding-top: 1.75rem; */
-    /* scroll-padding-bottom: 1.75rem; */
-    /* padding-block: 1rem; */
     padding-inline: 1rem;
-    /* border-radius: 0.4rem; */
-    /* border-top: 32px solid white; */
     border: none;
-    /* border: 1px solid var(--clr-neutral-800); */
-    /* border-radius: 0.4rem; */
-    /* padding: 1rem; */
 }
 
 textarea:focus,
 textarea:focus-visible,
 textarea:active {
-    /* border: 4px solid transparent; */
-    /* outline-color: transparent; */
     outline: none;
 }
 
@@ -198,7 +176,6 @@ button {
     border: none;
     border-radius: 0.4rem;
 
-    /* background-color: var(--clr-neutral-000); */
     background-color: transparent;
 }
 
@@ -355,8 +332,6 @@ dialog::backdrop {
     border-radius: 0.5rem;
     padding-block: 1rem;
     padding-inline: 1rem;
-
-    /* width: 100%; */
 }
 
 .component .badge,
@@ -516,7 +491,16 @@ dialog::backdrop {
 
 #logout_btn {
     background-color: transparent;
-    /* padding: 1rem; */
+}
+
+.textarea-wrapper {
+    padding-block: 0.75rem;
+    border-radius: 0.4rem;
+    border: 1px solid var(--clr-neutral-200);
+}
+
+.textarea-wrapper[data-status="focus"] {
+    border: 1px solid var(--clr-neutral-800);
 }
 
 /* ************************* */
@@ -612,6 +596,10 @@ dialog::backdrop {
 
 .fix-height {
     height: 40px;
+}
+
+.word-break {
+    word-break: break-all;
 }
 
 .center-text {

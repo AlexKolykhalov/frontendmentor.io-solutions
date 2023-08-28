@@ -299,7 +299,7 @@ textareaMobileSendFormHTML?.addEventListener('input', () => {
 
 // set custom border style for textarea in send form (mobile)
 textareaMobileSendFormHTML?.addEventListener('focusin', () => {
-    const listWrappers = sendFormHTML?.querySelectorAll('.wrapper');
+    const listWrappers = sendFormHTML?.querySelectorAll('.textarea-wrapper');
     listWrappers?.forEach(elem => {
         elem.setAttribute('data-status', 'focus');
     });
@@ -307,7 +307,7 @@ textareaMobileSendFormHTML?.addEventListener('focusin', () => {
 
 // remove custom border style for textarea in send form (mobile)
 textareaMobileSendFormHTML?.addEventListener('focusout', () => {
-    const listWrappers = sendFormHTML?.querySelectorAll('.wrapper');
+    const listWrappers = sendFormHTML?.querySelectorAll('.textarea-wrapper');
     listWrappers?.forEach(elem => {
         elem.removeAttribute('data-status');
     });
@@ -330,7 +330,7 @@ textareaDesktopSendFormHTML?.addEventListener('input', () => {
 
 // set custom border style for textarea in send form (desktop)
 textareaDesktopSendFormHTML?.addEventListener('focusin', () => {
-    const listWrappers = sendFormHTML?.querySelectorAll('.wrapper');
+    const listWrappers = sendFormHTML?.querySelectorAll('.textarea-wrapper');
     listWrappers?.forEach(elem => {
         elem.setAttribute('data-status', 'focus');
     });
@@ -338,7 +338,7 @@ textareaDesktopSendFormHTML?.addEventListener('focusin', () => {
 
 // remove custom border style for textarea in send form (desktop)
 textareaDesktopSendFormHTML?.addEventListener('focusout', () => {
-    const listWrappers = sendFormHTML?.querySelectorAll('.wrapper');
+    const listWrappers = sendFormHTML?.querySelectorAll('.textarea-wrapper');
     listWrappers?.forEach(elem => {
         elem.removeAttribute('data-status');
     });
@@ -502,7 +502,7 @@ function createHtmlTemplate(obj) {
             // forms
             const formUpdate = clone.querySelector('.component.grid form');
             const labelFormUpdate = formUpdate.querySelector('label');
-            const wrapperTextareaFormUpdate = formUpdate.querySelector('.wrapper');
+            const wrapperTextareaFormUpdate = formUpdate.querySelector('.textarea-wrapper');
             const textareaFormUpdate = formUpdate.querySelector('textarea');
             labelFormUpdate.setAttribute('for', labelFormUpdate.getAttribute('for') + obj.id);
             textareaFormUpdate.setAttribute('id', textareaFormUpdate.getAttribute('id') + obj.id);
@@ -517,7 +517,7 @@ function createHtmlTemplate(obj) {
             const textareaFormReplyMobile = formReply.querySelector('.sm\\:display-none>textarea');
             const labelFormReplyDesktop = formReply.querySelector('.m\\:display-none>label');
             const textareaFormReplyDesktop = formReply.querySelector('.m\\:display-none>textarea');
-            const wrapperTextareaFormReply = formReply.querySelectorAll('.wrapper');
+            const wrapperTextareaFormReply = formReply.querySelectorAll('.textarea-wrapper');
             labelFormReplyMobile.setAttribute('for', labelFormReplyMobile.getAttribute('for') + obj.id);
             textareaFormReplyMobile.setAttribute('id', textareaFormReplyMobile.getAttribute('id') + obj.id);
             labelFormReplyDesktop.setAttribute('for', labelFormReplyDesktop.getAttribute('for') + obj.id);
