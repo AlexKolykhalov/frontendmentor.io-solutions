@@ -3,11 +3,10 @@
 import {
     onAuthStateChanged,
     signInWithRedirect,
-    getRedirectResult,
+    signInWithPopup,
     signInAnonymously,
     signOut,
     deleteUser,
-    getAuth,
     GithubAuthProvider
 } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
 
@@ -38,11 +37,13 @@ async function signInAnonymous() {
 }
 
 const provider = new GithubAuthProvider();
+provider.addScope('repo');
 /**
  * @returns {Promise<void>}
  */
 async function signInGitHub() {
-    await signInWithRedirect(auth, provider);
+    // await signInWithRedirect(auth, provider);
+    await signInWithPopup(auth, provider);
 }
 
 /**
