@@ -443,14 +443,14 @@ dialog::backdrop {
     }
 }
 
-.lds-ring {
+/* .lds-ring {
     display: inline-block;
     position: relative;
     width: 32px;
     height: 32px;
-}
+} */
 
-.lds-ring div {
+/* .lds-ring div {
     box-sizing: border-box;
     display: block;
     position: absolute;
@@ -472,7 +472,7 @@ dialog::backdrop {
     100% {
         transform: rotate(360deg);
     }
-}
+} */
 
 .firebase-logo {
     position: absolute;

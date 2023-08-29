@@ -49,6 +49,21 @@ const githubLoginBtn = document.querySelector('#github_login_btn');
 /**
 * @type {HTMLButtonElement|null}
 */
+const githubLoginInfoBtn = document.querySelector('#github_login_info_btn');
+
+/**
+* @type {HTMLDialogElement|null}
+*/
+const modalGithubLoginInfoDialog = document.querySelector('#modal_github_login_info_dialog');
+
+/**
+* @type {HTMLButtonElement|null}
+*/
+const modalGithubLoginInfoDialogClose = document.querySelector('#modal_github_login_info_dialog_close');
+
+/**
+* @type {HTMLButtonElement|null}
+*/
 const anonymousLoginBtn = document.querySelector('#anonymous_login_btn');
 
 /**
@@ -184,6 +199,7 @@ function toggleVisibility() {
             footerDiv.setAttribute('data-visible', 'false');
         }
         infoBtn?.removeAttribute('data-visible');
+        githubLoginInfoBtn?.removeAttribute('data-visible');
     }
     if (window.matchMedia && window.matchMedia("(min-width: 36em)").matches) {
         commentBoardHTML?.removeAttribute('style');
@@ -191,6 +207,7 @@ function toggleVisibility() {
             footerDiv.removeAttribute('data-visible');
         }
         infoBtn?.setAttribute('data-visible', 'false');
+        githubLoginInfoBtn?.setAttribute('data-visible', 'false');
     }
 }
 
@@ -274,6 +291,14 @@ githubLoginBtn?.addEventListener('click', async () => {
     } catch (error) {
         console.log(`error: ${error}`);
     }
+});
+
+githubLoginInfoBtn?.addEventListener('click', () => {
+    modalGithubLoginInfoDialog?.showModal();
+});
+
+modalGithubLoginInfoDialogClose?.addEventListener('click', () => {
+    modalGithubLoginInfoDialog?.close();
 });
 
 logOutBtn?.addEventListener('click', async () => {

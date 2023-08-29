@@ -65,33 +65,45 @@
               </div>
               <div id="comment_board" class="column gap-m">
                 <div class="login-btns { row main-axis-center gap-l }" data-visible="false">
-                  <button id="github_login_btn" class="cta">
-                    <div class="row gap-sm main-axis-center cross-axis-center">
-                      <p>Log in</p>
-                      <div class="lds-ring" data-visible="false">
-                        <div></div>
-                      </div>
-                      <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="32" height="32"
-                        viewBox="0,0,256,256" style="fill:#000000;">
-                        <g fill="var(--svg-bg)" fill-rule="nonzero">
-                          <path d="M0,256v-256h256v256z" id="bgRectangle"></path>
-                        </g>
-                        <g fill="var(--svg-clr)" fill-rule="evenodd" style="mix-blend-mode: normal">
-                          <g transform="scale(8,8)">
-                            <path
-                              d="M16,4c-6.62891,0 -12,5.37109 -12,12c0,5.30078 3.4375,9.80078 8.20703,11.38672c0.60156,0.10938 0.82031,-0.25781 0.82031,-0.57812c0,-0.28516 -0.01172,-1.03906 -0.01562,-2.03906c-3.33984,0.72266 -4.04297,-1.60937 -4.04297,-1.60937c-0.54687,-1.38672 -1.33203,-1.75781 -1.33203,-1.75781c-1.08984,-0.74219 0.08203,-0.72656 0.08203,-0.72656c1.20313,0.08594 1.83594,1.23438 1.83594,1.23438c1.07031,1.83594 2.80859,1.30469 3.49219,1c0.10938,-0.77734 0.42188,-1.30469 0.76172,-1.60547c-2.66406,-0.30078 -5.46484,-1.33203 -5.46484,-5.92969c0,-1.3125 0.46875,-2.38281 1.23438,-3.22266c-0.12109,-0.30078 -0.53516,-1.52344 0.11719,-3.17578c0,0 1.00781,-0.32031 3.30078,1.23047c0.95703,-0.26562 1.98438,-0.39844 3.00391,-0.40234c1.01953,0.00391 2.04688,0.13672 3.00391,0.40234c2.29297,-1.55078 3.29688,-1.23047 3.29688,-1.23047c0.65625,1.65234 0.24609,2.875 0.12109,3.17578c0.76953,0.83984 1.23047,1.91016 1.23047,3.22266c0,4.60938 -2.80469,5.62109 -5.47656,5.92188c0.42969,0.36719 0.8125,1.10156 0.8125,2.21875c0,1.60547 -0.01172,2.89844 -0.01172,3.29297c0,0.32031 0.21484,0.69531 0.82422,0.57813c4.76563,-1.58984 8.19922,-6.08594 8.19922,-11.38672c0,-6.62891 -5.37109,-12 -12,-12z">
-                            </path>
+                  <div class="row gap-sm cross-axis-center">
+                    <button id="github_login_btn" class="cta">
+                      <div class="row gap-sm main-axis-center cross-axis-center">
+                        <p>Log in</p>
+                        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="32" height="32"
+                          viewBox="0,0,256,256" style="fill:#000000;">
+                          <g fill="var(--svg-bg)" fill-rule="nonzero">
+                            <path d="M0,256v-256h256v256z" id="bgRectangle"></path>
                           </g>
-                        </g>
+                          <g fill="var(--svg-clr)" fill-rule="evenodd" style="mix-blend-mode: normal">
+                            <g transform="scale(8,8)">
+                              <path
+                                d="M16,4c-6.62891,0 -12,5.37109 -12,12c0,5.30078 3.4375,9.80078 8.20703,11.38672c0.60156,0.10938 0.82031,-0.25781 0.82031,-0.57812c0,-0.28516 -0.01172,-1.03906 -0.01562,-2.03906c-3.33984,0.72266 -4.04297,-1.60937 -4.04297,-1.60937c-0.54687,-1.38672 -1.33203,-1.75781 -1.33203,-1.75781c-1.08984,-0.74219 0.08203,-0.72656 0.08203,-0.72656c1.20313,0.08594 1.83594,1.23438 1.83594,1.23438c1.07031,1.83594 2.80859,1.30469 3.49219,1c0.10938,-0.77734 0.42188,-1.30469 0.76172,-1.60547c-2.66406,-0.30078 -5.46484,-1.33203 -5.46484,-5.92969c0,-1.3125 0.46875,-2.38281 1.23438,-3.22266c-0.12109,-0.30078 -0.53516,-1.52344 0.11719,-3.17578c0,0 1.00781,-0.32031 3.30078,1.23047c0.95703,-0.26562 1.98438,-0.39844 3.00391,-0.40234c1.01953,0.00391 2.04688,0.13672 3.00391,0.40234c2.29297,-1.55078 3.29688,-1.23047 3.29688,-1.23047c0.65625,1.65234 0.24609,2.875 0.12109,3.17578c0.76953,0.83984 1.23047,1.91016 1.23047,3.22266c0,4.60938 -2.80469,5.62109 -5.47656,5.92188c0.42969,0.36719 0.8125,1.10156 0.8125,2.21875c0,1.60547 -0.01172,2.89844 -0.01172,3.29297c0,0.32031 0.21484,0.69531 0.82422,0.57813c4.76563,-1.58984 8.19922,-6.08594 8.19922,-11.38672c0,-6.62891 -5.37109,-12 -12,-12z">
+                              </path>
+                            </g>
+                          </g>
+                        </svg>
+                      </div>
+                    </button>
+                    <!-- Don't forget display: block in CSS -->
+                    <button id="github_login_info_btn" class="row">
+                      <svg class="clr-p-blue" fill="currentColor" width="20" height="20" viewBox="0 0 416.979 416.979"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                          d="M356.004,61.156c-81.37-81.47-213.377-81.551-294.848-0.182c-81.47,81.371-81.552,213.379-0.181,294.85
+                          c81.369,81.47,213.378,81.551,294.849,0.181C437.293,274.636,437.375,142.626,356.004,61.156z M237.6,340.786
+                          c0,3.217-2.607,5.822-5.822,5.822h-46.576c-3.215,0-5.822-2.605-5.822-5.822V167.885c0-3.217,2.607-5.822,5.822-5.822h46.576
+                          c3.215,0,5.822,2.604,5.822,5.822V340.786z M208.49,137.901c-18.618,0-33.766-15.146-33.766-33.765
+                          c0-18.617,15.147-33.766,33.766-33.766c18.619,0,33.766,15.148,33.766,33.766C242.256,122.755,227.107,137.901,208.49,137.901z">
+                        </path>
                       </svg>
-                    </div>
-                  </button>
+                    </button>
+                  </div>
                   <button id="anonymous_login_btn" class="cta" data-theme="secondary">
                     <div class="row gap-sm main-axis-center cross-axis-center">
                       <p>Log in</p>
-                      <div class="lds-ring" data-visible="false">
+                      <!-- <div class="lds-ring" data-visible="false">
                         <div></div>
-                      </div>
+                      </div> -->
                       <svg class="" fill="currentColor" width="32" height="32" viewBox="0 0 25 25"
                         xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" clip-rule="evenodd"
@@ -147,6 +159,19 @@
           <p class="clr-n-400">Coded by <a href="https://github.com/AlexKolykhalov">Alex Ko</a>.</p>
         </div>
         <button id="modal_info_dialog_close" class="cta { bg-n-800 }">Close</button>
+      </div>
+    </dialog>
+    <dialog id="modal_github_login_info_dialog" class="box-sm m:mar-inline-m pad-l border">
+      <div class="column gap-l">
+        <div class="column gap-sm">
+          <p class="clr-n-400">
+            If you have a GitHub app installed on your mobile, then you may have problems with authentication. To avoid
+            this, disable open GitHub links via GitHub app.
+          </p>
+          <p class="clr-n-400">Read more <a target="_blank"
+              href="https://github.com/orgs/community/discussions/10108">here</a>.</p>
+        </div>
+        <button id="modal_github_login_info_dialog_close" class="cta { bg-n-800 }">Close</button>
       </div>
     </dialog>
   </main>
