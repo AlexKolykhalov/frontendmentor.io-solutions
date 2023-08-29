@@ -46,19 +46,25 @@
             <h2 class="sr-only">A comment board</h2>
             <div class="column gap-m pad-block-m">
               <div class="fix-height">
-                <div id="user_info" class="row gap-m cross-axis-center" data-visible="false">
-                  <div class="row gap-sm cross-axis-center">
-                    <img class="border-radius" src="images/anonim-user.svg" width="40" height="40" alt="">
-                    <p></p>
+                <div id="user_info" class="row gap-m main-axis-space-between cross-axis-center" data-visible="false">
+                  <div class="row gap-m cross-axis-center">
+                    <div class="row gap-sm cross-axis-center">
+                      <img class="border-radius" src="images/anonim-user.svg" width="40" height="40" alt="">
+                      <p></p>
+                    </div>
+                    <button id="logout_btn">
+                      <span class="sr-only">Log out</span>
+                      <img src="images/logout.svg" width="20" height="20" alt="">
+                    </button>
                   </div>
-                  <button id="logout_btn">
-                    <span class="sr-only">Log out</span>
-                    <img src="images/logout.svg" width="20" height="20" alt="">
+                  <button id="info_btn">
+                    <span class="sr-only">Info</span>
+                    <img src="images/info.svg" width="20" height="20" alt="">
                   </button>
                 </div>
               </div>
               <div id="comment_board" class="column gap-m">
-                <div class="login-btns { row gap-l }" data-visible="false">
+                <div class="login-btns { row main-axis-center gap-l }" data-visible="false">
                   <button id="github_login_btn" class="cta">
                     <div class="row gap-sm main-axis-center cross-axis-center">
                       <p>Log in</p>
@@ -132,10 +138,21 @@
         </div>
       </div>
     </dialog>
+    <dialog id="modal_info_dialog" class="box-sm pad-l border">
+      <div class="column gap-l">
+        <div class="column gap-m">
+          <p class="clr-n-400">Challenge by <a href="https://www.frontendmentor.io?ref=challenge"
+              target="_blank">Frontend
+              Mentor</a>.</p>
+          <p class="clr-n-400">Coded by <a href="https://github.com/AlexKolykhalov">Alex Ko</a>.</p>
+        </div>
+        <button id="modal_info_dialog_close" class="cta { bg-n-800 }">Close</button>
+      </div>
+    </dialog>
   </main>
 
   <footer>
-    <div class="center gutters-m m:pad-l center-text">
+    <div class="center gutters-m m:pad-l center-text" data-visible="false">
       <p>Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>.</p>
       <p>Coded by <a href="https://github.com/AlexKolykhalov">Alex Ko</a>.</p>
     </div>

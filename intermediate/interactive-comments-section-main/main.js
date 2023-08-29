@@ -91,6 +91,21 @@ const modalDialogCancelBtn = document.querySelector('#modal_dialog_cancel_btn');
 */
 const modalDialogDeleteBtn = document.querySelector('#modal_dialog_delete_btn');
 
+/**
+* @type {HTMLButtonElement|null}
+*/
+const infoBtn = document.querySelector('#info_btn');
+
+/**
+* @type {HTMLButtonElement|null}
+*/
+const modalInfoDialogClose = document.querySelector('#modal_info_dialog_close');
+
+/**
+* @type {HTMLDialogElement|null}
+*/
+const modalInfoDialog = document.querySelector('#modal_info_dialog');
+
 let currentUser = null;
 
 /**
@@ -133,6 +148,49 @@ function getCurrentUserData(user) {
         id: user.reloadUserInfo.providerUserInfo[0].rawId,
         username: user.reloadUserInfo.providerUserInfo[0].screenName,
         photoUrl: user.reloadUserInfo.providerUserInfo[0].photoUrl,
+    }
+}
+
+function calculateHeightCommentBoard() {
+    const currentHeight = window.innerHeight;
+    const paddingTopAndBottom = 2 * 16;
+    const heightUserInfo = userInfo.offsetHeight;
+    const gapBetweenUserInfoAndCommentBoard = 16;
+    const gapBetweenCommentBoardAndSendForm = 16;
+    const heightSendForm = sendFormHTML.offsetHeight;
+    const paddingBottom = 16;
+    const commentBoardHeight = currentHeight -
+        heightUserInfo -
+        gapBetweenUserInfoAndCommentBoard -
+        gapBetweenCommentBoardAndSendForm -
+        heightSendForm -
+        paddingTopAndBottom -
+        paddingBottom;
+    if (commentBoardHTML) {
+        commentBoardHTML.style = `height: ${commentBoardHeight}px;`;
+    }
+}
+
+/**
+ * 1. Toggle visibility of footer
+ * 2. Calculate height of Comment board in mobile mode
+ * 3. Toggle visibility of info button
+ */
+function toggleVisibility() {
+    const footerDiv = document.querySelector('footer>div');
+    if (window.matchMedia && window.matchMedia("(max-width: 36em)").matches) {
+        calculateHeightCommentBoard();
+        if (footerDiv) {
+            footerDiv.setAttribute('data-visible', 'false');
+        }
+        infoBtn?.removeAttribute('data-visible');
+    }
+    if (window.matchMedia && window.matchMedia("(min-width: 36em)").matches) {
+        commentBoardHTML?.removeAttribute('style');
+        if (footerDiv) {
+            footerDiv.removeAttribute('data-visible');
+        }
+        infoBtn?.setAttribute('data-visible', 'false');
     }
 }
 
@@ -187,11 +245,15 @@ window.addEventListener('load', () => {
         } else {
             console.log('log out');
             currentUser = null;
-            emptyBoxImg?.setAttribute('data-visible', 'false');
             firebaseLogo?.setAttribute('data-visible', 'false');
             loginBtns?.removeAttribute('data-visible');
         }
+        toggleVisibility();
     });
+});
+
+window.addEventListener('resize', () => {
+    toggleVisibility();
 });
 
 anonymousLoginBtn?.addEventListener('click', async () => {
@@ -216,23 +278,10 @@ githubLoginBtn?.addEventListener('click', async () => {
 
 logOutBtn?.addEventListener('click', async () => {
     try {
-        firebaseLogo?.removeAttribute('data-visible');
+        emptyBoxImg?.setAttribute('data-visible', 'false');
         userInfo?.setAttribute('data-visible', 'false');
         sendFormHTML?.setAttribute('data-visible', 'false');
-        const sendFormImg = sendFormHTML?.querySelector('.avatar')
-        if (sendFormImg) {
-            sendFormImg.src = 'images/anonim-user.svg';
-        }
-        if (textareaMobileSendFormHTML && textareaDesktopSendFormHTML) {
-            textareaMobileSendFormHTML.value = '';
-            textareaDesktopSendFormHTML.value = '';
-            textareaMobileSendFormHTML.disabled = true;
-            textareaDesktopSendFormHTML.disabled = true;
-            const btn = sendFormHTML?.querySelector('.cta');
-            if (btn) {
-                btn.disabled = true;
-            }
-        }
+        firebaseLogo?.removeAttribute('data-visible');
         if (commentBoardHTML) {
             const array = [...commentBoardHTML.children];
             array.forEach(elem => {
@@ -309,6 +358,14 @@ modalDialogDeleteBtn?.addEventListener('click', async () => {
     } catch (error) {
         console.log(error);
     }
+});
+
+infoBtn?.addEventListener('click', () => {
+    modalInfoDialog?.showModal();
+});
+
+modalInfoDialogClose?.addEventListener('click', () => {
+    modalInfoDialog?.close();
 });
 
 textareaMobileSendFormHTML?.addEventListener('input', () => {

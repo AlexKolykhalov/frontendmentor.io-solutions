@@ -153,6 +153,7 @@ body {
     font-weight: 400;
     background-color: var(--clr-neutral-100);
     color: var(--clr-neutral-400);
+    overflow: hidden;
 }
 
 
@@ -292,12 +293,7 @@ dialog::backdrop {
     height: 60vh;
     overflow-y: auto;
 
-    position: relative;
-}
-
-#form_send[data-visible="false"] {
-    display: block;
-    opacity: 0.3;
+    /* position: relative; */
 }
 
 .column[id] form {
@@ -520,10 +516,6 @@ dialog::backdrop {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-}
-
-#logout_btn {
-    background-color: transparent;
 }
 
 .textarea-wrapper {
