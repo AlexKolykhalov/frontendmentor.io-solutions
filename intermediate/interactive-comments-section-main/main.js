@@ -147,8 +147,9 @@ function processText(text) {
     return newText;
 }
 
-function smoothScroll(div, block) {
-    div.scrollIntoView({ behavior: "smooth", block: block });
+function smoothScroll(div) {
+    // div.scrollIntoView({ behavior: "smooth", block: "end" });
+    div.scrollIntoView({ behavior: "smooth", block: "nearest" });
 }
 
 function getCurrentUserData(user) {
@@ -482,7 +483,7 @@ sendFormHTML?.addEventListener('submit', async (e) => {
             emptyBoxImg?.setAttribute('data-visible', 'false');
             commentHTML.setAttribute('data-status', 'in progress');
             commentBoardHTML?.appendChild(commentHTML);
-            smoothScroll(commentHTML, "end");
+            smoothScroll(commentHTML);
             try {
                 const id = await createComment(obj);
                 commentHTML.removeAttribute('data-status');
@@ -733,7 +734,7 @@ function createHtmlTemplate(obj) {
                         // and open this one
                         formUpdate.removeAttribute('data-visible');
                         textareaFormUpdate.value = content.textContent;
-                        smoothScroll(clone, "end");
+                        smoothScroll(clone);
                     } else {
                         content.removeAttribute('data-visible');
                         formUpdate.setAttribute('data-visible', 'false');
@@ -755,7 +756,7 @@ function createHtmlTemplate(obj) {
                         closeOthersForm();
                         // and open this one
                         formReply.removeAttribute('data-visible');
-                        smoothScroll(formReply, "end");
+                        smoothScroll(formReply);
                     } else {
                         formReply.setAttribute('data-visible', 'false');
                         textareaFormReplyMobile.value = '';
@@ -818,7 +819,7 @@ function createHtmlTemplate(obj) {
                             div.appendChild(newCommentHTML);
                             clone.appendChild(div);
                         }
-                        smoothScroll(newCommentHTML, 'end');
+                        smoothScroll(newCommentHTML);
 
                         const newId = await createComment(newObj);
                         const doc = await getComment(id);
