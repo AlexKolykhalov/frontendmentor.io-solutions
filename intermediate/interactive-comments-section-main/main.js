@@ -150,7 +150,7 @@ function processText(text) {
 function smoothScroll(div) {
     setTimeout(() => {
         div.scrollIntoView({ behavior: "smooth", block: "end" });
-    }, 10);
+    }, 100);
     // div.scrollIntoView({ behavior: "smooth", block: "end" });
 }
 
