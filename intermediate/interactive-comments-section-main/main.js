@@ -148,10 +148,16 @@ function processText(text) {
 }
 
 function smoothScroll(div) {
-    setTimeout(() => {
+    // setTimeout is needed for mob browsers when the keyboard closes
+    if (window.matchMedia && window.matchMedia("(max-width: 36em)").matches) {
+        setTimeout(() => {
+            div.scrollIntoView({ behavior: "smooth", block: "end" });
+        }, 100);
+    }
+
+    if (window.matchMedia && window.matchMedia("(min-width: 36em)").matches) {
         div.scrollIntoView({ behavior: "smooth", block: "end" });
-    }, 100);
-    // div.scrollIntoView({ behavior: "smooth", block: "end" });
+    }
 }
 
 function getCurrentUserData(user) {
