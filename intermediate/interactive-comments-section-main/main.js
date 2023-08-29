@@ -483,9 +483,9 @@ sendFormHTML?.addEventListener('submit', async (e) => {
             emptyBoxImg?.setAttribute('data-visible', 'false');
             commentHTML.setAttribute('data-status', 'in progress');
             commentBoardHTML?.appendChild(commentHTML);
-            setTimeout(() => {
-                smoothScroll(commentHTML);
-            }, 1000);
+            // setTimeout(() => {
+            //     smoothScroll(commentHTML);
+            // }, 1000);
             // smoothScroll(commentHTML);
             try {
                 const id = await createComment(obj);
@@ -503,6 +503,7 @@ sendFormHTML?.addEventListener('submit', async (e) => {
                 if (btn) {
                     btn.disabled = true;
                 }
+                smoothScroll(commentHTML);
             } catch (error) {
                 console.log(error);
             }
