@@ -60,10 +60,10 @@ Any comments are welcome.
 | 25 | Huddle landing page with curved sections | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/junior/huddle-landing-page-with-curved-sections-master/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/junior/huddle-landing-page-with-curved-sections-master) |
 </details>
 
-<!-- <details>
-<summary>Intermediate [0/14] (Free, Free++)</summary>
+<details>
+<summary>Intermediate [1/14] (Free, Free++)</summary>
 
 | No | Challenge | Live demo | Source |
 | :---: | :--- | :---: | :--- |
-| 01 | News homepage | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/intermediate/news-homepage-main/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/intermediate/news-homepage-main) |
-</details> -->
+| 01 | Interactive comments section | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/intermediate/interactive-comments-section-main/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/intermediate/interactive-comments-section-main) |
+</details>
