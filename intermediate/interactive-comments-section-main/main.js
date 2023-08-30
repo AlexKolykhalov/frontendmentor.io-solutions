@@ -204,7 +204,7 @@ anonymousLoginBtn?.addEventListener('click', async () => {
         loginBtns?.setAttribute('data-visible', 'false');
         await signInAnonymously();
     } catch (error) {
-        console.log(`error: ${error}`);
+        console.log(error);
     }
 });
 
@@ -214,7 +214,7 @@ githubLoginBtn?.addEventListener('click', async () => {
         loginBtns?.setAttribute('data-visible', 'false');
         await signIn();
     } catch (error) {
-        console.log(`error: ${error}`);
+        console.log(error);
     }
 });
 

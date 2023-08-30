@@ -103,29 +103,6 @@ img:not([alt]) {
 
     --base-size: 16px;
 
-    /* fluid typography */
-    /* https://fluid-typography.netlify.app/ */
-    /* https://fluidtypography.com/ */
-
-    /* minor third */
-    /* 5:6 <-> 1.2 */
-    /* 1.067
-    1.125
-    1.2
-    1.25
-    1.333
-    1.414
-    1.5
-    1.6
-    1.618
-    1.667
-    1.778
-    1.875
-    2
-    2.5
-    2.667
-    3
-    4 */
     --ratio: 1.2;
 
     --scale-100: calc(var(--scale-200) / var(--ratio));
@@ -155,7 +132,6 @@ body {
     color: var(--clr-neutral-400);
     overflow: hidden;
 }
-
 
 textarea {
     width: 100%;
@@ -195,13 +171,6 @@ dialog::backdrop {
     max-width: 75ch;
 }
 
-/* ↓ Intrinsic Centering: That is, centering elements based on their natural, content-based widths. */
-/* .intrinsic {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-} */
-
 .box-sm {
     max-width: 40ch;
 }
@@ -219,11 +188,6 @@ dialog::backdrop {
     block-size: 100%;
 }
 
-/* ↓ Split after - the element after which to split the stack with an auto margin */
-/* .column.split-after-1> :nth-child(1) {
-   margin-block-end: auto;
-} */
-
 .row {
     display: flex;
     flex-wrap: wrap;
@@ -233,28 +197,9 @@ dialog::backdrop {
 }
 
 .row>* {
-    /* ↓ Disallow children to grow */
     flex-grow: var(--flex-grow, 0);
-    /* ↓ Switch the layout at the --break */
     flex-basis: calc((var(--break) - 100%) * 999);
 }
-
-.break-m {
-    --break: var(--br-md);
-    /* ↓ Allow children to grow */
-    --flex-grow: 1;
-}
-
-/* ↓ Split after - the element after which to split the stack with an auto margin */
-/* .row.split-after-1> :nth-child(1) {
-    margin-inline-end: auto;
-} */
-
-/* .row.break-after-4> :nth-last-child(n+5), */
-/* .row.break-after-4> :nth-last-child(n+5)~* { */
-/* ↓ Switch to a vertical configuration if there are more than 4 child elements */
-/* flex-basis: 100%; */
-/* } */
 
 .grid {
     display: grid;
@@ -348,7 +293,6 @@ dialog::backdrop {
         opacity: 0.3;
     }
 }
-
 
 .component .badge,
 .component .delete,
@@ -542,10 +486,6 @@ dialog::backdrop {
     align-items: flex-end;
 }
 
-/* .cross-axis-stretch {
-    align-items: stretch;
-} */
-
 .gap-sm {
     gap: 0.5rem;
 }
@@ -565,14 +505,6 @@ dialog::backdrop {
 .pad-block-m {
     padding-block: 1rem;
 }
-
-/* .pad-left {
-    padding-left: clamp(1rem, 3vw, 2rem);
-} */
-
-/* .border-left {
-    border-left: 2px solid var(--clr-neutral-200);
-} */
 
 .border {
     border: none;
@@ -595,14 +527,6 @@ dialog::backdrop {
     text-align: center;
 }
 
-/* .uppercase {
-    text-transform: uppercase;
-} */
-
-/* .fw-regular {
-    font-weight: 400;
-} */
-
 .fw-medium {
     font-weight: 500;
 }
@@ -611,41 +535,9 @@ dialog::backdrop {
     font-weight: 700;
 }
 
-/* .fs-100 {
-    font-size: var(--scale-100);
-} */
-
-/* .fs-200 {
-    font-size: var(--scale-200);
-} */
-
-/* .fs-300 {
-    font-size: var(--scale-300);
-} */
-
-/* .fs-400 {
-    font-size: var(--scale-400);
-} */
-
-/* .fs-500 {
-    font-size: var(--scale-500);
-} */
-
 .fs-600 {
     font-size: var(--scale-600);
 }
-
-/* .fs-700 {
-    font-size: var(--scale-700);
-} */
-
-/* .fs-800 {
-    font-size: var(--scale-800);
-} */
-
-/* .fs-900 {
-    font-size: var(--scale-900);
-} */
 
 .clr-p-blue {
     color: var(--clr-primary-blue);

@@ -1,14 +1,3 @@
-<!-- TODO -->
-<!-- 1. [x] Clean text in reply textarea when close or open -->
-<!-- 2. [x] Make padding in textareas -->
-<!-- 3. [x] Close reply or update form when one of them is open -->
-<!-- 4. [x] Overflow error with very long content string -->
-<!-- 5. [x] Active state -->
-<!-- 6. [x] Testing mobile mode -->
-<!-- 7. [x] Testing CRUD -->
-<!-- 8. [x] Problem with github auth in Mozila  -->
-<!-- 9. [] Testing delete recursive -->
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -31,10 +20,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="style.css">
-  <script src="firebase/init.js" type="module" defer></script>
+  <!-- <script src="firebase/init.js" type="module" defer></script>
   <script src="firebase/firestore_api.js" type="module" defer></script>
   <script src="repository.js" type="module" defer></script>
-  <script src="main.js" type="module" defer></script>
+  <script src="main.js" type="module" defer></script> -->
 </head>
 
 <body>
@@ -68,8 +57,8 @@
                 <div class="login-btns { row main-axis-center gap-l }" data-visible="false">
                   <div class="row gap-sm cross-axis-center">
                     <button id="github_login_btn" class="cta">
-                      <div class="row gap-sm main-axis-center cross-axis-center">
-                        <p>Log in</p>
+                      <span class="row gap-sm main-axis-center cross-axis-center">
+                        <span>Log in</span>
                         <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="32" height="32"
                           viewBox="0,0,256,256" style="fill:#000000;">
                           <g fill="var(--svg-bg)" fill-rule="nonzero">
@@ -83,10 +72,10 @@
                             </g>
                           </g>
                         </svg>
-                      </div>
+                      </span>
                     </button>
-                    <!-- Don't forget display: block in CSS -->
                     <button id="github_login_info_btn" class="row">
+                      <span class="sr-only">Info</span>
                       <svg class="clr-p-blue" fill="currentColor" width="20" height="20" viewBox="0 0 416.979 416.979"
                         xmlns="http://www.w3.org/2000/svg">
                         <path
@@ -100,17 +89,14 @@
                     </button>
                   </div>
                   <button id="anonymous_login_btn" class="cta" data-theme="secondary">
-                    <div class="row gap-sm main-axis-center cross-axis-center">
-                      <p>Log in</p>
-                      <!-- <div class="lds-ring" data-visible="false">
-                        <div></div>
-                      </div> -->
+                    <span class="row gap-sm main-axis-center cross-axis-center">
+                      <span>Log in</span>
                       <svg class="" fill="currentColor" width="32" height="32" viewBox="0 0 25 25"
                         xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" clip-rule="evenodd"
                           d="M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12ZM15 9C15 10.6569 13.6569 12 12 12C10.3431 12 9 10.6569 9 9C9 7.34315 10.3431 6 12 6C13.6569 6 15 7.34315 15 9ZM12 20.5C13.784 20.5 15.4397 19.9504 16.8069 19.0112C17.4108 18.5964 17.6688 17.8062 17.3178 17.1632C16.59 15.8303 15.0902 15 11.9999 15C8.90969 15 7.40997 15.8302 6.68214 17.1632C6.33105 17.8062 6.5891 18.5963 7.19296 19.0111C8.56018 19.9503 10.2159 20.5 12 20.5Z" />
                       </svg>
-                    </div>
+                    </span>
                   </button>
                 </div>
                 <img class="empty-box" src="images/empty-box.svg" alt="" data-visible="false">
@@ -315,6 +301,11 @@
       </div>
     </div>
   </template>
+
+  <script src="firebase/init.js" type="module"></script>
+  <script src="firebase/firestore_api.js" type="module"></script>
+  <script src="repository.js" type="module"></script>
+  <script src="main.js" type="module"></script>
 </body>
 
 </html>
