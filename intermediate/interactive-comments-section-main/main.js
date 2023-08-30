@@ -136,90 +136,6 @@ let currentId = null;
 
 // ************************** 1. Events *********************************//
 
-/**
- * @param {string} text
- */
-function processText(text) {
-    const newText = text
-        .replace('[', '<span class="fw-medium clr-p-blue">@')
-        .replace(']', '</span>');
-
-    return newText;
-}
-
-function smoothScroll(div) {
-    // setTimeout is needed for mob browsers when the keyboard closes
-    if (window.matchMedia && window.matchMedia("(max-width: 36em)").matches) {
-        setTimeout(() => {
-            div.scrollIntoView({ behavior: "smooth", block: "end" });
-        }, 100);
-    }
-
-    if (window.matchMedia && window.matchMedia("(min-width: 36em)").matches) {
-        div.scrollIntoView({ behavior: "smooth", block: "end" });
-    }
-}
-
-function getCurrentUserData(user) {
-    if (user.isAnonymous) {
-        return {
-            id: null,
-            username: 'Anonymous',
-            photoUrl: null,
-        }
-    }
-    return {
-        id: user.reloadUserInfo.providerUserInfo[0].rawId,
-        username: user.reloadUserInfo.providerUserInfo[0].screenName,
-        photoUrl: user.reloadUserInfo.providerUserInfo[0].photoUrl,
-    }
-}
-
-function calculateHeightCommentBoard() {
-    const currentHeight = window.innerHeight;
-    const paddingTopAndBottom = 2 * 16;
-    const heightUserInfo = userInfo.offsetHeight;
-    const gapBetweenUserInfoAndCommentBoard = 16;
-    const gapBetweenCommentBoardAndSendForm = 16;
-    const heightSendForm = sendFormHTML.offsetHeight;
-    const paddingBottom = 16;
-    const commentBoardHeight = currentHeight -
-        heightUserInfo -
-        gapBetweenUserInfoAndCommentBoard -
-        gapBetweenCommentBoardAndSendForm -
-        heightSendForm -
-        paddingTopAndBottom -
-        paddingBottom;
-    if (commentBoardHTML) {
-        commentBoardHTML.style = `height: ${commentBoardHeight}px;`;
-    }
-}
-
-/**
- * 1. Toggle visibility of footer
- * 2. Calculate height of Comment board in mobile mode
- * 3. Toggle visibility of info button
- */
-function toggleVisibility() {
-    const footerDiv = document.querySelector('footer>div');
-    if (window.matchMedia && window.matchMedia("(max-width: 36em)").matches) {
-        calculateHeightCommentBoard();
-        if (footerDiv) {
-            footerDiv.setAttribute('data-visible', 'false');
-        }
-        infoBtn?.removeAttribute('data-visible');
-        githubLoginInfoBtn?.removeAttribute('data-visible');
-    }
-    if (window.matchMedia && window.matchMedia("(min-width: 36em)").matches) {
-        commentBoardHTML?.removeAttribute('style');
-        if (footerDiv) {
-            footerDiv.removeAttribute('data-visible');
-        }
-        infoBtn?.setAttribute('data-visible', 'false');
-        githubLoginInfoBtn?.setAttribute('data-visible', 'false');
-    }
-}
-
 window.addEventListener('load', () => {
     observerAuthState(async (user) => {
         if (user) {
@@ -388,10 +304,37 @@ modalDialogDeleteBtn?.addEventListener('click', async () => {
                 }
             }
         }
-        currentId = null;
     } catch (error) {
         console.log(error);
+        if (currentId && error.code === 'not-found') {
+            const comment = document.getElementById(currentId);
+            if (comment) {
+                const replies = comment.closest('.replies');
+                // if there are no replies to the comment
+                if (replies === null) {
+                    commentBoardHTML?.removeChild(comment);
+                    // add empty-box if commentBoard is empty
+                    const allComments = commentBoardHTML?.querySelectorAll('div[id].column');
+                    if (allComments && allComments.length === 0) {
+                        emptyBoxImg?.removeAttribute('data-visible');
+                    }
+                }
+                // if comment is inside replies
+                if (replies) {
+                    if (replies.children.length === 1) {
+                        const topComment = replies.closest('div[id].column');
+                        if (topComment) {
+                            topComment.removeChild(replies);
+                        }
+                    }
+                    if (replies.children.length > 1) {
+                        replies.removeChild(comment);
+                    }
+                }
+            }
+        }
     }
+    currentId = null;
 });
 
 infoBtn?.addEventListener('click', () => {
@@ -434,6 +377,7 @@ textareaMobileSendFormHTML?.addEventListener('focusout', () => {
     });
 });
 
+// send btn activity
 textareaDesktopSendFormHTML?.addEventListener('input', () => {
     if (sendFormHTML) {
         /**
@@ -518,6 +462,90 @@ sendFormHTML?.addEventListener('submit', async (e) => {
 // ************************* 2. Functions *******************************//
 
 /**
+ * @param {string} text
+ */
+function processText(text) {
+    const newText = text
+        .replace('[', '<span class="fw-medium clr-p-blue">@')
+        .replace(']', '</span>');
+
+    return newText;
+}
+
+function smoothScroll(div) {
+    // setTimeout is needed for mob browsers when the keyboard closes
+    if (window.matchMedia && window.matchMedia("(max-width: 36em)").matches) {
+        setTimeout(() => {
+            div.scrollIntoView({ behavior: "smooth", block: "end" });
+        }, 100);
+    }
+
+    if (window.matchMedia && window.matchMedia("(min-width: 36em)").matches) {
+        div.scrollIntoView({ behavior: "smooth", block: "end" });
+    }
+}
+
+function getCurrentUserData(user) {
+    if (user.isAnonymous) {
+        return {
+            id: null,
+            username: 'Anonymous',
+            photoUrl: null,
+        }
+    }
+    return {
+        id: user.reloadUserInfo.providerUserInfo[0].rawId,
+        username: user.reloadUserInfo.providerUserInfo[0].screenName,
+        photoUrl: user.reloadUserInfo.providerUserInfo[0].photoUrl,
+    }
+}
+
+function calculateHeightCommentBoard() {
+    const currentHeight = window.innerHeight;
+    const paddingTopAndBottom = 2 * 16;
+    const heightUserInfo = userInfo.offsetHeight;
+    const gapBetweenUserInfoAndCommentBoard = 16;
+    const gapBetweenCommentBoardAndSendForm = 16;
+    const heightSendForm = sendFormHTML.offsetHeight;
+    const paddingBottom = 16;
+    const commentBoardHeight = currentHeight -
+        heightUserInfo -
+        gapBetweenUserInfoAndCommentBoard -
+        gapBetweenCommentBoardAndSendForm -
+        heightSendForm -
+        paddingTopAndBottom -
+        paddingBottom;
+    if (commentBoardHTML) {
+        commentBoardHTML.style = `height: ${commentBoardHeight}px;`;
+    }
+}
+
+/**
+ * 1. Toggle visibility of footer
+ * 2. Calculate height of Comment board in mobile mode
+ * 3. Toggle visibility of info button
+ */
+function toggleVisibility() {
+    const footerDiv = document.querySelector('footer>div');
+    if (window.matchMedia && window.matchMedia("(max-width: 36em)").matches) {
+        calculateHeightCommentBoard();
+        if (footerDiv) {
+            footerDiv.setAttribute('data-visible', 'false');
+        }
+        infoBtn?.removeAttribute('data-visible');
+        githubLoginInfoBtn?.removeAttribute('data-visible');
+    }
+    if (window.matchMedia && window.matchMedia("(min-width: 36em)").matches) {
+        commentBoardHTML?.removeAttribute('style');
+        if (footerDiv) {
+            footerDiv.removeAttribute('data-visible');
+        }
+        infoBtn?.setAttribute('data-visible', 'false');
+        githubLoginInfoBtn?.setAttribute('data-visible', 'false');
+    }
+}
+
+/**
  *Close all recently opened update or reply forms
  * @returns {void}
  */
@@ -548,23 +576,19 @@ async function changeScore(id, operator) {
     if (div) {
         const commentHTML = div.querySelector('article');
         if (commentHTML) {
-            try {
-                /**
-                 * @type {NodeListOf<HTMLOutputElement>}
-                 */
-                const listScore = commentHTML.querySelectorAll('.score');
-                let value = operator === '+' ?
-                    Number(listScore[0].value) + 1 :
-                    Number(listScore[0].value) - 1
-                if (value > 99) { value = 99; }
-                if (value < -99) { value = -99; }
-                listScore.forEach(score => {
-                    score.value = value.toString();
-                });
-                await updateComment(id, { 'score': value });
-            } catch (error) {
-                console.log(error);
-            }
+            /**
+             * @type {NodeListOf<HTMLOutputElement>}
+             */
+            const listScore = commentHTML.querySelectorAll('.score');
+            let value = operator === '+' ?
+                Number(listScore[0].value) + 1 :
+                Number(listScore[0].value) - 1
+            if (value > 10) { value = 10; }
+            if (value < -10) { value = -10; }
+            listScore.forEach(score => {
+                score.value = value.toString();
+            });
+            await updateComment(id, { 'score': value });
         }
     }
 }
@@ -602,7 +626,7 @@ function createHtmlTemplate(obj) {
             const clone = firstChild.cloneNode(true);
             clone.setAttribute('id', obj.id);
 
-            // comment's elements
+            // *** comment's elements
             const h3 = clone.querySelector('h3');
             const content = clone.querySelector('.content');
             const createdAt = clone.querySelector('.createdAt');
@@ -625,7 +649,7 @@ function createHtmlTemplate(obj) {
                 component.setAttribute('data-status', 'editable');
             }
 
-            // forms
+            // *** forms
             const formUpdate = clone.querySelector('.component.grid form');
             const labelFormUpdate = formUpdate.querySelector('label');
             const wrapperTextareaFormUpdate = formUpdate.querySelector('.textarea-wrapper');
@@ -649,14 +673,15 @@ function createHtmlTemplate(obj) {
             labelFormReplyDesktop.setAttribute('for', labelFormReplyDesktop.getAttribute('for') + obj.id);
             textareaFormReplyDesktop.setAttribute('id', textareaFormReplyDesktop.getAttribute('id') + obj.id);
 
-            // buttons
+            // *** buttons
             const listBtnScorePlus = clone.querySelectorAll('.score-plus');
             const listBtnScoreMinus = clone.querySelectorAll('.score-minus');
             const listBtnSwitcherEdit = clone.querySelectorAll('.switcher_edit');
             const listBtnDelete = clone.querySelectorAll('.delete');
             const listBtnSwitcherReply = clone.querySelectorAll('.switcher_reply');
 
-            // events
+            // *** events
+            // reply btn activity 
             textareaFormReplyMobile.addEventListener('input', () => {
                 // reply btn
                 const btn = clone.querySelector('.column.gap-sm>form .cta');
@@ -679,6 +704,7 @@ function createHtmlTemplate(obj) {
                 });
             });
 
+            // reply btn activity 
             textareaFormReplyDesktop.addEventListener('input', () => {
                 // reply btn
                 const btn = clone.querySelector('.column.gap-sm>form .cta');
@@ -701,6 +727,7 @@ function createHtmlTemplate(obj) {
                 });
             });
 
+            // update btn activity 
             textareaFormUpdate.addEventListener('input', () => {
                 // update btn
                 const btn = clone.querySelector('.column.gap-sm>article .cta');
@@ -722,14 +749,40 @@ function createHtmlTemplate(obj) {
             listBtnScorePlus.forEach(btn => {
                 btn.addEventListener('click', async () => {
                     const id = clone.getAttribute('id');
-                    await changeScore(id, '+');
+                    const commentHTML = clone.querySelector('article');
+                    const listScore = commentHTML.querySelectorAll('.score');
+                    const currentValue = listScore[0].value;
+                    try {
+                        await changeScore(id, '+');
+                    } catch (error) {
+                        // console.log(error);
+                        listScore.forEach(score => {
+                            score.value = currentValue;
+                        });
+                        if (error.code === 'not-found') {
+                            clone.setAttribute('data-status', 'deleted');
+                        }
+                    }
                 });
             });
 
             listBtnScoreMinus.forEach(btn => {
                 btn.addEventListener('click', async () => {
                     const id = clone.getAttribute('id');
-                    await changeScore(id, '-');
+                    const commentHTML = clone.querySelector('article');
+                    const listScore = commentHTML.querySelectorAll('.score');
+                    const currentValue = listScore[0].value;
+                    try {
+                        await changeScore(id, '-');
+                    } catch (error) {
+                        // console.log(error);
+                        listScore.forEach(score => {
+                            score.value = currentValue;
+                        });
+                        if (error.code === 'not-found') {
+                            clone.setAttribute('data-status', 'deleted');
+                        }
+                    }
                 });
             });
 
@@ -788,12 +841,17 @@ function createHtmlTemplate(obj) {
                 e.preventDefault();
                 content.removeAttribute('data-visible');
                 formUpdate.setAttribute('data-visible', 'false');
+                const currentText = content.textContent;
                 try {
                     const id = clone.getAttribute('id');
                     content.textContent = textareaFormUpdate.value;
                     await updateComment(id, { 'content': textareaFormUpdate.value });
                 } catch (error) {
-                    console.log(error);
+                    // console.log(error);
+                    content.textContent = currentText;
+                    if (error.code === 'not-found') {
+                        clone.setAttribute('data-status', 'deleted');
+                    }
                 }
             });
 
@@ -815,6 +873,7 @@ function createHtmlTemplate(obj) {
                     );
                     const newCommentHTML = createHtmlFromObject(newObj);
                     formReply.setAttribute('data-visible', 'false');
+                    content.value = '';
                     if (newCommentHTML) {
                         newCommentHTML.setAttribute('data-status', 'in progress');
 
@@ -829,17 +888,22 @@ function createHtmlTemplate(obj) {
                         }
                         smoothScroll(newCommentHTML);
 
-                        const newId = await createComment(newObj);
                         const doc = await getComment(id);
+                        const newId = await createComment(newObj);
                         doc.replies.push(createCommentRef(newId));
                         await updateComment(doc.id, { 'replies': doc.replies });
 
                         newCommentHTML.removeAttribute('data-status');
                         newCommentHTML.setAttribute('id', newId);
-                        content.value = '';
                     }
                 } catch (error) {
-                    console.log(error);
+                    // console.log(error);
+                    const replies = clone.querySelector('.replies');
+                    const newCommentHTML = replies.querySelector('[data-status="in progress"]');
+                    replies.removeChild(newCommentHTML);
+                    if (error.code === 'not-found') {
+                        clone.setAttribute('data-status', 'deleted');
+                    }
                 }
             });
 

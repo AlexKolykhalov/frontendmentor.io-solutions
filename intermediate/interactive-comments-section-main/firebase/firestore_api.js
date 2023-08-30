@@ -1,5 +1,6 @@
 // @ts-check
 
+import { FirebaseError } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
 import { DocumentReference, Timestamp, doc, collection, query, where, orderBy, getDocs, getDoc, addDoc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js";
 import { db } from "./init.js"
 
@@ -83,7 +84,7 @@ async function executeQuery(leftValue, comparisonOperator, rightValue) {
 
 /**
  * @param {string|DocumentReference} id 
- * @returns {Promise<object>} data of comment or {}
+ * @returns {Promise<object>} data of comment
  */
 async function read(id) {
     const docSnap = typeof id === 'string' ?
@@ -96,7 +97,7 @@ async function read(id) {
         return obj;
     }
 
-    return {};
+    throw new FirebaseError('not-found');
 }
 
 /**

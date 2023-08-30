@@ -52,7 +52,7 @@ async function getComments() {
 
 /**
  * @param {string|unknown} id string or DocumentReference
- * @returns {Promise<object>} data of comment including id or {}
+ * @returns {Promise<object>} data of comment including id
  */
 async function getComment(id) {
     return read(id);

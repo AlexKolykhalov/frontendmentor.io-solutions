@@ -737,6 +737,33 @@ dialog::backdrop {
     opacity: 0.3;
 }
 
+[data-status="deleted"] {
+    position: relative;
+
+    border: 2px solid var(--clr-primary-red);
+    border-radius: 0.5rem;
+}
+
+[data-status="deleted"]>div {
+    opacity: 0.3;
+}
+
+[data-status="deleted"]::after {
+    content: 'has already been deleted';
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    background-color: var(--clr-neutral-100);
+    color: var(--clr-primary-red);
+    font-weight: 500;
+    padding-inline: 0.5rem;
+    text-align: center;
+}
+
+[data-status="deleted"] button,
 [data-status="in progress"] button {
     pointer-events: none;
 }
