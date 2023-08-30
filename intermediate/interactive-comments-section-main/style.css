@@ -292,8 +292,13 @@ dialog::backdrop {
 #comment_board {
     height: 60vh;
     overflow-y: auto;
+}
 
-    /* position: relative; */
+#github_login_info_btn {
+    position: absolute;
+
+    top: -20px;
+    right: -5px;
 }
 
 .column[id] form {
@@ -442,37 +447,6 @@ dialog::backdrop {
         background-color: var(--clr-neutral-400);
     }
 }
-
-/* .lds-ring {
-    display: inline-block;
-    position: relative;
-    width: 32px;
-    height: 32px;
-} */
-
-/* .lds-ring div {
-    box-sizing: border-box;
-    display: block;
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    margin: 6px;
-    border: 2px solid var(--clr-neutral-000);
-    border-radius: 50%;
-    border-color: var(--clr-neutral-000) var(--clr-neutral-000) var(--clr-neutral-000) transparent;
-
-    animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-}
-
-@keyframes lds-ring {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(360deg);
-    }
-} */
 
 .firebase-logo {
     position: absolute;
