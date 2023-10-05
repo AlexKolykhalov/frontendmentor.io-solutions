@@ -32,17 +32,17 @@ window.addEventListener('load', async () => {
     try {
         const response = await fetch('data.json');
         const json = await response.json();
-        // console.log('carousel init');
+        console.log('carousel init');
         if (window.location.pathname === '/intermediate/space-tourism-website-main/crew.html') {
-            // console.log('current data is about crew');
+            console.log('current data is about crew');
             data = json.crew;
         }
         if (window.location.pathname === '/intermediate/space-tourism-website-main/destination.html') {
-            // console.log('current data is about destinations');
+            console.log('current data is about destinations');
             data = json.destinations;
         }
         if (window.location.pathname === '/intermediate/space-tourism-website-main/technology.html') {
-            // console.log('current data is about technology');
+            console.log('current data is about technology');
             data = json.technology;
         }
     } catch (error) {
