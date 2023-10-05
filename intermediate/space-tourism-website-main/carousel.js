@@ -33,6 +33,7 @@ window.addEventListener('load', async () => {
         const response = await fetch('data.json');
         const json = await response.json();
         console.log('carousel init');
+        console.log(window.location.pathname);
         if (window.location.pathname === '/intermediate/space-tourism-website-main/crew.html') {
             console.log('current data is about crew');
             data = json.crew;
