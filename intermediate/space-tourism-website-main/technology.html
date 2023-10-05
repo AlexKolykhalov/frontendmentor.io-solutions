@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Space tourism website challenge on Frontend Mentor">
+    <meta name="keywords"
+        content="Frontend Mentor, Frontend, Mentor, HTML, CSS, Responsive, Mobile, Desktop, Alex Kolykhalov">
+
+    <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+
+    <title>Frontend Mentor | Space tourism website</title>
+    <!-- google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow&family=Barlow+Condensed&family=Bellefair&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background: no-repeat url('images/technology/background-technology-mobile.jpg');
+            background-size: cover;
+        }
+
+        @media (min-width: 48em) {
+            body {
+                background: no-repeat url('images/technology/background-technology-tablet.jpg');
+                background-size: cover;
+            }
+        }
+
+        @media (min-width: 62em) {
+            body {
+                background: no-repeat url('images/technology/background-technology-desktop.jpg');
+                background-size: cover;
+            }
+        }
+
+        /* General box which fixed main content */
+        .box-general {
+            max-width: 1107px;
+        }
+
+        /* Create gap between SPACE LAUNCH 101 and main content (not image)*/
+        @media (min-width: 62em) {
+            .lg\:mar-top {
+                margin-top: clamp(0px, 1vw, 90px);
+            }
+        }
+
+        @media (min-width: 75em) {
+            .lg\:mar-top {
+                margin-top: 90px;
+            }
+        }
+
+        .carousel {
+            transform: scaleX(1.2);
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="center gutters-m">
+            <div class="row main-axis-space-between cross-axis-center">
+                <img class="logo" src="images/shared/logo.svg" alt="">
+                <nav aria-label="Header">
+                    <button class="header-nav-btn" aria-controls="header_nav_list" aria-expanded="false"><span
+                            class="sr-only">Toggle</span></button>
+                    <ul id="header_nav_list" class="header-nav-list { row gap-m m:break }" data-visible="false">
+                        <li>
+                            <a class="clr-n-000 uppercase" href="index.html">
+                                <span class="fw-bold">00</span> Home
+                            </a>
+                        </li>
+                        <li>
+                            <a class="clr-n-000 uppercase" href="destination.html">
+                                <span class="fw-bold">01</span> Destination
+                            </a>
+                        </li>
+                        <li>
+                            <a class="clr-n-000 uppercase" href="crew.html">
+                                <span class="fw-bold">02</span> Crew
+                            </a>
+                        </li>
+                        <li>
+                            <a class="clr-n-000 uppercase" href="technology.html">
+                                <span class="fw-bold">03</span> Technology
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <h1 class="sr-only">Technology</h1>
+        <div class="center gutters-m overflow">
+            <div class="box-general center">
+                <div class="column pad-top-general gap-general m:cross-axis-center">
+                    <h2 class="ff-3 fs-500 uppercase"><span class="fw-bold clr-n-500 pad-right-xsm">03</span><span
+                            class="clr-n-000">Space launch 101</span></h2>
+                    <div class="center-text lg:start-text">
+                        <div class="lg:reverse row main-axis-center lg:main-axis-space-between">
+                            <div class="carousel">
+                                <picture class="tech-image">
+                                    <source srcset="images/technology/image-launch-vehicle-portrait.jpg"
+                                        media="(min-width: 62em)">
+                                    <img src="images/technology/image-launch-vehicle-landscape.jpg"
+                                        alt="Launch vehicle">
+                                </picture>
+                            </div>
+                            <div
+                                class="box-xl row main-axis-center lg:main-axis-space-between cross-axis-center lg:cross-axis-start lg:mar-top">
+                                <ul class="tech-nav { row lg:break }">
+                                    <li>
+                                        <button class="ff-2 fs-600" data-status="active">
+                                            <span class="sr-only">Launch vehicle</span>1
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button class="ff-2 fs-600">
+                                            <span class="sr-only">Spaceport</span>2
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button class="ff-2 fs-600">
+                                            <span class="sr-only">Space capsule</span>3
+                                        </button>
+                                    </li>
+                                </ul>
+                                <div class="box-l column">
+                                    <p class="ff-3 fs-300 uppercase">The terminology...</p>
+                                    <p class="name { ff-2 fs-700 uppercase clr-n-000 pad-bottom-general }">
+                                        Launch vehicle
+                                    </p>
+                                    <p class="tech-text { fs-400 }">
+                                        A launch vehicle or carrier rocket is a rocket-propelled vehicle used to carry a
+                                        payload from Earth's surface to space, usually to Earth orbit or beyond. Our
+                                        WEB-X carrier rocket is the most powerful in operation. Standing 150 metres
+                                        tall, it's quite an awe-inspiring sight on the launch pad!
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="main.js"></script>
+    <script src="carousel.js" type="module"></script>
+    <script src="technology.js" type="module"></script>
+</body>
+
+</html>

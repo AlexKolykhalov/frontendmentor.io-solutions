@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Space tourism website challenge on Frontend Mentor">
+  <meta name="keywords"
+    content="Frontend Mentor, Frontend, Mentor, HTML, CSS, Responsive, Mobile, Desktop, Alex Kolykhalov">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+
+  <title>Frontend Mentor | Space tourism website</title>
+  <!-- google fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow&family=Barlow+Condensed&family=Bellefair&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      background: no-repeat url('images/home/background-home-mobile.jpg');
+      background-size: cover;
+    }
+
+    @media (min-width: 48em) {
+      body {
+        background: no-repeat url('images/home/background-home-tablet.jpg');
+        background-size: cover;
+      }
+    }
+
+    @media (min-width: 62em) {
+      body {
+        background: no-repeat url('images/home/background-home-desktop.jpg');
+        background-size: cover;
+      }
+    }
+
+    /* Create gap between header navigaton and main content*/
+    .pad-top {
+      padding-top: 46px;
+    }
+
+    @media (min-width: 48em) {
+      .pad-top {
+        padding-top: 130px;
+      }
+    }
+
+    @media (min-width: 62em) {
+      .pad-top {
+        padding-top: 275px;
+      }
+    }
+
+    /* Create gap between text block and cta button */
+    .mar-top {
+      margin-top: 82px;
+    }
+
+    @media (min-width: 48em) {
+      .mar-top {
+        margin-top: 156px;
+      }
+    }
+
+    @media (min-width: 62em) {
+      .mar-top {
+        margin-top: 0;
+      }
+    }
+
+    .mar-block {
+      margin-top: 15px;
+      margin-bottom: 15px;
+    }
+
+    @media (min-width: 48em) {
+      .mar-block {
+        margin-top: 15px;
+        margin-bottom: 15px;
+      }
+    }
+
+    @media (min-width: 62em) {
+      .mar-block {
+        margin-top: 24px;
+        margin-bottom: 24px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="center gutters-m">
+      <div class="row main-axis-space-between cross-axis-center">
+        <img class="logo" src="images/shared/logo.svg" alt="">
+        <nav aria-label="Header">
+          <button class="header-nav-btn" aria-controls="header_nav_list" aria-expanded="false"><span
+              class="sr-only">Toggle</span></button>
+          <ul id="header_nav_list" class="header-nav-list { row m:break }" data-visible="false">
+            <li>
+              <a class="clr-n-000 uppercase" href="index.html">
+                <span class="fw-bold">00</span> Home
+              </a>
+            </li>
+            <li>
+              <a class="clr-n-000 uppercase" href="destination.html">
+                <span class="fw-bold">01</span> Destination
+              </a>
+            </li>
+            <li>
+              <a class="clr-n-000 uppercase" href="crew.html">
+                <span class="fw-bold">02</span> Crew
+              </a>
+            </li>
+            <li>
+              <a class="clr-n-000 uppercase" href="technology.html">
+                <span class="fw-bold">03</span> Technology
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <h1 class="sr-only">Space tourism</h1>
+    <div class="center gutters-m">
+      <div class="box-general center">
+        <div class="row main-axis-center lg:main-axis-space-between cross-axis-end pad-top">
+          <div class="box-m column center-text lg:start-text">
+            <p class="ff-3 fs-500 uppercase">So, you want to travel to</p>
+            <p class="mar-block ff-2 fs-900 uppercase clr-n-000">Space</p>
+            <p class="fs-400 mar-bottom">
+              Let’s face it; if you want to go to space, you might as well genuinely go to
+              outer space and not hover kind of on the edge of it. Well sit back, and relax
+              because we’ll give you a truly out of this world experience!
+            </p>
+          </div>
+          <a class="cta { row main-axis-center cross-axis-center mar-top }" href="#">Explore</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="center gutters-m pad-block-m center-text">
+      <p class="clr-n-000">Challenge by <a class="clr-n-000 underline"
+          href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend
+          Mentor</a>.</p>
+      <p class="clr-n-000">Coded by <a class="clr-n-000 underline" href="https://github.com/AlexKolykhalov">Alex Ko</a>.
+      </p>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+
+</html>

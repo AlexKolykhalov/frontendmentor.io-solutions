@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Space tourism website challenge on Frontend Mentor">
+    <meta name="keywords"
+        content="Frontend Mentor, Frontend, Mentor, HTML, CSS, Responsive, Mobile, Desktop, Alex Kolykhalov">
+
+    <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+
+    <title>Frontend Mentor | Space tourism website</title>
+    <!-- google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow&family=Barlow+Condensed&family=Bellefair&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background: no-repeat url('images/crew/background-crew-mobile.jpg');
+            background-size: cover;
+            overflow-x: hidden;
+        }
+
+        @media (min-width: 48em) {
+            body {
+                background: no-repeat url('images/crew/background-crew-tablet.jpg');
+                background-size: cover;
+                overflow-x: visible;
+            }
+        }
+
+        @media (min-width: 62em) {
+            body {
+                background: no-repeat url('images/crew/background-crew-desktop.jpg');
+                background-size: cover;
+                overflow: hidden;
+            }
+        }
+
+        /* Create gap between main content (not image) and MEET YOUR CREW */
+        @media (min-width: 62em) {
+            .lg\:mar-top {
+                margin-top: clamp(0px, 1vw, 90px);
+            }
+        }
+
+        @media (min-width: 75em) {
+            .lg\:mar-top {
+                margin-top: 90px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="center gutters-m">
+            <div class="row main-axis-space-between cross-axis-center">
+                <img class="logo" src="images/shared/logo.svg" alt="">
+                <nav aria-label="Header">
+                    <button class="header-nav-btn" aria-controls="header_nav_list" aria-expanded="false"><span
+                            class="sr-only">Toggle</span></button>
+                    <ul id="header_nav_list" class="header-nav-list { row gap-m m:break }" data-visible="false">
+                        <li>
+                            <a class="clr-n-000 uppercase" href="index.html">
+                                <span class="fw-bold">00</span> Home
+                            </a>
+                        </li>
+                        <li>
+                            <a class="clr-n-000 uppercase" href="destination.html">
+                                <span class="fw-bold">01</span> Destination
+                            </a>
+                        </li>
+                        <li>
+                            <a class="clr-n-000 uppercase" href="crew.html">
+                                <span class="fw-bold">02</span> Crew
+                            </a>
+                        </li>
+                        <li>
+                            <a class="clr-n-000 uppercase" href="technology.html">
+                                <span class="fw-bold">03</span> Technology
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <h1 class="sr-only">Crew</h1>
+        <div class="center gutters-m">
+            <div class="box-general center">
+                <div class="column pad-top-general gap-general m:cross-axis-center">
+                    <h2 class="ff-3 fs-500 uppercase"><span class="fw-bold clr-n-500 pad-right-xsm">02</span><span
+                            class="clr-n-000">Meet your crew</span></h2>
+                    <div class="center-text lg:start-text">
+                        <div class="m:reverse row main-axis-center lg:main-axis-space-between">
+                            <div
+                                class="m:reverse column lg:main-axis-space-between cross-axis-center lg:cross-axis-start">
+                                <div class="column lg:mar-top">
+                                    <p class="role { ff-2 fs-600 uppercase clr-n-500 }">Commander</p>
+                                    <p class="name { ff-2 fs-700 uppercase clr-n-000 pad-bottom-general }">
+                                        Douglas Hurley
+                                    </p>
+                                    <p class="bio { box-m fs-400 }">
+                                        Douglas Gerald Hurley is an American engineer, former Marine Corps pilot and
+                                        former
+                                        NASA astronaut. He launched into space for the third time as commander of Crew
+                                        Dragon Demo-2.
+                                    </p>
+                                </div>
+                                <ul class="crew-nav { row main-axis-center lg:main-axis-start border-top }">
+                                    <li>
+                                        <button data-status="active">
+                                            <span class="sr-only">Commander</span>
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button>
+                                            <span class="sr-only">Mission Specialist</span>
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button>
+                                            <span class="sr-only">Pilot</span>
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button>
+                                            <span class="sr-only">Flight Engineer</span>
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="carousel">
+                                <img class="crew-image" src="images/crew/image-douglas-hurley.webp" alt="Commander">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="main.js"></script>
+    <script src="carousel.js" type="module"></script>
+    <script src="crew.js" type="module"></script>
+</body>
+
+</html>

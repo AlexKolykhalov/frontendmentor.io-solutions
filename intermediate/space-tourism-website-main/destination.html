@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Space tourism website challenge on Frontend Mentor">
+    <meta name="keywords"
+        content="Frontend Mentor, Frontend, Mentor, HTML, CSS, Responsive, Mobile, Desktop, Alex Kolykhalov">
+
+    <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+
+    <title>Frontend Mentor | Space tourism website</title>
+    <!-- google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow&family=Barlow+Condensed&family=Bellefair&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background: no-repeat url('images/destination/background-destination-mobile.jpg');
+            background-size: cover;
+        }
+
+        @media (min-width: 48em) {
+            body {
+                background: no-repeat url('images/destination/background-destination-tablet.jpg');
+                background-size: cover;
+            }
+        }
+
+        @media (min-width: 62em) {
+            body {
+                background: no-repeat url('images/destination/background-destination-desktop.jpg');
+                background-size: cover;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="center gutters-m">
+            <div class="row main-axis-space-between cross-axis-center">
+                <img class="logo" src="images/shared/logo.svg" alt="">
+                <nav aria-label="Header">
+                    <button class="header-nav-btn" aria-controls="header_nav_list" aria-expanded="false"><span
+                            class="sr-only">Toggle</span></button>
+                    <ul id="header_nav_list" class="header-nav-list { row gap-m m:break }" data-visible="false">
+                        <li>
+                            <a class="clr-n-000 uppercase" href="index.html">
+                                <span class="fw-bold">00</span> Home
+                            </a>
+                        </li>
+                        <li>
+                            <a class="clr-n-000 uppercase" href="destination.html">
+                                <span class="fw-bold">01</span> Destination
+                            </a>
+                        </li>
+                        <li>
+                            <a class="clr-n-000 uppercase" href="crew.html">
+                                <span class="fw-bold">02</span> Crew
+                            </a>
+                        </li>
+                        <li>
+                            <a class="clr-n-000 uppercase" href="technology.html">
+                                <span class="fw-bold">03</span> Technology
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <h1 class="sr-only">Destination</h1>
+        <div class="center gutters-m">
+            <div class="box-general center">
+                <div class="column pad-top-general gap-general m:cross-axis-center">
+                    <h2 class="ff-3 fs-500 uppercase"><span class="fw-bold clr-n-500 pad-right-sm">01</span><span
+                            class="clr-n-000">Pick your
+                            destination</span></h2>
+                    <div class="center center-text lg:start-text">
+                        <div class="row main-axis-center cross-axis-end">
+                            <div class="carousel">
+                                <img class="planet-image" src="images/destination/image-moon.webp" alt="Moon">
+                            </div>
+                            <div class="box-sm column cross-axis-center lg:cross-axis-start">
+                                <ul class="planet-nav { row }">
+                                    <li><button class="ff-3 fs-300 uppercase" data-status="active">Moon</button></li>
+                                    <li><button class="ff-3 fs-300 uppercase">Mars</button></li>
+                                    <li><button class="ff-3 fs-300 uppercase">Europa</button></li>
+                                    <li><button class="ff-3 fs-300 uppercase">Titan</button></li>
+                                </ul>
+                                <p class="destination { ff-2 fs-800 uppercase clr-n-000 }">Moon</p>
+                                <p class="destination-description { fs-400 }">
+                                    See our planet as you’ve never seen it before. A perfect relaxing trip away to help
+                                    regain perspective and come back refreshed. While you’re there, take in some history
+                                    by visiting the Luna 2 and Apollo 11 landing sites.
+                                </p>
+                                <div class="destination-data { row gap break }">
+                                    <div class="column">
+                                        <p class="ff-3 fs-200 uppercase">Avg. distance</p>
+                                        <p class="distance { ff-2 fs-500-const clr-n-000 uppercase }">384,400 km</p>
+                                    </div>
+                                    <div class="column">
+                                        <p class="ff-3 fs-200 uppercase">Est. travel time</p>
+                                        <p class="travel-time { ff-2 fs-500-const clr-n-000 uppercase }">3 days</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="main.js"></script>
+    <script src="carousel.js" type="module"></script>
+    <script src="destination.js" type="module"></script>
+</body>
+
+</html>
