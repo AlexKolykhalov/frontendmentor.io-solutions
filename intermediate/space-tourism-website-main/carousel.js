@@ -46,7 +46,7 @@ window.addEventListener('load', async () => {
             data = json.technology;
         }
     } catch (error) {
-
+        console.log('data fetch error');
     }
 
     if (window.matchMedia("(min-width: 48em)").matches === false) {
