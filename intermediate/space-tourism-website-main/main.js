@@ -13,7 +13,8 @@ const headerNavList = document.querySelector('.header-nav-list');
 // ************************** 1. Events *********************************//
 
 window.addEventListener('load', () => {
-    if (window.matchMedia && window.matchMedia("(min-width: 48em)").matches) {
+    headerNavBtn?.removeAttribute('data-visible');
+    if (window.matchMedia("(min-width: 48em)").matches) {
         headerNavBtn?.setAttribute('data-visible', 'false');
         headerNavList?.removeAttribute('data-visible');
         setMark();
@@ -21,7 +22,7 @@ window.addEventListener('load', () => {
 });
 
 window.addEventListener('resize', () => {
-    if (window.matchMedia && window.matchMedia("(min-width: 48em)").matches) {
+    if (window.matchMedia("(min-width: 48em)").matches) {
         headerNavBtn?.setAttribute('data-visible', 'false');
         headerNavBtn?.setAttribute('aria-expanded', 'false');
         headerNavList?.removeAttribute('data-visible');
