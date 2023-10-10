@@ -82,16 +82,24 @@
         <div class="center gutters-m">
             <div class="box-general center">
                 <div class="column pad-top-general gap-general m:cross-axis-center">
-                    <h2 class="ff-3 fs-500 uppercase"><span class="fw-bold clr-n-500 pad-right-sm">01</span><span
-                            class="clr-n-000">Pick your
-                            destination</span></h2>
+                    <div class="row">
+                        <h2 class="ff-3 fs-500 uppercase">
+                            <span class="fw-bold clr-n-500 pad-right-sm">01</span>
+                            <span class="clr-n-000">Pick your destination</span>
+                        </h2>
+                        <button class="carousel-controller" aria-controls="planet_nav">
+                            <div class="spinner"></div>
+                            <img src="images/play.svg" alt="">
+                            <span class="sr-only">Play</span>
+                        </button>
+                    </div>
                     <div class="center center-text lg:start-text">
                         <div class="row main-axis-center cross-axis-end">
                             <div class="carousel">
                                 <img class="planet-image" src="images/destination/image-moon.webp" alt="Moon">
                             </div>
                             <div class="box-sm column cross-axis-center lg:cross-axis-start">
-                                <ul class="planet-nav { row }">
+                                <ul id="planet_nav" class="planet-nav { row }">
                                     <li><button class="ff-3 fs-300 uppercase" data-status="active">Moon</button></li>
                                     <li><button class="ff-3 fs-300 uppercase">Mars</button></li>
                                     <li><button class="ff-3 fs-300 uppercase">Europa</button></li>

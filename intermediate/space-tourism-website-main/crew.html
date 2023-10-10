@@ -98,8 +98,17 @@
         <div class="center gutters-m">
             <div class="box-general center">
                 <div class="column pad-top-general gap-general m:cross-axis-center">
-                    <h2 class="ff-3 fs-500 uppercase"><span class="fw-bold clr-n-500 pad-right-xsm">02</span><span
-                            class="clr-n-000">Meet your crew</span></h2>
+                    <div class="row">
+                        <h2 class="ff-3 fs-500 uppercase">
+                            <span class="fw-bold clr-n-500 pad-right-xsm">02</span>
+                            <span class="clr-n-000">Meet your crew</span>
+                        </h2>
+                        <button class="carousel-controller" aria-controls="crew_nav">
+                            <div class="spinner"></div>
+                            <img src="images/play.svg" alt="">
+                            <span class="sr-only">Play</span>
+                        </button>
+                    </div>
                     <div class="center-text lg:start-text">
                         <div class="m:reverse row main-axis-center lg:main-axis-space-between">
                             <div
@@ -116,7 +125,8 @@
                                         Dragon Demo-2.
                                     </p>
                                 </div>
-                                <ul class="crew-nav { row main-axis-center lg:main-axis-start border-top }">
+                                <ul id="crew_nav"
+                                    class="crew-nav { row main-axis-center lg:main-axis-start border-top }">
                                     <li>
                                         <button data-status="active">
                                             <span class="sr-only">Commander</span>

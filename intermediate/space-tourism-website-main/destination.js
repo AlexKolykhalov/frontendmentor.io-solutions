@@ -1,6 +1,6 @@
 // @ts-check
 
-import { getDataByIndex, setCurrentCarouselIndex, updateCarouselImages } from "./carousel.js"
+import { getDataByIndex, animateCarouselImages } from "./carousel.js"
 
 /**
 * @type {HTMLDivElement|null}
@@ -8,38 +8,49 @@ import { getDataByIndex, setCurrentCarouselIndex, updateCarouselImages } from ".
 const carousel = document.querySelector('.carousel');
 
 /**
+* @type {HTMLButtonElement|null}
+*/
+const carouselController = document.querySelector('.carousel-controller');
+
+/**
 * @type {NodeListOf<HTMLButtonElement>}
 */
 const listPlanetNavBtns = document.querySelectorAll('.planet-nav button');
 
+/**
+* @type {number}
+*/
+let intervalId = 0;
+
 // ************************** 1. Events *********************************//
 
 carousel?.addEventListener('turned', (e) => {
-    // console.log('turned');
     // current index in carousel
     const index = e.detail;
     updatePlanetInfo(index);
-    setCurrentCarouselIndex(index);
-    updateCarouselImages();
-    // clear all active status
-    listPlanetNavBtns.forEach(btn => {
-        btn.removeAttribute('data-status');
-    });
-    listPlanetNavBtns[index].setAttribute('data-status', 'active');
+    setNavBtnActiveStatus(index);
+});
+
+carouselController?.addEventListener('play', (e) => {
+    let index = e.detail;
+    const duration = window.matchMedia("(min-width: 48em)").matches ? 100 : 500;
+    intervalId = setInterval(() => {
+        index++;
+        animateCarouselImages(index, duration);
+    }, 4000);
+});
+
+carouselController?.addEventListener('pause', () => {
+    clearInterval(intervalId);
 });
 
 listPlanetNavBtns.forEach(bnt => {
     bnt.addEventListener('click', () => {
-        // clear all active status
-        listPlanetNavBtns.forEach(btn => {
-            btn.removeAttribute('data-status');
-        });
-        bnt.setAttribute('data-status', 'active');
         const arr = [...listPlanetNavBtns];
         const index = arr.indexOf(bnt);
-        updatePlanetInfo(index);
-        setCurrentCarouselIndex(index);
-        updateCarouselImages();
+        const duration = window.matchMedia("(min-width: 48em)").matches ? 100 : 300;
+        animateCarouselImages(index, duration);
+        carouselController?.dispatchEvent(new CustomEvent('break'));
     });
 });
 
@@ -92,4 +103,15 @@ function updatePlanetInfo(index) {
         img.src = planet.images.webp;
         img.alt = planet.name;
     }
+}
+
+/**
+ * @param {number} index 
+ */
+function setNavBtnActiveStatus(index) {
+    // clear all active status
+    listPlanetNavBtns.forEach(btn => {
+        btn.removeAttribute('data-status');
+    });
+    listPlanetNavBtns[index].setAttribute('data-status', 'active');
 }

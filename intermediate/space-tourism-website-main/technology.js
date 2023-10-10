@@ -1,6 +1,6 @@
 // @ts-check
 
-import { getDataByIndex, setCurrentCarouselIndex, updateCarouselImages } from "./carousel.js"
+import { getDataByIndex, animateCarouselImages } from "./carousel.js"
 
 /**
 * @type {HTMLDivElement|null}
@@ -8,38 +8,49 @@ import { getDataByIndex, setCurrentCarouselIndex, updateCarouselImages } from ".
 const carousel = document.querySelector('.carousel');
 
 /**
+* @type {HTMLButtonElement|null}
+*/
+const carouselController = document.querySelector('.carousel-controller');
+
+/**
 * @type {NodeListOf<HTMLButtonElement>}
 */
 const listTechNavBtns = document.querySelectorAll('.tech-nav button');
 
+/**
+* @type {number}
+*/
+let intervalId = 0;
+
 // ************************** 1. Events *********************************//
 
 carousel?.addEventListener('turned', (e) => {
-    // console.log('turned');
     // current index in carousel
     const index = e.detail;
     updateTechInfo(index);
-    setCurrentCarouselIndex(index);
-    updateCarouselImages();
-    // clear all active status
-    listTechNavBtns.forEach(btn => {
-        btn.removeAttribute('data-status');
-    });
-    listTechNavBtns[index].setAttribute('data-status', 'active');
+    setNavBtnActiveStatus(index);
+});
+
+carouselController?.addEventListener('play', (e) => {
+    let index = e.detail;
+    const duration = window.matchMedia("(min-width: 48em)").matches ? 100 : 500;
+    intervalId = setInterval(() => {
+        index++;
+        animateCarouselImages(index, duration);
+    }, 4000);
+});
+
+carouselController?.addEventListener('pause', () => {
+    clearInterval(intervalId);
 });
 
 listTechNavBtns.forEach(bnt => {
     bnt.addEventListener('click', async () => {
-        // clear all active status
-        listTechNavBtns.forEach(btn => {
-            btn.removeAttribute('data-status');
-        });
-        bnt.setAttribute('data-status', 'active');
         const arr = [...listTechNavBtns];
         const index = arr.indexOf(bnt);
-        updateTechInfo(index);
-        setCurrentCarouselIndex(index);
-        updateCarouselImages();
+        const duration = window.matchMedia("(min-width: 48em)").matches ? 100 : 300;
+        animateCarouselImages(index, duration);
+        carouselController?.dispatchEvent(new CustomEvent('break'));
     });
 });
 
@@ -89,4 +100,15 @@ function updateTechInfo(index) {
             img.alt = tech.name;
         }
     }
+}
+
+/**
+ * @param {number} index 
+ */
+function setNavBtnActiveStatus(index) {
+    // clear all active status
+    listTechNavBtns.forEach(btn => {
+        btn.removeAttribute('data-status');
+    });
+    listTechNavBtns[index].setAttribute('data-status', 'active');
 }

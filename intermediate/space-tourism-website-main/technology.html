@@ -105,8 +105,17 @@
         <div class="center gutters-m overflow">
             <div class="box-general center">
                 <div class="column pad-top-general gap-general m:cross-axis-center">
-                    <h2 class="ff-3 fs-500 uppercase"><span class="fw-bold clr-n-500 pad-right-xsm">03</span><span
-                            class="clr-n-000">Space launch 101</span></h2>
+                    <div class="row">
+                        <h2 class="ff-3 fs-500 uppercase">
+                            <span class="fw-bold clr-n-500 pad-right-xsm">03</span>
+                            <span class="clr-n-000">Space launch 101</span>
+                        </h2>
+                        <button class="carousel-controller" aria-controls="tech_nav">
+                            <div class="spinner"></div>
+                            <img src="images/play.svg" alt="">
+                            <span class="sr-only">Play</span>
+                        </button>
+                    </div>
                     <div class="center-text lg:start-text">
                         <div class="lg:reverse row main-axis-center lg:main-axis-space-between">
                             <div class="carousel">
@@ -119,7 +128,7 @@
                             </div>
                             <div
                                 class="box-xl row main-axis-center lg:main-axis-space-between cross-axis-center lg:cross-axis-start lg:mar-top">
-                                <ul class="tech-nav { row lg:break }">
+                                <ul id="tech_nav" class="tech-nav { row lg:break }">
                                     <li>
                                         <button class="ff-2 fs-600" data-status="active">
                                             <span class="sr-only">Launch vehicle</span>1

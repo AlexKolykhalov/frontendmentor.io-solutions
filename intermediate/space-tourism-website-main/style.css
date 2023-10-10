@@ -357,6 +357,66 @@ a {
     }
 }
 
+.carousel-controller {
+    background-color: transparent;
+
+    width: 20px;
+    height: 20px;
+
+    position: relative;
+}
+
+.carousel-controller>.spinner {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+
+    border-radius: 50%;
+    border: 1px solid var(--clr-neutral-000);
+    width: 20px;
+    height: 20px;
+
+    transition: scale 0.2s ease-out;
+}
+
+@media (pointer:fine) {
+    .carousel-controller>.spinner:hover {
+        scale: 1.2;
+    }
+}
+
+.carousel-controller>.spinner[data-status="on"] {
+    border-color: var(--clr-neutral-000) transparent transparent transparent;
+
+    animation: rotate 4s infinite;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(45deg);
+    }
+
+    25% {
+        transform: rotate(45deg);
+        border-color: var(--clr-neutral-000) transparent transparent transparent;
+    }
+
+    50% {
+        transform: rotate(45deg);
+        border-color: var(--clr-neutral-000) var(--clr-neutral-000) transparent transparent;
+    }
+
+    75% {
+        transform: rotate(45deg);
+        border-color: var(--clr-neutral-000) var(--clr-neutral-000) var(--clr-neutral-000) transparent;
+    }
+
+    100% {
+        transform: rotate(360deg);
+        border-color: transparent transparent transparent transparent;
+    }
+}
+
 .carousel .front {
     --scale: 1;
     --translateX: 0%;
