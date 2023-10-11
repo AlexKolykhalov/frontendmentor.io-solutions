@@ -33,9 +33,9 @@ carousel?.addEventListener('turned', (e) => {
 
 carouselController?.addEventListener('play', (e) => {
     let index = e.detail;
-    const duration = window.matchMedia("(min-width: 48em)").matches ? 100 : 500;
     intervalId = setInterval(() => {
         index++;
+        const duration = window.matchMedia("(min-width: 48em)").matches ? 100 : 500;
         animateCarouselImages(index, duration);
     }, 4000);
 });

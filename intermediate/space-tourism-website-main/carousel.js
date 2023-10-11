@@ -38,18 +38,18 @@ window.addEventListener('load', async () => {
         const response = await fetch('data.json');
         const json = await response.json();
         // console.log('carousel init');
-        // if (window.location.pathname === '/frontendmentor.io-solutions/intermediate/space-tourism-website-main/crew.html') {
-        if (window.location.pathname === '/intermediate/space-tourism-website-main/crew.html') {
+        if (window.location.pathname === '/frontendmentor.io-solutions/intermediate/space-tourism-website-main/crew.html') {
+            // if (window.location.pathname === '/intermediate/space-tourism-website-main/crew.html') {
             // console.log('current data is about crew');
             data = json.crew;
         }
-        // if (window.location.pathname === '/frontendmentor.io-solutions/intermediate/space-tourism-website-main/destination.html') {
-        if (window.location.pathname === '/intermediate/space-tourism-website-main/destination.html') {
+        if (window.location.pathname === '/frontendmentor.io-solutions/intermediate/space-tourism-website-main/destination.html') {
+            // if (window.location.pathname === '/intermediate/space-tourism-website-main/destination.html') {
             // console.log('current data is about destinations');
             data = json.destinations;
         }
-        // if (window.location.pathname === '/frontendmentor.io-solutions/intermediate/space-tourism-website-main/technology.html') {
-        if (window.location.pathname === '/intermediate/space-tourism-website-main/technology.html') {
+        if (window.location.pathname === '/frontendmentor.io-solutions/intermediate/space-tourism-website-main/technology.html') {
+            // if (window.location.pathname === '/intermediate/space-tourism-website-main/technology.html') {
             // console.log('current data is about technology');
             data = json.technology;
         }
@@ -63,7 +63,6 @@ window.addEventListener('load', async () => {
 });
 
 window.addEventListener('resize', () => {
-    carouselController?.dispatchEvent(new CustomEvent('break'));
     if (window.matchMedia("(min-width: 48em)").matches) {
         removeBackwardForwardImagesFromCarousel();
     } else {
