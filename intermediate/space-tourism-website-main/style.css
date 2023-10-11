@@ -778,15 +778,17 @@ a {
 }
 
 @media (pointer:fine) {
+    @media (min-width: 48em) {
 
-    .header-nav-list>li:has(a:hover),
-    .header-nav-list>li:has(a:focus) {
-        border-bottom: 4px solid var(--clr-neutral-050);
-    }
+        .header-nav-list>li:has(a:hover),
+        .header-nav-list>li:has(a:focus) {
+            border-bottom: 4px solid var(--clr-neutral-050);
+        }
 
-    .header-nav-list>li[data-status="active"]:hover,
-    .header-nav-list>li[data-status="active"]:has(a:focus) {
-        border-bottom: 4px solid var(--clr-neutral-000);
+        .header-nav-list>li[data-status="active"]:hover,
+        .header-nav-list>li[data-status="active"]:has(a:focus) {
+            border-bottom: 4px solid var(--clr-neutral-000);
+        }
     }
 }
 
