@@ -38,18 +38,18 @@ window.addEventListener('load', async () => {
         const response = await fetch('data.json');
         const json = await response.json();
         // console.log('carousel init');
-        if (window.location.pathname === '/frontendmentor.io-solutions/intermediate/space-tourism-website-main/crew.html') {
-            // if (window.location.pathname === '/intermediate/space-tourism-website-main/crew.html') {
+        // if (window.location.pathname === '/frontendmentor.io-solutions/intermediate/space-tourism-website-main/crew.html') {
+        if (window.location.pathname === '/intermediate/space-tourism-website-main/crew.html') {
             // console.log('current data is about crew');
             data = json.crew;
         }
-        if (window.location.pathname === '/frontendmentor.io-solutions/intermediate/space-tourism-website-main/destination.html') {
-            // if (window.location.pathname === '/intermediate/space-tourism-website-main/destination.html') {
+        // if (window.location.pathname === '/frontendmentor.io-solutions/intermediate/space-tourism-website-main/destination.html') {
+        if (window.location.pathname === '/intermediate/space-tourism-website-main/destination.html') {
             // console.log('current data is about destinations');
             data = json.destinations;
         }
-        if (window.location.pathname === '/frontendmentor.io-solutions/intermediate/space-tourism-website-main/technology.html') {
-            // if (window.location.pathname === '/intermediate/space-tourism-website-main/technology.html') {
+        // if (window.location.pathname === '/frontendmentor.io-solutions/intermediate/space-tourism-website-main/technology.html') {
+        if (window.location.pathname === '/intermediate/space-tourism-website-main/technology.html') {
             // console.log('current data is about technology');
             data = json.technology;
         }
@@ -282,78 +282,80 @@ function addBackwardForwardImagesToCarousel() {
  */
 function animateCarouselImages(imageIndex, duration) {
     const index = convertTo(imageIndex, data.length);
-    const imgFront = document.querySelector('.carousel .front');
-    let imgHidden;
+    if (index !== currentIndex) {
+        const imgFront = document.querySelector('.carousel .front');
+        let imgHidden;
 
-    if (window.location.pathname === '/frontendmentor.io-solutions/intermediate/space-tourism-website-main/destination.html') {
-        // if (window.location.pathname === '/intermediate/space-tourism-website-main/destination.html') {
-        imgHidden = index < currentIndex ?
-            document.querySelector('.carousel .backward') :
-            document.querySelector('.carousel .forward');
-        if (imgHidden) {
-            imgHidden.src = data[index].images.webp;
-            imgHidden.alt = data[index].name;
-        }
-    }
-
-    if (window.location.pathname === '/frontendmentor.io-solutions/intermediate/space-tourism-website-main/crew.html') {
-        // if (window.location.pathname === '/intermediate/space-tourism-website-main/crew.html') {
-        imgHidden = index < currentIndex ?
-            document.querySelector('.carousel .backward') :
-            document.querySelector('.carousel .forward');
-        if (imgHidden) {
-            imgHidden.src = data[index].images.webp;
-            imgHidden.alt = data[index].role;
-        }
-    }
-
-    if (window.location.pathname === '/frontendmentor.io-solutions/intermediate/space-tourism-website-main/technology.html') {
-        // if (window.location.pathname === '/intermediate/space-tourism-website-main/technology.html') {
-        imgHidden = index < currentIndex ?
-            document.querySelector('.carousel .backward') :
-            document.querySelector('.carousel .forward');
-        if (imgHidden) {
-            const source = imgHidden.querySelector('source');
-            const img = imgHidden.querySelector('img');
-            if (source && img) {
-                source.srcset = data[index].images.portrait;;
-                img.src = data[index].images.webp;
-                img.alt = data[index].name;
+        if (window.location.pathname === '/frontendmentor.io-solutions/intermediate/space-tourism-website-main/destination.html') {
+            // if (window.location.pathname === '/intermediate/space-tourism-website-main/destination.html') {
+            imgHidden = index < currentIndex ?
+                document.querySelector('.carousel .backward') :
+                document.querySelector('.carousel .forward');
+            if (imgHidden) {
+                imgHidden.src = data[index].images.webp;
+                imgHidden.alt = data[index].name;
             }
         }
+
+        if (window.location.pathname === '/frontendmentor.io-solutions/intermediate/space-tourism-website-main/crew.html') {
+            // if (window.location.pathname === '/intermediate/space-tourism-website-main/crew.html') {
+            imgHidden = index < currentIndex ?
+                document.querySelector('.carousel .backward') :
+                document.querySelector('.carousel .forward');
+            if (imgHidden) {
+                imgHidden.src = data[index].images.webp;
+                imgHidden.alt = data[index].role;
+            }
+        }
+
+        if (window.location.pathname === '/frontendmentor.io-solutions/intermediate/space-tourism-website-main/technology.html') {
+            // if (window.location.pathname === '/intermediate/space-tourism-website-main/technology.html') {
+            imgHidden = index < currentIndex ?
+                document.querySelector('.carousel .backward') :
+                document.querySelector('.carousel .forward');
+            if (imgHidden) {
+                const source = imgHidden.querySelector('source');
+                const img = imgHidden.querySelector('img');
+                if (source && img) {
+                    source.srcset = data[index].images.portrait;;
+                    img.src = data[index].images.webp;
+                    img.alt = data[index].name;
+                }
+            }
+        }
+
+        let start = performance.now();
+
+        const id = requestAnimationFrame(function animate(time) {
+            // timeFraction changed form 0 to 1
+            let timeFraction = (time - start) / duration;
+            if (timeFraction > 1) {
+                timeFraction = 1;
+            }
+
+            const progress = 1 - Math.pow(timeFraction, 6);
+
+            const scale = range(0, 1, 0.5, 1, progress);
+            const opacity = range(0, 0.5, 0, 1, progress);
+            const translate = range(0, 1, index < currentIndex ? 100 : -100, 0, progress);
+
+            if (imgFront && imgHidden) {
+                imgFront.setAttribute("style", `--scale: ${scale}; --translateX: ${translate}%; --opacity: ${opacity};`);
+                imgHidden.setAttribute("style", `--scale: ${1 - scale + 0.5}; --translateX: ${(index < currentIndex ? -100 : 100) + translate}%; --opacity: ${1 - opacity};`);
+            }
+
+            if (timeFraction < 1) {
+                requestAnimationFrame(animate);
+            } else {
+                cancelAnimationFrame(id);
+                setCurrentCarouselIndex(index);
+                updateCarouselImages();
+
+                // dispatch currentIndex our listeners in destination.js, crew.js and technology.js
+                carousel?.dispatchEvent(new CustomEvent('turned', { detail: index }));
+            }
+        });
     }
-
-    let start = performance.now();
-
-    const id = requestAnimationFrame(function animate(time) {
-        // timeFraction changed form 0 to 1
-        let timeFraction = (time - start) / duration;
-        if (timeFraction > 1) {
-            timeFraction = 1;
-        }
-
-        const progress = 1 - Math.pow(timeFraction, 6);
-
-        const scale = range(0, 1, 0.5, 1, progress);
-        const opacity = range(0, 0.5, 0, 1, progress);
-        const translate = range(0, 1, index < currentIndex ? 100 : -100, 0, progress);
-
-        if (imgFront && imgHidden) {
-            imgFront.setAttribute("style", `--scale: ${scale}; --translateX: ${translate}%; --opacity: ${opacity};`);
-            imgHidden.setAttribute("style", `--scale: ${1 - scale + 0.5}; --translateX: ${(index < currentIndex ? -100 : 100) + translate}%; --opacity: ${1 - opacity};`);
-        }
-
-        if (timeFraction < 1) {
-            requestAnimationFrame(animate);
-        } else {
-            cancelAnimationFrame(id);
-            setCurrentCarouselIndex(index);
-            updateCarouselImages();
-
-            // dispatch currentIndex our listeners in destination.js, crew.js and technology.js
-            carousel?.dispatchEvent(new CustomEvent('turned', { detail: index }));
-        }
-    });
 }
 
 function updateCarouselImages() {
