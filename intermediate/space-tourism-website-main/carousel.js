@@ -126,7 +126,7 @@ carousel?.addEventListener('touchend', (e) => {
 }, { passive: true });
 
 carouselController?.addEventListener('click', () => {
-    const description = carouselController.querySelector('span');
+    const description = carouselController.querySelector('span.sr-only');
     const imgSvg = carouselController.querySelector('img');
     const spinner = carouselController.querySelector('.spinner');
     if (description && imgSvg && spinner) {
