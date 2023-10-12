@@ -32,8 +32,8 @@ let turned = null;
 let data = null;
 
 /**@type {string} */
-// const pathname = '/frontendmentor.io-solutions/intermediate/space-tourism-website-main';
-const pathname = '/intermediate/space-tourism-website-main';
+const pathname = '/frontendmentor.io-solutions/intermediate/space-tourism-website-main';
+// const pathname = '/intermediate/space-tourism-website-main';
 
 // ************************** 1. Events *********************************//
 

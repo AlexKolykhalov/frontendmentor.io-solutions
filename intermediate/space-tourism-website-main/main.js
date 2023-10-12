@@ -68,8 +68,8 @@ function openMobileNavBar() {
  */
 function setMark() {
     const currentPath = window.location.pathname;
-    // const pathname = '/frontendmentor.io-solutions/intermediate/space-tourism-website-main';
-    const pathname = '/intermediate/space-tourism-website-main';
+    const pathname = '/frontendmentor.io-solutions/intermediate/space-tourism-website-main';
+    // const pathname = '/intermediate/space-tourism-website-main';
 
     let currentPage = headerNavList?.querySelector('li:nth-child(1)');
     if (currentPath === `${pathname}/destination.html`) {
