@@ -68,14 +68,17 @@ function openMobileNavBar() {
  */
 function setMark() {
     const currentPath = window.location.pathname;
+    // const pathname = '/frontendmentor.io-solutions/intermediate/space-tourism-website-main';
+    const pathname = '/intermediate/space-tourism-website-main';
+
     let currentPage = headerNavList?.querySelector('li:nth-child(1)');
-    if (currentPath === '/frontendmentor.io-solutions/intermediate/space-tourism-website-main/destination.html') {
+    if (currentPath === `${pathname}/destination.html`) {
         currentPage = headerNavList?.querySelector('li:nth-child(2)');
     }
-    if (currentPath === '/frontendmentor.io-solutions/intermediate/space-tourism-website-main/crew.html') {
+    if (currentPath === `${pathname}/crew.html`) {
         currentPage = headerNavList?.querySelector('li:nth-child(3)');
     }
-    if (currentPath === '/frontendmentor.io-solutions/intermediate/space-tourism-website-main/technology.html') {
+    if (currentPath === `${pathname}/technology.html`) {
         currentPage = headerNavList?.querySelector('li:nth-child(4)');
     }
     currentPage?.setAttribute('data-status', 'active');
