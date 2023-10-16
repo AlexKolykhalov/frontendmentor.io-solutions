@@ -48,8 +48,9 @@ function closeMobileNavBar() {
     headerNavBtn?.setAttribute('aria-expanded', 'false');
 
     const list = document.querySelectorAll('[tabindex="-1"]');
-    list.forEach(a => {
-        a.removeAttribute('tabindex');
+    list.forEach(elem => {
+        elem.removeAttribute('tabindex');
+        elem.removeAttribute('style');
     });
 }
 
@@ -58,8 +59,9 @@ function openMobileNavBar() {
     headerNavBtn?.setAttribute('aria-expanded', 'true');
 
     const list = document.querySelectorAll('a:not(.header-nav-list a), li>button');
-    list.forEach(a => {
-        a.setAttribute('tabindex', '-1');
+    list.forEach(elem => {
+        elem.setAttribute('tabindex', '-1');
+        elem.style = 'pointer-events: none;';
     });
 }
 
