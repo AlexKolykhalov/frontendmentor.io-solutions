@@ -61,10 +61,11 @@ Any comments are welcome.
 </details>
 
 <details>
-<summary>Intermediate [2/14] (Free, Free++)</summary>
+<summary>Intermediate [3/14] (Free, Free++)</summary>
 
 | No | Challenge | Live demo | Source |
 | :---: | :--- | :---: | :--- |
 | 01 | Interactive comments section | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/intermediate/interactive-comments-section-main/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/intermediate/interactive-comments-section-main) |
 | 02 | Space tourism website | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/intermediate/space-tourism-website-main/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/intermediate/space-tourism-website-main) |
+| 03 | E-commerce product page | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/intermediate/ecommerce-product-page-main/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/intermediate/ecommerce-product-page-main) |
 </details>
