@@ -197,14 +197,18 @@ modCloseBtn?.addEventListener('click', () => {
 
 /**Starts the effect of smooth disappearance of the cart*/
 function startFadeOut() {
-    cart?.setAttribute('data-status', 'fadeout');
-    timeoutId = setTimeout(closeCartItems, 3100);
+    if (window.matchMedia("(min-width: 48em)").matches) {
+        cart?.setAttribute('data-status', 'fadeout');
+        timeoutId = setTimeout(closeCartItems, 3100);
+    }
 }
 
 /**Cancel the effect of smooth disappearance of the cart*/
 function cancelFadeOut() {
-    cart?.removeAttribute('data-status');
-    clearTimeout(timeoutId);
+    if (window.matchMedia("(min-width: 48em)").matches) {
+        cart?.removeAttribute('data-status');
+        clearTimeout(timeoutId);
+    }
 }
 
 function closeMobileNavBar() {
@@ -260,7 +264,6 @@ function openCartItems() {
             headerCartIcon?.removeAttribute('data-count');
         });
     }
-
 
     startFadeOut();
 }
