@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Space tourism website challenge on Frontend Mentor">
+  <meta name="keywords"
+    content="Frontend Mentor, Frontend, Mentor, HTML, CSS, Responsive, Mobile, Desktop, Alex Kolykhalov">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+
+  <title>Frontend Mentor | E-commerce product page</title>
+
+  <!-- google fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <header>
+    <div class="box-m center-h gutters-m">
+      <div class="row main-axis-space-between cross-axis-center pad-block-m-d md:border-bottom">
+        <div class="row gap-m-d cross-axis-center m:reverse">
+          <a href="#">
+            <span class="sr-only">Home</span>
+            <img src="images/logo.svg" alt="">
+          </a>
+          <nav aria-label="Header">
+            <button class="header-nav-btn" aria-controls="header_nav_list" aria-expanded="false">
+              <span class="sr-only">Toggle</span>
+            </button>
+            <ul id="header_nav_list" class="header-nav-list { row m:break }" data-visible="false">
+              <li><a href="#">Collections</a></li>
+              <li><a href="#">Men</a></li>
+              <li><a href="#">Women</a></li>
+              <li><a href="#">About</a></li>
+              <li><a href="#">Contact</a></li>
+            </ul>
+          </nav>
+        </div>
+        <div class="row gap-m cross-axis-center">
+          <button class="header-cart-icon" aria-controls="cart" aria-expanded="false">
+            <span class="sr-only">Cart</span>
+            <svg fill="currentColor" width="23" height="20" viewBox="0 0 22 20" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M20.925 3.641H3.863L3.61.816A.896.896 0 0 0 2.717 0H.897a.896.896 0 1 0 0 1.792h1l1.031 11.483c.073.828.52 1.726 1.291 2.336C2.83 17.385 4.099 20 6.359 20c1.875 0 3.197-1.87 2.554-3.642h4.905c-.642 1.77.677 3.642 2.555 3.642a2.72 2.72 0 0 0 2.717-2.717 2.72 2.72 0 0 0-2.717-2.717H6.365c-.681 0-1.274-.41-1.53-1.009l14.321-.842a.896.896 0 0 0 .817-.677l1.821-7.283a.897.897 0 0 0-.87-1.114ZM6.358 18.208a.926.926 0 0 1 0-1.85.926.926 0 0 1 0 1.85Zm10.015 0a.926.926 0 0 1 0-1.85.926.926 0 0 1 0 1.85Zm2.021-7.243-13.8.81-.57-6.341h15.753l-1.383 5.53Z">
+              </path>
+            </svg>
+          </button>
+          <article id="cart" class="cart" data-visible="false">
+            <!-- <header class="pad-inline-m"> -->
+            <!-- <span class="fw-bold clr-n-800">Cart</span> -->
+            <h2 class="pad-inline-m fs-400 fw-bold clr-n-800">Cart</h2>
+            <!-- </header> -->
+            <hr>
+            <!-- <section> -->
+            <div class="cart-items { column gap-m pad-inline-m }">
+              <p class="center-h fw-bold clr-n-700 pad-top-l">Your cart is empty.</p>
+            </div>
+            <!-- </section> -->
+          </article>
+          <a class="avatar" href="#">
+            <span class="sr-only">Avatar</span>
+            <img src="images/image-avatar.png" alt="">
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="box-m center-h gutters-m m:overflow-x">
+      <div class="row m:break main-axis-space-around cross-axis-center md:pad-top-l">
+        <article>
+          <h2 class="sr-only">Image carousel</h2>
+          <div class="carousel">
+            <button>
+              <span class="sr-only">Previous</span>
+              <img src="images/icon-previous.svg" width="11" height="16" alt="">
+            </button>
+            <img src="images/image-product-1.jpg" alt="Product">
+            <button>
+              <span class="sr-only">Next</span>
+              <img src="images/icon-next.svg" width="11" height="16" alt="">
+            </button>
+          </div>
+          <ul class="row gap-m main-axis-space-between pad-top-m-d">
+            <li>
+              <button data-status="selected">
+                <span class="sr-only">Product-1-thumbnail</span>
+                <img src="images/image-product-1-thumbnail.jpg" width="80" height="80" alt="">
+              </button>
+            </li>
+            <li>
+              <button>
+                <span class="sr-only">Product-2-thumbnail</span>
+                <img src="images/image-product-2-thumbnail.jpg" width="80" height="80" alt="">
+              </button>
+            </li>
+            <li>
+              <button>
+                <span class="sr-only">Product-3-thumbnail</span>
+                <img src="images/image-product-3-thumbnail.jpg" width="80" height="80" alt="">
+              </button>
+            </li>
+            <li>
+              <button>
+                <span class="sr-only">Product-4-thumbnail</span>
+                <img src="images/image-product-4-thumbnail.jpg" width="80" height="80" alt="">
+              </button>
+            </li>
+          </ul>
+        </article>
+        <div class="md:box-sm">
+          <p class="fs-200-300 fw-bold clr-p-400 letter-spacing-m uppercase pad-top-m-d">Sneaker Company</p>
+          <h1 class="fs-700-900 fw-bold clr-n-800 pad-top-m">Fall Limited Edition Sneakers</h1>
+          <p class="clr-n-700 pad-top-m-d">
+            These low-profile sneakers are your perfect casual wear companion. Featuring a
+            durable rubber outer sole, they’ll withstand everything the weather can offer.
+          </p>
+          <div class="row md:break main-axis-space-between cross-axis-center pad-block-sm-d">
+            <div class="row gap-m cross-axis-center">
+              <div class="fs-700-800 fw-bold clr-n-800">$125.00</div>
+              <div class="discount">50%</div>
+            </div>
+            <div class="fw-bold text-decoration">$250.00</div>
+          </div>
+          <div class="row gap-m m:break flex-grow">
+            <div class="counter { row m:flex-grow cross-axis-center }">
+              <button>
+                <span class="sr-only">Add item</span>
+                <img src="images/icon-minus.svg" alt="">
+              </button>
+              <output class="fw-bold clr-n-800">0</output>
+              <button>
+                <span class="sr-only">Remove item</span>
+                <img src="images/icon-plus.svg" alt="">
+              </button>
+            </div>
+            <button class="cta" disabled>
+              <span class="row gap-m main-axis-center cross-axis-center">
+                <svg fill="currentColor" width="17" height="15" viewBox="0 0 22 20" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M20.925 3.641H3.863L3.61.816A.896.896 0 0 0 2.717 0H.897a.896.896 0 1 0 0 1.792h1l1.031 11.483c.073.828.52 1.726 1.291 2.336C2.83 17.385 4.099 20 6.359 20c1.875 0 3.197-1.87 2.554-3.642h4.905c-.642 1.77.677 3.642 2.555 3.642a2.72 2.72 0 0 0 2.717-2.717 2.72 2.72 0 0 0-2.717-2.717H6.365c-.681 0-1.274-.41-1.53-1.009l14.321-.842a.896.896 0 0 0 .817-.677l1.821-7.283a.897.897 0 0 0-.87-1.114ZM6.358 18.208a.926.926 0 0 1 0-1.85.926.926 0 0 1 0 1.85Zm10.015 0a.926.926 0 0 1 0-1.85.926.926 0 0 1 0 1.85Zm2.021-7.243-13.8.81-.57-6.341h15.753l-1.383 5.53Z">
+                  </path>
+                </svg>
+                <span>Add to cart</span>
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="box-m center-h gutters-m pad-block-m-d">
+      <div class="column cross-axis-center">
+        <p>Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend
+            Mentor</a>.</p>
+        <p>Coded by <a href="https://github.com/AlexKolykhalov">Alex Ko</a>.</p>
+      </div>
+    </div>
+  </footer>
+
+  <template id="template">
+    <div class="cart-items-description { column gap-m overflow-y }">
+      <div class="row no-wrap gap-m cross-axis-center split-after-2">
+        <img src="images/image-product-1-thumbnail.jpg" width="50" height="50" alt="">
+        <div class="column">
+          <p class="clr-n-700">Fall Limited Edition Sneakers</p>
+          <p>
+            <span class="clr-n-700">$125.00 x <span class="cart-items-count">3</span></span>
+            <span class="cart-items-price { fw-bold clr-n-800 }">$375.00</span>
+          </p>
+        </div>
+        <button><img src="images/icon-delete.svg" width="14" height="18" alt=""></button>
+      </div>
+    </div>
+    <button class="cta">Checkout</button>
+  </template>
+
+  <dialog id="modal_dialog">
+    <div class="column gap-m cross-axis-end">
+      <button>
+        <span class="sr-only">Close</span>
+        <svg fill="currentColor" width="14" height="15" viewBox="0 0 14 15" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="m11.596.782 2.122 2.122L9.12 7.499l4.597 4.597-2.122 2.122L7 9.62l-4.595 4.597-2.122-2.122L4.878 7.5.282 2.904 2.404.782l4.595 4.596L11.596.782Z">
+          </path>
+        </svg>
+      </button>
+      <article>
+        <h2 class="sr-only">Modal image carousel</h2>
+        <div class="carousel">
+          <button>
+            <span class="sr-only">Previous</span>
+            <svg width="12" height="18" viewBox="0 0 12 18" xmlns="http://www.w3.org/2000/svg">
+              <path d="M11 1 3 9l8 8" stroke="currentColor" stroke-width="3" fill="none" fill-rule="evenodd" />
+            </svg>
+          </button>
+          <img src="images/image-product-1.jpg" alt="Product">
+          <button>
+            <span class="sr-only">Next</span>
+            <svg width="12" height="18" viewBox="0 0 13 18" xmlns="http://www.w3.org/2000/svg">
+              <path d="m2 1 8 8-8 8" stroke="currentColor" stroke-width="3" fill="none" fill-rule="evenodd" />
+            </svg>
+          </button>
+        </div>
+        <ul class="row gap-m main-axis-space-evenly pad-top-m-d">
+          <li>
+            <button>
+              <span class="sr-only">Product-1-thumbnail</span>
+              <img src="images/image-product-1-thumbnail.jpg" width="80" height="80" alt="">
+            </button>
+          </li>
+          <li>
+            <button>
+              <span class="sr-only">Product-2-thumbnail</span>
+              <img src="images/image-product-2-thumbnail.jpg" width="80" height="80" alt="">
+            </button>
+          </li>
+          <li>
+            <button>
+              <span class="sr-only">Product-3-thumbnail</span>
+              <img src="images/image-product-3-thumbnail.jpg" width="80" height="80" alt="">
+            </button>
+          </li>
+          <li>
+            <button>
+              <span class="sr-only">Product-4-thumbnail</span>
+              <img src="images/image-product-4-thumbnail.jpg" width="80" height="80" alt="">
+            </button>
+          </li>
+        </ul>
+      </article>
+    </div>
+  </dialog>
+
+  <script src="main.js"></script>
+</body>
+
+</html>
