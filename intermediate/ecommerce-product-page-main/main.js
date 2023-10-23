@@ -193,8 +193,6 @@ modCloseBtn?.addEventListener('click', () => {
 
 // ************************* 2. Functions *******************************//
 
-
-
 /**Starts the effect of smooth disappearance of the cart*/
 function startFadeOut() {
     if (window.matchMedia("(min-width: 48em)").matches) {
