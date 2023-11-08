@@ -103,7 +103,7 @@ listBtns.forEach(btn => {
 
             // @ts-ignore
             symbol = e.target.textContent;
-            console.log(`symbol: ${symbol}`);
+            // console.log(`symbol: ${symbol}`);
 
             if (symbol === '=' && a !== '' && b !== '') {
                 // prevent from division by 0 
@@ -207,7 +207,6 @@ listBtns.forEach(btn => {
                 .replace(RegExp('\\.\\d{4}'), 'NaN'); // disable 4 digit after '.'
 
             if (isNaN(Number(result)) === true || result.length > 12) {
-                console.log('error');
                 return false;
             }
 
@@ -279,7 +278,7 @@ function executeCalculation() {
 
     a = right.toString().replace('.', ',');
     b = '';
-    console.log(`a: ${a} b: ${b}`);
+    // console.log(`a: ${a} b: ${b}`);
 }
 
 /**
