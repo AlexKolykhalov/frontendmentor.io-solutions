@@ -83,7 +83,9 @@ window.addEventListener('keydown', (e) => {
 });
 
 slider?.addEventListener('input', (e) => {
+    // @ts-ignore
     localStorage.setItem('theme', e.target?.value);
+    // @ts-ignore
     document.documentElement.setAttribute('data-theme', e.target?.value);
 });
 
@@ -91,6 +93,7 @@ listBtns.forEach(btn => {
     btn.addEventListener('click', (e) => {
         if (e.target && output) {
 
+            // @ts-ignore
             symbol = e.target.textContent;
             console.log(`symbol: ${symbol}`);
 
@@ -323,5 +326,6 @@ function getKeyNumber(key) {
  * prevent unwanted triggiring.
  */
 function removeFocusFromTheActiveElement() {
+    // @ts-ignore
     document.activeElement?.blur();
 }
