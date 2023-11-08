@@ -62,24 +62,32 @@ window.addEventListener('resize', () => {
 window.addEventListener('keyup', (e) => {
     const num = getKeyNumber(e.key);
     if (num !== '-1') {
-        /**@type {HTMLElement|null} */
+        /**@type {HTMLButtonElement|null} */
         const btn = document.querySelector(`.grid>li:nth-of-type(${num})>button`);
-        if (btn) {
-            btn.removeAttribute('data-status');
-        }
+        btn?.removeAttribute('data-status');
     }
 });
 
 window.addEventListener('keydown', (e) => {
     const num = getKeyNumber(e.key);
     if (num !== '-1') {
-        /**@type {HTMLElement|null} */
+        /**@type {HTMLButtonElement|null} */
         const btn = document.querySelector(`.grid>li:nth-of-type(${num})>button`);
-        if (btn) {
-            btn.setAttribute('data-status', 'active');
-            btn.click();
-        }
+        btn?.setAttribute('data-status', 'active');
+        btn?.click();
     }
+});
+
+window.addEventListener('touchstart', (e) => {
+    const btn = e.targetTouches[0].target;
+    // @ts-ignore
+    btn.setAttribute('data-status', 'active');
+});
+
+window.addEventListener('touchend', (e) => {
+    const btn = e.changedTouches[0].target;
+    // @ts-ignore
+    btn.removeAttribute('data-status');
 });
 
 slider?.addEventListener('input', (e) => {
