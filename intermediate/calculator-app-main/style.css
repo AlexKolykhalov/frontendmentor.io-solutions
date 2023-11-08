@@ -294,23 +294,20 @@ output[data-status="empty"] {
     transition: translate 0.05s ease-in, box-shadow 0.05s ease-in;
 }
 
-@media (pointer:fine) {
+.grid button:active,
+.grid button[data-status="active"] {
+    box-shadow: 0 -1px 0 1px var(--clr-key-shadow);
+    translate: 0px 3px;
+}
 
-    .grid button:active,
-    .grid button[data-status="active"] {
-        box-shadow: 0 -1px 0 1px var(--clr-key-shadow);
-        translate: 0px 3px;
-    }
+.grid .p-key:active,
+.grid .p-key[data-status="active"] {
+    box-shadow: 0 -1px 0 0px var(--clr-p-key-shadow);
+}
 
-    .grid .p-key:active,
-    .grid .p-key[data-status="active"] {
-        box-shadow: 0 -1px 0 0px var(--clr-p-key-shadow);
-    }
-
-    .grid .n-key:active,
-    .grid .n-key[data-status="active"] {
-        box-shadow: 0 -1px 0 0px var(--clr-n-key-shadow);
-    }
+.grid .n-key:active,
+.grid .n-key[data-status="active"] {
+    box-shadow: 0 -1px 0 0px var(--clr-n-key-shadow);
 }
 
 .grid>li:nth-of-type(1) {
