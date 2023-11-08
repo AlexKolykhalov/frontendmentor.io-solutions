@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Calculator app challenge on Frontend Mentor">
+  <meta name="keywords"
+    content="Calculator app, Frontend Mentor, Frontend, Mentor, HTML, CSS, Responsive, Mobile, Desktop, Alex Kolykhalov">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+
+  <title>Frontend Mentor | Calculator app</title>
+
+  <!-- google fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <main>
+    <h1 class="sr-only">Calculator app</h1>
+    <article>
+      <h2 class="sr-only">Calculator</h2>
+      <div class="center-v pad-h-m pad-v-m">
+        <div class="box-m center-h">
+          <div class="column gap-m">
+            <div class="row main-axis-space-between cross-axis-end">
+              <p>calc</p>
+              <div class="row gap-m cross-axis-center">
+                <p class="fs-100 uppercase">theme</p>
+                <div class="slider">
+                  <label class="sr-only" for="theme">Themes</label>
+                  <input type="range" id="theme" value="1" min="1" max="3">
+                </div>
+              </div>
+            </div>
+            <output class="row main-axis-end cross-axis-center pad-m bg-output bor-rad-l fs-500"
+              data-status="empty">0</output>
+            <ul class="grid { pad-h-m pad-v-m bg-keypad bor-rad-l }">
+              <li><button class="key bor-rad">0</button></li>
+              <li><button class="key bor-rad">1</button></li>
+              <li><button class="key bor-rad">2</button></li>
+              <li><button class="key bor-rad">3</button></li>
+              <li><button class="key bor-rad">4</button></li>
+              <li><button class="key bor-rad">5</button></li>
+              <li><button class="key bor-rad">6</button></li>
+              <li><button class="key bor-rad">7</button></li>
+              <li><button class="key bor-rad">8</button></li>
+              <li><button class="key bor-rad">9</button></li>
+              <li><button class="key bor-rad">+</button></li>
+              <li><button class="key bor-rad">-</button></li>
+              <li><button class="key bor-rad">/</button></li>
+              <li><button class="key bor-rad">x</button></li>
+              <li><button class="key bor-rad">.</button></li>
+              <li><button class="fs-200 n-key bor-rad uppercase">del</button></li>
+              <li><button class="fs-200 n-key bor-rad uppercase">reset</button></li>
+              <li><button class="fs-200 p-key bor-rad">=</button></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <footer>
+    <div class="box-m center-h pad-h-m text-center">
+      <p class="fs-200">Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend
+          Mentor</a>.</p>
+      <p class="fs-200">Coded by <a href="https://github.com/AlexKolykhalov">Alex Ko</a>.</p>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+
+</html>

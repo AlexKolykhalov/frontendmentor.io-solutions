@@ -1,0 +1,610 @@
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Remove default margin */
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+ul[class] ol[class] figure,
+blockquote,
+dl,
+dd {
+    margin: 0;
+}
+
+/* Remove default padding */
+ul[class] ol[class] {
+    padding: 0;
+}
+
+/* Remove list styles on ul, ol elements with a class attribute */
+ul[class],
+ol[class] {
+    list-style: none;
+}
+
+/* Set core root defaults */
+html:focus-within {
+    scroll-behavior: smooth;
+}
+
+/* Set core body defaults */
+body {
+    min-height: 100vh;
+    text-rendering: optimizeSpeed;
+    line-height: 1.5;
+}
+
+/* A elements that don't have a class get default styles */
+a:not([class]) {
+    text-decoration-skip-ink: auto;
+}
+
+/* Make images easier to work with */
+img,
+picture {
+    max-width: 100%;
+    display: block;
+}
+
+/* Inherit fonts for inputs and buttons */
+input,
+button,
+textarea,
+select {
+    font: inherit;
+}
+
+/* Red border when they have no alt attribute */
+img:not([alt]) {
+    border: 3px dashed hsl(0, 100%, 50%);
+}
+
+/* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
+@media (prefers-reduced-motion: reduce) {
+    html:focus-within {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* ************************* */
+/*         Variables         */
+/* ************************* */
+
+:root {
+    --bg-main: hsl(222, 26%, 31%);
+    --bg-output: hsl(224, 36%, 15%);
+    --bg-keypad: hsl(223, 31%, 20%);
+
+    --bg-toggle: hsl(223, 31%, 20%);
+    --clr-toggle: hsl(6, 63%, 50%);
+
+    --bg-key: hsl(30, 25%, 89%);
+    --clr-key-shadow: hsl(28, 16%, 65%);
+    --clr-key: hsl(221, 14%, 31%);
+
+    --bg-p-key: hsl(6, 63%, 50%);
+    --clr-p-key-shadow: hsl(6, 70%, 34%);
+    --clr-p-key: hsl(0, 0%, 100%);
+
+    --bg-n-key: hsl(225, 21%, 49%);
+    --clr-n-key-shadow: hsl(224, 28%, 35%);
+    --clr-n-key: hsl(0, 0%, 100%);
+
+    --clr-text: hsl(0, 0%, 100%);
+
+    --ff: 'League Spartan', sans-serif;
+
+    --base-size: 32px;
+
+    --ratio: 1.333;
+
+    --scale-100: calc(var(--scale-200) / var(--ratio));
+    --scale-200: calc(var(--scale-300) / var(--ratio));
+    --scale-300: calc(var(--scale-400) / var(--ratio));
+    --scale-400: var(--base-size);
+    --scale-500: calc(var(--scale-400) * var(--ratio));
+    --scale-600: calc(var(--scale-500) * var(--ratio));
+    --scale-700: calc(var(--scale-600) * var(--ratio));
+    --scale-800: calc(var(--scale-700) * var(--ratio));
+    --scale-900: calc(var(--scale-800) * var(--ratio));
+}
+
+:root[data-theme="2"] {
+    --bg-main: hsl(0, 0, 90%);
+    --bg-output: hsl(0, 0, 93%);
+    --bg-keypad: hsl(0, 5%, 81%);
+
+    --bg-toggle: hsl(0, 5%, 81%);
+    --clr-toggle: hsl(25, 98%, 40%);
+
+    --bg-key: hsl(45, 7%, 89%);
+    --clr-key-shadow: hsl(35, 11%, 61%);
+    --clr-key: hsl(60, 10%, 19%);
+
+    --bg-p-key: hsl(25, 98%, 40%);
+    --clr-p-key-shadow: hsl(25, 99%, 27%);
+    --clr-p-key: hsl(0, 0%, 100%);
+
+    --bg-n-key: hsl(185, 42%, 37%);
+    --clr-n-key-shadow: hsl(185, 58%, 25%);
+    --clr-n-key: hsl(0, 0%, 100%);
+
+    --clr-text: hsl(60, 10%, 19%);
+}
+
+:root[data-theme="3"] {
+    --bg-main: hsl(268, 75%, 9%);
+    --bg-output: hsl(268, 71%, 12%);
+    --bg-keypad: hsl(268, 71%, 12%);
+
+    --bg-toggle: hsl(268, 71%, 12%);
+    --clr-toggle: hsl(176, 100%, 44%);
+
+    --bg-key: hsl(268, 47%, 21%);
+    --clr-key-shadow: hsl(290, 70%, 36%);
+    --clr-key: hsl(52, 100%, 62%);
+
+    --bg-p-key: hsl(176, 100%, 44%);
+    --clr-p-key-shadow: hsl(177, 92%, 70%);
+    --clr-p-key: hsl(198, 20%, 13%);
+
+    --bg-n-key: hsl(281, 89%, 26%);
+    --clr-n-key-shadow: hsl(285, 91%, 52%);
+    --clr-n-key: hsl(0, 0%, 100%);
+
+    --clr-text: hsl(52, 100%, 62%);
+}
+
+/* ************************* */
+/*       General style       */
+/* ************************* */
+
+body {
+    font-family: var(--ff);
+    font-size: var(--scale-400);
+    font-weight: 700;
+
+    color: var(--clr-text);
+    background-color: var(--bg-main);
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+article {
+    transition: all 0.2s ease-in;
+}
+
+a {
+    color: inherit;
+}
+
+button {
+    width: 100%;
+
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+output {
+    height: 95px;
+
+    transition: opacity 0.2s ease-in;
+}
+
+output[data-status="empty"] {
+    opacity: 0.5;
+}
+
+@media (pointer:fine) {
+    button {
+        cursor: pointer;
+    }
+}
+
+/* ************************* */
+/*        Composition        */
+/* ************************* */
+
+.box-m {
+    width: clamp(300px, 66vw, 550px);
+}
+
+.center-v {
+    display: flex;
+    flex-direction: column;
+
+    min-height: 80vh;
+}
+
+.center-v>* {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.center-h {
+    box-sizing: content-box;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+}
+
+.column:only-child {
+    block-size: 100%;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+
+    --flex-grow: 0;
+    --break: 0;
+}
+
+.row>* {
+    flex-grow: var(--flex-grow, 0);
+    flex-basis: calc((var(--break) - 100%) * 999);
+}
+
+.grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    grid-template-areas:
+        "seven eight nine del"
+        "four five six plus"
+        "one two three minus"
+        "dot zero div multi"
+        "res res eq eq";
+
+    transition: background-color 0.2s ease-in;
+}
+
+.grid button {
+    height: 55px;
+    line-height: 2;
+
+    transition: translate 0.05s ease-in, box-shadow 0.05s ease-in;
+}
+
+@media (pointer:fine) {
+
+    .grid button:active,
+    .grid button[data-status="active"] {
+        box-shadow: 0 -1px 0 1px var(--clr-key-shadow);
+        translate: 0px 3px;
+    }
+
+    .grid .p-key:active,
+    .grid .p-key[data-status="active"] {
+        box-shadow: 0 -1px 0 0px var(--clr-p-key-shadow);
+    }
+
+    .grid .n-key:active,
+    .grid .n-key[data-status="active"] {
+        box-shadow: 0 -1px 0 0px var(--clr-n-key-shadow);
+    }
+}
+
+.grid>li:nth-of-type(1) {
+    grid-area: zero;
+}
+
+.grid>li:nth-of-type(2) {
+    grid-area: one;
+}
+
+.grid>li:nth-of-type(3) {
+    grid-area: two;
+}
+
+.grid>li:nth-of-type(4) {
+    grid-area: three;
+}
+
+.grid>li:nth-of-type(5) {
+    grid-area: four;
+}
+
+.grid>li:nth-of-type(6) {
+    grid-area: five;
+}
+
+.grid>li:nth-of-type(7) {
+    grid-area: six;
+}
+
+.grid>li:nth-of-type(8) {
+    grid-area: seven;
+}
+
+.grid>li:nth-of-type(9) {
+    grid-area: eight;
+}
+
+.grid>li:nth-of-type(10) {
+    grid-area: nine;
+}
+
+.grid>li:nth-of-type(11) {
+    grid-area: plus;
+}
+
+.grid>li:nth-of-type(12) {
+    grid-area: minus;
+}
+
+.grid>li:nth-of-type(13) {
+    grid-area: div;
+}
+
+.grid>li:nth-of-type(14) {
+    grid-area: multi;
+}
+
+.grid>li:nth-of-type(15) {
+    grid-area: dot;
+}
+
+.grid>li:nth-of-type(16) {
+    grid-area: del;
+}
+
+.grid>li:nth-of-type(17) {
+    grid-area: res;
+}
+
+.grid>li:nth-of-type(18) {
+    grid-area: eq;
+}
+
+/* ************************* */
+/*          Blocks           */
+/* ************************* */
+
+.slider {
+    --bg-range: var(--bg-toggle);
+    --bg-thumb: var(--clr-toggle);
+    --thumb-size: 16px;
+    --range-height: 26px;
+    --range-bor-rad: 15px;
+    --range-pad: calc((var(--range-height) - var(--thumb-size)) / 2);
+
+    width: 65px;
+    height: var(--range-height);
+    background-color: var(--bg-toggle);
+    padding-inline: var(--range-pad);
+    border-radius: var(--range-bor-rad);
+
+    display: flex;
+    position: relative;
+
+    transition: background-color 0.2s ease-in;
+}
+
+.slider:has(input[type="range"]:focus-visible) {
+    background-color: hsl(0, 5%, 81%);
+}
+
+.slider::after {
+    content: "1\00a0\00a0\00a0\00a0 2\00a0\00a0\00a0\00a0 3";
+
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    translate: -50% 0;
+
+    font-size: var(--scale-100);
+}
+
+/*Range Reset*/
+input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    width: 100%;
+
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+/* Removes default focus */
+input[type="range"]:focus {
+    outline: none;
+}
+
+/* slider thumb */
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    /* Override default look */
+    appearance: none;
+
+    background-color: var(--bg-thumb);
+    height: var(--thumb-size);
+    width: var(--thumb-size);
+    border-radius: 50%;
+}
+
+input[type="range"]:focus-visible::-webkit-slider-thumb {
+    box-shadow: 0 0 0px 2px black;
+}
+
+/******** Firefox styles ********/
+
+/* slider thumb */
+input[type="range"]::-moz-range-thumb {
+    /*Removes extra border that FF applies*/
+    border: none;
+    /*Removes default border-radius that FF applies*/
+    border-radius: 0;
+
+    /*custom styles*/
+    background-color: var(--bg-thumb);
+    height: var(--thumb-size);
+    width: var(--thumb-size);
+    border-radius: 50%;
+}
+
+input[type="range"]:focus-visible::-moz-range-thumb {
+    box-shadow: 0 0 0px 2px rgb(17, 97, 247);
+}
+
+@media (pointer:fine) {
+    input[type="range"] {
+        cursor: pointer;
+    }
+
+    input[type="range"]:active {
+        cursor: grabbing;
+    }
+}
+
+/* ************************* */
+/*         Utilities         */
+/* ************************* */
+
+.sr-only {
+    position: absolute;
+    width: 0px;
+    height: 0px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+.main-axis-end {
+    justify-content: flex-end;
+}
+
+.main-axis-space-between {
+    justify-content: space-between;
+}
+
+.cross-axis-center {
+    align-items: center;
+}
+
+.cross-axis-end {
+    align-items: flex-end;
+}
+
+.pad-h-m {
+    padding-inline: 1rem;
+}
+
+.pad-v-m {
+    padding-block: 1.5rem;
+}
+
+.gap-m {
+    gap: 1rem;
+}
+
+.pad-m {
+    padding: 1rem;
+}
+
+.bor-rad {
+    border-radius: 5px;
+}
+
+.bor-rad-l {
+    border-radius: 10px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.uppercase {
+    text-transform: uppercase;
+}
+
+.fs-100 {
+    font-size: var(--scale-100);
+}
+
+.fs-200 {
+    font-size: var(--scale-200);
+}
+
+.fs-300 {
+    font-size: var(--scale-300);
+}
+
+.fs-500 {
+    font-size: var(--scale-500);
+}
+
+.bg-main {
+    background-color: var(--bg-main);
+}
+
+.bg-output {
+    background-color: var(--bg-output);
+}
+
+.bg-keypad {
+    background-color: var(--bg-keypad);
+}
+
+.key {
+    background-color: var(--bg-key);
+    box-shadow: 0 3px 0 0 var(--clr-key-shadow);
+    color: var(--clr-key);
+}
+
+.p-key {
+    background-color: var(--bg-p-key);
+    box-shadow: 0 3px 0 0 var(--clr-p-key-shadow);
+    color: var(--clr-p-key);
+}
+
+.n-key {
+    background-color: var(--bg-n-key);
+    box-shadow: 0 3px 0 0 var(--clr-n-key-shadow);
+    color: var(--clr-n-key);
+}
+
+.bg-toggle {
+    background-color: var(--bg-toggle);
+}
+
+.clr-toggle {
+    background-color: var(--clr-toggle);
+}
