@@ -264,10 +264,10 @@ function executeCalculation() {
         right = left;
     }
     if (operation === '+') {
-        right = right + left;
+        right = Number((right + left).toFixed(3));
     }
     if (operation === '-') {
-        right = right - left;
+        right = Number((right - left).toFixed(3));
     }
     if (operation === 'x') {
         right = Number((right * left).toFixed(3));
