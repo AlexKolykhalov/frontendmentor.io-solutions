@@ -21,6 +21,8 @@ let defaultMin = 0;
 let defaultHours = 0;
 let defaultDays = 0;
 
+let pauseInterval = false;
+
 /**
  * @type {{ days:string, hours:string, minutes:string, seconds:string }}
  */
@@ -31,6 +33,9 @@ const timeFormat = { days: 'days', hours: 'hours', minutes: 'minutes', seconds: 
 window.addEventListener('load', () => {
     setInitCountdownTime();
     const idInterval = setInterval(() => {
+        if (pauseInterval) {
+            return;
+        }
         counter--;
         if (counter < 1) {
             clearInterval(idInterval);
@@ -81,6 +86,10 @@ window.addEventListener('load', () => {
         }
         // console.log(`days: ${time.days} hours: ${time.hours} minutes: ${time.minutes} seconds: ${time.seconds}`);
     }, 1000);
+});
+
+document.addEventListener('visibilitychange', () => {
+    pauseInterval = document.hidden ? true : false;
 });
 
 listClockFaces.forEach(clockFace => {
