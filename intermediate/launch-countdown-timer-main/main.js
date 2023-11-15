@@ -80,7 +80,7 @@ window.addEventListener('load', () => {
             }
         }
         // console.log(`days: ${time.days} hours: ${time.hours} minutes: ${time.minutes} seconds: ${time.seconds}`);
-    }, 4000);
+    }, 1000);
 });
 
 listClockFaces.forEach(clockFace => {
