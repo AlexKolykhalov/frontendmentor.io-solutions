@@ -462,9 +462,19 @@ input[type="checkbox"]:checked+p {
     overflow-y: auto;
 }
 
-.todo-list>* {
+.todo-item {
+    pointer-events: stroke;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+
     border-bottom: 1px solid var(--clr-text-neutral);
 }
+
+/* .todo-list>* {
+    border-bottom: 1px solid var(--clr-text-neutral);
+} */
 
 .toggle-color-scheme {
     margin: 0;
