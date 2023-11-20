@@ -194,6 +194,8 @@ body {
     font-family: var(--ff);
     font-size: var(--scale-400);
     font-weight: 400;
+
+    overscroll-behavior: contain;
 }
 
 header {
