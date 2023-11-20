@@ -1,0 +1,624 @@
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Remove default margin */
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+ul,
+ol,
+figure,
+blockquote,
+dl,
+dd {
+    margin: 0;
+}
+
+/* Remove default padding */
+ul,
+ol {
+    padding: 0;
+}
+
+/* Remove list styles on ul, ol elements */
+ul,
+ol {
+    list-style: none;
+}
+
+/* Set core root defaults */
+html:focus-within {
+    scroll-behavior: smooth;
+}
+
+/* Set core body defaults */
+body {
+    min-height: 100vh;
+    text-rendering: optimizeSpeed;
+    line-height: 1.5;
+}
+
+/* A elements that don't have a class get default styles */
+a:not([class]) {
+    text-decoration-skip-ink: auto;
+}
+
+/* Make images easier to work with */
+img,
+picture {
+    max-width: 100%;
+    display: block;
+}
+
+/* Inherit fonts for inputs and buttons */
+input,
+button,
+textarea,
+select {
+    font: inherit;
+}
+
+/* Red border when they have no alt attribute */
+img:not([alt]) {
+    border: 3px dashed hsl(0, 100%, 50%);
+}
+
+/* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
+@media (prefers-reduced-motion: reduce) {
+    html:focus-within {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* ************************* */
+/*         Variables         */
+/* ************************* */
+
+:root {
+    --clr-primary-blue: hsl(220, 98%, 61%);
+    --clr-primary-purple: hsl(280, 87%, 65%);
+    --clr-primary-aqua: hsl(192, 100%, 67%);
+
+    /* ### Light Theme */
+    --clr-light-neutral-000: hsl(0, 0%, 98%);
+    --clr-light-neutral-100: hsl(236, 33%, 92%);
+    --clr-light-neutral-300: hsl(233, 11%, 84%);
+    --clr-light-neutral-400: hsl(236, 9%, 61%);
+    --clr-light-neutral-700: hsl(235, 19%, 35%);
+
+    /* ### Dark Theme */
+    /* hover */
+    --clr-dark-neutral-000: hsl(236, 33%, 92%);
+    --clr-dark-neutral-100: hsl(234, 39%, 85%);
+    --clr-dark-neutral-400: hsl(234, 11%, 52%);
+    --clr-dark-neutral-600: hsl(233, 14%, 35%);
+    --clr-dark-neutral-700: hsl(237, 14%, 26%);
+    --clr-dark-neutral-800: hsl(235, 24%, 19%);
+    --clr-dark-neutral-900: hsl(235, 21%, 11%);
+
+    --clr-logo: var(--clr-light-neutral-000);
+    --clr-body-bg: var(--clr-light-neutral-100);
+    --clr-todo-bg: var(--clr-light-neutral-000);
+    --clr-text-primary: var(--clr-primary-blue);
+    --clr-text-main: var(--clr-light-neutral-700);
+    --clr-text-accent: var(--clr-light-neutral-400);
+    --clr-text-neutral: var(--clr-light-neutral-300);
+
+    --ff: 'Josefin Sans', sans-serif;
+
+    --base-size: 18px;
+
+    /* fluid typography */
+    /* https://fluid-typography.netlify.app/ */
+    /* https://fluidtypography.com/ */
+
+    /* minor third */
+    /* 5:6 <-> 1.2 */
+    /* 1.067
+    1.125
+    1.2
+    1.25
+    1.333
+    1.414
+    1.5
+    1.6
+    1.618
+    1.667
+    1.778
+    1.875
+    2
+    2.5
+    2.667
+    3
+    4 */
+    --ratio: 1.2;
+
+    --scale-100: calc(var(--scale-200) / var(--ratio));
+    --scale-200: calc(var(--scale-300) / var(--ratio));
+    --scale-300: calc(var(--scale-400) / var(--ratio));
+    --scale-400: var(--base-size);
+    --scale-500: calc(var(--scale-400) * var(--ratio));
+    --scale-600: calc(var(--scale-500) * var(--ratio));
+    --scale-700: calc(var(--scale-600) * var(--ratio));
+    --scale-800: calc(var(--scale-700) * var(--ratio));
+    --scale-900: calc(var(--scale-800) * var(--ratio));
+
+    --br-sm: 36em;
+    --br-md: 48em;
+    --br-lg: 62em;
+
+    --bg-image-mobile: url('images/bg-mobile-light.jpg');
+    --bg-image-desktop: url('images/bg-desktop-light.jpg');
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --clr-logo: var(--clr-light-neutral-000);
+        --clr-body-bg: var(--clr-dark-neutral-900);
+        --clr-todo-bg: var(--clr-dark-neutral-800);
+        --clr-text-primary: var(--clr-primary-blue);
+        --clr-text-main: var(--clr-dark-neutral-100);
+        --clr-text-accent: var(--clr-dark-neutral-400);
+        --clr-text-neutral: var(--clr-dark-neutral-600);
+
+        --bg-image-mobile: url('images/bg-mobile-dark.jpg');
+        --bg-image-desktop: url('images/bg-desktop-dark.jpg');
+    }
+}
+
+/* ************************* */
+/*       General style       */
+/* ************************* */
+
+body {
+    background-color: var(--clr-body-bg);
+
+    color: var(--clr-text-main);
+
+    font-family: var(--ff);
+    font-size: var(--scale-400);
+    font-weight: 400;
+}
+
+header {
+    height: 30vh;
+
+    background-image: url('images/bg-mobile-light.jpg');
+    background-image: var(--bg-image-mobile);
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+}
+
+@media (min-width: 36em) {
+    header {
+        background-image: var(--bg-image-desktop);
+        background-size: cover;
+    }
+}
+
+button {
+    border: none;
+    background-color: transparent;
+}
+
+input {
+    border: none;
+    width: 100%;
+    height: 100%;
+
+    margin: 0;
+    padding: 0;
+}
+
+input[type="checkbox"],
+input[type="checkbox"]~button {
+    width: clamp(20px, 3vw, 25px);
+    height: clamp(20px, 3vw, 25px);
+}
+
+input[type="checkbox"] {
+    appearance: none;
+
+    border-radius: 50%;
+    border: 1px solid var(--clr-text-neutral);
+}
+
+input[type="checkbox"]:checked {
+    border: none;
+    background:
+        no-repeat center/50% url('images/icon-check.svg'),
+        linear-gradient(to right bottom, var(--clr-primary-aqua), var(--clr-primary-purple));
+}
+
+input[type="checkbox"]:checked+p {
+    color: var(--clr-text-neutral);
+    font-weight: 400;
+    text-decoration: line-through;
+}
+
+@media (pointer:fine) {
+
+    .todo-list>li,
+    input[type="checkbox"],
+    button {
+        cursor: pointer;
+    }
+
+    .todo-item button {
+        display: none;
+    }
+
+    .todo-list>li:hover button,
+    .todo-item:focus-within button {
+        display: block;
+    }
+
+    input[type="checkbox"]:not(:checked):hover,
+    input[type="checkbox"]:not(:checked):focus-visible {
+        position: relative;
+    }
+
+    input[type="checkbox"]:not(:checked):hover::after,
+    input[type="checkbox"]:not(:checked):focus-visible::after {
+        content: '';
+
+        position: absolute;
+        padding: 1px;
+
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        background-color: var(--clr-todo-bg);
+        background-clip: content-box;
+    }
+
+    input[type="checkbox"]:not(:checked):hover::before,
+    input[type="checkbox"]:not(:checked):focus-visible::before {
+        content: '';
+
+        position: absolute;
+
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        background: linear-gradient(to right bottom, var(--clr-primary-aqua), var(--clr-primary-purple));
+    }
+
+    .todo-app>ul button:hover,
+    .todo-list+div button:hover {
+        color: var(--clr-text-main);
+    }
+}
+
+/* ************************* */
+/*        Composition        */
+/* ************************* */
+
+.box-m {
+    max-width: 50ch;
+}
+
+.center-v {
+    display: flex;
+    flex-direction: column;
+}
+
+.center-v>* {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.center-h {
+    box-sizing: content-box;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ↓ Intrinsic Centering: That is, centering elements based on their natural, content-based widths. */
+/* .intrinsic {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+} */
+
+.column {
+    display: flex;
+    flex-direction: column;
+}
+
+.column:only-child {
+    block-size: 100%;
+}
+
+/* ↓ Split after - the element after which to split the stack with an auto margin */
+/* .column.split-after-1> :nth-child(1) {
+   margin-block-end: auto;
+} */
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+
+    --flex-grow: 0;
+    --break: 0;
+}
+
+.row>* {
+    /* ↓ Disallow children to grow */
+    flex-grow: var(--flex-grow, 0);
+    /* ↓ Switch the layout at the --break */
+    flex-basis: calc((var(--break) - 100%) * 999);
+}
+
+.no-wrap {
+    flex-wrap: nowrap;
+}
+
+.break-m {
+    --break: var(--br-md);
+    /* ↓ Allow children to grow */
+    --flex-grow: 1;
+}
+
+/* ↓ Split after - the element after which to split the stack with an auto margin */
+.row.split-after-3> :nth-child(3) {
+    margin-inline-end: auto;
+}
+
+/* .row.break-after-4> :nth-last-child(n+5), */
+/* .row.break-after-4> :nth-last-child(n+5)~* { */
+/* ↓ Switch to a vertical configuration if there are more than 4 child elements */
+/* flex-basis: 100%; */
+/* } */
+
+.grid {
+    display: grid;
+    gap: clamp(5px, 2vw, 30px);
+    grid-template-columns: auto 1fr auto;
+}
+
+/* ************************* */
+/*          Blocks           */
+/* ************************* */
+
+.todo-app {
+    position: relative;
+    top: -110px;
+}
+
+.todo-app>*,
+.new-todo-input>input {
+    line-height: 1;
+    border-radius: 5px;
+}
+
+.new-todo-input>input,
+.todo-list>*,
+.todo-list+div,
+.todo-app>ul {
+    height: clamp(45px, 5vw, 55px);
+    padding-inline: 1rem;
+}
+
+.new-todo-input {
+    position: relative;
+}
+
+.new-todo-input>input {
+    /* pad + size of checkbox + grid gap */
+    padding-left: calc(1rem + clamp(20px, 3vw, 25px) + clamp(5px, 2vw, 30px));
+}
+
+.new-todo-input::after {
+    content: '';
+
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    translate: 0% -50%;
+
+    width: clamp(20px, 3vw, 25px);
+    height: clamp(20px, 3vw, 25px);
+    border-radius: 50%;
+    border: 1px solid var(--clr-text-neutral);
+}
+
+@media (min-width: 36em) {
+    .todo-app>ul {
+        position: absolute;
+        left: 50%;
+        bottom: 55px;
+        translate: -50% 0%;
+    }
+}
+
+.todo-app>ul button {
+    color: var(--clr-text-accent);
+}
+
+.todo-app>ul button[data-status="active"] {
+    color: var(--clr-text-primary);
+}
+
+.todo-list {
+    height: 350px;
+    overflow-y: auto;
+}
+
+.todo-list>* {
+    border-bottom: 1px solid var(--clr-text-neutral);
+}
+
+.toggle-color-scheme {
+    margin: 0;
+    padding: 0;
+    width: clamp(20px, 4vw, 30px);
+    height: clamp(20px, 4vw, 30px);
+}
+
+.toggle-color-scheme>img {
+    width: 100%;
+    height: 100%;
+}
+
+/* ************************* */
+/*         Utilities         */
+/* ************************* */
+
+.sr-only {
+    position: absolute;
+    width: 0px;
+    height: 0px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+.main-axis-center {
+    justify-content: center;
+}
+
+/* .main-axis-end {
+    justify-content: flex-end;
+} */
+
+.main-axis-space-between {
+    justify-content: space-between;
+}
+
+.cross-axis-center {
+    align-items: center;
+}
+
+/* .cross-axis-end {
+    align-items: flex-end;
+} */
+
+/* .cross-axis-stretch {
+    align-items: stretch;
+} */
+
+.pad-h-m {
+    padding-inline: 1rem;
+}
+
+.pad-v-l {
+    padding-block: clamp(2rem, 4vw, 4rem);
+}
+
+.pad-top-l {
+    padding-top: 1.5rem;
+}
+
+.pad-m {
+    padding: 1rem;
+}
+
+.gap-m {
+    gap: 1rem;
+}
+
+/* .line-height {
+    line-height: 1;
+} */
+
+.letter-spacing {
+    letter-spacing: 9px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.uppercase {
+    text-transform: uppercase;
+}
+
+/* .fw-regular {
+    font-weight: 400;
+} */
+
+.fw-bold {
+    font-weight: 700;
+}
+
+/* .fs-100 {
+    font-size: var(--scale-100);
+} */
+
+.fs-200-400 {
+    font-size: clamp(var(--scale-200), 3vw, var(--scale-400));
+}
+
+.fs-200 {
+    font-size: var(--scale-200);
+}
+
+.fs-300 {
+    font-size: var(--scale-300);
+}
+
+/* .fs-400 {
+    font-size: var(--scale-400);
+} */
+
+/* .fs-500 {
+    font-size: var(--scale-500);
+} */
+
+.fs-600-900 {
+    /* font-size: var(--scale-600); */
+    font-size: clamp(var(--scale-600), 4vw, var(--scale-900));
+}
+
+/* .fs-700 {
+    font-size: var(--scale-700);
+} */
+
+/* .fs-800 {
+    font-size: var(--scale-800);
+} */
+
+/* .fs-900 {
+    font-size: var(--scale-900);
+} */
+
+.clr-n-logo {
+    color: var(--clr-logo);
+}
+
+.clr-todo-bg {
+    background-color: var(--clr-todo-bg);
+}
+
+.clr-text-main {
+    color: var(--clr-text-main);
+}
+
+.clr-text-accent {
+    color: var(--clr-text-accent);
+}
+
+/* .clr-text-neutral {
+    color: var(--clr-text-neutral);
+} */

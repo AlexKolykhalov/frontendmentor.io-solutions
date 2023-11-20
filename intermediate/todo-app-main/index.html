@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- displays site properly based on user's device -->
+  <meta name="description" content="Todo app challenge on Frontend Mentor">
+  <meta name="keywords"
+    content="Todo app, Frontend Mentor, Frontend, Mentor, HTML, CSS, Responsive, Mobile, Desktop, Alex Kolykhalov">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+
+  <title>Frontend Mentor | Todo app</title>
+
+  <!-- google fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <header>
+    <div class="box-m center-h pad-h-m pad-v-l">
+      <div class="row main-axis-space-between cross-axis-center">
+        <p class="uppercase fs-600-900 fw-bold clr-n-logo letter-spacing">Todo</p>
+        <button class="toggle-color-scheme">
+          <img src="images/icon-moon.svg" width="26" height="26" alt="">
+          <span class="sr-only">Toggle color theme</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <body>
+    <div class="">
+      <div class="box-m center-h pad-h-m">
+        <h1 class="sr-only">Todo application page</h1>
+        <article class="todo-app { column gap-m }">
+          <h2 class="sr-only">Todo application</h2>
+          <div class="new-todo-input">
+            <label for="new_todo" class="sr-only">New todo</label>
+            <input class="fs-200-400 clr-todo-bg clr-text-main" type="text" id="new_todo"
+              placeholder="Create a new todo...">
+          </div>
+          <div class="clr-todo-bg">
+            <ul class="todo-list">
+              <li class="center-v" draggable="true">
+                <div class="todo-item { grid cross-axis-center }">
+                  <label for="status-1" class="sr-only">Done</label>
+                  <!-- TODO implement random `id` for input -->
+                  <input type="checkbox" id="status-1" checked>
+                  <p class="fs-200-400">Complete online JavaScript course</p>
+                  <button>
+                    <img src="images/icon-cross.svg" alt="">
+                    <span class="sr-only">Delete</span>
+                  </button>
+                </div>
+              </li>
+              <li class="center-v">
+                <div class="todo-item { grid cross-axis-center }" draggable="true">
+                  <label for="status-1" class="sr-only">Done</label>
+                  <!-- TODO implement random `id` for input -->
+                  <input type="checkbox" id="status-1" checked>
+                  <p class="fs-200-400">Complete online JavaScript course</p>
+                  <button>
+                    <img src="images/icon-cross.svg" alt="">
+                    <span class="sr-only">Delete</span>
+                  </button>
+                </div>
+              </li>
+              <li class="center-v">
+                <div class="todo-item { grid cross-axis-center }">
+                  <label for="status-1" class="sr-only">Done</label>
+                  <!-- TODO implement random `id` for input -->
+                  <input type="checkbox" id="status-1" checked>
+                  <p class="fs-200-400">Complete online JavaScript course</p>
+                  <button>
+                    <img src="images/icon-cross.svg" alt="">
+                    <span class="sr-only">Delete</span>
+                  </button>
+                </div>
+              </li>
+              <li class="center-v">
+                <div class="todo-item { grid cross-axis-center }">
+                  <label for="status-1" class="sr-only">Done</label>
+                  <!-- TODO implement random `id` for input -->
+                  <input type="checkbox" id="status-1" checked>
+                  <p class="fs-200-400">Complete online JavaScript course</p>
+                  <button>
+                    <img src="images/icon-cross.svg" alt="">
+                    <span class="sr-only">Delete</span>
+                  </button>
+                </div>
+              </li>
+              <li class="center-v">
+                <div class="todo-item { grid cross-axis-center }">
+                  <label for="status-1" class="sr-only">Done</label>
+                  <!-- TODO implement random `id` for input -->
+                  <input type="checkbox" id="status-1" checked>
+                  <p class="fs-200-400">Complete online JavaScript course</p>
+                  <button>
+                    <img src="images/icon-cross.svg" alt="">
+                    <span class="sr-only">Delete</span>
+                  </button>
+                </div>
+              </li>
+              <li class="center-v">
+                <div class="todo-item { grid cross-axis-center }">
+                  <label for="status-1" class="sr-only">Done</label>
+                  <!-- TODO implement random `id` for input -->
+                  <input type="checkbox" id="status-1">
+                  <p class="fs-200-400">Complete online JavaScript course</p>
+                  <button>
+                    <img src="images/icon-cross.svg" alt="">
+                    <span class="sr-only">Delete</span>
+                  </button>
+                </div>
+              </li>
+              <li class="center-v">
+                <div class="todo-item { grid cross-axis-center }">
+                  <label for="status-1" class="sr-only">Done</label>
+                  <!-- TODO implement random `id` for input -->
+                  <input type="checkbox" id="status-1">
+                  <p class="fs-200-400">Jog around the park 3x</p>
+                  <button>
+                    <img src="images/icon-cross.svg" alt="">
+                    <span class="sr-only">Delete</span>
+                  </button>
+                </div>
+              </li>
+            </ul>
+            <div class="row main-axis-space-between cross-axis-center">
+              <p class="fs-200 clr-text-accent">2 items left</p>
+              <button class="fs-200 clr-text-accent">Clear Completed</button>
+            </div>
+          </div>
+          <ul class="row gap-m main-axis-center cross-axis-center clr-todo-bg">
+            <li><button class="fw-bold fs-300" data-status="active">All</button></li>
+            <li><button class="fw-bold fs-300">Active</button></li>
+            <li><button class="fw-bold fs-300">Completed</button></li>
+          </ul>
+          <p class="pad-top-l text-center fs-300 clr-text-accent">Drag and drop to reorder list</p>
+        </article>
+      </div>
+    </div>
+  </body>
+
+  <footer>
+    <div class="text-center pad-m">
+      <p>Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>.</p>
+      <p>Coded by <a href="https://github.com/AlexKolykhalov">Alex Ko</a>.</p>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+
+</body>
+
+</html>
