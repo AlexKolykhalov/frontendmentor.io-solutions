@@ -141,7 +141,7 @@ function createTodo(todo) {
                 const p = newTodoItemLI.querySelector('p');
 
                 /**@type {number}*/
-                const id = todoList.indexOf(todo);
+                const id = todoList.indexOf(todo) === -1 ? todoList.length : todoList.indexOf(todo);
 
                 if (label && input && p) {
                     label.setAttribute('for', `done-${id}`);
@@ -170,8 +170,8 @@ function createTodo(todo) {
                         }
                     });
                     // drag & drop implementation
-                    newTodoItemLI.addEventListener('touchstart', dragStart);
-                    newTodoItemLI.addEventListener('mousedown', dragStart);
+                    newTodoItemLI.addEventListener('touchstart', dragStart, { passive: true });
+                    newTodoItemLI.addEventListener('mousedown', dragStart, { passive: true });
                     todoListUL.appendChild(newTodoItemLI);
                 }
             }
