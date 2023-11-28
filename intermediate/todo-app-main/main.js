@@ -91,10 +91,10 @@ input?.addEventListener('keydown', (e) => {
 });
 
 clearCompleted?.addEventListener('click', () => {
-    const allCompletedItems = document.querySelectorAll('.todo-item:has(input[type="checkbox"]:checked)');
+    const allCompletedItems = document.querySelectorAll('input[type="checkbox"]:checked');
     if ([...allCompletedItems].length > 0) {
         allCompletedItems.forEach(elem => {
-            elem.remove();
+            elem.parentElement?.remove();
         });
         //select only active todoes
         todoList = todoList.filter((elem) => elem.completed === false);
@@ -199,7 +199,7 @@ function getTodoList() {
  * Change info about the number of active items located at left bottom.  
  */
 function changeInfoAboutActiveItems() {
-    const allActiveItems = document.querySelectorAll('.todo-item:has(input[type="checkbox"]:not(:checked))');
+    const allActiveItems = document.querySelectorAll('input[type="checkbox"]:not(:checked)');
     const output = document.querySelector('.items-left');
     const text = allActiveItems.length === 1 ? 'item left' : 'items left';
     if (output) {
@@ -226,24 +226,24 @@ function setFilter(index) {
         }
         // `Active` filter
         if (index === 1) {
-            const active = document.querySelectorAll('.todo-item:has(input[type="checkbox"]:not(:checked))');
+            const active = document.querySelectorAll('input[type="checkbox"]:not(:checked)');
             active.forEach(elem => {
-                elem.removeAttribute('data-visible');
+                elem.parentElement?.removeAttribute('data-visible');
             });
-            const completed = document.querySelectorAll('.todo-item:has(input[type="checkbox"]:checked)');
+            const completed = document.querySelectorAll('input[type="checkbox"]:checked');
             completed.forEach(elem => {
-                elem.setAttribute('data-visible', 'false');
+                elem.parentElement?.setAttribute('data-visible', 'false');
             });
         }
         // `Completed` filter
         if (index === 2) {
-            const active = document.querySelectorAll('.todo-item:has(input[type="checkbox"]:not(:checked))');
+            const active = document.querySelectorAll('input[type="checkbox"]:not(:checked)');
             active.forEach(elem => {
-                elem.setAttribute('data-visible', 'false');
+                elem.parentElement?.setAttribute('data-visible', 'false');
             });
-            const completed = document.querySelectorAll('.todo-item:has(input[type="checkbox"]:checked)');
+            const completed = document.querySelectorAll('input[type="checkbox"]:checked');
             completed.forEach(elem => {
-                elem.removeAttribute('data-visible');
+                elem.parentElement?.removeAttribute('data-visible');
             });
         }
     }
