@@ -259,8 +259,8 @@ function dragStart(event) {
         return false;
     };
     if (event.currentTarget) {
-        const todoList = document.querySelector('.todo-list');
-        if (todoList) {
+        const todoListUL = document.querySelector('.todo-list');
+        if (todoListUL) {
             // @ts-ignore
             const draggingElement = event.currentTarget;
             // @ts-ignore
@@ -275,13 +275,14 @@ function dragStart(event) {
             // @ts-ignore
             // insert `empty` element after `dragging` element
             const nextSibling = draggingElement.nextSibling;
-            todoList.insertBefore(emptyElement, nextSibling);
+            todoListUL.insertBefore(emptyElement, nextSibling);
 
             if (event.type === 'touchstart') {
                 // @ts-ignore
                 x0 = event.touches[0].pageX;
                 // @ts-ignore
                 y0 = event.touches[0].pageY;
+                todoListUL.setAttribute('style', 'overflow-y: hidden');
                 document.addEventListener('touchmove', dragMove);
                 document.addEventListener('touchend', dragEnd);
             }
@@ -295,7 +296,7 @@ function dragStart(event) {
             }
             shiftY = 0;
             movementY = y0;
-            defaultScrollTop = todoList.scrollTop;
+            defaultScrollTop = todoListUL.scrollTop;
             // @ts-ignore
             draggingElement.setAttribute('style', `--x: 0px; --y:-${defaultScrollTop}px`);
         }
@@ -380,23 +381,23 @@ function dragMove(event) {
  * @param {Event} event 
  */
 function dragEnd(event) {
-    const draggingElement = document.querySelector('.dragging');
-    const emptyElement = document.querySelector('.empty');
+    const todoListUL = document.querySelector('.todo-list');
+    todoListUL?.removeAttribute('style');
 
-    if (draggingElement) {
-        draggingElement.classList.remove('dragging');
-        if (emptyElement) {
-            emptyElement.remove();
-        }
-        draggingElement.removeAttribute('style');
-        if (event.type === 'touchend') {
-            document.removeEventListener('touchmove', dragMove);
-            document.removeEventListener('touchend', dragEnd);
-        }
-        if (event.type === 'mouseup') {
-            document.removeEventListener('mousemove', dragMove);
-            document.removeEventListener('mouseup', dragEnd);
-        }
-        saveTodoList();
+    const draggingElement = document.querySelector('.dragging');
+    draggingElement?.classList.remove('dragging');
+    draggingElement?.removeAttribute('style');
+
+    const emptyElement = document.querySelector('.empty');
+    emptyElement?.remove();
+
+    if (event.type === 'touchend') {
+        document.removeEventListener('touchmove', dragMove);
+        document.removeEventListener('touchend', dragEnd);
     }
+    if (event.type === 'mouseup') {
+        document.removeEventListener('mousemove', dragMove);
+        document.removeEventListener('mouseup', dragEnd);
+    }
+    saveTodoList();
 }
