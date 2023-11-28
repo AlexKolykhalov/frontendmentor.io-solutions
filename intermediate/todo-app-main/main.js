@@ -57,6 +57,8 @@ let defaultScrollTop = 0;
  */
 let shiftY = 0;
 
+let timeoutID = 0;
+
 // ************************** 1. Events *********************************//
 
 window.addEventListener('load', () => {
@@ -110,6 +112,22 @@ listFilters.forEach(elem => {
 });
 
 // ************************* 2. Functions *******************************//
+
+/**
+ * Save current Todo list to `localStorage`.
+ */
+function saveTodoList() {
+    localStorage.setItem('todo-list', JSON.stringify(todoList));
+}
+
+/**
+ * Get Todo list from `localStorage`.
+ * @returns {Array<TodoItem>}
+ */
+function getTodoList() {
+    const data = localStorage.getItem('todo-list');
+    return data ? JSON.parse(data) : [];
+}
 
 /**
  * Create a new todo. 
@@ -181,22 +199,6 @@ function createTodo(todo) {
 }
 
 /**
- * Save current Todo list to `localStorage`.
- */
-function saveTodoList() {
-    localStorage.setItem('todo-list', JSON.stringify(todoList));
-}
-
-/**
- * Get Todo list from `localStorage`.
- * @returns {Array<TodoItem>}
- */
-function getTodoList() {
-    const data = localStorage.getItem('todo-list');
-    return data ? JSON.parse(data) : [];
-}
-
-/**
  * Change info about the number of active items located at left bottom.  
  */
 function changeInfoAboutActiveItems() {
@@ -251,6 +253,37 @@ function setFilter(index) {
 };
 
 /**
+ * Create dragging element with empty element. 
+ * @param {EventTarget|null} target 
+ */
+function createDraggingElement(target) {
+    const todoListUL = document.querySelector('.todo-list');
+    if (todoListUL) {
+        // @ts-ignore
+        const draggingElement = target;
+        // @ts-ignore
+        draggingElement.classList.add('dragging');
+
+        // @ts-ignore
+        // create `empty` element
+        const emptyElement = draggingElement.cloneNode();
+        emptyElement.classList.remove('dragging');
+        emptyElement.classList.add('empty');
+
+        // @ts-ignore
+        // insert `empty` element after `dragging` element
+        const nextSibling = draggingElement.nextSibling;
+        todoListUL.insertBefore(emptyElement, nextSibling);
+
+        shiftY = 0;
+        movementY = y0;
+        defaultScrollTop = todoListUL.scrollTop;
+        // @ts-ignore
+        draggingElement.setAttribute('style', `--x: 0px; --y:-${defaultScrollTop}px`);
+    }
+}
+
+/**
  * @param {Event} event 
  */
 function dragStart(event) {
@@ -260,46 +293,26 @@ function dragStart(event) {
         return false;
     };
     if (event.currentTarget) {
-        const todoListUL = document.querySelector('.todo-list');
-        if (todoListUL) {
-            // @ts-ignore
-            const draggingElement = event.currentTarget;
-            // @ts-ignore
-            draggingElement.classList.add('dragging');
-
-            // @ts-ignore
-            // create `empty` element
-            const emptyElement = draggingElement.cloneNode();
-            emptyElement.classList.remove('dragging');
-            emptyElement.classList.add('empty');
-
-            // @ts-ignore
-            // insert `empty` element after `dragging` element
-            const nextSibling = draggingElement.nextSibling;
-            todoListUL.insertBefore(emptyElement, nextSibling);
-
-            if (event.type === 'touchstart') {
+        if (event.type === 'touchstart') {
+            // implementing long press
+            timeoutID = setTimeout(() => {
                 // @ts-ignore
                 x0 = event.touches[0].pageX;
                 // @ts-ignore
                 y0 = event.touches[0].pageY;
-                todoListUL.setAttribute('style', 'overflow-y: hidden');
+                createDraggingElement(event.target);
                 document.addEventListener('touchmove', dragMove);
-                document.addEventListener('touchend', dragEnd);
-            }
-            if (event.type === 'mousedown') {
-                // @ts-ignore
-                x0 = event.pageX;
-                // @ts-ignore
-                y0 = event.pageY;
-                document.addEventListener('mousemove', dragMove);
-                document.addEventListener('mouseup', dragEnd);
-            }
-            shiftY = 0;
-            movementY = y0;
-            defaultScrollTop = todoListUL.scrollTop;
+            }, 2000);
+            document.addEventListener('touchend', dragEnd);
+        }
+        if (event.type === 'mousedown') {
             // @ts-ignore
-            draggingElement.setAttribute('style', `--x: 0px; --y:-${defaultScrollTop}px`);
+            x0 = event.pageX;
+            // @ts-ignore
+            y0 = event.pageY;
+            createDraggingElement(event.target);
+            document.addEventListener('mousemove', dragMove);
+            document.addEventListener('mouseup', dragEnd);
         }
     }
 }
@@ -319,28 +332,20 @@ function dragMove(event) {
         const x1 = event.type === 'touchmove' ? event.touches[0].pageX : event.pageX;
         //@ts-ignore 
         const y1 = event.type === 'touchmove' ? event.touches[0].pageY : event.pageY;
-
-        // smooth scrolling when crossing lines of detection 
-        const topLineDetection = parentBox.top + parentBox.height * 0.23;
-        const bottomLineDetection = parentBox.top + parentBox.height * 0.77;
-
-        if (draggingBox.bottom > bottomLineDetection) {
-            const delta = draggingBox.bottom - bottomLineDetection;
-            todoListUL.scroll({ top: todoListUL.scrollTop + delta, behavior: "smooth" });
-        }
-
-        if (draggingBox.top < topLineDetection) {
-            const delta = topLineDetection - draggingBox.top;
-            todoListUL.scroll({ top: todoListUL.scrollTop - delta, behavior: "smooth" });
-        }
-
         // to detect the direction
         movementY = y1 - movementY;
-
         // moving down
         if (movementY > 0) {
             const nextElement = emptyElement.nextElementSibling;
             if (nextElement) {
+                // smooth scrolling when crossing lines of detection (only desktop view)
+                const bottomLineDetection = parentBox.top + parentBox.height * 0.77;
+                if (draggingBox.bottom > bottomLineDetection) {
+                    console.log('move down');
+                    const delta = draggingBox.bottom - bottomLineDetection;
+                    todoListUL.scroll({ top: todoListUL.scrollTop + delta, behavior: "smooth" });
+                }
+
                 const nextElementBox = nextElement.getBoundingClientRect();
                 if (draggingBox.bottom > nextElementBox.top + nextElementBox.height / 2) {
                     const index = [...todoListUL.children].indexOf(draggingElement);
@@ -358,6 +363,14 @@ function dragMove(event) {
         if (movementY < 0) {
             const prevElement = draggingElement.previousElementSibling;
             if (prevElement) {
+                // smooth scrolling when crossing lines of detection (only desktop view)
+                const topLineDetection = parentBox.top + parentBox.height * 0.23;
+                if (draggingBox.top < topLineDetection) {
+                    console.log('move up');
+                    const delta = topLineDetection - draggingBox.top;
+                    todoListUL.scroll({ top: todoListUL.scrollTop - delta, behavior: "smooth" });
+                }
+
                 const prevElementBox = prevElement.getBoundingClientRect();
                 if (draggingBox.top < prevElementBox.top + prevElementBox.height / 2) {
                     const index = [...todoListUL.children].indexOf(draggingElement);
@@ -395,6 +408,8 @@ function dragEnd(event) {
     if (event.type === 'touchend') {
         document.removeEventListener('touchmove', dragMove);
         document.removeEventListener('touchend', dragEnd);
+        clearTimeout(timeoutID);
+        console.log(`clear timeout: ${timeoutID}`);
     }
     if (event.type === 'mouseup') {
         document.removeEventListener('mousemove', dragMove);
