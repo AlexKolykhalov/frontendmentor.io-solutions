@@ -321,6 +321,8 @@ function dragStart(event) {
  * @param {Event} event 
  */
 function dragMove(event) {
+    event.preventDefault();
+
     const todoListUL = document.querySelector('.todo-list');
     const draggingElement = document.querySelector('.dragging');
     const emptyElement = document.querySelector('.empty');
