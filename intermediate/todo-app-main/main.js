@@ -190,7 +190,10 @@ function createTodo(todo) {
                     // drag & drop implementation
                     newTodoItemLI.addEventListener('touchstart', dragStart, { passive: true });
                     newTodoItemLI.addEventListener('mousedown', dragStart, { passive: true });
-                    newTodoItemLI.addEventListener('dragstart', () => false, { passive: true });
+                    // newTodoItemLI.addEventListener('dragstart', (e) => {
+                    //     e.preventDefault();
+                    //     return false;
+                    // }, { passive: true });
                     todoListUL.appendChild(newTodoItemLI);
                 }
             }
@@ -283,6 +286,12 @@ function createDraggingElement(target) {
     }
 }
 
+function preventDrag(event) {
+    console.log('return false');
+    event.preventDefault();
+    return false;
+}
+
 /**
  * @param {Event} event 
  */
@@ -301,6 +310,14 @@ function dragStart(event) {
                 // @ts-ignore
                 y0 = event.touches[0].pageY;
                 createDraggingElement(event.target);
+                const todoListUL = document.querySelector('.todo-list');
+                // todoListUL?.addEventListener('touchmove', preventDrag);
+                // todoListUL?.addEventListener('touchmove', (e) => {
+                //     console.log('return false');
+                //     e.preventDefault();
+                //     return false;
+                // });
+                todoListUL?.setAttribute('style', 'overflow-y: hidden;')
                 document.addEventListener('touchmove', dragMove);
             }, 2000);
             document.addEventListener('touchend', dragEnd);
@@ -321,8 +338,6 @@ function dragStart(event) {
  * @param {Event} event 
  */
 function dragMove(event) {
-    event.preventDefault();
-
     const todoListUL = document.querySelector('.todo-list');
     const draggingElement = document.querySelector('.dragging');
     const emptyElement = document.querySelector('.empty');
@@ -408,6 +423,7 @@ function dragEnd(event) {
     emptyElement?.remove();
 
     if (event.type === 'touchend') {
+        todoListUL?.removeEventListener('touchmove', preventDrag);
         document.removeEventListener('touchmove', dragMove);
         document.removeEventListener('touchend', dragEnd);
         clearTimeout(timeoutID);
