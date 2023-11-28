@@ -124,29 +124,6 @@ img:not([alt]) {
 
     --base-size: 18px;
 
-    /* fluid typography */
-    /* https://fluid-typography.netlify.app/ */
-    /* https://fluidtypography.com/ */
-
-    /* minor third */
-    /* 5:6 <-> 1.2 */
-    /* 1.067
-    1.125
-    1.2
-    1.25
-    1.333
-    1.414
-    1.5
-    1.6
-    1.618
-    1.667
-    1.778
-    1.875
-    2
-    2.5
-    2.667
-    3
-    4 */
     --ratio: 1.2;
 
     --scale-100: calc(var(--scale-200) / var(--ratio));
@@ -158,10 +135,6 @@ img:not([alt]) {
     --scale-700: calc(var(--scale-600) * var(--ratio));
     --scale-800: calc(var(--scale-700) * var(--ratio));
     --scale-900: calc(var(--scale-800) * var(--ratio));
-
-    --br-sm: 36em;
-    --br-md: 48em;
-    --br-lg: 62em;
 
     --bg-image-mobile: url('images/bg-mobile-light.jpg');
     --bg-image-desktop: url('images/bg-desktop-light.jpg');
@@ -195,7 +168,9 @@ body {
     font-size: var(--scale-400);
     font-weight: 400;
 
+    /* prevent refresh in mobile browsers */
     overscroll-behavior: contain;
+    overflow: hidden;
 }
 
 header {
@@ -256,19 +231,9 @@ input[type="checkbox"]:checked+p {
 
 @media (pointer:fine) {
 
-    .todo-list>li,
     input[type="checkbox"],
     button {
         cursor: pointer;
-    }
-
-    .todo-item button {
-        display: none;
-    }
-
-    .todo-list>li:hover button,
-    .todo-item:focus-within button {
-        display: block;
     }
 
     input[type="checkbox"]:not(:checked):hover,
@@ -301,11 +266,6 @@ input[type="checkbox"]:checked+p {
         border-radius: 50%;
         background: linear-gradient(to right bottom, var(--clr-primary-aqua), var(--clr-primary-purple));
     }
-
-    .todo-app>ul button:hover,
-    .todo-list+div button:hover {
-        color: var(--clr-text-main);
-    }
 }
 
 /* ************************* */
@@ -333,13 +293,6 @@ input[type="checkbox"]:checked+p {
     margin-right: auto;
 }
 
-/* ↓ Intrinsic Centering: That is, centering elements based on their natural, content-based widths. */
-/* .intrinsic {
-   display: flex;
-   flex-direction: column;
-   align-items: center;
-} */
-
 .column {
     display: flex;
     flex-direction: column;
@@ -348,11 +301,6 @@ input[type="checkbox"]:checked+p {
 .column:only-child {
     block-size: 100%;
 }
-
-/* ↓ Split after - the element after which to split the stack with an auto margin */
-/* .column.split-after-1> :nth-child(1) {
-   margin-block-end: auto;
-} */
 
 .row {
     display: flex;
@@ -363,37 +311,8 @@ input[type="checkbox"]:checked+p {
 }
 
 .row>* {
-    /* ↓ Disallow children to grow */
     flex-grow: var(--flex-grow, 0);
-    /* ↓ Switch the layout at the --break */
     flex-basis: calc((var(--break) - 100%) * 999);
-}
-
-.no-wrap {
-    flex-wrap: nowrap;
-}
-
-.break-m {
-    --break: var(--br-md);
-    /* ↓ Allow children to grow */
-    --flex-grow: 1;
-}
-
-/* ↓ Split after - the element after which to split the stack with an auto margin */
-.row.split-after-3> :nth-child(3) {
-    margin-inline-end: auto;
-}
-
-/* .row.break-after-4> :nth-last-child(n+5), */
-/* .row.break-after-4> :nth-last-child(n+5)~* { */
-/* ↓ Switch to a vertical configuration if there are more than 4 child elements */
-/* flex-basis: 100%; */
-/* } */
-
-.grid {
-    display: grid;
-    gap: clamp(5px, 2vw, 30px);
-    grid-template-columns: auto 1fr auto;
 }
 
 /* ************************* */
@@ -412,9 +331,8 @@ input[type="checkbox"]:checked+p {
 }
 
 .new-todo-input>input,
-.todo-list>*,
 .todo-list+div,
-.todo-app>ul {
+.filter {
     height: clamp(45px, 5vw, 55px);
     padding-inline: 1rem;
 }
@@ -443,7 +361,7 @@ input[type="checkbox"]:checked+p {
 }
 
 @media (min-width: 36em) {
-    .todo-app>ul {
+    .filter {
         position: absolute;
         left: 50%;
         bottom: 55px;
@@ -451,32 +369,69 @@ input[type="checkbox"]:checked+p {
     }
 }
 
-.todo-app>ul button {
+.filter button {
     color: var(--clr-text-accent);
 }
 
-.todo-app>ul button[data-status="active"] {
+.filter button[data-status="active"] {
     color: var(--clr-text-primary);
 }
 
 .todo-list {
+    --gap: 0rem;
+
     height: 350px;
     overflow-y: auto;
 }
 
+.todo-list>*+* {
+    margin-top: var(--gap);
+}
+
+.todo-item:first-of-type {
+    border-top: none;
+}
+
 .todo-item {
-    pointer-events: stroke;
+    display: flex;
+    align-items: center;
+    gap: clamp(5px, 2vw, 30px);
+
+    /* pointer-events: stroke; */
     user-select: none;
     -moz-user-select: none;
     -webkit-user-select: none;
     -ms-user-select: none;
 
     border-bottom: 1px solid var(--clr-text-neutral);
+    box-sizing: content-box;
+
+    height: clamp(45px, 5vw, 55px);
+    padding-inline: 1rem;
 }
 
-/* .todo-list>* {
-    border-bottom: 1px solid var(--clr-text-neutral);
-} */
+.todo-item>:nth-child(3) {
+    margin-inline-end: auto;
+}
+
+.todo-item.dragging {
+    --x: 0px;
+    --y: 0px;
+
+    position: absolute;
+    translate: var(--x) var(--y);
+
+    border: none;
+    background-color: var(--clr-todo-bg);
+    box-shadow: 0 0 3px 1px var(--clr-text-main);
+    /* Important for detecting element in the list when dragging */
+    pointer-events: none;
+
+    width: -moz-available;
+    width: -webkit-fill-available;
+
+    z-index: 1;
+}
 
 .toggle-color-scheme {
     margin: 0;
@@ -488,6 +443,26 @@ input[type="checkbox"]:checked+p {
 .toggle-color-scheme>img {
     width: 100%;
     height: 100%;
+}
+
+@media (pointer:fine) {
+    .todo-item {
+        cursor: pointer;
+    }
+
+    .todo-item button {
+        display: none;
+    }
+
+    .todo-item:not(.dragging):hover button,
+    .todo-item:not(.dragging):focus-within button {
+        display: block;
+    }
+
+    .filter button:not([data-status]):hover,
+    .todo-list+div button:hover {
+        color: var(--clr-text-main);
+    }
 }
 
 /* ************************* */
@@ -510,10 +485,6 @@ input[type="checkbox"]:checked+p {
     justify-content: center;
 }
 
-/* .main-axis-end {
-    justify-content: flex-end;
-} */
-
 .main-axis-space-between {
     justify-content: space-between;
 }
@@ -521,14 +492,6 @@ input[type="checkbox"]:checked+p {
 .cross-axis-center {
     align-items: center;
 }
-
-/* .cross-axis-end {
-    align-items: flex-end;
-} */
-
-/* .cross-axis-stretch {
-    align-items: stretch;
-} */
 
 .pad-h-m {
     padding-inline: 1rem;
@@ -550,10 +513,6 @@ input[type="checkbox"]:checked+p {
     gap: 1rem;
 }
 
-/* .line-height {
-    line-height: 1;
-} */
-
 .letter-spacing {
     letter-spacing: 9px;
 }
@@ -566,17 +525,9 @@ input[type="checkbox"]:checked+p {
     text-transform: uppercase;
 }
 
-/* .fw-regular {
-    font-weight: 400;
-} */
-
 .fw-bold {
     font-weight: 700;
 }
-
-/* .fs-100 {
-    font-size: var(--scale-100);
-} */
 
 .fs-200-400 {
     font-size: clamp(var(--scale-200), 3vw, var(--scale-400));
@@ -590,30 +541,9 @@ input[type="checkbox"]:checked+p {
     font-size: var(--scale-300);
 }
 
-/* .fs-400 {
-    font-size: var(--scale-400);
-} */
-
-/* .fs-500 {
-    font-size: var(--scale-500);
-} */
-
 .fs-600-900 {
-    /* font-size: var(--scale-600); */
     font-size: clamp(var(--scale-600), 4vw, var(--scale-900));
 }
-
-/* .fs-700 {
-    font-size: var(--scale-700);
-} */
-
-/* .fs-800 {
-    font-size: var(--scale-800);
-} */
-
-/* .fs-900 {
-    font-size: var(--scale-900);
-} */
 
 .clr-n-logo {
     color: var(--clr-logo);
@@ -631,6 +561,10 @@ input[type="checkbox"]:checked+p {
     color: var(--clr-text-accent);
 }
 
-/* .clr-text-neutral {
-    color: var(--clr-text-neutral);
-} */
+/* ************************* */
+/*        Exceptions         */
+/* ************************* */
+
+[data-visible="false"] {
+    display: none;
+}
