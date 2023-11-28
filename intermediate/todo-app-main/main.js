@@ -282,7 +282,7 @@ function dragStart(event) {
                 x0 = event.touches[0].pageX;
                 // @ts-ignore
                 y0 = event.touches[0].pageY;
-                todoListUL.setAttribute('style', 'overflow-y: hidden');
+                // todoListUL.setAttribute('style', 'overflow-y: hidden');
                 document.addEventListener('touchmove', dragMove);
                 document.addEventListener('touchend', dragEnd);
             }
