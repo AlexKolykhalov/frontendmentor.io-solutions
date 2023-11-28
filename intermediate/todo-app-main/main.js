@@ -251,7 +251,7 @@ function setFilter(index) {
 };
 
 /**
- * @param {MouseEvent|TouchEvent} event 
+ * @param {Event} event 
  */
 function dragStart(event) {
     // if click checkbox
@@ -305,7 +305,7 @@ function dragStart(event) {
 }
 
 /**
- * @param {MouseEvent|TouchEvent} event 
+ * @param {Event} event 
  */
 function dragMove(event) {
     const todoListUL = document.querySelector('.todo-list');
@@ -379,7 +379,7 @@ function dragMove(event) {
 }
 
 /**
- * @param {MouseEvent|TouchEvent} event 
+ * @param {Event} event 
  */
 function dragEnd(event) {
     const todoListUL = document.querySelector('.todo-list');

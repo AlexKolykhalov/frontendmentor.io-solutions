@@ -159,6 +159,10 @@ img:not([alt]) {
 /*       General style       */
 /* ************************* */
 
+html {
+    overflow: hidden;
+}
+
 body {
     background-color: var(--clr-body-bg);
 
