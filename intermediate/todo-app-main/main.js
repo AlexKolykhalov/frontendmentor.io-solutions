@@ -172,6 +172,7 @@ function createTodo(todo) {
                     // drag & drop implementation
                     newTodoItemLI.addEventListener('touchstart', dragStart, { passive: true });
                     newTodoItemLI.addEventListener('mousedown', dragStart, { passive: true });
+                    newTodoItemLI.addEventListener('dragstart', () => false, { passive: true });
                     todoListUL.appendChild(newTodoItemLI);
                 }
             }
@@ -282,7 +283,7 @@ function dragStart(event) {
                 x0 = event.touches[0].pageX;
                 // @ts-ignore
                 y0 = event.touches[0].pageY;
-                // todoListUL.setAttribute('style', 'overflow-y: hidden');
+                todoListUL.setAttribute('style', 'overflow-y: hidden');
                 document.addEventListener('touchmove', dragMove);
                 document.addEventListener('touchend', dragEnd);
             }
