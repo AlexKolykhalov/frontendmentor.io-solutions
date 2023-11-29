@@ -190,10 +190,6 @@ function createTodo(todo) {
                     // drag & drop implementation
                     newTodoItemLI.addEventListener('touchstart', dragStart, { passive: true });
                     newTodoItemLI.addEventListener('mousedown', dragStart, { passive: true });
-                    // newTodoItemLI.addEventListener('dragstart', (e) => {
-                    //     e.preventDefault();
-                    //     return false;
-                    // }, { passive: true });
                     todoListUL.appendChild(newTodoItemLI);
                 }
             }
@@ -256,7 +252,7 @@ function setFilter(index) {
 };
 
 /**
- * Create dragging element with empty element. 
+ * Create dragging and empty elements. 
  * @param {EventTarget|null} target 
  */
 function createDraggingElement(target) {
@@ -278,18 +274,9 @@ function createDraggingElement(target) {
         const nextSibling = draggingElement.nextSibling;
         todoListUL.insertBefore(emptyElement, nextSibling);
 
-        shiftY = 0;
-        movementY = y0;
-        defaultScrollTop = todoListUL.scrollTop;
         // @ts-ignore
         draggingElement.setAttribute('style', `--x: 0px; --y:-${defaultScrollTop}px`);
     }
-}
-
-function preventDrag(event) {
-    console.log('return false');
-    event.preventDefault();
-    return false;
 }
 
 /**
@@ -301,7 +288,12 @@ function dragStart(event) {
     if (event.target.tagName.toLowerCase() === 'input') {
         return false;
     };
-    if (event.currentTarget) {
+    const todoListUL = document.querySelector('.todo-list');
+    if (event.target && todoListUL) {
+        // set defaults
+        shiftY = 0;
+        movementY = y0;
+        defaultScrollTop = todoListUL.scrollTop;
         if (event.type === 'touchstart') {
             // implementing long press
             timeoutID = setTimeout(() => {
@@ -309,15 +301,8 @@ function dragStart(event) {
                 x0 = event.touches[0].pageX;
                 // @ts-ignore
                 y0 = event.touches[0].pageY;
+                todoListUL.setAttribute('style', 'overflow-y: hidden');
                 createDraggingElement(event.target);
-                const todoListUL = document.querySelector('.todo-list');
-                // todoListUL?.addEventListener('touchmove', preventDrag);
-                // todoListUL?.addEventListener('touchmove', (e) => {
-                //     console.log('return false');
-                //     e.preventDefault();
-                //     return false;
-                // });
-                todoListUL?.setAttribute('style', 'overflow-y: hidden;')
                 document.addEventListener('touchmove', dragMove);
             }, 2000);
             document.addEventListener('touchend', dragEnd);
@@ -358,24 +343,21 @@ function dragMove(event) {
                 // smooth scrolling when crossing lines of detection (only desktop view)
                 const bottomLineDetection = parentBox.top + parentBox.height * 0.77;
                 if (draggingBox.bottom > bottomLineDetection) {
-                    console.log('move down');
                     const delta = draggingBox.bottom - bottomLineDetection;
                     todoListUL.scroll({ top: todoListUL.scrollTop + delta, behavior: "smooth" });
                 }
-
                 const nextElementBox = nextElement.getBoundingClientRect();
                 if (draggingBox.bottom > nextElementBox.top + nextElementBox.height / 2) {
                     const index = [...todoListUL.children].indexOf(draggingElement);
                     // swap two elements in array 
                     // https://stackoverflow.com/questions/872310/swap-array-elements-in-javascript
                     [todoList[index], todoList[index + 1]] = [todoList[index + 1], todoList[index]];
-
+                    // changed elements in DOM
                     todoListUL.insertBefore(nextElement, draggingElement);
                     shiftY = shiftY - draggingBox.height;
                 }
             }
         }
-
         // moving up
         if (movementY < 0) {
             const prevElement = draggingElement.previousElementSibling;
@@ -383,18 +365,16 @@ function dragMove(event) {
                 // smooth scrolling when crossing lines of detection (only desktop view)
                 const topLineDetection = parentBox.top + parentBox.height * 0.23;
                 if (draggingBox.top < topLineDetection) {
-                    console.log('move up');
                     const delta = topLineDetection - draggingBox.top;
                     todoListUL.scroll({ top: todoListUL.scrollTop - delta, behavior: "smooth" });
                 }
-
                 const prevElementBox = prevElement.getBoundingClientRect();
                 if (draggingBox.top < prevElementBox.top + prevElementBox.height / 2) {
                     const index = [...todoListUL.children].indexOf(draggingElement);
                     // swap two elements in array 
                     // https://stackoverflow.com/questions/872310/swap-array-elements-in-javascript
                     [todoList[index - 1], todoList[index]] = [todoList[index], todoList[index - 1]];
-
+                    // changed elements in DOM
                     todoListUL.insertBefore(prevElement, emptyElement.nextElementSibling);
                     shiftY = shiftY + draggingBox.height;
                 }
@@ -423,7 +403,6 @@ function dragEnd(event) {
     emptyElement?.remove();
 
     if (event.type === 'touchend') {
-        todoListUL?.removeEventListener('touchmove', preventDrag);
         document.removeEventListener('touchmove', dragMove);
         document.removeEventListener('touchend', dragEnd);
         clearTimeout(timeoutID);
