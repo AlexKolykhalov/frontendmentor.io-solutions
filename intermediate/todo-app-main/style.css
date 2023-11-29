@@ -378,6 +378,7 @@ input[type="checkbox"]:checked+p {
 }
 
 .filter button[data-status="active"] {
+    pointer-events: none;
     color: var(--clr-text-primary);
 }
 

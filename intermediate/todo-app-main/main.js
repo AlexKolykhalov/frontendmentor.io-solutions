@@ -105,7 +105,7 @@ clearCompleted?.addEventListener('click', () => {
 });
 
 listFilters.forEach(elem => {
-    elem.addEventListener('click', () => {
+    elem.addEventListener('click', (e) => {
         const index = [...listFilters].indexOf(elem);
         setFilter(index);
     });
@@ -154,6 +154,10 @@ function createTodo(todo) {
                 //@ts-ignore
                 const input = newTodoItemLI.querySelector('input[type="checkbox"]');
 
+                /**@type {HTMLButtonElement|null}*/
+                //@ts-ignore
+                const btn = newTodoItemLI.querySelector('button');
+
                 /**@type {HTMLParagraphElement|null}*/
                 //@ts-ignore
                 const p = newTodoItemLI.querySelector('p');
@@ -161,12 +165,11 @@ function createTodo(todo) {
                 /**@type {number}*/
                 const id = todoList.indexOf(todo) === -1 ? todoList.length : todoList.indexOf(todo);
 
-                if (label && input && p) {
+                if (label && input && btn && p) {
                     label.setAttribute('for', `done-${id}`);
                     input.setAttribute('id', `done-${id}`);
                     input.checked = todo.completed;
                     p.textContent = todo.title;
-
                     input.addEventListener('click', () => {
                         const parentElement = input.parentElement;
                         const currentFilter = document.querySelector('.filter button[data-status]');
@@ -185,6 +188,17 @@ function createTodo(todo) {
                             // of the delete button in todo-item 
                             input.blur();
                             changeInfoAboutActiveItems();
+                        }
+                    });
+                    btn.addEventListener('click', () => {
+                        const todoItemList = document.querySelectorAll('.todo-item');
+                        const parentElement = input.parentElement;
+                        if (parentElement) {
+                            const id = [...todoItemList].indexOf(parentElement);
+                            todoList.splice(id, 1);
+                            parentElement.remove();
+                            changeInfoAboutActiveItems();
+                            saveTodoList();
                         }
                     });
                     // drag & drop implementation
@@ -214,40 +228,37 @@ function changeInfoAboutActiveItems() {
  * @param {number} index Number of filter (All = 0, Active = 1, Completed = 2)
  */
 function setFilter(index) {
-    if (listFilters[index].getAttribute('data-status') !== 'active') {
-        listFilters.forEach(elem => {
-            elem.removeAttribute('data-status');
+    listFilters.forEach(elem => {
+        index === [...listFilters].indexOf(elem)
+            ? listFilters[index].setAttribute('data-status', 'active')
+            : elem.removeAttribute('data-status');
+    });
+
+    // `All` filter
+    if (index === 0) {
+        const allInvisible = document.querySelectorAll('.todo-item[data-visible="false"]');
+        allInvisible.forEach(elem => {
+            elem.removeAttribute('data-visible');
         });
-        listFilters[index].setAttribute('data-status', 'active');
-        // `All` filter
-        if (index === 0) {
-            const allInvisible = document.querySelectorAll('.todo-item[data-visible="false"]');
-            allInvisible.forEach(elem => {
-                elem.removeAttribute('data-visible');
-            });
-        }
-        // `Active` filter
-        if (index === 1) {
-            const active = document.querySelectorAll('input[type="checkbox"]:not(:checked)');
-            active.forEach(elem => {
-                elem.parentElement?.removeAttribute('data-visible');
-            });
-            const completed = document.querySelectorAll('input[type="checkbox"]:checked');
-            completed.forEach(elem => {
-                elem.parentElement?.setAttribute('data-visible', 'false');
-            });
-        }
-        // `Completed` filter
-        if (index === 2) {
-            const active = document.querySelectorAll('input[type="checkbox"]:not(:checked)');
-            active.forEach(elem => {
-                elem.parentElement?.setAttribute('data-visible', 'false');
-            });
-            const completed = document.querySelectorAll('input[type="checkbox"]:checked');
-            completed.forEach(elem => {
-                elem.parentElement?.removeAttribute('data-visible');
-            });
-        }
+    } else {
+        /**
+         * @type {NodeListOf<HTMLInputElement>}
+         */
+        const inputsList = document.querySelectorAll('input[type="checkbox"]');
+        inputsList.forEach(input => {
+            // `Active` filter
+            if (index === 1) {
+                input.checked ?
+                    input.parentElement?.setAttribute('data-visible', 'false') :
+                    input.parentElement?.removeAttribute('data-visible');
+            }
+            // `Completed` filter
+            if (index === 2) {
+                input.checked ?
+                    input.parentElement?.removeAttribute('data-visible') :
+                    input.parentElement?.setAttribute('data-visible', 'false');
+            }
+        });
     }
 };
 
@@ -283,38 +294,42 @@ function createDraggingElement(target) {
  * @param {Event} event 
  */
 function dragStart(event) {
-    // if click checkbox
-    // @ts-ignore
-    if (event.target.tagName.toLowerCase() === 'input') {
-        return false;
-    };
-    const todoListUL = document.querySelector('.todo-list');
-    if (event.target && todoListUL) {
-        // set defaults
-        shiftY = 0;
-        movementY = y0;
-        defaultScrollTop = todoListUL.scrollTop;
-        if (event.type === 'touchstart') {
-            // implementing long press
-            timeoutID = setTimeout(() => {
+    const target = event.target;
+    if (target) {
+        // if click checkbox or button or img inside button
+        // @ts-ignore
+        const tagName = target.tagName.toLowerCase();
+        if (tagName === 'input' || tagName === 'button' || tagName == 'img') {
+            return false;
+        };
+        const todoListUL = document.querySelector('.todo-list');
+        if (todoListUL) {
+            // set defaults
+            shiftY = 0;
+            movementY = y0;
+            defaultScrollTop = todoListUL.scrollTop;
+            if (event.type === 'touchstart') {
+                // implementing long press
+                timeoutID = setTimeout(() => {
+                    // @ts-ignore
+                    x0 = event.touches[0].pageX;
+                    // @ts-ignore
+                    y0 = event.touches[0].pageY;
+                    todoListUL.setAttribute('style', 'overflow-y: hidden');
+                    createDraggingElement(target);
+                    document.addEventListener('touchmove', dragMove);
+                }, 800);
+                document.addEventListener('touchend', dragEnd);
+            }
+            if (event.type === 'mousedown') {
                 // @ts-ignore
-                x0 = event.touches[0].pageX;
+                x0 = event.pageX;
                 // @ts-ignore
-                y0 = event.touches[0].pageY;
-                todoListUL.setAttribute('style', 'overflow-y: hidden');
-                createDraggingElement(event.target);
-                document.addEventListener('touchmove', dragMove);
-            }, 2000);
-            document.addEventListener('touchend', dragEnd);
-        }
-        if (event.type === 'mousedown') {
-            // @ts-ignore
-            x0 = event.pageX;
-            // @ts-ignore
-            y0 = event.pageY;
-            createDraggingElement(event.target);
-            document.addEventListener('mousemove', dragMove);
-            document.addEventListener('mouseup', dragEnd);
+                y0 = event.pageY;
+                createDraggingElement(target);
+                document.addEventListener('mousemove', dragMove);
+                document.addEventListener('mouseup', dragEnd);
+            }
         }
     }
 }
