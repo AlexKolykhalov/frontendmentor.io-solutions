@@ -388,6 +388,7 @@ input[type="checkbox"]:checked+p {
 
 .filter button {
     color: var(--clr-text-accent);
+    transition: color 0.2s ease-in;
 }
 
 .filter button[data-status="active"] {
