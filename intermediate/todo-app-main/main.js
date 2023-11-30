@@ -159,7 +159,7 @@ clearCompleted?.addEventListener('click', () => {
 });
 
 listFilters.forEach(elem => {
-    elem.addEventListener('click', (e) => {
+    elem.addEventListener('click', () => {
         const index = [...listFilters].indexOf(elem);
         setFilter(index);
     });
