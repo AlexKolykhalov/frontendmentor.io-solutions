@@ -67,11 +67,19 @@ let timeoutID = 0;
 // ************************** 1. Events *********************************//
 
 window.addEventListener('load', () => {
-    todoList = getTodoList();
-    todoList.forEach(todo => {
-        createTodo(todo);
-    });
-    changeInfoAboutActiveItems();
+    const todoListUL = document.querySelector('.todo-list');
+    if (todoListUL) {
+        todoList = getTodoList();
+        todoList.forEach((todo) => {
+            const newTodo = createNewTodo(todo);
+            if (newTodo) {
+                todoListUL.appendChild(newTodo);
+            }
+        });
+        changeInfoAboutActiveItems();
+    }
+});
+
 colorThemeToggleBtn?.addEventListener('click', () => {
     const body = document.querySelector('body');
     const img = colorThemeToggleBtn.querySelector('img');
@@ -101,11 +109,17 @@ input?.addEventListener('keydown', (e) => {
             title: input.value.trim(),
             completed: false,
         }
-        createTodo(newTodo);
-        todoList.push(newTodo);
-        saveTodoList();
-        changeInfoAboutActiveItems();
-        input.value = '';
+        const newTodoElement = createNewTodo(newTodo);
+        if (newTodoElement) {
+            const todoListUL = document.querySelector('.todo-list');
+            if (todoListUL) {
+                todoListUL.appendChild(newTodoElement);
+                todoList.push(newTodo);
+                saveTodoList();
+                changeInfoAboutActiveItems();
+                input.value = '';
+            }
+        }
     }
 });
 
@@ -149,8 +163,9 @@ function getTodoList() {
 /**
  * Create a new todo. 
  * @param {TodoItem} todo 
+ * @return {Node|undefined} New HTML element.
  */
-function createTodo(todo) {
+function createNewTodo(todo) {
     /**
      * @type {HTMLUListElement|null}
      */
@@ -221,7 +236,7 @@ function createTodo(todo) {
                     // drag & drop implementation
                     newTodoItemLI.addEventListener('touchstart', dragStart, { passive: true });
                     newTodoItemLI.addEventListener('mousedown', dragStart, { passive: true });
-                    todoListUL.appendChild(newTodoItemLI);
+                    return newTodoItemLI;
                 }
             }
         }
