@@ -225,7 +225,7 @@ function createNewTodo(todo) {
                     input.setAttribute('id', `done-${id}`);
                     input.checked = todo.completed;
                     p.textContent = todo.title;
-                    input.addEventListener('click', () => {
+                    input.addEventListener('click', async () => {
                         const parentElement = input.parentElement;
                         const currentFilter = document.querySelector('.filter button[data-status]');
 
@@ -233,7 +233,16 @@ function createNewTodo(todo) {
                         if (currentFilter && parentElement) {
                             if (currentFilter.textContent === 'Active' && input.checked ||
                                 currentFilter.textContent === 'Completed' && !input.checked) {
-                                parentElement.setAttribute('data-visible', 'false');
+                                const state = await parentElement.animate(
+                                    [{ opacity: 0 }],
+                                    {
+                                        easing: 'ease-out',
+                                        duration: 300,
+                                    }
+                                ).finished;
+                                if (state.playState === 'finished') {
+                                    parentElement.setAttribute('data-visible', 'false');
+                                }
                             }
                             const todoItemList = document.querySelectorAll('.todo-item');
                             const id = [...todoItemList].indexOf(parentElement);
