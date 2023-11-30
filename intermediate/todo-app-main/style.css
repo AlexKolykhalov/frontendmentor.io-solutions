@@ -173,7 +173,7 @@ body {
         color 0.3s ease-in;
 }
 
-body[data-theme] {
+body[data-theme="dark"] {
     --clr-logo: var(--clr-light-neutral-000);
     --clr-body-bg: var(--clr-dark-neutral-900);
     --clr-todo-bg: var(--clr-dark-neutral-800);
