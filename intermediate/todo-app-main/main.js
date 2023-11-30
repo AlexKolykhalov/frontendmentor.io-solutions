@@ -99,7 +99,7 @@ input?.addEventListener('focus', () => {
     setFilter(0);
 });
 
-input?.addEventListener('keydown', (e) => {
+input?.addEventListener('keydown', async (e) => {
     if (e.key === 'Enter') {
         e.preventDefault();
         /**
@@ -114,6 +114,20 @@ input?.addEventListener('keydown', (e) => {
             const todoListUL = document.querySelector('.todo-list');
             if (todoListUL) {
                 todoListUL.appendChild(newTodoElement);
+                //@ts-ignore
+                newTodoElement.setAttribute('style', 'opacity: 0');
+                //@ts-ignore
+                const state = await newTodoElement.animate(
+                    [{ opacity: 1 }],
+                    {
+                        easing: 'ease-in',
+                        duration: 300,
+                    }
+                ).finished;
+                if (state.playState === 'finished') {
+                    //@ts-ignore
+                    newTodoElement.removeAttribute('style');
+                }
                 todoList.push(newTodo);
                 saveTodoList();
                 changeInfoAboutActiveItems();
@@ -126,8 +140,17 @@ input?.addEventListener('keydown', (e) => {
 clearCompleted?.addEventListener('click', () => {
     const allCompletedItems = document.querySelectorAll('input[type="checkbox"]:checked');
     if ([...allCompletedItems].length > 0) {
-        allCompletedItems.forEach(elem => {
-            elem.parentElement?.remove();
+        allCompletedItems.forEach(async (elem) => {
+            const state = await elem.animate(
+                [{ opacity: 0 }],
+                {
+                    easing: 'ease-out',
+                    duration: 300,
+                }
+            ).finished;
+            if (state.playState === 'finished') {
+                elem.parentElement?.remove();
+            }
         });
         //select only active todoes
         todoList = todoList.filter((elem) => elem.completed === false);
@@ -222,15 +245,24 @@ function createNewTodo(todo) {
                             changeInfoAboutActiveItems();
                         }
                     });
-                    btn.addEventListener('click', () => {
-                        const todoItemList = document.querySelectorAll('.todo-item');
-                        const parentElement = input.parentElement;
+                    btn.addEventListener('click', async () => {
+                        const parentElement = btn.parentElement;
                         if (parentElement) {
-                            const id = [...todoItemList].indexOf(parentElement);
-                            todoList.splice(id, 1);
-                            parentElement.remove();
-                            changeInfoAboutActiveItems();
-                            saveTodoList();
+                            const state = await parentElement.animate(
+                                [{ opacity: 0 }],
+                                {
+                                    easing: 'ease-out',
+                                    duration: 300,
+                                }
+                            ).finished;
+                            if (state.playState === 'finished') {
+                                const todoItemList = document.querySelectorAll('.todo-item');
+                                const id = [...todoItemList].indexOf(parentElement);
+                                todoList.splice(id, 1);
+                                parentElement.remove();
+                                changeInfoAboutActiveItems();
+                                saveTodoList();
+                            }
                         }
                     });
                     // drag & drop implementation
@@ -269,26 +301,50 @@ function setFilter(index) {
     // `All` filter
     if (index === 0) {
         const allInvisible = document.querySelectorAll('.todo-item[data-visible="false"]');
-        allInvisible.forEach(elem => {
+        allInvisible.forEach(async (elem) => {
             elem.removeAttribute('data-visible');
+            elem.setAttribute('style', 'opacity: 0');
+            const state = await elem.animate(
+                [{ opacity: 1 }],
+                {
+                    easing: 'ease-in',
+                    duration: 300,
+                }
+            ).finished;
+            if (state.playState === 'finished') {
+                elem.removeAttribute('style');
+            }
         });
     } else {
         /**
          * @type {NodeListOf<HTMLInputElement>}
          */
         const inputsList = document.querySelectorAll('input[type="checkbox"]');
-        inputsList.forEach(input => {
-            // `Active` filter
-            if (index === 1) {
-                input.checked ?
-                    input.parentElement?.setAttribute('data-visible', 'false') :
-                    input.parentElement?.removeAttribute('data-visible');
-            }
-            // `Completed` filter
-            if (index === 2) {
-                input.checked ?
-                    input.parentElement?.removeAttribute('data-visible') :
-                    input.parentElement?.setAttribute('data-visible', 'false');
+        inputsList.forEach(async (input) => {
+            if (input.parentElement) {
+                // `Active` filter
+                if (index === 1) {
+                    input.checked ?
+                        input.parentElement.setAttribute('data-visible', 'false') :
+                        input.parentElement.removeAttribute('data-visible');
+                }
+                // `Completed` filter
+                if (index === 2) {
+                    input.checked ?
+                        input.parentElement.removeAttribute('data-visible') :
+                        input.parentElement.setAttribute('data-visible', 'false');
+                }
+                input.parentElement.setAttribute('style', 'opacity: 0');
+                const state = await input.parentElement.animate(
+                    [{ opacity: 1 }],
+                    {
+                        easing: 'ease-in',
+                        duration: 300,
+                    }
+                ).finished;
+                if (state.playState === 'finished') {
+                    input.parentElement.removeAttribute('style');
+                }
             }
         });
     }
