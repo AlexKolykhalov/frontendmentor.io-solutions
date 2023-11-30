@@ -16,6 +16,11 @@ const clearCompleted = document.querySelector('.clear-completed-btn');
 const input = document.querySelector('.new-todo-input>input');
 
 /**
+ * @type {HTMLInputElement|null}
+ */
+const colorThemeToggleBtn = document.querySelector('.toggle-color-scheme');
+
+/**
  * @typedef {object} TodoItem
  * @property {string} title
  * @property {boolean} completed
@@ -67,6 +72,18 @@ window.addEventListener('load', () => {
         createTodo(todo);
     });
     changeInfoAboutActiveItems();
+colorThemeToggleBtn?.addEventListener('click', () => {
+    const body = document.querySelector('body');
+    const img = colorThemeToggleBtn.querySelector('img');
+    if (body && img) {
+        if (body.getAttribute('data-theme') === 'dark') {
+            img.src = 'images/icon-moon.svg';
+            body.removeAttribute('data-theme');
+        } else {
+            img.src = 'images/icon-sun.svg';
+            body.setAttribute('data-theme', 'dark');
+        }
+    }
 });
 
 input?.addEventListener('focus', () => {

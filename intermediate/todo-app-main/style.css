@@ -177,6 +177,19 @@ body {
     overflow: hidden;
 }
 
+body[data-theme] {
+    --clr-logo: var(--clr-light-neutral-000);
+    --clr-body-bg: var(--clr-dark-neutral-900);
+    --clr-todo-bg: var(--clr-dark-neutral-800);
+    --clr-text-primary: var(--clr-primary-blue);
+    --clr-text-main: var(--clr-dark-neutral-100);
+    --clr-text-accent: var(--clr-dark-neutral-400);
+    --clr-text-neutral: var(--clr-dark-neutral-600);
+
+    --bg-image-mobile: url('images/bg-mobile-dark.jpg');
+    --bg-image-desktop: url('images/bg-desktop-dark.jpg');
+}
+
 header {
     height: 30vh;
 
