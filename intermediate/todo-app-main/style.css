@@ -175,6 +175,10 @@ body {
     /* prevent refresh in mobile browsers */
     overscroll-behavior: contain;
     overflow: hidden;
+
+    transition:
+        background-color 0.3s ease-in,
+        color 0.3s ease-in;
 }
 
 body[data-theme] {
