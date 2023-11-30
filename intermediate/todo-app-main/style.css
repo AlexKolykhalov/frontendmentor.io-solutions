@@ -159,10 +159,6 @@ img:not([alt]) {
 /*       General style       */
 /* ************************* */
 
-html {
-    overflow: hidden;
-}
-
 body {
     background-color: var(--clr-body-bg);
 
@@ -171,10 +167,6 @@ body {
     font-family: var(--ff);
     font-size: var(--scale-400);
     font-weight: 400;
-
-    /* prevent refresh in mobile browsers */
-    overscroll-behavior: contain;
-    overflow: hidden;
 
     transition:
         background-color 0.3s ease-in,

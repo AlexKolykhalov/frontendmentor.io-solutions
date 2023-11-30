@@ -399,12 +399,17 @@ function dragStart(event) {
         if (tagName === 'input' || tagName === 'button' || tagName == 'img') {
             return false;
         };
+        const html = document.querySelector('html');
+        const body = document.querySelector('body');
         const todoListUL = document.querySelector('.todo-list');
-        if (todoListUL) {
+        if (html && body && todoListUL) {
             // set defaults
             shiftY = 0;
             movementY = y0;
             defaultScrollTop = todoListUL.scrollTop;
+            // hide horizontal & vertical scroll bars
+            html.setAttribute('style', 'overflow: hidden');
+            body.setAttribute('style', 'overscroll-behavior: contain; overflow: hidden;');
             if (event.type === 'touchstart') {
                 // implementing long press
                 timeoutID = setTimeout(() => {
@@ -504,7 +509,11 @@ function dragMove(event) {
  * @param {Event} event 
  */
 function dragEnd(event) {
+    const html = document.querySelector('html');
+    const body = document.querySelector('body');
     const todoListUL = document.querySelector('.todo-list');
+    html?.removeAttribute('style');
+    body?.removeAttribute('style');
     todoListUL?.removeAttribute('style');
 
     const draggingElement = document.querySelector('.dragging');
