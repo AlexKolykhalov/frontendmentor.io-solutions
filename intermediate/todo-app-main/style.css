@@ -173,6 +173,19 @@ body {
         color 0.3s ease-in;
 }
 
+body[data-theme="light"] {
+    --clr-logo: var(--clr-light-neutral-000);
+    --clr-body-bg: var(--clr-light-neutral-100);
+    --clr-todo-bg: var(--clr-light-neutral-000);
+    --clr-text-primary: var(--clr-primary-blue);
+    --clr-text-main: var(--clr-light-neutral-700);
+    --clr-text-accent: var(--clr-light-neutral-400);
+    --clr-text-neutral: var(--clr-light-neutral-300);
+
+    --bg-image-mobile: url('images/bg-mobile-light.jpg');
+    --bg-image-desktop: url('images/bg-desktop-light.jpg');
+}
+
 body[data-theme="dark"] {
     --clr-logo: var(--clr-light-neutral-000);
     --clr-body-bg: var(--clr-dark-neutral-900);

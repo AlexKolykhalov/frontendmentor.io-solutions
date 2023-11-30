@@ -67,6 +67,11 @@ let timeoutID = 0;
 // ************************** 1. Events *********************************//
 
 window.addEventListener('load', () => {
+    if (window.matchMedia("(prefers-color-scheme: dark)").matches === true) {
+        setTheme('dark');
+    } else {
+        setTheme('light');
+    }
     const todoListUL = document.querySelector('.todo-list');
     if (todoListUL) {
         todoList = getTodoList();
@@ -82,14 +87,11 @@ window.addEventListener('load', () => {
 
 colorThemeToggleBtn?.addEventListener('click', () => {
     const body = document.querySelector('body');
-    const img = colorThemeToggleBtn.querySelector('img');
-    if (body && img) {
+    if (body) {
         if (body.getAttribute('data-theme') === 'dark') {
-            img.src = 'images/icon-moon.svg';
-            body.removeAttribute('data-theme');
+            setTheme('light');
         } else {
-            img.src = 'images/icon-sun.svg';
-            body.setAttribute('data-theme', 'dark');
+            setTheme('dark');
         }
     }
 });
@@ -293,6 +295,25 @@ function changeInfoAboutActiveItems() {
     const text = allActiveItems.length === 1 ? 'item left' : 'items left';
     if (output) {
         output.textContent = `${allActiveItems.length} ${text}`;
+    }
+}
+
+/**
+ * @param {string} theme Available values: 'light' and 'dark'
+ */
+function setTheme(theme) {
+    if (colorThemeToggleBtn) {
+        const body = document.querySelector('body');
+        const img = colorThemeToggleBtn.querySelector('img');
+        if (body && img) {
+            if (theme == 'dark') {
+                img.src = 'images/icon-sun.svg';
+                body.setAttribute('data-theme', 'dark');
+            } else {
+                img.src = 'images/icon-moon.svg';
+                body.setAttribute('data-theme', 'light');
+            }
+        }
     }
 }
 
