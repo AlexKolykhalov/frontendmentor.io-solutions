@@ -61,7 +61,7 @@ Any comments are welcome.
 </details>
 
 <details>
-<summary>Intermediate [5/14] (Free, Free++)</summary>
+<summary>Intermediate [6/14] (Free, Free++)</summary>
 
 | No | Challenge | Live demo | Source |
 | :---: | :--- | :---: | :--- |
@@ -70,4 +70,5 @@ Any comments are welcome.
 | 03 | E-commerce product page | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/intermediate/ecommerce-product-page-main/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/intermediate/ecommerce-product-page-main) |
 | 04 | Calculator app solution | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/intermediate/calculator-app-main/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/intermediate/calculator-app-main) |
 | 05 | Launch countdown timer | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/intermediate/launch-countdown-timer-main/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/intermediate/launch-countdown-timer-main) |
+| 06 | Todo app solution | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/intermediate/todo-app-main/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/intermediate/todo-app-main) |
 </details>
