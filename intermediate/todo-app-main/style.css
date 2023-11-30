@@ -334,7 +334,7 @@ input[type="checkbox"]:checked+p {
 
 .todo-app {
     position: relative;
-    top: -110px;
+    top: clamp(-110px, -10vw, -80px);
 }
 
 .todo-app>*,
