@@ -1,0 +1,411 @@
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Remove default margin */
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+ul,
+ol,
+figure,
+blockquote,
+dl,
+dd {
+    margin: 0;
+}
+
+/* Remove default padding */
+ul,
+ol {
+    padding: 0;
+}
+
+/* Remove list styles on ul, ol elements */
+ul,
+ol {
+    list-style: none;
+}
+
+/* Set core root defaults */
+html:focus-within {
+    scroll-behavior: smooth;
+}
+
+/* Set core body defaults */
+body {
+    min-height: 100vh;
+    text-rendering: optimizeSpeed;
+    line-height: 1.5;
+}
+
+/* A elements that don't have a class get default styles */
+a:not([class]) {
+    text-decoration-skip-ink: auto;
+}
+
+/* Make images easier to work with */
+img,
+picture {
+    max-width: 100%;
+    display: block;
+}
+
+/* Inherit fonts for inputs and buttons */
+input,
+button,
+textarea,
+select {
+    font: inherit;
+}
+
+/* Red border when they have no alt attribute */
+img:not([alt]) {
+    border: 3px dashed hsl(0, 100%, 50%);
+}
+
+/* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
+@media (prefers-reduced-motion: reduce) {
+    html:focus-within {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* ************************* */
+/*         Variables         */
+/* ************************* */
+
+:root {
+    --clr-primary-400: hsl(10, 79%, 65%);
+
+    --clr-neutral-400: hsl(28, 10%, 53%);
+
+    --ff: '', sans-serif;
+
+    --base-size: 16px;
+
+    /* fluid typography */
+    /* https://fluid-typography.netlify.app/ */
+    /* https://fluidtypography.com/ */
+
+    /* minor third */
+    /* 5:6 <-> 1.2 */
+    /* 1.067
+    1.125
+    1.2
+    1.25
+    1.333
+    1.414
+    1.5
+    1.6
+    1.618
+    1.667
+    1.778
+    1.875
+    2
+    2.5
+    2.667
+    3
+    4 */
+    --ratio: 1.2;
+
+    --scale-100: calc(var(--scale-200) / var(--ratio));
+    --scale-200: calc(var(--scale-300) / var(--ratio));
+    --scale-300: calc(var(--scale-400) / var(--ratio));
+    --scale-400: var(--base-size);
+    --scale-500: calc(var(--scale-400) * var(--ratio));
+    --scale-600: calc(var(--scale-500) * var(--ratio));
+    --scale-700: calc(var(--scale-600) * var(--ratio));
+    --scale-800: calc(var(--scale-700) * var(--ratio));
+    --scale-900: calc(var(--scale-800) * var(--ratio));
+
+    --br-sm: 36em;
+    --br-md: 48em;
+    --br-lg: 62em;
+}
+
+/* ************************* */
+/*       General style       */
+/* ************************* */
+
+body {
+    font-family: var(--ff);
+    font-size: var(--scale-400);
+    font-weight: 400;
+}
+
+/* ************************* */
+/*        Composition        */
+/* ************************* */
+
+.box-h-m {
+    max-width: 60ch;
+}
+
+.box-v-m {
+    min-height: 70vh;
+}
+
+.center-v {
+    display: flex;
+    flex-direction: column;
+}
+
+.center-v>* {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.center-h {
+    box-sizing: content-box;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ↓ Intrinsic Centering: That is, centering elements based on their natural, content-based widths. */
+/* .intrinsic {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+} */
+
+.column {
+    display: flex;
+    flex-direction: column;
+}
+
+.column:only-child {
+    block-size: 100%;
+}
+
+/* ↓ Split after - the element after which to split the stack with an auto margin */
+/* .column.split-after-1> :nth-child(1) {
+   margin-block-end: auto;
+} */
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+
+    --flex-grow: 0;
+    --break: 0;
+}
+
+.row>* {
+    /* ↓ Disallow children to grow */
+    /* flex-grow: var(--flex-grow, 0); */
+    /* ↓ Switch the layout at the --break */
+    /* flex-basis: calc((var(--break) - 100%) * 999); */
+}
+
+.break-m {
+    --break: var(--br-md);
+    /* ↓ Allow children to grow */
+    --flex-grow: 1;
+}
+
+/* ↓ Split after - the element after which to split the stack with an auto margin */
+/* .row.split-after-1> :nth-child(1) {
+   margin-inline-end: auto;
+} */
+
+/* .row.break-after-4> :nth-last-child(n+5), */
+/* .row.break-after-4> :nth-last-child(n+5)~* { */
+/* ↓ Switch to a vertical configuration if there are more than 4 child elements */
+/* flex-basis: 100%; */
+/* } */
+
+/* ************************* */
+/*          Blocks           */
+/* ************************* */
+
+body {
+    /* overflow: hidden;
+    overscroll-behavior: contain; */
+}
+
+.grid {
+    --minimum: 10ch;
+
+    width: 400px;
+    height: 200px;
+    display: grid;
+    gap: 1rem;
+
+    background-color: grey;
+    padding: 0.5rem;
+
+    overflow-y: scroll;
+}
+
+.grid>* {
+    /* touch-action: none;
+
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none; */
+
+    border: 1px solid black;
+    background-color: wheat;
+    text-align: center;
+}
+
+@supports (width: min(var(--minimum), 100%)) {
+    .grid {
+        grid-template-columns: repeat(auto-fit, minmax(min(var(--minimum), 100%), 1fr));
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+/* ************************* */
+/*         Utilities         */
+/* ************************* */
+
+.sr-only {
+    position: absolute;
+    width: 0px;
+    height: 0px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+/* .main-axis-center {
+    justify-content: center;
+} */
+
+/* .main-axis-end {
+    justify-content: flex-end;
+} */
+
+/* .main-axis-space-between {
+    justify-content: space-between;
+} */
+
+.cross-axis-center {
+    align-items: center;
+}
+
+/* .cross-axis-end {
+    align-items: flex-end;
+} */
+
+/* .cross-axis-stretch {
+    align-items: stretch;
+} */
+
+.pad-h-m {
+    padding-inline: 1rem;
+}
+
+.gap-m {
+    gap: 1rem;
+}
+
+/* .pad-m {
+    padding: 1rem;
+} */
+
+.text-center {
+    text-align: center;
+}
+
+.over {
+    border: 2px dashed red
+}
+
+/* .uppercase {
+    text-transform: uppercase;
+} */
+
+/* .fw-thin {
+    font-weight: 100;
+} */
+
+/* .fw-extralight {
+    font-weight: 200;
+} */
+
+/* .fw-light {
+    font-weight: 300;
+} */
+
+/* .fw-regular {
+    font-weight: 400;
+} */
+
+/* .fw-medium {
+    font-weight: 500;
+} */
+
+/* .fw-semibold {
+    font-weight: 600;
+} */
+
+/* .fw-bold {
+    font-weight: 700;
+} */
+
+/* .fw-extrabold {
+    font-weight: 800;
+} */
+
+/* .fw-black {
+    font-weight: 900;
+} */
+
+/* .fs-100 {
+    font-size: var(--scale-100);
+} */
+
+/* .fs-200 {
+    font-size: var(--scale-200);
+} */
+
+/* .fs-300 {
+    font-size: var(--scale-300);
+} */
+
+/* .fs-400 {
+    font-size: var(--scale-400);
+} */
+
+/* .fs-500 {
+    font-size: var(--scale-500);
+} */
+
+/* .fs-600 {
+    font-size: var(--scale-600);
+} */
+
+/* .fs-700 {
+    font-size: var(--scale-700);
+} */
+
+/* .fs-800 {
+    font-size: var(--scale-800);
+} */
+
+/* .fs-900 {
+    font-size: var(--scale-900);
+} */
