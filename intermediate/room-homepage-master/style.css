@@ -263,7 +263,7 @@ svg {
     transform-origin: left bottom;
 
     transform: rotateZ(-90deg);
-    transition: transform 0.2s ease-in;
+    transition: transform 0.2s ease-in, box-shadow 0.2s ease-in;
 }
 
 @media (min-width: 48em) {
@@ -278,6 +278,7 @@ svg {
 
 .header-nav-btn[aria-expanded="true"]~.header-nav-list {
     transform: rotateZ(0deg);
+    box-shadow: 0 0 0 10000px rgba(0, 0, 0, 0.5);
 }
 
 .header-nav-list a {
