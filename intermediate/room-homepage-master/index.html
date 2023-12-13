@@ -2,150 +2,173 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- displays site properly based on user's device -->
-  <meta name="description" content="Room homepage challenge on Frontend Mentor" />
+  <meta name="description" content="Room homepage challenge on Frontend Mentor">
   <meta name="keywords"
-    content="Frontend Mentor, Frontend, Mentor, HTML, CSS, Responsive, Mobile, Desktop, Alex Kolykhalov" />
+    content="Frontend Mentor, Frontend, Mentor, HTML, CSS, Responsive, Mobile, Desktop, Alex Kolykhalov">
 
-  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
 
   <title>Frontend Mentor | Room homepage</title>
 
   <!-- google fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@500;600;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
   <header>
-    <ul>
-      <li>Home</li>
-      <li>Shop</li>
-      <li>About</li>
-      <li>Contact</li>
-    </ul>
-  </header>
-
-  <main>
-    <div class="row gap-m">
-      <ul class="grid" draggable="">
-        <li draggable="true">
-          <div class="row gap-m cross-axis-center">
-            <div>
-              <label for="check" class="sr-only">1</label>
-              <input type="checkbox" name="" id="check">
-            </div>
-            <p>Item 10000.1</p>
-            <img src="images/favicon-32x32.png" alt="">
-          </div>
-        </li>
-        <li draggable="true">2</li>
-        <li draggable="true">3</li>
-        <li draggable="true">4</li>
-        <li draggable="true">5</li>
-        <li draggable="true">6</li>
-        <li draggable="true">7</li>
-        <li draggable="true">8</li>
-        <li draggable="true">9</li>
-        <li draggable="true">10</li>
-        <li draggable="true">11</li>
-        <li draggable="true">12</li>
-        <li draggable="true">13</li>
-        <li draggable="true">14</li>
-        <li draggable="true">15</li>
-        <li draggable="true">16</li>
-        <li draggable="true">17</li>
-        <li draggable="true">18</li>
-        <li draggable="true">19</li>
-        <li draggable="true">20</li>
-        <li draggable="true">21</li>
-        <li draggable="true">22</li>
-      </ul>
-      <ul class="grid" draggable="">
-        <li draggable="true">
-          <div class="row gap-m cross-axis-center">
-            <div>
-              <label for="check" class="sr-only">1</label>
-              <input type="checkbox" name="" id="check">
-            </div>
-            <p>Item 10000.2</p>
-            <img src="images/favicon-32x32.png" alt="">
-          </div>
-        </li>
-        <li draggable="true">2</li>
-        <li draggable="true">3</li>
-        <li draggable="true">4</li>
-        <li draggable="true">5</li>
-        <li draggable="true">6</li>
-        <li draggable="true">7</li>
-        <li draggable="true">8</li>
-        <li draggable="true">9</li>
-        <li draggable="true">10</li>
-        <li draggable="true">11</li>
-        <li draggable="true">12</li>
-        <li draggable="true">13</li>
-        <li draggable="true">14</li>
-        <li draggable="true">15</li>
-        <li draggable="true">16</li>
-        <li draggable="true">17</li>
-        <li draggable="true">18</li>
-        <li draggable="true">19</li>
-        <li draggable="true">20</li>
-        <li draggable="true">21</li>
-        <li draggable="true">22</li>
-      </ul>
+    <div class="box-h-xl center-h relative">
+      <nav>
+        <button class="header-nav-btn" aria-controls="header_nav_list" aria-expanded="false">
+          <span class="sr-only">Toggle</span>
+        </button>
+        <ul id="header_nav_list" class="header-nav-list { row gap-l main-axis-end cross-axis-center }"
+          data-visible="fale">
+          <li><a class="fs-500 lowercase" href="#">Home</a></li>
+          <li><a class="fs-500 lowercase" href="#">Shop</a></li>
+          <li><a class="fs-500 lowercase" href="#">About</a></li>
+          <li><a class="fs-500 lowercase" href="#">Contact</a></li>
+        </ul>
+      </nav>
+      <p class="logo { fs-800 lowercase line-height clr-p-000 }">Room</p>
     </div>
-
-    <h1>Discover innovative ways to decorate</h1>
-    <p>
-      We provide unmatched quality, comfort, and style for property owners
-      across the country. Our experts combine form and function in bringing
-      your vision to life. Create a room in your own style with our collection
-      and make your property a reflection of you and what you love.
-    </p>
-    <h2>Shop now</h2>
-    <h3>We are available all across the globe</h3>
-    <p>
-      With stores all over the world, it's easy for you to find furniture for
-      your home or place of business. Locally, we’re in most major cities
-      throughout the country. Find the branch nearest you using our store
-      locator. Any questions? Don't hesitate to contact us today.
-    </p>
-    <h2>Shop now</h2>
-    <h3>Manufactured with the best materials</h3>
-    <p>
-      Our modern furniture store provide a high level of quality. Our company
-      has invested in advanced technology to ensure that every product is made
-      as perfect and as consistent as possible. With three decades of
-      experience in this industry, we understand what customers want for their
-      home and office.
-    </p>
-    <h2>Shop now</h2>
-    <h3>About our furniture</h3>
-    <p>
-      Our multifunctional collection blends design and function to suit your
-      individual taste. Make each room unique, or pick a cohesive theme that
-      best express your interests and what inspires you. Find the furniture
-      pieces you need, from traditional to contemporary styles or anything in
-      between. Product specialists are available to help you create your dream
-      space.
-    </p>
+  </header>
+  <main>
+    <h1 class="sr-only">Room homepage</h1>
+    <div class="box-h-xl center-h">
+      <article>
+        <h2 class="sr-only">Image carousel</h2>
+        <div class="carousel { relative }">
+          <div class="carousel-controllers { row no-wrap }">
+            <button class="row main-axis-center cross-axis-center" aria-label="Previous"
+              aria-controls="carousel_images">
+              <img src="images/icon-angle-left.svg" width="11" height="16" alt="">
+            </button>
+            <button class="row main-axis-center cross-axis-center" aria-label="Next" aria-controls="carousel_images">
+              <img src="images/icon-angle-right.svg" width="11" height="16" alt="">
+            </button>
+          </div>
+          <ul id="carousel_images" class="carousel-images">
+            <li class="row break-m main-axis-center" data-status="current">
+              <picture>
+                <source srcset="images/desktop-image-hero-1.jpg" media="(min-width: 36em)">
+                <img src="images/mobile-image-hero-1.jpg" alt="">
+              </picture>
+              <div class="box-h-m mar-d-h-m">
+                <div class="column gap-d-m-l">
+                  <h3 class="fs-d-800-900 fw-semibold line-height letter-spacing-xs">Discover innovative ways to
+                    decorate
+                  </h3>
+                  <p class="fs-500 letter-spacing-s clr-p-300">
+                    We provide unmatched quality, comfort, and style for property owners
+                    across the country. Our experts combine form and function in bringing
+                    your vision to life. Create a room in your own style with our collection
+                    and make your property a reflection of you and what you love.
+                  </p>
+                  <div class="cta { row gap-m cross-axis-center }">
+                    <a href="#">Shop now</a>
+                    <svg class="" fill="currentColor" width="40" height="13" viewBox="0 0 40 13"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M34.05 0l5.481 5.527h.008v.008L40 6l-.461.465v.063l-.062-.001L34.049 12l-.662-.668 4.765-4.805H0v-1h38.206l-4.82-4.86L34.05 0z">
+                      </path>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="row break-m main-axis-center">
+              <picture>
+                <source srcset="images/desktop-image-hero-2.jpg" media="(min-width: 36em)">
+                <img src="images/mobile-image-hero-2.jpg" alt="">
+              </picture>
+              <div class="box-h-m mar-d-h-m">
+                <div class="column gap-d-m-l">
+                  <h3 class="fs-d-800-900 fw-semibold line-height letter-spacing-xs">We are available all across the
+                    globe
+                  </h3>
+                  <p class="fs-500 letter-spacing-s clr-p-300">
+                    With stores all over the world, it's easy for you to find furniture for
+                    your home or place of business. Locally, we’re in most major cities
+                    throughout the country. Find the branch nearest you using our store
+                    locator. Any questions? Don't hesitate to contact us today.
+                  </p>
+                  <div class="cta { row gap-m cross-axis-center }">
+                    <a href="#">Shop now</a>
+                    <svg class="" fill="currentColor" width="40" height="13" viewBox="0 0 40 13"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M34.05 0l5.481 5.527h.008v.008L40 6l-.461.465v.063l-.062-.001L34.049 12l-.662-.668 4.765-4.805H0v-1h38.206l-4.82-4.86L34.05 0z">
+                      </path>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="row break-m main-axis-center">
+              <picture>
+                <source srcset="images/desktop-image-hero-3.jpg" media="(min-width: 36em)">
+                <img src="images/mobile-image-hero-3.jpg" alt="">
+              </picture>
+              <div class="box-h-m mar-d-h-m">
+                <div class="column gap-d-m-l">
+                  <h3 class="fs-d-800-900 fw-semibold line-height letter-spacing-xs">Manufactured with the best
+                    materials
+                  </h3>
+                  <p class="fs-500 letter-spacing-s clr-p-300">
+                    Our modern furniture store provide a high level of quality. Our company
+                    has invested in advanced technology to ensure that every product is made
+                    as perfect and as consistent as possible. With three decades of
+                    experience in this industry, we understand what customers want for their
+                    home and office.
+                  </p>
+                  <div class="cta { row gap-m cross-axis-center }">
+                    <a href="#">Shop now</a>
+                    <svg class="" fill="currentColor" width="40" height="13" viewBox="0 0 40 13"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M34.05 0l5.481 5.527h.008v.008L40 6l-.461.465v.063l-.062-.001L34.049 12l-.662-.668 4.765-4.805H0v-1h38.206l-4.82-4.86L34.05 0z">
+                      </path>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </article>
+      <section>
+        <div class="row break-l main-axis-center">
+          <img src="images/image-about-dark.jpg" width="405" height="350" alt="">
+          <div class="box-h-l flex-2 mar-d-h-s">
+            <div class="column gap-m main-axis-center">
+              <h3 class="fs-500 fw-bold uppercase letter-spacing-l">About our furniture</h3>
+              <p class="fs-500 letter-spacing-s clr-p-300">
+                Our multifunctional collection blends design and function to suit your
+                individual taste. Make each room unique, or pick a cohesive theme that
+                best express your interests and what inspires you. Find the furniture
+                pieces you need, from traditional to contemporary styles or anything in
+                between. Product specialists are available to help you create your dream
+                space.
+              </p>
+            </div>
+          </div>
+          <img src="images/image-about-light.jpg" width="405" height="350" alt="">
+        </div>
+      </section>
+      <div class="text-end pad-v-m">
+        Challenge by <a href='https://www.frontendmentor.io?ref=challenge' target="_blank">Frontend Mentor</a>.
+        Coded by <a href="https://github.com/AlexKolykhalov">Alex Ko</a>.
+      </div>
+    </div>
   </main>
 
-  <footer>
-    <div class="">
-      Challenge by
-      <a href='https://www.frontendmentor.io?ref=challenge' target="_blank">Frontend Mentor</a>. Coded by <a
-        href="#">Your Name Here</a>.
-    </div>
-  </footer>
-
-  <!-- <script src="DragDropTouch.js"></script> -->
   <script src="main.js"></script>
 </body>
 
