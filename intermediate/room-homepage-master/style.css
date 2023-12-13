@@ -217,6 +217,20 @@ svg {
 /*          Blocks           */
 /* ************************* */
 
+.shadow {
+    position: fixed;
+    z-index: 2;
+
+    width: 100vw;
+    height: 100vh;
+
+    translate: 0 -100%;
+
+    transition:
+        background-color 0.2s ease-in,
+        translate 0.2s ease-in;
+}
+
 .logo {
     position: absolute;
     top: 47px;
@@ -236,7 +250,7 @@ svg {
     background: no-repeat url(images/icon-hamburger.svg);
     background-size: contain;
     width: 20px;
-    height: 14px;
+    height: 16px;
 
     margin: 0;
     padding: 0;
@@ -263,7 +277,7 @@ svg {
     transform-origin: left bottom;
 
     transform: rotateZ(-90deg);
-    transition: transform 0.2s ease-in, box-shadow 0.2s ease-in;
+    transition: transform 0.2s ease-in;
 }
 
 @media (min-width: 48em) {
@@ -278,7 +292,11 @@ svg {
 
 .header-nav-btn[aria-expanded="true"]~.header-nav-list {
     transform: rotateZ(0deg);
-    box-shadow: 0 0 0 10000px rgba(0, 0, 0, 0.5);
+}
+
+.header-nav-btn[aria-expanded="true"]~.shadow {
+    background-color: rgba(0, 0, 0, 0.5);
+    translate: 0% 0%;
 }
 
 .header-nav-list a {
