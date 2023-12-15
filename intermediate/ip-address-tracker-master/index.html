@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- displays site properly based on user's device -->
+  <meta name="description" content="IP address tracker challenge on Frontend Mentor">
+  <meta name="keywords"
+    content="IP address tracker, Frontend Mentor, Frontend, Mentor, HTML, CSS, Responsive, Mobile, Desktop, Alex Kolykhalov">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+
+  <title>Frontend Mentor | IP Address Tracker</title>
+  <!-- google fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v8.2.0/ol.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <header class="relative">
+    <h1 class="fs-d-500-600 fw-medium pad-m text-center clr-n-000">IP Address Tracker</h1>
+    <div class="row">
+      <div class="center-h relative">
+        <label class="sr-only" for="ip_search">IP address or domain</label>
+        <input class="border-radius" id="ip_search" type="text"
+          placeholder="Search for any IP address or domain"></input>
+        <button class="border-radius bg-n-900">
+          <img class="center-h" src="images/icon-arrow.svg" alt="">
+          <span class="sr-only">Search</span>
+        </button>
+      </div>
+    </div>
+    <div class="outputs { box-d-h-l center-h pad-d-m border-radius bg-n-000 }">
+      <ul class="row gap-m break-m">
+        <li class="column relative pad-h-m m:cross-axis-center">
+          <p class="uppercase letter-spacing-s fs-100 fw-bold clr-n-400">IP Address</p>
+          <output class="fs-d-400-500 fw-medium" for="ip_search">**********</output>
+        </li>
+        <li class="column relative pad-h-m m:cross-axis-center">
+          <p class="uppercase letter-spacing-s fs-100 fw-bold clr-n-400">Location</p>
+          <output class="fs-d-400-500 fw-medium" for="ip_search">**********</output>
+        </li>
+        <li class="column relative pad-h-m m:cross-axis-center">
+          <p class="uppercase letter-spacing-s fs-100 fw-bold clr-n-400">Timezone</p>
+          <output class="fs-d-400-500 fw-medium" for="ip_search">**********</output>
+        </li>
+        <li class="column relative pad-h-m m:cross-axis-center">
+          <p class="uppercase letter-spacing-s fs-100 fw-bold clr-n-400">ISP</p>
+          <output class="fs-d-400-500 fw-medium" for="ip_search">**********</output>
+        </li>
+      </ul>
+    </div>
+  </header>
+  <main>
+    <div id="map"></div>
+  </main>
+  <footer>
+    <div style="position: absolute; bottom: 10px; left: 10px;">
+      <span class="fs-200 fw-medium clr-n-900">
+        Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>.
+        Coded by <a href="https://github.com/AlexKolykhalov">Alex Ko</a>.
+      </span>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/ol@v8.2.0/dist/ol.js"></script>
+  <script src="main.js" type="module"></script>
+</body>
+
+</html>

@@ -1,0 +1,381 @@
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Remove default margin */
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+ul,
+ol,
+figure,
+blockquote,
+dl,
+dd {
+    margin: 0;
+}
+
+/* Remove default padding */
+ul,
+ol {
+    padding: 0;
+}
+
+/* Remove list styles on ul, ol elements */
+ul,
+ol {
+    list-style: none;
+}
+
+/* Set core root defaults */
+html:focus-within {
+    scroll-behavior: smooth;
+}
+
+/* Set core body defaults */
+body {
+    min-height: 100vh;
+    text-rendering: optimizeSpeed;
+    line-height: 1.5;
+}
+
+/* A elements that don't have a class get default styles */
+a:not([class]) {
+    text-decoration-skip-ink: auto;
+}
+
+/* Make images easier to work with */
+img,
+picture {
+    max-width: 100%;
+    display: block;
+}
+
+/* Inherit fonts for inputs and buttons */
+input,
+button,
+textarea,
+select {
+    font: inherit;
+}
+
+/* Red border when they have no alt attribute */
+img:not([alt]) {
+    border: 3px dashed hsl(0, 100%, 50%);
+}
+
+/* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
+@media (prefers-reduced-motion: reduce) {
+    html:focus-within {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* ************************* */
+/*         Variables         */
+/* ************************* */
+
+:root {
+    --clr-neutral-000: hsl(0, 0%, 100%);
+    --clr-neutral-400: hsl(0, 0%, 59%);
+    --clr-neutral-900: hsl(0, 0%, 17%);
+
+    --ff: 'Rubik', sans-serif;
+
+    --base-size: 18px;
+
+    --ratio: 1.2;
+
+    --scale-100: calc(var(--scale-200) / var(--ratio));
+    --scale-200: calc(var(--scale-300) / var(--ratio));
+    --scale-300: calc(var(--scale-400) / var(--ratio));
+    --scale-400: var(--base-size);
+    --scale-500: calc(var(--scale-400) * var(--ratio));
+    --scale-600: calc(var(--scale-500) * var(--ratio));
+    --scale-700: calc(var(--scale-600) * var(--ratio));
+    --scale-800: calc(var(--scale-700) * var(--ratio));
+    --scale-900: calc(var(--scale-800) * var(--ratio));
+
+    --br-sm: 36em;
+    --br-md: 48em;
+    --br-lg: 62em;
+}
+
+/* ************************* */
+/*       General style       */
+/* ************************* */
+
+body {
+    font-family: var(--ff);
+    font-size: var(--scale-400);
+    font-weight: 400;
+    color: var(--clr-neutral-900);
+}
+
+header {
+    background: no-repeat url('images/pattern-bg-mobile.png');
+    background-size: 100%;
+    height: 30vh;
+}
+
+@media (min-width: 36em) {
+    header {
+        background: no-repeat url('images/pattern-bg-desktop.png');
+        background-size: cover;
+    }
+}
+
+input {
+    cursor: pointer;
+
+    display: block;
+
+    width: clamp(200px, 80vw, 600px);
+
+    padding-block: 0.75rem;
+    padding-inline: 1.5rem;
+
+    border: none;
+}
+
+header>.row>div[data-status="warning"]::after {
+    content: 'Incorrent IP address or domain';
+
+    color: var(--clr-neutral-000);
+
+    position: absolute;
+    left: 1.5rem;
+    bottom: -2rem;
+}
+
+header>.row>div[data-status="connection-error"]::after {
+    content: 'Internet connection error';
+
+    color: var(--clr-neutral-000);
+
+    position: absolute;
+    left: 1.5rem;
+    bottom: -2rem;
+}
+
+input::placeholder {
+    font-size: clamp(var(--scale-100), 3vw, var(--scale-400));
+}
+
+button {
+    cursor: pointer;
+
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+
+    width: 12%;
+    height: 100%;
+
+    margin: 0;
+    padding: 0;
+
+    border: none;
+    border-top-left-radius: 0px !important;
+    border-bottom-left-radius: 0px !important;
+}
+
+button:hover,
+button:focus-visible {
+    opacity: 0.8;
+}
+
+/* ************************* */
+/*        Composition        */
+/* ************************* */
+
+.box-d-h-l {
+    max-width: clamp(200px, 80vw, 1070px);
+}
+
+.center-h {
+    box-sizing: content-box;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+}
+
+.column:only-child {
+    block-size: 100%;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+
+    --flex-grow: 0;
+    --break: 0;
+}
+
+.row>* {
+    flex-grow: var(--flex-grow, 0);
+    flex-basis: calc((var(--break) - 100%) * 999);
+}
+
+.break-m {
+    --break: var(--br-sm);
+    --flex-grow: 1;
+}
+
+/* ************************* */
+/*          Blocks           */
+/* ************************* */
+
+#map {
+    width: auto;
+    height: 70vh;
+}
+
+.outputs {
+    position: absolute;
+    left: 50%;
+    bottom: 0%;
+    translate: -50% clamp(50%, calc(100% - 10vw), 75%);
+    z-index: 1;
+
+    width: 100%;
+    box-shadow: 0 0 30px 0px var(--clr-neutral-900);
+}
+
+@media (min-width: 62em) {
+    .outputs>ul>*+*::before {
+        content: '';
+
+        position: absolute;
+        top: 50%;
+        left: 0px;
+        translate: 0% -50%;
+
+        height: 70%;
+        width: 1px;
+        background-color: var(--clr-neutral-400);
+    }
+}
+
+/* ************************* */
+/*         Utilities         */
+/* ************************* */
+
+.sr-only {
+    position: absolute;
+    width: 0px;
+    height: 0px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+.relative {
+    position: relative;
+}
+
+@media (max-width: 36em) {
+    .m\:cross-axis-center {
+        align-items: center;
+    }
+}
+
+.border-radius {
+    border-radius: 1rem;
+}
+
+.pad-h-m {
+    padding-inline: 1rem;
+}
+
+.pad-m {
+    padding: 1rem;
+}
+
+.pad-d-m {
+    padding: clamp(1rem, 5vw, 2rem);
+}
+
+.gap-m {
+    gap: 1rem;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.uppercase {
+    text-transform: uppercase;
+}
+
+.letter-spacing-s {
+    letter-spacing: 2px;
+}
+
+.fw-medium {
+    font-weight: 500;
+}
+
+.fw-bold {
+    font-weight: 700;
+}
+
+.fs-100 {
+    font-size: var(--scale-100);
+}
+
+/* font of footer */
+.fs-200 {
+    font-size: var(--scale-200);
+}
+
+.fs-d-400-500 {
+    font-size: clamp(var(--scale-400), 2vw, var(--scale-500));
+}
+
+.fs-d-500-600 {
+    font-size: clamp(var(--scale-500), 3vw, var(--scale-600));
+}
+
+.clr-n-000 {
+    color: var(--clr-neutral-000);
+}
+
+.bg-n-000 {
+    background-color: var(--clr-neutral-000);
+}
+
+.clr-n-400 {
+    color: var(--clr-neutral-400);
+}
+
+.clr-n-900 {
+    color: var(--clr-neutral-900);
+}
+
+.bg-n-900 {
+    background-color: var(--clr-neutral-900);
+}
