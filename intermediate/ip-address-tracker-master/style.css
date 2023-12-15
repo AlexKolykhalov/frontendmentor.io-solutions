@@ -319,12 +319,18 @@ button:focus-visible {
     padding: clamp(1rem, 5vw, 2rem);
 }
 
-.gap-m {
-    gap: 1rem;
+.gap-d-m {
+    gap: clamp(0.25rem, 2vw, 1rem);
 }
 
 .text-center {
     text-align: center;
+}
+
+@media (max-width: 36em) {
+    .m\:text-center {
+        text-align: center;
+    }
 }
 
 .uppercase {
