@@ -61,7 +61,7 @@ Any comments are welcome.
 </details>
 
 <details>
-<summary>Intermediate [8/14] (Free, Free++)</summary>
+<summary>Intermediate [9/14] (Free, Free++)</summary>
 
 | No | Challenge | Live demo | Source |
 | :---: | :--- | :---: | :--- |
@@ -73,4 +73,5 @@ Any comments are welcome.
 | 06 | Todo app solution | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/intermediate/todo-app-main/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/intermediate/todo-app-main) |
 | 07 | Room homepage | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/intermediate/room-homepage-master/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/intermediate/room-homepage-master) |
 | 08 | IP address tracker | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/intermediate/ip-address-tracker-master/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/intermediate/ip-address-tracker-master) |
+| 09 | Chat app CSS illustration | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/intermediate/chat-app-css-illustration-master/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/intermediate/chat-app-css-illustration-master) |
 </details>
