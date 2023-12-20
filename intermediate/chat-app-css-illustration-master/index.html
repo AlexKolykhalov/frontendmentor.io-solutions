@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- displays site properly based on user's device -->
+  <meta name="description" content="Chat app CSS illustration challenge on Frontend Mentor">
+  <meta name="keywords"
+    content="Chat App, Frontend Mentor, Frontend, Mentor, HTML, CSS, Responsive, Mobile, Desktop, Alex Kolykhalov">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+
+  <title>Frontend Mentor | App css illustration</title>
+
+  <!-- google fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <main>
+    <div class="center-v box-v-m">
+      <div class="row gap-d-sm-m main-axis-space-evenly cross-axis-center pad-h-l pad-v-m">
+        <article class="app { bg-n-000 pad-m border-radius-l }">
+          <header class="column main-axis-end bg-lin-grad pad-d-s-m border-top-radius-m">
+            <div class="row gap-d-sm-m cross-axis-center split-after-3">
+              <span class="fs-d-400-500 fw-bold clr-n-000">&LeftAngleBracket;</span>
+              <img class="border-radius-circle pad-xs bg-n-000" width="40" height="40" src="images/avatar.jpg" alt="">
+              <div>
+                <p class="fs-d-300-400 fw-medim clr-n-000">Samuel Green</p>
+                <p class="fs-200 clr-p-light-pink">Available to Walk</p>
+              </div>
+              <span class="clr-n-000">&#8942</span>
+            </div>
+          </header>
+          <section class="bg-n-100 pad-v-m border-bottom-radius-m">
+            <div class="pad-h-m overflow-y">
+              <div class="anim">
+                <p class="message received">That sounds great. I’d be happy to discuss more.</p>
+                <p class="message received { anim2 mar-top-m }">Could you send over some pictures of your dog, please?
+                </p>
+                <div class="anim3 row gap-d-sm-m main-axis-end mar-top-l">
+                  <img class="border-radius-s" src="images/dog-image-1.jpg" width="60" height="60" alt="">
+                  <img class="border-radius-s" src="images/dog-image-2.jpg" width="60" height="60" alt="">
+                  <img class="border-radius-s" src="images/dog-image-3.jpg" width="60" height="60" alt="">
+                </div>
+                <p class="message sended { anim4 mar-top-m }">Here are a few pictures. She’s a happy girl!</p>
+                <p class="message sended { anim5 mar-top-m }">Can you make it?</p>
+                <p class="message received { anim6 mar-top-l }">She looks so happy! The time we discussed works. How
+                  long shall I take her out for?
+                </p>
+                <div class="message received invoice { row split-after-1 gap-d-sm-m cross-axis-center mar-top-m }">
+                  <p>30 minute walk</p><span class="fs-d-400-500 fw-bold">$29</span>
+                </div>
+                <div class="message received invoice { row split-after-1 gap-d-sm-m cross-axis-center mar-top-m }">
+                  <p>1 hour walk</p><span class="fs-d-400-500 fw-bold">$49</span>
+                </div>
+              </div>
+            </div>
+            <div class="input { row cross-axis-center mar-top-l mar-h-m pad-h-m bg-n-000 border-radius-l }">
+              <p class="fs-d-200-300 clr-p-100">Type a message…</p>
+            </div>
+          </section>
+        </article>
+        <div class="box-h-m m:text-center line-height-m">
+          <h1 class="fs-700 fw-medium clr-n-900">Simple booking</h1>
+          <p class="clr-p-200">
+            Stay in touch with our dog walkers through the chat interface. This makes it easy to
+            discuss arrangements and make bookings. Once the walk has been completed you can rate
+            your walker and book again all through the chat.
+          </p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p class="text-center clr-n-900 pad-h-m">
+      Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>.
+      Coded by <a href="https://github.com/AlexKolykhalov">Alex Ko</a>.
+    </p>
+  </footer>
+</body>
+
+</html>
