@@ -655,7 +655,7 @@ body::after {
 
 @keyframes moveup {
 
-    1% {
+    0% {
         opacity: 0;
         translate: 0% 100%;
     }
