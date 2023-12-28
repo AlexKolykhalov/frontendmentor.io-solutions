@@ -437,6 +437,10 @@ button {
     align-items: center;
 }
 
+.pad-sm {
+    padding: 0.4rem;
+}
+
 .pad-h-m {
     padding-inline: 1rem;
 }
@@ -509,6 +513,10 @@ button {
 
 .bg-n-100 {
     background-color: var(--clr-neutral-100);
+}
+
+.bg-p-dark-cyan {
+    background-color: var(--clr-primary-dark-cyan);
 }
 
 /* ************************* */
