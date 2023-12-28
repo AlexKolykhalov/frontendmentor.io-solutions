@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- displays site properly based on user's device -->
+  <meta name="description" content="Job listings with filtering challenge on Frontend Mentor">
+  <meta name="keywords"
+    content="Filtering, Frontend Mentor, Frontend, Mentor, HTML, CSS, Responsive, Mobile, Desktop, Alex Kolykhalov">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+
+  <title>Frontend Mentor | Job Listings</title>
+
+  <!-- google fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@500;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <main>
+    <h1 class="sr-only">Static job listing site</h1>
+    <div class="hero"></div>
+    <div class="pad-h-m">
+      <article>
+        <h2 class="sr-only">Available jobs</h2>
+        <div class="column gap-d-xl-l">
+          <section>
+            <h3 class="sr-only">Filter</h3>
+            <div class="filter { box-h-l box-shadow border-radius center-h pad-h-d-m-l pad-v-m bg-n-000 }" hidden>
+              <div class="row gap-m no-wrap main-axis-space-between">
+                <ul class="row gap-m">
+                </ul>
+                <button aria-controls="jobs_list" class="bg-n-000 clr-n-400">Clear</button>
+              </div>
+            </div>
+          </section>
+          <section>
+            <h3 class="sr-only">List of jobs</h3>
+            <ul id="jobs_list" class="jobs { column gap-d-xl-l }">
+            </ul>
+          </section>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer class="bg-n-100">
+    <p class="text-center">
+      Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>.
+      Coded by <a href="https://github.com/AlexKolykhalov">Alex Ko</a>.
+    </p>
+  </footer>
+
+  <template>
+    <li>
+      <article>
+        <div class="content { box-h-l center-h relative bg-n-000 pad-d-m-l m:pad-top-l box-shadow border-radius }">
+          <div class="row break-m gap-l main-axis-space-between cross-axis-center">
+            <div class="column gap-sm">
+              <h4 class="relative width-fit-content fs-500 clr-p-dark-cyan">Photosnap</h4>
+              <a class="fs-d-500-600 fw-bold clr-n-800 width-fit-content" href="#">Senior Frontend Developer</a>
+              <section>
+                <h5 class="sr-only">Additional information</h5>
+                <ul class="row gap-l clr-n-400">
+                  <li class="posted"></li>
+                  <li class="contract { relative }"></li>
+                  <li class="location { relative }"></li>
+                </ul>
+              </section>
+            </div>
+            <section class="relative">
+              <h5 class="sr-only">Requirements</h5>
+              <ul class="requirements { row gap-m width-fit-content right-h }">
+              </ul>
+            </section>
+          </div>
+        </div>
+      </article>
+    </li>
+  </template>
+
+  <script src="main.js"></script>
+</body>
+
+</html>
