@@ -61,7 +61,7 @@ Any comments are welcome.
 </details>
 
 <details>
-<summary>Intermediate [10/14] (Free, Free++)</summary>
+<summary>Intermediate [11/14] (Free, Free++)</summary>
 
 | No | Challenge | Live demo | Source |
 | :---: | :--- | :---: | :--- |
@@ -75,4 +75,5 @@ Any comments are welcome.
 | 08 | IP address tracker | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/intermediate/ip-address-tracker-master/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/intermediate/ip-address-tracker-master) |
 | 09 | Chat app CSS illustration | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/intermediate/chat-app-css-illustration-master/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/intermediate/chat-app-css-illustration-master) |
 | 10 | Job listings with filtering challenge | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/intermediate/static-job-listings-master/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/intermediate/static-job-listings-master) |
+| 11 | Easybank landing page challenge | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/intermediate/easybank-landing-page-master/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/intermediate/easybank-landing-page-master) |
 </details>
