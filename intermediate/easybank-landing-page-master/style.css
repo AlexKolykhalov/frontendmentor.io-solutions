@@ -150,6 +150,10 @@ header {
     z-index: 1;
 }
 
+aside header {
+    z-index: 0;
+}
+
 a {
     text-decoration: none;
 }
