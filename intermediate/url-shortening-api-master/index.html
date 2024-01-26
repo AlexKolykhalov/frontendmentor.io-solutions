@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- displays site properly based on user's device -->
+  <meta name="description" content="Shortly URL shortening API Challenge challenge on Frontend Mentor">
+  <meta name="keywords"
+    content="Frontend Mentor, Frontend, Mentor, HTML, CSS, Responsive, Mobile, Desktop, Alex Kolykhalov">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+
+  <title>Frontend Mentor | Shortly URL shortening API Challenge</title>
+
+  <!-- google fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <header class="content | pad-v-l md:pad-bottom-xl">
+    <div class="row gap-xl m:main-axis-space-between cross-axis-center">
+      <svg class="clr-n-800" xmlns="http://www.w3.org/2000/svg" width="121" height="33">
+        <path fill="currentColor"
+          d="M16.715 7.932c-.068-.09-.306-.26-.714-.51s-.918-.51-1.53-.782-1.281-.51-2.006-.714a8.005 8.005 0 00-2.176-.306c-1.995 0-2.992.669-2.992 2.006 0 .408.107.748.323 1.02.215.272.532.516.952.731.419.215.946.414 1.58.595l1.406.393.805.219c1.156.317 2.198.663 3.128 1.037.929.374 1.717.839 2.363 1.394a5.647 5.647 0 011.496 2.023c.35.793.527 1.745.527 2.856 0 1.36-.255 2.51-.765 3.451-.51.94-1.185 1.7-2.023 2.278-.84.578-1.802.997-2.89 1.258-1.088.26-2.21.391-3.366.391a19.68 19.68 0 01-5.44-.799c-.884-.26-1.74-.572-2.567-.935A14.358 14.358 0 01.53 22.28l2.448-4.862c.09.113.385.329.884.646.498.317 1.116.635 1.853.952.736.317 1.558.6 2.465.85.906.25 1.824.374 2.754.374 1.972 0 2.958-.6 2.958-1.802 0-.453-.148-.827-.442-1.122-.295-.295-.703-.561-1.224-.799a12.455 12.455 0 00-1.504-.56l-1.702-.495-.976-.288c-1.111-.34-2.074-.708-2.89-1.105-.816-.397-1.49-.856-2.023-1.377a5.003 5.003 0 01-1.19-1.802c-.261-.68-.391-1.473-.391-2.38 0-1.27.238-2.391.714-3.366a7.266 7.266 0 011.938-2.465 8.435 8.435 0 012.839-1.513c1.076-.34 2.215-.51 3.417-.51.838 0 1.666.08 2.482.238.816.159 1.598.363 2.346.612.748.25 1.445.533 2.09.85.647.317 1.242.635 1.786.952l-2.448 4.624zM40.139 25h-5.44V14.97c0-1.156-.227-2.006-.68-2.55-.454-.544-1.077-.816-1.87-.816-.318 0-.663.074-1.037.221a4.173 4.173 0 00-1.088.646 5.827 5.827 0 00-.97 1.003 4.4 4.4 0 00-.68 1.292V25h-5.44V.18h5.44v9.962a6.786 6.786 0 012.602-2.465c1.076-.578 2.26-.867 3.553-.867 1.201 0 2.17.21 2.907.629.736.42 1.303.952 1.7 1.598.396.646.663 1.371.799 2.176.136.805.204 1.592.204 2.363V25zm12.34.34c-1.519 0-2.873-.25-4.063-.748-1.19-.499-2.193-1.173-3.01-2.023a8.54 8.54 0 01-1.852-2.958 9.97 9.97 0 01-.63-3.519c0-1.224.21-2.397.63-3.519a8.54 8.54 0 011.853-2.958c.816-.85 1.819-1.53 3.009-2.04s2.544-.765 4.063-.765c1.519 0 2.867.255 4.046.765 1.179.51 2.176 1.19 2.992 2.04a8.754 8.754 0 011.87 2.958 9.736 9.736 0 01.646 3.519 9.97 9.97 0 01-.63 3.519 8.54 8.54 0 01-1.852 2.958c-.816.85-1.82 1.524-3.01 2.023-1.19.499-2.543.748-4.062.748zM48.5 16.092c0 1.405.374 2.533 1.122 3.383.748.85 1.7 1.275 2.856 1.275a3.59 3.59 0 001.564-.34c.476-.227.89-.544 1.24-.952a4.57 4.57 0 00.834-1.479 5.632 5.632 0 00.306-1.887c0-1.405-.374-2.533-1.122-3.383-.748-.85-1.689-1.275-2.822-1.275a3.702 3.702 0 00-2.84 1.292 4.57 4.57 0 00-.832 1.479 5.632 5.632 0 00-.306 1.887zm27.776-4.284c-1.315.023-2.505.238-3.57.646-1.065.408-1.836 1.02-2.312 1.836V25h-5.44V7.15h4.998v3.604c.612-1.201 1.4-2.142 2.363-2.822.963-.68 1.989-1.031 3.077-1.054h.544c.113 0 .227.011.34.034v4.896zm14.074 12.24a21.71 21.71 0 01-2.567.884c-.963.272-1.932.408-2.907.408-.68 0-1.32-.085-1.92-.255a4.286 4.286 0 01-1.582-.816c-.453-.374-.81-.867-1.07-1.479-.262-.612-.392-1.349-.392-2.21v-9.316h-2.278V7.15h2.278V1.472h5.44V7.15h3.638v4.114h-3.638v7.446c0 .59.147 1.014.442 1.275.295.26.669.391 1.122.391.408 0 .827-.068 1.258-.204.43-.136.805-.283 1.122-.442l1.054 4.318zM92.627.18h5.44v18.462c0 1.36.578 2.04 1.734 2.04.272 0 .572-.04.901-.119.329-.08.63-.198.901-.357l.714 4.08c-.68.317-1.462.567-2.346.748-.884.181-1.711.272-2.482.272-1.564 0-2.765-.408-3.604-1.224-.839-.816-1.258-1.995-1.258-3.536V.18zm11.456 27.506c.454.159.879.272 1.275.34a6.4 6.4 0 001.071.102c.658 0 1.168-.227 1.53-.68.363-.453.692-1.27.986-2.448l-6.8-17.85h5.61l4.148 13.192 3.57-13.192h5.1l-6.8 20.74a7.106 7.106 0 01-2.55 3.587c-1.224.918-2.674 1.377-4.352 1.377a8.17 8.17 0 01-1.377-.119 7.516 7.516 0 01-1.41-.391v-4.658z" />
+      </svg>
+      <nav class="row md:flex-grow-1" aria-label="Header">
+        <button class="header-nav-btn" aria-controls="header_nav_list" aria-expanded="false"><span
+            class="sr-only">Toggle</span></button>
+        <ul id="header_nav_list"
+          class="header-nav-list { row break-m md:flex-grow-1 main-axis-center cross-axis-center split-after-3 }"
+          data-visible="false">
+          <li><a href="#"> Features</a></li>
+          <li><a href="#">Pricing</a></li>
+          <li><a href="#">Resources</a></li>
+          <li><a href="#">Login</a></li>
+          <li><a class="cta" href="#">Sign Up</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="content">
+    <div class="row gap-m main-axis-space-between cross-axis-center pad-bottom-xxl">
+      <img class="illustration-img" src="images/illustration-working.svg" alt="">
+      <div class="m:center-h box-h-m">
+        <div class="column cross-axis-start">
+          <h1 class="m:text-center line-height-m fs-d-700-900 clr-n-800">More than just shorter links</h1>
+          <p class="m:text-center fs-d-400-500">
+            Build your brand’s recognition and get detailed insights
+            on how your links are performing.
+          </p>
+          <a class="cta { m:center-h mar-top-d-m-l }" href="#">Get Started</a>
+        </div>
+      </div>
+    </div>
+    <section class="full-width | bg-n-100 pad-bottom-xl">
+      <section class="content | shorten-block">
+        <h3 class="sr-only">Shorten link part</h3>
+        <div class="row gap-m break-m relative">
+          <label for="input_shorten_link" class="sr-only">Shorten link</label>
+          <input class="md:flex-grow-1" id="input_shorten_link" type="text" placeholder="Shorten a link here...">
+          <button class="badge">Shorten It!</button>
+        </div>
+        <article class="mar-top-m">
+          <h4 class="sr-only">List of shorten links</h4>
+          <ul id="shorten_links_list" class="column gap-m">
+          </ul>
+        </article>
+      </section>
+      <div class="content">
+        <div class="box-h-sm center-h">
+          <h2 class="text-center fs-d-500-600 clr-n-800">Advanced Statistics</h2>
+          <p class="mar-top-m text-center fs-d-300-400">
+            Track how your links are performing across the web with our
+            advanced statistics dashboard.
+          </p>
+        </div>
+      </div>
+      <div class="content">
+        <ul class="statistics-grid decoration-line">
+          <li>
+            <section class="pad-h-d-m-l pad-bottom-l m:text-center bg-n-000">
+              <div class="section-icon">
+                <img src="images/icon-brand-recognition.svg" alt="">
+              </div>
+              <h3 class="clr-n-800">Brand Recognition</h3>
+              <p class="mar-top-m fs-300">
+                Boost your brand recognition with each click. Generic links don’t
+                mean a thing. Branded links help instil confidence in your content.
+              </p>
+            </section>
+          </li>
+          <li>
+            <section class="pad-h-d-m-l pad-bottom-l m:text-center bg-n-000">
+              <div class="section-icon">
+                <img src="images/icon-detailed-records.svg" alt="">
+              </div>
+              <h3 class="clr-n-800">Detailed Records</h3>
+              <p class="mar-top-m fs-300">
+                Gain insights into who is clicking your links. Knowing when and where
+                people engage with your content helps inform better decisions.
+              </p>
+            </section>
+          </li>
+          <li>
+            <section class="pad-h-d-m-l pad-bottom-l m:text-center bg-n-000">
+              <div class="section-icon">
+                <img src="images/icon-fully-customizable.svg" alt="">
+              </div>
+              <h3 class="clr-n-800">Fully Customizable</h3>
+              <p class="mar-top-m fs-300">
+                Improve brand awareness and content discoverability through customizable
+                links, supercharging audience engagement.
+              </p>
+            </section>
+          </li>
+        </ul>
+      </div>
+    </section>
+    <section class="full-width | bg-img">
+      <div class="content | pad-v-xl">
+        <h2 class="text-center fs-d-500-600 clr-n-000">Boost your links today</h2>
+        <a class="cta { mar-top-m center-h }" href="#">Get Started</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="content">
+    <div class="row gap-d-l-xl pad-v-xl">
+      <svg class="center-h | clr-n-000" xmlns="http://www.w3.org/2000/svg" width="121" height="33">
+        <path fill="currentColor"
+          d="M16.715 7.932c-.068-.09-.306-.26-.714-.51s-.918-.51-1.53-.782-1.281-.51-2.006-.714a8.005 8.005 0 00-2.176-.306c-1.995 0-2.992.669-2.992 2.006 0 .408.107.748.323 1.02.215.272.532.516.952.731.419.215.946.414 1.58.595l1.406.393.805.219c1.156.317 2.198.663 3.128 1.037.929.374 1.717.839 2.363 1.394a5.647 5.647 0 011.496 2.023c.35.793.527 1.745.527 2.856 0 1.36-.255 2.51-.765 3.451-.51.94-1.185 1.7-2.023 2.278-.84.578-1.802.997-2.89 1.258-1.088.26-2.21.391-3.366.391a19.68 19.68 0 01-5.44-.799c-.884-.26-1.74-.572-2.567-.935A14.358 14.358 0 01.53 22.28l2.448-4.862c.09.113.385.329.884.646.498.317 1.116.635 1.853.952.736.317 1.558.6 2.465.85.906.25 1.824.374 2.754.374 1.972 0 2.958-.6 2.958-1.802 0-.453-.148-.827-.442-1.122-.295-.295-.703-.561-1.224-.799a12.455 12.455 0 00-1.504-.56l-1.702-.495-.976-.288c-1.111-.34-2.074-.708-2.89-1.105-.816-.397-1.49-.856-2.023-1.377a5.003 5.003 0 01-1.19-1.802c-.261-.68-.391-1.473-.391-2.38 0-1.27.238-2.391.714-3.366a7.266 7.266 0 011.938-2.465 8.435 8.435 0 012.839-1.513c1.076-.34 2.215-.51 3.417-.51.838 0 1.666.08 2.482.238.816.159 1.598.363 2.346.612.748.25 1.445.533 2.09.85.647.317 1.242.635 1.786.952l-2.448 4.624zM40.139 25h-5.44V14.97c0-1.156-.227-2.006-.68-2.55-.454-.544-1.077-.816-1.87-.816-.318 0-.663.074-1.037.221a4.173 4.173 0 00-1.088.646 5.827 5.827 0 00-.97 1.003 4.4 4.4 0 00-.68 1.292V25h-5.44V.18h5.44v9.962a6.786 6.786 0 012.602-2.465c1.076-.578 2.26-.867 3.553-.867 1.201 0 2.17.21 2.907.629.736.42 1.303.952 1.7 1.598.396.646.663 1.371.799 2.176.136.805.204 1.592.204 2.363V25zm12.34.34c-1.519 0-2.873-.25-4.063-.748-1.19-.499-2.193-1.173-3.01-2.023a8.54 8.54 0 01-1.852-2.958 9.97 9.97 0 01-.63-3.519c0-1.224.21-2.397.63-3.519a8.54 8.54 0 011.853-2.958c.816-.85 1.819-1.53 3.009-2.04s2.544-.765 4.063-.765c1.519 0 2.867.255 4.046.765 1.179.51 2.176 1.19 2.992 2.04a8.754 8.754 0 011.87 2.958 9.736 9.736 0 01.646 3.519 9.97 9.97 0 01-.63 3.519 8.54 8.54 0 01-1.852 2.958c-.816.85-1.82 1.524-3.01 2.023-1.19.499-2.543.748-4.062.748zM48.5 16.092c0 1.405.374 2.533 1.122 3.383.748.85 1.7 1.275 2.856 1.275a3.59 3.59 0 001.564-.34c.476-.227.89-.544 1.24-.952a4.57 4.57 0 00.834-1.479 5.632 5.632 0 00.306-1.887c0-1.405-.374-2.533-1.122-3.383-.748-.85-1.689-1.275-2.822-1.275a3.702 3.702 0 00-2.84 1.292 4.57 4.57 0 00-.832 1.479 5.632 5.632 0 00-.306 1.887zm27.776-4.284c-1.315.023-2.505.238-3.57.646-1.065.408-1.836 1.02-2.312 1.836V25h-5.44V7.15h4.998v3.604c.612-1.201 1.4-2.142 2.363-2.822.963-.68 1.989-1.031 3.077-1.054h.544c.113 0 .227.011.34.034v4.896zm14.074 12.24a21.71 21.71 0 01-2.567.884c-.963.272-1.932.408-2.907.408-.68 0-1.32-.085-1.92-.255a4.286 4.286 0 01-1.582-.816c-.453-.374-.81-.867-1.07-1.479-.262-.612-.392-1.349-.392-2.21v-9.316h-2.278V7.15h2.278V1.472h5.44V7.15h3.638v4.114h-3.638v7.446c0 .59.147 1.014.442 1.275.295.26.669.391 1.122.391.408 0 .827-.068 1.258-.204.43-.136.805-.283 1.122-.442l1.054 4.318zM92.627.18h5.44v18.462c0 1.36.578 2.04 1.734 2.04.272 0 .572-.04.901-.119.329-.08.63-.198.901-.357l.714 4.08c-.68.317-1.462.567-2.346.748-.884.181-1.711.272-2.482.272-1.564 0-2.765-.408-3.604-1.224-.839-.816-1.258-1.995-1.258-3.536V.18zm11.456 27.506c.454.159.879.272 1.275.34a6.4 6.4 0 001.071.102c.658 0 1.168-.227 1.53-.68.363-.453.692-1.27.986-2.448l-6.8-17.85h5.61l4.148 13.192 3.57-13.192h5.1l-6.8 20.74a7.106 7.106 0 01-2.55 3.587c-1.224.918-2.674 1.377-4.352 1.377a8.17 8.17 0 01-1.377-.119 7.516 7.516 0 01-1.41-.391v-4.658z" />
+      </svg>
+      <nav aria-label="Footer" class="md:flex-grow-1 | row break-m gap-d-l-xl m:cross-axis-center md:main-axis-end">
+        <section>
+          <h3 class="m:text-center fs-300 clr-n-000">Features</h3>
+          <ul class="mar-top-m column m:cross-axis-center">
+            <li><a class="fs-300 clr-n-400" href="#">Link Shortening</a></li>
+            <li><a class="fs-300 clr-n-400" href="#">Branded Links</a></li>
+            <li><a class="fs-300 clr-n-400" href="#">Analytics</a></li>
+          </ul>
+        </section>
+        <section>
+          <h3 class="m:text-center fs-300 clr-n-000">Resources</h3>
+          <ul class="mar-top-m column m:cross-axis-center">
+            <li><a class="fs-300 clr-n-400" href="#">Blog</a></li>
+            <li><a class="fs-300 clr-n-400" href="#">Developers</a></li>
+            <li><a class="fs-300 clr-n-400" href="#">Support</a></li>
+          </ul>
+        </section>
+        <section>
+          <h3 class="m:text-center fs-300 clr-n-000">Company</h3>
+          <ul class="mar-top-m column m:cross-axis-center">
+            <li><a class="fs-300 clr-n-400" href="#">About</a></li>
+            <li><a class="fs-300 clr-n-400" href="#">Our Team</a></li>
+            <li><a class="fs-300 clr-n-400" href="#">Careers</a></li>
+            <li><a class="fs-300 clr-n-400" href="#">Contact</a></li>
+          </ul>
+        </section>
+      </nav>
+      <ul class="center-h | row gap-m">
+        <li>
+          <a href="#" class="clr-n-000">
+            <svg width="20" height="20" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M18.896 0H1.104C.494 0 0 .494 0 1.104v17.793C0 19.506.494 20 1.104 20h9.58v-7.745H8.076V9.237h2.606V7.01c0-2.583 1.578-3.99 3.883-3.99 1.104 0 2.052.082 2.329.119v2.7h-1.598c-1.254 0-1.496.597-1.496 1.47v1.928h2.989l-.39 3.018h-2.6V20h5.098c.608 0 1.102-.494 1.102-1.104V1.104C20 .494 19.506 0 18.896 0z"
+                fill="currentColor" fill-rule="nonzero" />
+            </svg>
+            <span class="sr-only">Facebook</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="clr-n-000">
+            <svg width="20" height="17" viewbox="0 0 20 17" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M20 2.172a8.192 8.192 0 01-2.357.646 4.11 4.11 0 001.805-2.27 8.22 8.22 0 01-2.606.996A4.096 4.096 0 0013.847.248c-2.65 0-4.596 2.472-3.998 5.037A11.648 11.648 0 011.392 1a4.109 4.109 0 001.27 5.478 4.086 4.086 0 01-1.858-.513c-.045 1.9 1.318 3.679 3.291 4.075a4.113 4.113 0 01-1.853.07 4.106 4.106 0 003.833 2.849A8.25 8.25 0 010 14.658a11.616 11.616 0 006.29 1.843c7.618 0 11.923-6.434 11.663-12.205A8.354 8.354 0 0020 2.172z"
+                fill="currentColor" fill-rule="nonzero" />
+            </svg>
+            <span class="sr-only">Twitter</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="clr-n-000">
+            <svg width="20" height="20" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M10 0C4.477 0 0 4.477 0 10c0 4.237 2.636 7.855 6.356 9.312-.088-.791-.167-2.005.035-2.868.181-.78 1.172-4.97 1.172-4.97s-.299-.6-.299-1.486c0-1.39.806-2.428 1.81-2.428.852 0 1.264.64 1.264 1.408 0 .858-.546 2.14-.828 3.33-.236.995.5 1.807 1.48 1.807 1.778 0 3.144-1.874 3.144-4.58 0-2.393-1.72-4.068-4.176-4.068-2.845 0-4.516 2.135-4.516 4.34 0 .859.331 1.781.745 2.281a.3.3 0 01.069.288l-.278 1.133c-.044.183-.145.223-.335.134-1.249-.581-2.03-2.407-2.03-3.874 0-3.154 2.292-6.052 6.608-6.052 3.469 0 6.165 2.473 6.165 5.776 0 3.447-2.173 6.22-5.19 6.22-1.013 0-1.965-.525-2.291-1.148l-.623 2.378c-.226.869-.835 1.958-1.244 2.621.937.29 1.931.446 2.962.446 5.523 0 10-4.477 10-10S15.523 0 10 0z"
+                fill="currentColor" fill-rule="nonzero" />
+            </svg>
+            <span class="sr-only">Pinterest</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="clr-n-000">
+            <svg width="20" height="20" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M10 1.802c2.67 0 2.987.01 4.042.059 2.71.123 3.975 1.409 4.099 4.099.048 1.054.057 1.37.057 4.04 0 2.672-.01 2.988-.057 4.042-.124 2.687-1.387 3.975-4.1 4.099-1.054.048-1.37.058-4.041.058-2.67 0-2.987-.01-4.04-.058-2.718-.124-3.977-1.416-4.1-4.1-.048-1.054-.058-1.37-.058-4.041 0-2.67.01-2.986.058-4.04.124-2.69 1.387-3.977 4.1-4.1 1.054-.048 1.37-.058 4.04-.058zM10 0C7.284 0 6.944.012 5.877.06 2.246.227.227 2.242.061 5.877.01 6.944 0 7.284 0 10s.012 3.057.06 4.123c.167 3.632 2.182 5.65 5.817 5.817 1.067.048 1.407.06 4.123.06s3.057-.012 4.123-.06c3.629-.167 5.652-2.182 5.816-5.817.05-1.066.061-1.407.061-4.123s-.012-3.056-.06-4.122C19.777 2.249 17.76.228 14.124.06 13.057.01 12.716 0 10 0zm0 4.865a5.135 5.135 0 100 10.27 5.135 5.135 0 000-10.27zm0 8.468a3.333 3.333 0 110-6.666 3.333 3.333 0 010 6.666zm5.338-9.87a1.2 1.2 0 100 2.4 1.2 1.2 0 000-2.4z"
+                fill="currentColor" fill-rule="nonzero" />
+            </svg>
+            <span class="sr-only">Instagram</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="text-center pad-v-m fs-200 clr-n-000">
+      Challenge by <a class="clr-n-400" href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend
+        Mentor</a>.
+      Coded by <a class="clr-n-400" href="https://github.com/AlexKolykhalov">Alex Ko</a>.
+    </div>
+  </footer>
+
+  <template id="shorten_link_section">
+    <li class="pad-m bg-n-000 overflow-x">
+      <section class="row break-m main-axis-space-between cross-axis-center">
+        <p class="title { fs-d-300-400 clr-n-800 }">https://www.twitter.com/frontendmentor</p>
+        <hr color="#bfbfbf" size="1">
+        <div class="row break-m gap-m cross-axis-center">
+          <p class="shorten-link { fs-d-300-400 clr-p-cyan }">https://rel.ink/gxOXp9</p>
+          <button class="badge">Copy</button>
+        </div>
+      </section>
+    </li>
+  </template>
+
+  <script src="main.js"></script>
+
+</body>
+
+</html>
