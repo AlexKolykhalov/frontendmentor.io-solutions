@@ -61,7 +61,7 @@ Any comments are welcome.
 </details>
 
 <details>
-<summary>Intermediate [12/14] (Free, Free++)</summary>
+<summary>Intermediate [13/14] (Free, Free++)</summary>
 
 | No | Challenge | Live demo | Source |
 | :---: | :--- | :---: | :--- |
@@ -77,4 +77,5 @@ Any comments are welcome.
 | 10 | Job listings with filtering challenge | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/intermediate/static-job-listings-master/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/intermediate/static-job-listings-master) |
 | 11 | Easybank landing page challenge | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/intermediate/easybank-landing-page-master/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/intermediate/easybank-landing-page-master) |
 | 12 | Manage landing page | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/intermediate/manage-landing-page-master/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/intermediate/manage-landing-page-master) |
+| 13 | Shortly URL shortening API | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/intermediate/url-shortening-api-master/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/intermediate/url-shortening-api-master) |
 </details>
