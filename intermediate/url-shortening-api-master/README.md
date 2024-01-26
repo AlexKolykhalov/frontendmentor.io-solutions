@@ -2,6 +2,8 @@
 
 This is a solution to the [Shortly URL shortening API Challenge challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/url-shortening-api-landing-page-2ce3ob-G). Frontend Mentor challenges help you improve your coding skills by building realistic projects. 
 
+[__Live demo__](https://alexkolykhalov.github.io/frontendmentor.io-solutions/intermediate/url-shortening-api-master/)
+
 ## Table of contents
 
 - [Overview](#overview)
