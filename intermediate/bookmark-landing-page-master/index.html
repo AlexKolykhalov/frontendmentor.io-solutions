@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- displays site properly based on user's device -->
+  <meta name="description" content="Bookmark landing page challenge on Frontend Mentor">
+  <meta name="keywords"
+    content="Frontend Mentor, Frontend, Mentor, HTML, CSS, Responsive, Mobile, Desktop, Alex Kolykhalov">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+
+  <title>Frontend Mentor | Bookmark landing page</title>
+
+  <!-- google fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300..900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <header class="content | pad-v-l">
+    <div class="row main-axis-space-between cross-axis-center">
+      <svg class="logo header-logo" viewbox="0 0 148 25" xmlns="http://www.w3.org/2000/svg">
+        <g fill="none" fill-rule="evenodd">
+          <path
+            d="M37 6.299h5.227c.746 0 1.434.155 2.062.466.629.311 1.123.735 1.484 1.27s.542 1.12.542 1.754c0 .672-.165 1.254-.495 1.746-.33.491-.762.868-1.297 1.129v.15c.697.248 1.25.643 1.661 1.185.41.541.616 1.191.616 1.95 0 .735-.196 1.385-.588 1.951a3.817 3.817 0 0 1-1.587 1.307c-.665.305-1.403.457-2.212.457H37V6.299zm5.04 5.45c.548 0 .986-.152 1.316-.457.33-.305.495-.688.495-1.148 0-.448-.159-.824-.476-1.13-.318-.304-.738-.457-1.26-.457H39.52v3.192h2.52zm.28 5.619c.61 0 1.086-.159 1.428-.476.342-.317.513-.731.513-1.241 0-.51-.174-.927-.522-1.251-.349-.324-.847-.485-1.494-.485H39.52v3.453h2.8zm12.927 2.595c-1.307 0-2.492-.308-3.556-.924a6.711 6.711 0 0 1-2.511-2.53c-.61-1.07-.915-2.246-.915-3.528 0-1.281.305-2.457.915-3.528a6.711 6.711 0 0 1 2.51-2.529C52.756 6.308 53.94 6 55.248 6c1.306 0 2.492.308 3.556.924a6.711 6.711 0 0 1 2.51 2.53c.61 1.07.915 2.246.915 3.527 0 1.282-.305 2.458-.915 3.528a6.711 6.711 0 0 1-2.51 2.53c-1.064.616-2.25.924-3.556.924zm0-2.39a4.52 4.52 0 0 0 2.258-.578 4.177 4.177 0 0 0 1.615-1.624c.392-.697.588-1.494.588-2.39 0-.896-.196-1.692-.588-2.389a4.177 4.177 0 0 0-1.615-1.624 4.52 4.52 0 0 0-2.258-.579 4.47 4.47 0 0 0-2.25.579 4.195 4.195 0 0 0-1.605 1.624c-.392.697-.588 1.493-.588 2.39 0 .895.196 1.692.588 2.389a4.195 4.195 0 0 0 1.605 1.624 4.47 4.47 0 0 0 2.25.578zm15.353 2.39c-1.307 0-2.492-.308-3.556-.924a6.711 6.711 0 0 1-2.51-2.53c-.61-1.07-.915-2.246-.915-3.528 0-1.281.305-2.457.914-3.528a6.711 6.711 0 0 1 2.511-2.529C68.108 6.308 69.294 6 70.6 6c1.307 0 2.492.308 3.556.924a6.711 6.711 0 0 1 2.51 2.53c.61 1.07.915 2.246.915 3.527 0 1.282-.305 2.458-.914 3.528a6.711 6.711 0 0 1-2.511 2.53c-1.064.616-2.25.924-3.556.924zm0-2.39a4.52 4.52 0 0 0 2.259-.578 4.177 4.177 0 0 0 1.614-1.624c.392-.697.588-1.494.588-2.39 0-.896-.196-1.692-.588-2.389a4.177 4.177 0 0 0-1.614-1.624 4.52 4.52 0 0 0-2.259-.579 4.47 4.47 0 0 0-2.25.579 4.195 4.195 0 0 0-1.605 1.624c-.392.697-.588 1.493-.588 2.39 0 .895.196 1.692.588 2.389a4.195 4.195 0 0 0 1.606 1.624 4.47 4.47 0 0 0 2.249.578zM79.83 6.3h2.52v5.73h.15l4.89-5.73h3.043v.149L85.6 11.973l5.338 7.542v.149h-3.08l-3.994-5.693-1.512 1.773v3.92h-2.52V6.299zM93.779 6h3.248l3.546 9.39h.15L104.268 6h3.267v13.365h-2.501v-6.589l.15-2.221h-.15l-3.398 8.81h-1.96l-3.416-8.81h-.149l.15 2.221v6.59h-2.483V6zm20.8 0h2.894l5.021 13.365h-2.781l-1.12-3.192h-5.115l-1.12 3.192h-2.781L114.579 6zm3.193 7.859l-1.176-3.36-.486-1.606h-.149l-.485 1.606-1.195 3.36h3.49zM124.553 6h4.872c.871 0 1.646.18 2.324.541.678.361 1.204.862 1.577 1.503.374.64.56 1.366.56 2.175 0 .858-.27 1.62-.812 2.286a4.617 4.617 0 0 1-2.044 1.447l-.018.13 3.584 5.134v.15h-2.894l-3.453-5.022h-1.176v5.021h-2.52V6zm4.853 6.03c.573 0 1.04-.175 1.4-.523.361-.349.542-.79.542-1.326 0-.51-.172-.945-.514-1.306-.342-.361-.806-.542-1.39-.542h-2.371v3.696h2.333zm7.23-6.03h2.52v5.73h.15l4.89-5.73h3.043v.15l-4.835 5.525 5.34 7.541v.15h-3.08l-3.996-5.694-1.512 1.773v3.92h-2.52V6z"
+            fill="currentColor" fill-rule="nonzero" />
+          <g>
+            <circle fill="currentColor" cx="12.5" cy="12.5" r="12.5" />
+            <path d="M9 9v10l3.54-3.44L16.078 19V9a2 2 0 0 0-2-2H11a2 2 0 0 0-2 2z" fill="currentColor" />
+          </g>
+        </g>
+      </svg>
+      <nav class="row" aria-label="Header">
+        <button class="header-nav-btn" aria-controls="header_nav_list" aria-expanded="false" aria-label="Menu"></button>
+        <ul id="header_nav_list" class="header-nav-list { row break-m cross-axis-center }" data-visible="false">
+          <li><a href="#">Features</a></li>
+          <li><a href="#">Pricing</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">Login</a></li>
+        </ul>
+      </nav>
+      <ul class="header-social-links { row gap-l }" data-visible="false">
+        <li>
+          <a class="clr-n-000" href="#" aria-label="Facebook">
+            <svg width="25" height="25" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M18.896 0H1.104C.494 0 0 .494 0 1.104v17.793C0 19.506.494 20 1.104 20h9.58v-7.745H8.076V9.237h2.606V7.01c0-2.583 1.578-3.99 3.883-3.99 1.104 0 2.052.082 2.329.119v2.7h-1.598c-1.254 0-1.496.597-1.496 1.47v1.928h2.989l-.39 3.018h-2.6V20h5.098c.608 0 1.102-.494 1.102-1.104V1.104C20 .494 19.506 0 18.896 0z"
+                fill="currentColor" fill-rule="nonzero" />
+            </svg>
+          </a>
+        </li>
+        <li>
+          <a class="clr-n-000" href="#" aria-label="Twitter">
+            <svg width="25" height="25" viewbox="0 0 20 17" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M20 2.172a8.192 8.192 0 01-2.357.646 4.11 4.11 0 001.805-2.27 8.22 8.22 0 01-2.606.996A4.096 4.096 0 0013.847.248c-2.65 0-4.596 2.472-3.998 5.037A11.648 11.648 0 011.392 1a4.109 4.109 0 001.27 5.478 4.086 4.086 0 01-1.858-.513c-.045 1.9 1.318 3.679 3.291 4.075a4.113 4.113 0 01-1.853.07 4.106 4.106 0 003.833 2.849A8.25 8.25 0 010 14.658a11.616 11.616 0 006.29 1.843c7.618 0 11.923-6.434 11.663-12.205A8.354 8.354 0 0020 2.172z"
+                fill="currentColor" fill-rule="nonzero" />
+            </svg>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </header>
+
+  <main class="content">
+    <div class="row gap-l md:no-wrap main-axis-space-between cross-axis-center mar-top-l">
+      <div class="m:center-h | hero-img { relative z-index }"><img src="images/illustration-hero.svg" alt=""></div>
+      <div class="m:center-h | box-h-m">
+        <div class="column gap-d-m-l">
+          <h1 class="m:text-center line-height-m fw-medium fs-d-800-900 clr-n-900">A Simple Bookmark Manager</h1>
+          <p class="m:text-center fs-d-300-400 clr-n-400">
+            A clean and simple interface to organize your favourite websites. Open a new
+            browser tab and see your sites load instantly. Try it for free.
+          </p>
+          <div class="row gap-m m:main-axis-center mar-top-m">
+            <a class="btn-theme secondary" href="#">Get it on Chrome</a>
+            <a class="btn-theme default" href="#">Get it on Firefox</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <section class="pad-v-xl">
+      <div class="center-h | box-h-m">
+        <h2 class="text-center fs-d-700-1000 fw-medium clr-n-900">Features</h2>
+        <p class="text-center fs-d-300-400 clr-n-400 mar-top-m">
+          Our aim is to make it quick and easy for you to access your favourite websites.
+          Your bookmarks sync between your devices so you can access them on the go.
+        </p>
+      </div>
+      <article>
+        <h2 class="sr-only">List of features</h2>
+        <div class="carousel">
+          <nav aria-label="Features">
+            <ul class="carousel-thumbnails { pad-v-xl }">
+              <li data-status="current">
+                <button>Simple Bookmarking</button>
+              </li>
+              <li>
+                <button>Speedy Searching</button>
+              </li>
+              <li>
+                <button>Easy Sharing</button>
+              </li>
+            </ul>
+          </nav>
+          <ul id="carousel_images" class="carousel-images">
+            <li>
+              <section class="row gap-d-xl-xxl md:no-wrap cross-axis-center">
+                <img src="images/illustration-features-tab-1.svg" height="250" alt="">
+                <div class="center-h | box-h-m">
+                  <h3 class="m:text-center fs-d-700-1000 fw-medium clr-n-900">Bookmark in one click</h3>
+                  <p class="m:text-center fs-d-300-400 clr-n-400 mar-top-m">
+                    Organize your bookmarks however you like. Our simple drag-and-drop interface
+                    gives you complete control over how you manage your favourite sites.
+                  </p>
+                  <a class="m:center-h | btn-theme secondary mar-top-m" href="#">More Info</a>
+                </div>
+              </section>
+            </li>
+            <li>
+              <section class="row gap-d-xl-xxl md:no-wrap cross-axis-center">
+                <img src="images/illustration-features-tab-2.svg" height="250" alt="">
+                <div class="center-h | box-h-m">
+                  <h3 class="m:text-center fs-d-700-1000 fw-medium clr-n-900">Intelligent search</h3>
+                  <p class="m:text-center fs-d-300-400 clr-n-400 mar-top-m">
+                    Our powerful search feature will help you find saved sites in no time at all.
+                    No need to trawl through all of your bookmarks.
+                  </p>
+                  <a tabindex="-1" class="m:center-h | btn-theme secondary { mar-top-m }" href="#">More Info</a>
+                </div>
+              </section>
+            </li>
+            <li>
+              <section class="row gap-d-xl-xxl md:no-wrap cross-axis-center">
+                <img src="images/illustration-features-tab-3.svg" height="250" alt="">
+                <div class="center-h | box-h-m">
+                  <h3 class="m:text-center fs-d-700-1000 fw-medium clr-n-900">Share your bookmarks</h3>
+                  <p class="m:text-center fs-d-300-400 clr-n-400 mar-top-m">
+                    Easily share your bookmarks and collections with others. Create a shareable
+                    link that you can send at the click of a button.
+                  </p>
+                  <a tabindex="-1" class="m:center-h | btn-theme secondary { mar-top-m }" href="#">More Info</a>
+                </div>
+              </section>
+            </li>
+          </ul>
+        </div>
+      </article>
+    </section>
+    <section class="pad-v-xl">
+      <div class="center-h | box-h-m">
+        <h2 class="text-center fs-d-700-1000 fw-medium clr-n-900">Download the extension</h2>
+        <p class="text-center fs-d-300-400 clr-n-400 mar-top-m">
+          We’ve got more browsers in the pipeline. Please do let us know if you’ve
+          got a favourite you’d like us to prioritize.
+        </p>
+      </div>
+      <div class="extensions { row gap-l md:no-wrap break-m main-axis-center mar-top-l }">
+        <article class="column cross-axis-center pad-l">
+          <img src="images/logo-chrome.svg" alt="">
+          <h3 class="text-center fs-600 fw-medium clr-n-900 mar-top-l">Add to Chrome</h3>
+          <p class="text-center fs-d-300-400 clr-n-400">Minimum version 62</p>
+          <hr class="mar-top-l">
+          <button class="btn-theme secondary { max-width }">Add & Install Extension</button>
+        </article>
+        <article class="column cross-axis-center pad-l">
+          <img src="images/logo-firefox.svg" alt="">
+          <h3 class="text-center fs-600 fw-medium clr-n-900 mar-top-l">Add to Firefox</h3>
+          <p class="text-center fs-d-300-400 clr-n-400">Minimum version 55</p>
+          <hr class="mar-top-l">
+          <button class="btn-theme secondary { max-width }">Add & Install Extension</button>
+        </article>
+        <article class="column cross-axis-center pad-l">
+          <img src="images/logo-opera.svg" alt="">
+          <h3 class="text-center fs-600 fw-medium clr-n-900 mar-top-l">Add to Opera</h3>
+          <p class="text-center fs-d-300-400 clr-n-400">Minimum version 46</p>
+          <hr class="mar-top-l">
+          <button class="btn-theme secondary { max-width }">Add & Install Extension</button>
+        </article>
+      </div>
+    </section>
+    <section class="center-h box-h-m pad-v-xl">
+      <h2 class="text-center fs-d-700-1000 fw-medium clr-n-900">Frequently Asked Questions</h2>
+      <p class="text-center fs-d-300-400 clr-n-400 mar-top-m">
+        Here are some of our FAQs. If you have any other questions you’d like
+        answered please feel free to email us.
+      </p>
+      <div class="column pad-v-l">
+        <details>
+          <summary class="row gap-m main-axis-space-between cross-axis-center pad-v-l">
+            <span class="fw-medium fs-d-200-400 clr-n-900">What is Bookmark?</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="12">
+              <path fill="none" stroke="currentColor" stroke-width="3" d="M1 1l8 8 8-8" />
+            </svg>
+          </summary>
+          <p class="fs-d-200-400 clr-n-400 pad-bottom-l">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce tincidunt
+            justo eget ultricies fringilla. Phasellus blandit ipsum quis quam ornare mattis.
+          </p>
+        </details>
+        <details>
+          <summary class="row gap-m main-axis-space-between cross-axis-center pad-v-l">
+            <span class="fw-medium fs-d-200-400 clr-n-900">How can I request a new browser?</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="12">
+              <path fill="none" stroke="currentColor" stroke-width="3" d="M1 1l8 8 8-8" />
+            </svg>
+          </summary>
+          <p class="fs-d-200-400 clr-n-400 pad-bottom-l">
+            Vivamus luctus eros aliquet convallis ultricies. Mauris augue massa, ultricies non ligula.
+            Suspendisse imperdiet. Vivamus luctus eros aliquet convallis ultricies. Mauris augue massa,
+            ultricies non ligula. Suspendisse imperdie tVivamus luctus eros aliquet convallis ultricies.
+            Mauris augue massa, ultricies non ligula. Suspendisse imperdiet.
+          </p>
+        </details>
+        <details>
+          <summary class="row gap-m main-axis-space-between cross-axis-center pad-v-l">
+            <span class="fw-medium fs-d-200-400 clr-n-900">Is there a mobile app?</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="12">
+              <path fill="none" stroke="currentColor" stroke-width="3" d="M1 1l8 8 8-8" />
+            </svg>
+          </summary>
+          <p class="fs-d-200-400 clr-n-400 pad-bottom-l">
+            Sed consectetur quam id neque fermentum accumsan. Praesent luctus vestibulum dolor, ut condimentum
+            urna vulputate eget. Cras in ligula quis est pharetra mattis sit amet pharetra purus. Sed
+            sollicitudin ex et ultricies bibendum.
+          </p>
+        </details>
+        <details>
+          <summary class="row gap-m main-axis-space-between cross-axis-center pad-v-l">
+            <span class="fw-medium fs-d-200-400 clr-n-900">What about other Chromium browsers?</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="12">
+              <path fill="none" stroke="currentColor" stroke-width="3" d="M1 1l8 8 8-8" />
+            </svg>
+          </summary>
+          <p class="fs-d-200-400 clr-n-400 pad-bottom-l">
+            Integer condimentum ipsum id imperdiet finibus. Vivamus in placerat mi, at euismod dui. Aliquam
+            vitae neque eget nisl gravida pellentesque non ut velit.
+          </p>
+        </details>
+      </div>
+      <a class="center-h | btn-theme secondary" href="#">More Info</a>
+    </section>
+    <section class="full-width | content | pad-v-xl bg-p-blue">
+      <form class="center-h box-h-m">
+        <p class="text-center letter-spacing-xl fs-200 clr-n-000">35,000+ <span class="uppercase">already joined</span>
+        </p>
+        <h2 class="text-center fs-d-700-1000 fw-medium clr-n-000 mar-top-m">Stay up-to-date with what we’re doing</h2>
+        <div class="row gap-m break-m cross-axis-start mar-top-l">
+          <div class="relative flex-grow-1">
+            <label for="contact" class="sr-only">Email address</label>
+            <input class="fs-200" type="email" id="contact" placeholder="Enter your email address">
+          </div>
+          <button class="btn-theme primary">Contact Us</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <footer class="content | pad-v-l">
+    <div class="row gap-d-l-xl break-m m:main-axis-center cross-axis-center split-after-2">
+      <div class="row">
+        <svg class="logo clr-n-000" viewbox="0 0 148 25" xmlns="http://www.w3.org/2000/svg">
+          <g fill="none" fill-rule="evenodd">
+            <path
+              d="M37 6.299h5.227c.746 0 1.434.155 2.062.466.629.311 1.123.735 1.484 1.27s.542 1.12.542 1.754c0 .672-.165 1.254-.495 1.746-.33.491-.762.868-1.297 1.129v.15c.697.248 1.25.643 1.661 1.185.41.541.616 1.191.616 1.95 0 .735-.196 1.385-.588 1.951a3.817 3.817 0 0 1-1.587 1.307c-.665.305-1.403.457-2.212.457H37V6.299zm5.04 5.45c.548 0 .986-.152 1.316-.457.33-.305.495-.688.495-1.148 0-.448-.159-.824-.476-1.13-.318-.304-.738-.457-1.26-.457H39.52v3.192h2.52zm.28 5.619c.61 0 1.086-.159 1.428-.476.342-.317.513-.731.513-1.241 0-.51-.174-.927-.522-1.251-.349-.324-.847-.485-1.494-.485H39.52v3.453h2.8zm12.927 2.595c-1.307 0-2.492-.308-3.556-.924a6.711 6.711 0 0 1-2.511-2.53c-.61-1.07-.915-2.246-.915-3.528 0-1.281.305-2.457.915-3.528a6.711 6.711 0 0 1 2.51-2.529C52.756 6.308 53.94 6 55.248 6c1.306 0 2.492.308 3.556.924a6.711 6.711 0 0 1 2.51 2.53c.61 1.07.915 2.246.915 3.527 0 1.282-.305 2.458-.915 3.528a6.711 6.711 0 0 1-2.51 2.53c-1.064.616-2.25.924-3.556.924zm0-2.39a4.52 4.52 0 0 0 2.258-.578 4.177 4.177 0 0 0 1.615-1.624c.392-.697.588-1.494.588-2.39 0-.896-.196-1.692-.588-2.389a4.177 4.177 0 0 0-1.615-1.624 4.52 4.52 0 0 0-2.258-.579 4.47 4.47 0 0 0-2.25.579 4.195 4.195 0 0 0-1.605 1.624c-.392.697-.588 1.493-.588 2.39 0 .895.196 1.692.588 2.389a4.195 4.195 0 0 0 1.605 1.624 4.47 4.47 0 0 0 2.25.578zm15.353 2.39c-1.307 0-2.492-.308-3.556-.924a6.711 6.711 0 0 1-2.51-2.53c-.61-1.07-.915-2.246-.915-3.528 0-1.281.305-2.457.914-3.528a6.711 6.711 0 0 1 2.511-2.529C68.108 6.308 69.294 6 70.6 6c1.307 0 2.492.308 3.556.924a6.711 6.711 0 0 1 2.51 2.53c.61 1.07.915 2.246.915 3.527 0 1.282-.305 2.458-.914 3.528a6.711 6.711 0 0 1-2.511 2.53c-1.064.616-2.25.924-3.556.924zm0-2.39a4.52 4.52 0 0 0 2.259-.578 4.177 4.177 0 0 0 1.614-1.624c.392-.697.588-1.494.588-2.39 0-.896-.196-1.692-.588-2.389a4.177 4.177 0 0 0-1.614-1.624 4.52 4.52 0 0 0-2.259-.579 4.47 4.47 0 0 0-2.25.579 4.195 4.195 0 0 0-1.605 1.624c-.392.697-.588 1.493-.588 2.39 0 .895.196 1.692.588 2.389a4.195 4.195 0 0 0 1.606 1.624 4.47 4.47 0 0 0 2.249.578zM79.83 6.3h2.52v5.73h.15l4.89-5.73h3.043v.149L85.6 11.973l5.338 7.542v.149h-3.08l-3.994-5.693-1.512 1.773v3.92h-2.52V6.299zM93.779 6h3.248l3.546 9.39h.15L104.268 6h3.267v13.365h-2.501v-6.589l.15-2.221h-.15l-3.398 8.81h-1.96l-3.416-8.81h-.149l.15 2.221v6.59h-2.483V6zm20.8 0h2.894l5.021 13.365h-2.781l-1.12-3.192h-5.115l-1.12 3.192h-2.781L114.579 6zm3.193 7.859l-1.176-3.36-.486-1.606h-.149l-.485 1.606-1.195 3.36h3.49zM124.553 6h4.872c.871 0 1.646.18 2.324.541.678.361 1.204.862 1.577 1.503.374.64.56 1.366.56 2.175 0 .858-.27 1.62-.812 2.286a4.617 4.617 0 0 1-2.044 1.447l-.018.13 3.584 5.134v.15h-2.894l-3.453-5.022h-1.176v5.021h-2.52V6zm4.853 6.03c.573 0 1.04-.175 1.4-.523.361-.349.542-.79.542-1.326 0-.51-.172-.945-.514-1.306-.342-.361-.806-.542-1.39-.542h-2.371v3.696h2.333zm7.23-6.03h2.52v5.73h.15l4.89-5.73h3.043v.15l-4.835 5.525 5.34 7.541v.15h-3.08l-3.996-5.694-1.512 1.773v3.92h-2.52V6z"
+              fill="currentColor" fill-rule="nonzero" />
+            <g>
+              <circle fill="#5267DF" cx="12.5" cy="12.5" r="12.5" />
+              <path d="M9 9v10l3.54-3.44L16.078 19V9a2 2 0 0 0-2-2H11a2 2 0 0 0-2 2z" fill="#FFF" />
+            </g>
+          </g>
+        </svg>
+      </div>
+      <nav aria-label="Footer">
+        <ul class="row gap-d-m-l break-m">
+          <li class="grid main-axis-center">
+            <a class="fs-300 clr-n-000 uppercase letter-spacing-m" href="#">Features</a>
+          </li>
+          <li class="grid main-axis-center">
+            <a class="fs-300 clr-n-000 uppercase letter-spacing-m" href="#">Pricing</a>
+          </li>
+          <li class="grid main-axis-center">
+            <a class="fs-300 clr-n-000 uppercase letter-spacing-m" href="#">Contact</a>
+          </li>
+        </ul>
+      </nav>
+      <ul class="row gap-l">
+        <li>
+          <a class="clr-n-000" href="#" aria-label="Facebook">
+            <svg width="20" height="20" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M18.896 0H1.104C.494 0 0 .494 0 1.104v17.793C0 19.506.494 20 1.104 20h9.58v-7.745H8.076V9.237h2.606V7.01c0-2.583 1.578-3.99 3.883-3.99 1.104 0 2.052.082 2.329.119v2.7h-1.598c-1.254 0-1.496.597-1.496 1.47v1.928h2.989l-.39 3.018h-2.6V20h5.098c.608 0 1.102-.494 1.102-1.104V1.104C20 .494 19.506 0 18.896 0z"
+                fill="currentColor" fill-rule="nonzero" />
+            </svg>
+          </a>
+        </li>
+        <li>
+          <a class="clr-n-000" href="#" aria-label="Twitter">
+            <svg width="20" height="17" viewbox="0 0 20 17" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M20 2.172a8.192 8.192 0 01-2.357.646 4.11 4.11 0 001.805-2.27 8.22 8.22 0 01-2.606.996A4.096 4.096 0 0013.847.248c-2.65 0-4.596 2.472-3.998 5.037A11.648 11.648 0 011.392 1a4.109 4.109 0 001.27 5.478 4.086 4.086 0 01-1.858-.513c-.045 1.9 1.318 3.679 3.291 4.075a4.113 4.113 0 01-1.853.07 4.106 4.106 0 003.833 2.849A8.25 8.25 0 010 14.658a11.616 11.616 0 006.29 1.843c7.618 0 11.923-6.434 11.663-12.205A8.354 8.354 0 0020 2.172z"
+                fill="currentColor" fill-rule="nonzero" />
+            </svg>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <small class="text-center fs-300 clr-n-400 mar-top-l">
+      Challenge by <a class="clr-n-000" href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend
+        Mentor</a>.
+      Coded by <a class="clr-n-000" href="https://github.com/AlexKolykhalov">Alex Ko</a>.
+    </small>
+  </footer>
+
+  <script src="main.js"></script>
+
+</body>
+
+</html>
