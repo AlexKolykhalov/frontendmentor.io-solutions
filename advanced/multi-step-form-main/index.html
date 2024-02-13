@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- displays site properly based on user's device -->
+  <meta name="description" content="Multi-step form challenge on Frontend Mentor">
+  <meta name="keywords"
+    content="Multi-step form, Frontend Mentor, Frontend, Mentor, HTML, CSS, Responsive, Mobile, Desktop, Alex Kolykhalov">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
+
+  <!-- ios support -->
+  <link rel="apple-touch-icon" href="assets/images/128.png">
+  <link rel="apple-touch-icon" href="assets/images/192.png">
+  <link rel="apple-touch-icon" href="assets/images/512.png">
+  <meta name="apple-mobile-web-app-status-bar" content="#473dff">
+  <meta name="theme-color" content="#bfe2fd">
+  <!-- end ios support -->
+
+  <title>Frontend Mentor | Multi-step form</title>
+
+  <link rel="preload" href="assets/images/bg-sidebar-mobile.svg" as="image">
+  <link rel="preload" href="assets/images/bg-sidebar-desktop.svg" as="image">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="bg-n-200">
+  <main>
+    <div class="md:center-v | md:box-v-m">
+      <article class="content">
+        <h1 class="sr-only">Multistep form</h1>
+        <div class="full-width | bg-img"></div>
+        <div class="row md:no-wrap main-axis-center border-radius-m md:bg-n-000 m:mar-bottom-xl md:box-shadow">
+          <ol class="steps-list" aria-label="Steps">
+            <li class="uppercase" data-status="active">
+              <div class="m:sr-only">
+                <p class="fw-regular clr-n-400">Step 1</p>
+                <p class="clr-n-000">Your info</p>
+              </div>
+            </li>
+            <li class="uppercase">
+              <div class="m:sr-only">
+                <p class="fw-regular clr-n-400">Step 2</p>
+                <p class="clr-n-000">Select plan</p>
+              </div>
+            </li>
+            <li class="uppercase">
+              <div class="m:sr-only">
+                <p class="fw-regular clr-n-400">Step 3</p>
+                <p class="clr-n-000">Add-ons</p>
+              </div>
+            </li>
+            <li class="uppercase">
+              <div class="m:sr-only">
+                <p class="fw-regular clr-n-400">Step 4</p>
+                <p class="clr-n-000">Summary</p>
+              </div>
+            </li>
+          </ol>
+          <article class="max-width bg-n-000 pad-v-d-m-l pad-h-d-m-xl border-radius-m m:box-shadow">
+            <div class="column">
+              <h2 class="fs-d-600-900 clr-p-marine-blue">Personal info</h2>
+              <p class="fs-d-400-500 clr-n-400">Please provide your name, email address, and phone number.</p>
+              <div class="flex-grow-1 | column gap-m mar-top-d-m-l">
+                <div class="relative column gap-d-xsm-sm">
+                  <label class="fs-d-300-400 fw-medium clr-p-marine-blue" for="name">Name</label>
+                  <input type="text" id="name" placeholder="e.g. Stephen King">
+                </div>
+                <div class="relative column gap-d-xsm-sm">
+                  <label class="fs-d-300-400 fw-medium clr-p-marine-blue" for="email">Email Address</label>
+                  <input type="email" id="email" placeholder="e.g. stephenking@lorem.com">
+                </div>
+                <div class="relative column gap-d-xsm-sm">
+                  <label class="fs-d-300-400 fw-medium clr-p-marine-blue" for="phone">Phone Number</label>
+                  <input type="tel" id="phone" placeholder="e.g. +1 234 567 890">
+                </div>
+                <div class="content | controll-btns { bg-n-000 }">
+                  <div class="md:full-width row main-axis-end">
+                    <button class="next-step-btn">Next Step</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+          <article id="billing_plans" class="max-width bg-n-000 pad-v-d-m-l pad-h-d-m-xl border-radius-m m:box-shadow"
+            hidden>
+            <div class="column">
+              <h2 class="fs-d-600-900 clr-p-marine-blue">Select your plan</h2>
+              <p class="fs-d-400-500 clr-n-400">You have the option of monthly or yearly billing.</p>
+              <ul class="billing-plans { row gap-m break-m md:no-wrap mar-top-d-m-l }">
+                <li tabindex="0" data-status="active">
+                  <div class="row gap-m cross-axis-space-between md:break-m">
+                    <div>
+                      <img src="assets/images/icon-arcade.svg" width="40" height="40" alt="">
+                    </div>
+                    <div class="column">
+                      <h3 class="fs-d-400-500 clr-p-marine-blue">Arcade</h3>
+                      <p class="fs-d-300-400 clr-n-400">$9/mo</p>
+                    </div>
+                  </div>
+                </li>
+                <li tabindex="0">
+                  <div class="row gap-m cross-axis-space-between md:break-m">
+                    <div>
+                      <img src="assets/images/icon-advanced.svg" width="40" height="40" alt="">
+                    </div>
+                    <div class="column">
+                      <h3 class="fs-d-400-500 clr-p-marine-blue">Advanced</h3>
+                      <p class="fs-d-300-400 clr-n-400">$12/mo</p>
+                    </div>
+                  </div>
+                </li>
+                <li tabindex="0">
+                  <div class="row gap-m cross-axis-space-between md:break-m">
+                    <div>
+                      <img src="assets/images/icon-pro.svg" width="40" height="40" alt="">
+                    </div>
+                    <div class="column">
+                      <h3 class="fs-d-400-500 clr-p-marine-blue">Pro</h3>
+                      <p class="fs-d-300-400 clr-n-400">$15/mo</p>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+              <div class="billing-plans-time-period">
+                <button data-status="active">Monthly</button>
+                <label class="toggle" for="billing_plans_time_period">
+                  <span class="sr-only">Toggle</span>
+                  <input type="checkbox" id="billing_plans_time_period" autocomplete="off">
+                  <span class="toggle-background"></span>
+                </label>
+                <button>Yearly</button>
+              </div>
+              <div class="content | controll-btns { bg-n-000 }">
+                <div class="md:full-width | row main-axis-space-between">
+                  <button class="prev-step-btn">Go Back</button>
+                  <button class="next-step-btn">Next Step</button>
+                </div>
+              </div>
+            </div>
+          </article>
+          <article class="max-width bg-n-000 pad-v-d-m-l pad-h-d-m-xl border-radius-m m:box-shadow" hidden>
+            <div class="column">
+              <h2 class="fs-d-600-900 clr-p-marine-blue">Pick add-ons</h2>
+              <p class="fs-d-400-500 clr-n-400">Add-ons help enhance your gaming experience.</p>
+              <ul class="addons { column gap-m mar-top-d-m-l }">
+                <li tabindex="0" class="relative row gap-m no-wrap split-after-2 cross-axis-center pad-m">
+                  <input tabindex="-1" type="checkbox" id="online_service" autocomplete="off">
+                  <div class="column">
+                    <label class="clr-p-marine-blue fw-medium" for="online_service">Online service</label>
+                    <p class="fs-d-300-400 clr-n-400">Access to multiplayer games</p>
+                  </div>
+                  <p class="fs-d-300-400 clr-p-purplish-blue">+$1/mo</p>
+                </li>
+                <li tabindex="0" class="relative row gap-m no-wrap split-after-2 cross-axis-center">
+                  <input tabindex="-1" type="checkbox" id="large_storage" autocomplete="off">
+                  <div class="column">
+                    <label class="clr-p-marine-blue fw-medium" for="large_storage">Large storage</label>
+                    <p class="fs-d-300-400 clr-n-400">Extra 1TB of cloud save</p>
+                  </div>
+                  <p class="fs-d-300-400 clr-p-purplish-blue">+$2/mo</p>
+                </li>
+                <li tabindex="0" class="relative row gap-m no-wrap split-after-2 cross-axis-center">
+                  <input tabindex="-1" type="checkbox" id="customizable_profile" autocomplete="off">
+                  <div class="column">
+                    <label class="clr-p-marine-blue fw-medium" for="customizable_profile">Customizable Profile</label>
+                    <p class="fs-d-300-400 clr-n-400">Custom theme on your profile</p>
+                  </div>
+                  <p class="fs-d-300-400 clr-p-purplish-blue">+$2/mo</p>
+                </li>
+              </ul>
+              <div class="content | controll-btns { bg-n-000 }">
+                <div class="md:full-width | row main-axis-space-between">
+                  <button class="prev-step-btn">Go Back</button>
+                  <button class="next-step-btn">Next Step</button>
+                </div>
+              </div>
+            </div>
+          </article>
+          <article class="max-width bg-n-000 pad-v-d-m-l pad-h-d-m-xl border-radius-m m:box-shadow" hidden>
+            <div class="column">
+              <h2 class="fs-d-600-900 clr-p-marine-blue">Finishing up</h2>
+              <p class="fs-d-400-500 clr-n-400">Double-check everything looks OK before confirming.</p>
+              <section class="border-radius-m bg-n-200 pad-d-m-l mar-top-d-m-l">
+                <h3 class="sr-only">Totals</h3>
+                <div class="row main-axis-space-between cross-axis-center">
+                  <div class="column cross-axis-start">
+                    <p class="choosen-billing-plan { fw-bold fs-d-300-500 clr-p-marine-blue }">Arcade (Monthly)</p>
+                    <a class="change-plan-link" href="#">Change</a>
+                  </div>
+                  <p class="choosen-billing-plan-price { fw-bold fs-d-300-400 clr-p-marine-blue }">$9/mo</p>
+                </div>
+                <div class="choosen-addons { column gap-m }"></div>
+              </section>
+              <div class="row main-axis-space-between cross-axis-center pad-h-d-m-l mar-top-d-m-l">
+                <p class="fs-d-300-400 clr-n-400">Total (per month/year)</p>
+                <p class="total-price { fw-bold fs-d-400-500 clr-p-purplish-blue }">$9/mo</p>
+              </div>
+              <div class="content | controll-btns { bg-n-000 }">
+                <div class="md:full-width | row main-axis-space-between">
+                  <button class="prev-step-btn">Go Back</button>
+                  <button class="next-step-btn { bg-p-purplish-blue }">Confirm</button>
+                </div>
+              </div>
+            </div>
+          </article>
+          <article class="max-width bg-n-000 pad-v-l pad-h-d-m-xl border-radius-m m:box-shadow" hidden>
+            <div class="column main-axis-center cross-axis-center">
+              <img class="thankyou-img" src="assets/images/icon-thank-you.svg" width="60" height="60" alt="">
+              <h2 class="fs-d-600-900 clr-p-marine-blue mar-top-d-m-l">Thank you!</h2>
+              <p class="text-center fs-d-400-500 clr-n-400">
+                Thanks for confirming your subscription! We hope you have fun
+                using our platform. If you ever need support, please feel free
+                to email us at support@loremgaming.com.
+              </p>
+            </div>
+          </article>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer class="text-center">
+    <p class="fs-d-300-400 clr-p-marine-blue">
+      Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>.
+      Coded by <a href="https://github.com/AlexKolykhalov">Alex Ko</a>.
+    </p>
+  </footer>
+
+  <script src="main.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,45 @@
+{
+    "name": "Multi-step form challenge on Frontend Mentor",
+    "short_name": "Multi-step form",
+    "description": "This is a solution to the https://www.frontendmentor.io/challenges/multistep-form-YVAnSdqQBJ.",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#3367D6",
+    "theme_color": "#3367D6",
+    "orientation": "portrait-primary",
+    "icons": [
+        {
+            "src": "assets/images/128.png",
+            "sizes": "128x128",
+            "type": "image/png"
+        },
+        {
+            "src": "assets/images/192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "assets/images/512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        },
+        {
+            "src": "assets/images/maskable128.png",
+            "sizes": "128x128",
+            "type": "image/png",
+            "purpose": "maskable"
+        },
+        {
+            "src": "assets/images/maskable192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable"
+        },
+        {
+            "src": "assets/images/maskable512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ]
+}
