@@ -80,3 +80,11 @@ Any comments are welcome.
 | 13 | Shortly URL shortening API | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/intermediate/url-shortening-api-master/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/intermediate/url-shortening-api-master) |
 | 14 | Bookmark landing page | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/intermediate/bookmark-landing-page-master/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/intermediate/bookmark-landing-page-master) |
 </details>
+
+<details>
+<summary>Advanced [1/3] (Free, Free++)</summary>
+
+| No | Challenge | Live demo | Source |
+| :---: | :--- | :---: | :--- |
+| 01 | Multi-step form | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/advanced/multi-step-form-main/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/advanced/multi-step-form-main) |
+</details>
