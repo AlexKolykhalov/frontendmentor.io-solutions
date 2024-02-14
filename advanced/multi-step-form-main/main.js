@@ -51,32 +51,7 @@ let yearlyBillingPlan = false;
 
 //PWA
 if ("serviceWorker" in navigator) {
-    window.addEventListener("load", function () {
-        navigator.serviceWorker
-            .register("sw.js")
-            .then(res => console.log("service worker registered"))
-            .catch(err => console.log("service worker not registered", err))
-    });
-}
-
-let deferredPrompt;
-window.addEventListener('beforeinstallprompt', (e) => {
-    deferredPrompt = e;
-});
-
-const installApp = document.querySelectorAll('.download');
-if (installApp) {
-    installApp.forEach(element => {
-        element.addEventListener('click', async () => {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                const { outcome } = await deferredPrompt.userChoice;
-                if (outcome === 'accepted') {
-                    deferredPrompt = null;
-                }
-            }
-        });
-    });
+    window.addEventListener("load", () => navigator.serviceWorker.register("service-worker.js"));
 }
 
 listControlBtns.forEach((elem) => {
