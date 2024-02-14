@@ -9,34 +9,34 @@
     "orientation": "portrait-primary",
     "icons": [
         {
-            "src": "assets/images/128.png",
+            "src": "/frontendmentor.io-solutions/advanced/multi-step-form-main/assets/images/128.png",
             "sizes": "128x128",
             "type": "image/png"
         },
         {
-            "src": "assets/images/192.png",
+            "src": "/frontendmentor.io-solutions/advanced/multi-step-form-main/assets/images/192.png",
             "sizes": "192x192",
             "type": "image/png"
         },
         {
-            "src": "assets/images/512.png",
+            "src": "/frontendmentor.io-solutions/advanced/multi-step-form-main/assets/images/512.png",
             "sizes": "512x512",
             "type": "image/png"
         },
         {
-            "src": "assets/images/maskable128.png",
+            "src": "/frontendmentor.io-solutions/advanced/multi-step-form-main/assets/images/maskable128.png",
             "sizes": "128x128",
             "type": "image/png",
             "purpose": "maskable"
         },
         {
-            "src": "assets/images/maskable192.png",
+            "src": "/frontendmentor.io-solutions/advanced/multi-step-form-main/assets/images/maskable192.png",
             "sizes": "192x192",
             "type": "image/png",
             "purpose": "maskable"
         },
         {
-            "src": "assets/images/maskable512.png",
+            "src": "/frontendmentor.io-solutions/advanced/multi-step-form-main/assets/images/maskable512.png",
             "sizes": "512x512",
             "type": "image/png",
             "purpose": "maskable"
