@@ -15,6 +15,7 @@ const APP_STATIC_RESOURCES = [
     `${path}/index.html`,
     `${path}/style.css`,
     `${path}/main.js`,
+    `${path}/manifest.json`,
     `${path}/assets/fonts/Ubuntu-Bold.ttf`,
     `${path}/assets/fonts/Ubuntu-Bold.woff`,
     `${path}/assets/fonts/Ubuntu-Bold.woff2`,
