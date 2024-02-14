@@ -8,7 +8,7 @@ const VERSION = "v1";
 const CACHE_NAME = `period-tracker-${VERSION}`;
 
 // The static resources that the app needs to function.
-const path = '/advanced/multi-step-form-main';
+const path = '/frontendmentor.io-solutions/advanced/multi-step-form-main';
 
 const APP_STATIC_RESOURCES = [
     `${path}/`,
