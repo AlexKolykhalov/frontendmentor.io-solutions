@@ -39,35 +39,6 @@ const APP_STATIC_RESOURCES = [
     `${path}/assets/images/maskable128.png`,
     `${path}/assets/images/maskable192.png`,
     `${path}/assets/images/maskable512.png`,
-
-    // `${path}`,
-    // `${path}index.html`,
-    // `${path}style.css`,
-    // `${path}main.js`,
-    // `${path}manifest.json`,
-    // `${path}assets/fonts/Ubuntu-Bold.ttf`,
-    // `${path}assets/fonts/Ubuntu-Bold.woff`,
-    // `${path}assets/fonts/Ubuntu-Bold.woff2`,
-    // `${path}assets/fonts/Ubuntu-Medium.ttf`,
-    // `${path}assets/fonts/Ubuntu-Medium.woff`,
-    // `${path}assets/fonts/Ubuntu-Medium.woff2`,
-    // `${path}assets/fonts/Ubuntu-Regular.ttf`,
-    // `${path}assets/fonts/Ubuntu-Regular.woff`,
-    // `${path}assets/fonts/Ubuntu-Regular.woff2`,
-    // `${path}assets/images/bg-sidebar-desktop.svg`,
-    // `${path}assets/images/bg-sidebar-mobile.svg`,
-    // `${path}assets/images/favicon-32x32.png`,
-    // `${path}assets/images/icon-advanced.svg`,
-    // `${path}assets/images/icon-arcade.svg`,
-    // `${path}assets/images/icon-checkmark.svg`,
-    // `${path}assets/images/icon-pro.svg`,
-    // `${path}assets/images/icon-thank-you.svg`,
-    // `${path}assets/images/128.png`,
-    // `${path}assets/images/192.png`,
-    // `${path}assets/images/512.png`,
-    // `${path}assets/images/maskable128.png`,
-    // `${path}assets/images/maskable192.png`,
-    // `${path}assets/images/maskable512.png`,
 ];
 
 // On install, cache the static resources
@@ -107,8 +78,7 @@ self.addEventListener("activate", (event) => {
 self.addEventListener("fetch", (event) => {
     // // As a single page app, direct app to always go to cached home page.
     if (event.request.mode === "navigate") {
-        event.respondWith(caches.match("/"));
-        // event.respondWith(caches.match(`${path}`));
+        event.respondWith(caches.match(`${path}/`));
         return;
     }
 
