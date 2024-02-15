@@ -36,7 +36,7 @@
             "purpose": "maskable"
         },
         {
-            "src": "/assets/images/maskable512.png",
+            "src": "assets/images/maskable512.png",
             "sizes": "512x512",
             "type": "image/png",
             "purpose": "maskable"
