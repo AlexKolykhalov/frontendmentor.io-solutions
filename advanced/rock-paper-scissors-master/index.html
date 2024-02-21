@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- displays site properly based on user's device -->
+  <meta name="description" content="Rock, Paper, Scissors challenge on Frontend Mentor">
+  <meta name="keywords"
+    content="Game, Frontend Mentor, Frontend, Mentor, HTML, CSS, Responsive, Mobile, Desktop, Alex Kolykhalov">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+
+  <!-- ios support -->
+  <!-- <link rel="apple-touch-icon" href="assets/images/128.png">
+  <link rel="apple-touch-icon" href="assets/images/192.png">
+  <link rel="apple-touch-icon" href="assets/images/512.png">
+  <meta name="apple-mobile-web-app-status-bar" content="#473dff">
+  <meta name="theme-color" content="#bfe2fd"> -->
+  <!-- end ios support -->
+
+  <title>Frontend Mentor | Rock, Paper, Scissors</title>
+
+  <!-- <link rel="manifest" href="manifest.json"> -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <main class="content">
+    <h1 class="sr-only">Game application</h1>
+    <div class="score { row main-axis-space-between cross-axis-center }">
+      <img class="logo" src="images/logo-bonus.svg" alt="">
+      <div class="column cross-axis-center bg-n-000 pad-v-d-sm-m pad-h-d-m-l border-radius-sm">
+        <p class="letter-spacing-m uppercase fw-bold fs-d-300-400 clr-n-600">Score</p>
+        <output class="line-height-normal fw-bold fs-d-800-900 clr-n-800">12</output>
+      </div>
+    </div>
+    <article class="breakout-l">
+      <!-- <h2 class="sr-only">Rock, Paper, Scissors</h2> -->
+      <h2 class="sr-only">Rock, Paper, Scissors, Lizard, Spock</h2>
+      <section id="game_buttons">
+        <h3 class="sr-only">Game buttons</h3>
+        <ul class="game { mar-v-d-xl-xxl }">
+          <li>
+            <button class="game-btn" data-theme="scissors">
+              <img src="images/icon-scissors.svg" alt="Scissors">
+            </button>
+          </li>
+          <li>
+            <button class="game-btn" data-theme="paper">
+              <img src="images/icon-paper.svg" alt="Paper">
+            </button>
+          </li>
+          <li>
+            <button class="game-btn" data-theme="rock">
+              <img src="images/icon-rock.svg" alt="Rock">
+            </button>
+          </li>
+          <li>
+            <button class="game-btn" data-theme="lizard">
+              <img src="images/icon-lizard.svg" alt="Lizard">
+            </button>
+          </li>
+          <li>
+            <button class="game-btn" data-theme="spock">
+              <img src="images/icon-spock.svg" alt="Spock">
+            </button>
+          </li>
+        </ul>
+      </section>
+      <section id="results" hidden>
+        <h3 class="sr-only">Results</h3>
+        <div class="grid gap-l md:cross-axis-center mar-v-d-xl-xxl">
+          <div class="column md:reverse gap-d-l-xl cross-axis-center">
+            <div class="game-btn xl" data-theme="paper">
+              <img src="images/icon-paper.svg" alt="Paper">
+            </div>
+            <p class="uppercase letter-spacing-m fs-d-400-500">You Picked</p>
+          </div>
+          <div class="column md:reverse gap-d-l-xl cross-axis-center">
+            <!-- <div class="game-btn xl spock-theme">
+              <img src="images/icon-spock.svg" alt="Spock">
+            </div> -->
+            <div class="game-btn xl" data-theme="empty">
+            </div>
+            <p class="text-center uppercase letter-spacing-m fs-d-400-500">The House Picked</p>
+          </div>
+          <div class="column cross-axis-center" style="display:none;">
+            <p class="uppercase fs-800">You Win</p>
+            <p class="sr-only uppercase fs-900">You Lose</p>
+            <button class="play-again btn-theme">Play Again</button>
+          </div>
+        </div>
+      </section>
+    </article>
+    <button class="rules btn-theme">Rules</button>
+  </main>
+
+  <footer class="sr-only content">
+    <p>
+      Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>.
+      Coded by <a href="https://github.com/AlexKolykhalov">Alex Ko</a>.
+    </p>
+  </footer>
+
+  <script src="main.js"></script>
+
+  drfelrjfke:
+</body>
+
+</html>

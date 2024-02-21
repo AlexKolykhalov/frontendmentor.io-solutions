@@ -1,0 +1,762 @@
+@font-face {
+    font-family: 'Barlow Semi Condensed';
+    src: url('fonts/BarlowSemiCondensed-SemiBold.woff2') format('woff2'),
+        url('fonts/BarlowSemiCondensed-SemiBold.woff') format('woff');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Barlow Semi Condensed';
+    src: url('fonts/BarlowSemiCondensed-Bold.woff2') format('woff2'),
+        url('fonts/BarlowSemiCondensed-Bold.woff') format('woff');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Remove default margin */
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+ul,
+ol,
+figure,
+blockquote,
+dl,
+dd {
+    margin: 0;
+}
+
+/* Remove default padding */
+ul,
+ol {
+    padding: 0;
+}
+
+/* Remove list styles on ul, ol elements */
+ul,
+ol {
+    list-style: none;
+}
+
+/* Set core root defaults */
+html:focus-within {
+    scroll-behavior: smooth;
+}
+
+/* Set core body defaults */
+body {
+    min-height: 100vh;
+    text-rendering: optimizeSpeed;
+    line-height: 1.5;
+}
+
+/* A elements that don't have a class get default styles */
+a:not([class]) {
+    text-decoration-skip-ink: auto;
+}
+
+/* Make images easier to work with */
+img,
+picture {
+    max-width: 100%;
+    display: block;
+}
+
+/* Inherit fonts for inputs and buttons */
+input,
+button,
+textarea,
+select {
+    font: inherit;
+}
+
+/* Red border when they have no alt attribute */
+img:not([alt]) {
+    border: 3px dashed hsl(0, 100%, 50%);
+}
+
+/* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
+@media (prefers-reduced-motion: reduce) {
+    html:focus-within {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* ************************* */
+/*         Variables         */
+/* ************************* */
+
+:root {
+    --clr-primary-scissors-from: hsl(39, 89%, 49%);
+    --clr-primary-scissors-to: hsl(40, 84%, 53%);
+    --clr-primary-scissors-shadow: hsl(40, 100%, 30%);
+
+    --clr-primary-paper-from: hsl(230, 89%, 62%);
+    --clr-primary-paper-to: hsl(230, 89%, 65%);
+    --clr-primary-paper-shadow: hsl(230, 97%, 56%);
+
+    --clr-primary-rock-from: hsl(349, 71%, 52%);
+    --clr-primary-rock-to: hsl(349, 70%, 56%);
+    --clr-primary-rock-shadow: hsl(349, 72%, 41%);
+
+    --clr-primary-lizard-from: hsl(261, 73%, 60%);
+    --clr-primary-lizard-to: hsl(261, 72%, 63%);
+    --clr-primary-lizard-shadow: hsl(261, 100%, 60%);
+
+    --clr-primary-spock-from: hsl(189, 59%, 53%);
+    --clr-primary-spock-to: hsl(189, 58%, 57%);
+    --clr-primary-spock-shadow: hsl(188, 100%, 30%);
+
+    --clr-primary-bg-from: hsl(214, 47%, 23%);
+    --clr-primary-bg-to: hsl(237, 49%, 15%);
+
+    --clr-neutral-000: hsl(0, 0%, 100%);
+    --clr-neutral-100: hsl(0, 0%, 80%);
+    --clr-neutral-400: hsl(217, 16%, 45%);
+    --clr-neutral-600: hsl(229, 64%, 46%);
+    --clr-neutral-800: hsl(229, 25%, 31%);
+
+    --ff: 'Barlow Semi Condensed', sans-serif;
+
+    --base-size: 16px;
+
+    /* fluid typography */
+    /* https://fluid-typography.netlify.app/ */
+    /* https://fluidtypography.com/ */
+
+    /* minor third */
+    /* 5:6 <-> 1.2 */
+    /* 1.067
+    1.125
+    1.2
+    1.25
+    1.333
+    1.414
+    1.5
+    1.6
+    1.618
+    1.667
+    1.778
+    1.875
+    2
+    2.5
+    2.667
+    3
+    4 */
+    --ratio: 1.333;
+
+    --scale-100: calc(var(--scale-200) / var(--ratio));
+    --scale-200: calc(var(--scale-300) / var(--ratio));
+    --scale-300: calc(var(--scale-400) / var(--ratio));
+    --scale-400: var(--base-size);
+    --scale-500: calc(var(--scale-400) * var(--ratio));
+    --scale-600: calc(var(--scale-500) * var(--ratio));
+    --scale-700: calc(var(--scale-600) * var(--ratio));
+    --scale-800: calc(var(--scale-700) * var(--ratio));
+    --scale-900: calc(var(--scale-800) * var(--ratio));
+
+    --br-sm: 36em;
+    --br-md: 48em;
+    --br-lg: 62em;
+}
+
+/* ************************* */
+/*       General style       */
+/* ************************* */
+
+body {
+    background: linear-gradient(var(--clr-primary-bg-from) 60%, var(--clr-primary-bg-to));
+    color: var(--clr-neutral-000);
+    font-family: var(--ff);
+    font-size: var(--scale-400);
+    font-weight: 600;
+}
+
+@media (min-width: 48em) {
+    body {
+        background: linear-gradient(var(--clr-primary-bg-from) 30%, var(--clr-primary-bg-to));
+    }
+}
+
+button {
+    cursor: pointer;
+    border: none;
+}
+
+/* ************************* */
+/*        Composition        */
+/* ************************* */
+
+/* .box-h-m {
+   max-width: 60ch;
+} */
+
+/* .box-v-m {
+   min-height: 70vh;
+} */
+
+/* .center-v {
+    display: flex;
+    flex-direction: column;
+}
+
+.center-v>* {
+    margin-top: auto;
+    margin-bottom: auto;
+} */
+
+.center-h {
+    box-sizing: content-box;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ↓ Intrinsic Centering: That is, centering elements based on their natural, content-based widths. */
+/* .intrinsic {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+} */
+
+.column {
+    display: flex;
+    flex-direction: column;
+}
+
+.column:only-child {
+    block-size: 100%;
+}
+
+@media (min-width: 48em) {
+    .md\:reverse {
+        flex-direction: column-reverse;
+    }
+}
+
+/* ↓ Split after - the element after which to split the stack with an auto margin */
+/* .column.split-after-1> :nth-child(1) {
+   margin-block-end: auto;
+} */
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+
+    --flex-grow: 0;
+    --break: 0;
+}
+
+.row>* {
+    /* ↓ Disallow children to grow */
+    flex-grow: var(--flex-grow, 0);
+    /* ↓ Switch the layout at the --break */
+    flex-basis: calc((var(--break) - 100%) * 999);
+}
+
+.break-m {
+    --break: var(--br-md);
+    /* ↓ Allow children to grow */
+    --flex-grow: 1;
+}
+
+/* ↓ Split after - the element after which to split the stack with an auto margin */
+/* .row.split-after-1> :nth-child(1) {
+   margin-inline-end: auto;
+} */
+
+/* .row.break-after-4> :nth-last-child(n+5), */
+/* .row.break-after-4> :nth-last-child(n+5)~* { */
+/* ↓ Switch to a vertical configuration if there are more than 4 child elements */
+/* flex-basis: 100%; */
+/* } */
+
+.content {
+    --content-width: 80ch;
+    --large-breakout-inline-padding: 5rem;
+    --small-breakout-inline-padding: 2rem;
+
+    --gap: clamp(1rem, 6vw, 3rem);
+    --content: min(var(--content-width), 100% - var(--gap) * 2);
+    --full-width: minmax(var(--gap), 1fr);
+    --large-breakout: minmax(0, var(--large-breakout-inline-padding));
+    --small-breakout: minmax(0, var(--small-breakout-inline-padding));
+
+    display: grid;
+    grid-template-columns:
+        [full-width-start breakout-left-start] var(--full-width) [large-breakout-start] var(--large-breakout) [small-breakout-start] var(--small-breakout) [content-start breakout-right-start] var(--content) [content-end breakout-left-end] var(--small-breakout) [small-breakout-end] var(--large-breakout) [large-breakout-end] var(--full-width) [full-width-end breakout-right-end];
+}
+
+.content>* {
+    grid-column: content;
+}
+
+.full-width {
+    grid-column: full-width;
+}
+
+/* .breakout-right {
+    grid-column: breakout-right;
+} */
+
+/* .breakout-left {
+    grid-column: breakout-left;
+} */
+
+.breakout-l {
+    grid-column: large-breakout;
+}
+
+/* .breakout-sm {
+    grid-column: small-breakout;
+} */
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.grid>:nth-child(2) {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+.grid>:nth-child(3) {
+    grid-column: 1/3;
+    grid-row: 2;
+}
+
+@media (min-width: 48em) {
+    .grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .grid>:nth-child(2) {
+        grid-column: 3;
+    }
+
+    .grid>:nth-child(3) {
+        grid-column: 2;
+        grid-row: 1;
+    }
+}
+
+/* .grid.break-20ch {
+   --minimum: 20ch;
+} */
+
+/* .grid.break-30ch {
+    --minimum: 30ch;
+} */
+
+/* .col-3 {
+    grid-template-columns: repeat(3, 1fr);
+} */
+
+/* @supports (width: min(var(--minimum), 100%)) {
+    .grid {
+        grid-template-columns: repeat(auto-fit, minmax(min(var(--minimum), 100%), 1fr));
+    }
+} */
+
+/* ************************* */
+/*          Blocks           */
+/* ************************* */
+
+.logo {
+    height: clamp(60px, 10vw, 130px);
+}
+
+.score {
+    border: 4px solid var(--clr-neutral-400);
+    border-radius: 0.5rem;
+    margin-top: 2rem;
+    padding: 1rem;
+}
+
+.game {
+    position: relative;
+
+    background: no-repeat url('images/bg-pentagon.svg');
+    z-index: 0;
+    background-size: contain;
+    background-position: center;
+    width: clamp(200px, 50vw, 400px);
+    height: clamp(200px, 50vw, 400px);
+    margin-inline: auto;
+    margin-block: 3rem;
+}
+
+.game-btn {
+    position: relative;
+
+    display: grid;
+    place-content: center;
+
+    width: clamp(70px, 15vw, 100px);
+    height: clamp(70px, 15vw, 100px);
+    background-color: var(--clr-neutral-000);
+
+    border-radius: 50%;
+    box-shadow: inset 0 3px 0 clamp(1px, 0.5vw, 3px) var(--clr-neutral-100);
+}
+
+.game-btn::before {
+    content: '';
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+
+    width: clamp(90px, 20vw, 130px);
+    height: clamp(90px, 20vw, 130px);
+    border-radius: 50%;
+    z-index: -1;
+}
+
+.game-btn img {
+    width: clamp(25px, 6vw, 35px);
+    height: clamp(35px, 7vw, 45px);
+}
+
+[data-theme="scissors"]::before {
+    background: linear-gradient(to top, var(--clr-primary-scissors-from), var(--clr-primary-scissors-to));
+    box-shadow: 0 2px 0 clamp(1px, 0.5vw, 3px) var(--clr-primary-scissors-shadow);
+}
+
+[data-theme="paper"]::before {
+    background: linear-gradient(to top, var(--clr-primary-paper-from), var(--clr-primary-paper-to));
+    box-shadow: 0 2px 0 clamp(1px, 0.5vw, 3px) var(--clr-primary-paper-shadow);
+}
+
+[data-theme="rock"]::before {
+    background: linear-gradient(to top, var(--clr-primary-rock-from), var(--clr-primary-rock-to));
+    box-shadow: 0 2px 0 clamp(1px, 0.5vw, 3px) var(--clr-primary-rock-shadow);
+}
+
+[data-theme="lizard"]::before {
+    background: linear-gradient(to top, var(--clr-primary-lizard-from), var(--clr-primary-lizard-to));
+    box-shadow: 0 2px 0 clamp(1px, 0.5vw, 3px) var(--clr-primary-lizard-shadow);
+}
+
+[data-theme="spock"]::before {
+    background: linear-gradient(to top, var(--clr-primary-spock-from), var(--clr-primary-spock-to));
+    box-shadow: 0 2px 0 clamp(1px, 0.5vw, 3px) var(--clr-primary-spock-shadow);
+}
+
+.game-btn.xl {
+    width: clamp(90px, 20vw, 230px);
+    height: clamp(90px, 20vw, 230px);
+}
+
+.game-btn.xl::before {
+    width: clamp(120px, 27vw, 300px);
+    height: clamp(120px, 27vw, 300px);
+}
+
+.game-btn.xl img {
+    width: clamp(35px, 9vw, 75px);
+    height: clamp(45px, 10vw, 105px);
+}
+
+.game-btn.xl[data-theme="empty"] {
+    background-color: var(--clr-primary-bg-to);
+    box-shadow: none;
+}
+
+.game-btn.xl[data-theme="empty"]::before {
+    width: clamp(115px, 20vw, 170px);
+    height: clamp(115px, 20vw, 170px);
+    background: transparent;
+    box-shadow: none;
+}
+
+.game>li {
+    cursor: pointer;
+
+    position: absolute;
+}
+
+.game>li:nth-child(1) {
+    top: -10%;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.game>li:nth-child(2),
+.game>li:nth-child(5) {
+    top: 25%;
+}
+
+.game>li:nth-child(2) {
+    right: -16%;
+}
+
+.game>li:nth-child(5) {
+    left: -16%;
+}
+
+.game>li:nth-child(3),
+.game>li:nth-child(4) {
+    bottom: -10%;
+}
+
+.game>li:nth-child(3) {
+    right: 3%;
+}
+
+.game>li:nth-child(4) {
+    left: 3%;
+}
+
+.rules {
+    position: fixed;
+    left: 50%;
+    bottom: 2rem;
+    translate: -50%;
+
+    background-color: var(--clr-primary-bg-to);
+    border: 2px solid var(--clr-neutral-400);
+    color: var(--clr-neutral-000);
+    padding-inline: 2.5rem;
+    padding-block: 0.35rem;
+}
+
+@media (min-width: 48em) {
+    .rules {
+        left: auto;
+        right: 2rem;
+        translate: 0;
+    }
+}
+
+.play-again {
+    background-color: var(--clr-neutral-000);
+    color: var(--clr-neutral-800);
+    font-weight: 700;
+    padding-inline: 4rem;
+    padding-block: 0.75rem;
+}
+
+.btn-theme {
+    letter-spacing: 1px;
+    border-radius: 0.5rem;
+    text-transform: uppercase;
+}
+
+/* ************************* */
+/*         Utilities         */
+/* ************************* */
+
+.sr-only {
+    position: absolute;
+    width: 0px;
+    height: 0px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+/* .relative {
+    position: relative;
+} */
+
+/* .main-axis-center {
+    justify-content: center;
+} */
+
+/* .main-axis-end {
+    justify-content: flex-end;
+} */
+
+.main-axis-space-between {
+    justify-content: space-between;
+}
+
+.cross-axis-center {
+    align-items: center;
+}
+
+@media (min-width: 48em) {
+    .md\:cross-axis-center {
+        align-items: center;
+    }
+}
+
+/* .cross-axis-end {
+    align-items: flex-end;
+} */
+
+/* .cross-axis-stretch {
+    align-items: stretch;
+} */
+
+.pad-v-d-sm-m {
+    padding-block: clamp(0.5rem, 2vw, 1rem);
+}
+
+.pad-h-d-m-l {
+    padding-inline: clamp(1.5rem, 5vw, 2.5rem);
+}
+
+/* .pad-m {
+    padding: 1rem;
+} */
+
+.mar-top-l {
+    margin-top: 3rem;
+}
+
+.mar-v-d-xl-xxl {
+    margin-block: clamp(4rem, 13vw, 9rem);
+}
+
+.gap-m {
+    gap: 1rem;
+}
+
+.gap-l {
+    gap: 3rem;
+}
+
+.gap-d-l-xl {
+    gap: clamp(3rem, 6vw, 7rem);
+}
+
+.gap-xl {
+    gap: 7rem;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.uppercase {
+    text-transform: uppercase;
+}
+
+.letter-spacing-m {
+    letter-spacing: 1px;
+}
+
+.line-height-normal {
+    line-height: 1;
+}
+
+.border {
+    border: 2px solid var(--clr-neutral-400);
+}
+
+.border-radius-sm {
+    border-radius: 0.5rem;
+}
+
+/* .fw-semibold {
+    font-weight: 600;
+} */
+
+.fw-bold {
+    font-weight: 700;
+}
+
+/* .fs-100 {
+    font-size: var(--scale-100);
+} */
+
+/* .fs-200 {
+    font-size: var(--scale-200);
+} */
+
+.fs-d-300-400 {
+    font-size: clamp(var(--scale-300), 3vw, var(--scale-400));
+}
+
+.fs-d-400-500 {
+    font-size: clamp(var(--scale-400), 3vw, var(--scale-500));
+}
+
+/* .fs-400 {
+    font-size: var(--scale-400);
+} */
+
+/* .fs-500 {
+    font-size: var(--scale-500);
+} */
+
+/* .fs-600 {
+    font-size: var(--scale-600);
+} */
+
+/* .fs-700 {
+    font-size: var(--scale-700);
+} */
+
+/* .fs-800 {
+    font-size: var(--scale-800);
+} */
+
+.fs-d-800-900 {
+    font-size: clamp(var(--scale-800), 7vw, var(--scale-900));
+}
+
+.fs-800 {
+    font-size: var(--scale-800);
+}
+
+.fs-900 {
+    font-size: var(--scale-900);
+}
+
+.clr-n-000 {
+    color: var(--clr-neutral-000);
+}
+
+.clr-n-600 {
+    color: var(--clr-neutral-600);
+}
+
+.clr-n-800 {
+    color: var(--clr-neutral-800);
+}
+
+.bg-n-000 {
+    background-color: var(--clr-neutral-000);
+}
+
+.bg-p-bg-to {
+    background-color: var(--clr-primary-bg-to);
+}
+
+/* ************************* */
+/*        Exceptions         */
+/* ************************* */
+
+/* [data-visible="false"] {
+    display: none;
+} */
