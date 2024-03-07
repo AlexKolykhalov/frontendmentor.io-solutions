@@ -133,6 +133,9 @@ img:not([alt]) {
     --clr-primary-bg-to: hsl(237, 49%, 15%);
 
     --clr-neutral-000: hsl(0, 0%, 100%);
+    --clr-neutral-070: hsla(219, 44%, 28%, 0.9);
+    --clr-neutral-080: hsla(219, 44%, 28%, 0.5);
+    --clr-neutral-090: hsla(219, 60%, 23%, 0.5);
     --clr-neutral-100: hsl(0, 0%, 80%);
     --clr-neutral-400: hsl(217, 16%, 45%);
     --clr-neutral-600: hsl(229, 64%, 46%);
@@ -142,29 +145,6 @@ img:not([alt]) {
 
     --base-size: 16px;
 
-    /* fluid typography */
-    /* https://fluid-typography.netlify.app/ */
-    /* https://fluidtypography.com/ */
-
-    /* minor third */
-    /* 5:6 <-> 1.2 */
-    /* 1.067
-    1.125
-    1.2
-    1.25
-    1.333
-    1.414
-    1.5
-    1.6
-    1.618
-    1.667
-    1.778
-    1.875
-    2
-    2.5
-    2.667
-    3
-    4 */
     --ratio: 1.333;
 
     --scale-100: calc(var(--scale-200) / var(--ratio));
@@ -205,41 +185,75 @@ button {
     border: none;
 }
 
+dialog {
+    border: none;
+    height: 100%;
+    opacity: 0;
+    transform: translate(0, 15%);
+}
+
+dialog[open] {
+    animation: fade-in 0.25s ease-out forwards;
+}
+
+@keyframes fade-in {
+    100% {
+        opacity: 1;
+        transform: translate(0, 0);
+        display: block;
+    }
+}
+
+dialog::backdrop {
+    background-color: #fff;
+}
+
+dialog button {
+    position: absolute;
+
+    bottom: 5%;
+    left: 50%;
+    transform: translate(-50%, 0);
+
+    background-color: transparent;
+    padding: 1rem;
+}
+
+dialog>img {
+    margin-block: 5rem;
+}
+
+@media (min-width: 48em) {
+    dialog {
+        border-radius: 0.5rem;
+        padding: 2.5rem;
+        height: fit-content;
+    }
+
+    dialog::backdrop {
+        background-color: hsl(237, 49%, 15%);
+        opacity: 0.8;
+    }
+
+    dialog button {
+        position: static;
+
+        bottom: 0;
+        left: 0;
+        transform: translate(0, 0);
+        padding: 0;
+    }
+
+    dialog>img {
+        margin-block: 0;
+        margin-top: 2rem;
+    }
+}
+
+
 /* ************************* */
 /*        Composition        */
 /* ************************* */
-
-/* .box-h-m {
-   max-width: 60ch;
-} */
-
-/* .box-v-m {
-   min-height: 70vh;
-} */
-
-/* .center-v {
-    display: flex;
-    flex-direction: column;
-}
-
-.center-v>* {
-    margin-top: auto;
-    margin-bottom: auto;
-} */
-
-.center-h {
-    box-sizing: content-box;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-/* ↓ Intrinsic Centering: That is, centering elements based on their natural, content-based widths. */
-/* .intrinsic {
-   display: flex;
-   flex-direction: column;
-   align-items: center;
-} */
 
 .column {
     display: flex;
@@ -256,11 +270,6 @@ button {
     }
 }
 
-/* ↓ Split after - the element after which to split the stack with an auto margin */
-/* .column.split-after-1> :nth-child(1) {
-   margin-block-end: auto;
-} */
-
 .row {
     display: flex;
     flex-wrap: wrap;
@@ -270,28 +279,9 @@ button {
 }
 
 .row>* {
-    /* ↓ Disallow children to grow */
     flex-grow: var(--flex-grow, 0);
-    /* ↓ Switch the layout at the --break */
     flex-basis: calc((var(--break) - 100%) * 999);
 }
-
-.break-m {
-    --break: var(--br-md);
-    /* ↓ Allow children to grow */
-    --flex-grow: 1;
-}
-
-/* ↓ Split after - the element after which to split the stack with an auto margin */
-/* .row.split-after-1> :nth-child(1) {
-   margin-inline-end: auto;
-} */
-
-/* .row.break-after-4> :nth-last-child(n+5), */
-/* .row.break-after-4> :nth-last-child(n+5)~* { */
-/* ↓ Switch to a vertical configuration if there are more than 4 child elements */
-/* flex-basis: 100%; */
-/* } */
 
 .content {
     --content-width: 80ch;
@@ -313,25 +303,9 @@ button {
     grid-column: content;
 }
 
-.full-width {
-    grid-column: full-width;
-}
-
-/* .breakout-right {
-    grid-column: breakout-right;
-} */
-
-/* .breakout-left {
-    grid-column: breakout-left;
-} */
-
 .breakout-l {
     grid-column: large-breakout;
 }
-
-/* .breakout-sm {
-    grid-column: small-breakout;
-} */
 
 .grid {
     display: grid;
@@ -363,24 +337,6 @@ button {
     }
 }
 
-/* .grid.break-20ch {
-   --minimum: 20ch;
-} */
-
-/* .grid.break-30ch {
-    --minimum: 30ch;
-} */
-
-/* .col-3 {
-    grid-template-columns: repeat(3, 1fr);
-} */
-
-/* @supports (width: min(var(--minimum), 100%)) {
-    .grid {
-        grid-template-columns: repeat(auto-fit, minmax(min(var(--minimum), 100%), 1fr));
-    }
-} */
-
 /* ************************* */
 /*          Blocks           */
 /* ************************* */
@@ -396,17 +352,47 @@ button {
     padding: 1rem;
 }
 
+.score button {
+    position: absolute;
+
+    background-color: var(--clr-neutral-000);
+    border-radius: 50%;
+    box-shadow: 0 0 0 1px var(--clr-neutral-400);
+}
+
+.score button:hover {
+    scale: 1.05;
+}
+
+.score button:nth-of-type(1) {
+    top: -15px;
+    left: -15px;
+}
+
+.score button:nth-of-type(2) {
+    top: -15px;
+    right: -15px;
+}
+
 .game {
     position: relative;
 
-    background: no-repeat url('images/bg-pentagon.svg');
+    background: no-repeat url('images/bg-triangle.svg');
     z-index: 0;
+    background-size: contain;
+    background-position: center;
+    width: clamp(200px, 50vw, 300px);
+    height: clamp(200px, 50vw, 300px);
+    margin-inline: auto;
+    margin-block: 3rem;
+}
+
+.game[data-theme='bonus'] {
+    background: no-repeat url('images/bg-pentagon.svg');
     background-size: contain;
     background-position: center;
     width: clamp(200px, 50vw, 400px);
     height: clamp(200px, 50vw, 400px);
-    margin-inline: auto;
-    margin-block: 3rem;
 }
 
 .game-btn {
@@ -423,7 +409,8 @@ button {
     box-shadow: inset 0 3px 0 clamp(1px, 0.5vw, 3px) var(--clr-neutral-100);
 }
 
-.game-btn::before {
+.game-btn::before,
+.game-btn::after {
     content: '';
 
     position: absolute;
@@ -442,29 +429,50 @@ button {
     height: clamp(35px, 7vw, 45px);
 }
 
-[data-theme="scissors"]::before {
+[data-theme="scissors"]::after {
     background: linear-gradient(to top, var(--clr-primary-scissors-from), var(--clr-primary-scissors-to));
     box-shadow: 0 2px 0 clamp(1px, 0.5vw, 3px) var(--clr-primary-scissors-shadow);
 }
 
-[data-theme="paper"]::before {
+[data-theme="paper"]::after {
     background: linear-gradient(to top, var(--clr-primary-paper-from), var(--clr-primary-paper-to));
     box-shadow: 0 2px 0 clamp(1px, 0.5vw, 3px) var(--clr-primary-paper-shadow);
 }
 
-[data-theme="rock"]::before {
+[data-theme="rock"]::after {
     background: linear-gradient(to top, var(--clr-primary-rock-from), var(--clr-primary-rock-to));
     box-shadow: 0 2px 0 clamp(1px, 0.5vw, 3px) var(--clr-primary-rock-shadow);
 }
 
-[data-theme="lizard"]::before {
+[data-theme="lizard"]::after {
     background: linear-gradient(to top, var(--clr-primary-lizard-from), var(--clr-primary-lizard-to));
     box-shadow: 0 2px 0 clamp(1px, 0.5vw, 3px) var(--clr-primary-lizard-shadow);
 }
 
-[data-theme="spock"]::before {
+[data-theme="spock"]::after {
     background: linear-gradient(to top, var(--clr-primary-spock-from), var(--clr-primary-spock-to));
     box-shadow: 0 2px 0 clamp(1px, 0.5vw, 3px) var(--clr-primary-spock-shadow);
+}
+
+[data-status="win"]::before {
+    z-index: -2;
+    animation: box-shadow-loop 2s ease-in forwards;
+}
+
+@keyframes box-shadow-loop {
+
+    20%,
+    60%,
+    100% {
+        box-shadow: 0 0 0 clamp(10px, 5vw, 30px) var(--clr-neutral-070),
+            0 0 0 clamp(40px, 11vw, 70px) var(--clr-neutral-080),
+            0 0 0 clamp(70px, 17vw, 120px) var(--clr-neutral-090);
+    }
+
+    40%,
+    80% {
+        box-shadow: none;
+    }
 }
 
 .game-btn.xl {
@@ -472,7 +480,8 @@ button {
     height: clamp(90px, 20vw, 230px);
 }
 
-.game-btn.xl::before {
+.game-btn.xl::before,
+.game-btn.xl::after {
     width: clamp(120px, 27vw, 300px);
     height: clamp(120px, 27vw, 300px);
 }
@@ -498,38 +507,146 @@ button {
     cursor: pointer;
 
     position: absolute;
+    transition: scale 0.15s ease-in;
+}
+
+.game>li:hover {
+    scale: 1.025;
+}
+
+.game>li:nth-child(1),
+.game>li:nth-child(2),
+.game>li:nth-child(3),
+.game>li:nth-child(4),
+.game>li:nth-child(5) {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation-timing-function: ease-in;
+    animation-duration: 0.75s;
+    animation-fill-mode: forwards;
+}
+
+.game[data-theme='bonus']>li:nth-child(1),
+.game[data-theme='bonus']>li:nth-child(2),
+.game[data-theme='bonus']>li:nth-child(3),
+.game[data-theme='bonus']>li:nth-child(4),
+.game[data-theme='bonus']>li:nth-child(5) {
+    animation-duration: 0.15s;
 }
 
 .game>li:nth-child(1) {
-    top: -10%;
-    left: 50%;
-    transform: translate(-50%, 0);
+    animation-name: scissors-default;
 }
 
-.game>li:nth-child(2),
-.game>li:nth-child(5) {
-    top: 25%;
+@keyframes scissors-default {
+    30% {
+        transform: translate(-50%, -50%);
+    }
+
+    50% {
+        transform: translate(80%, -175%);
+    }
+
+    100% {
+        transform: translate(80%, -175%);
+    }
 }
 
 .game>li:nth-child(2) {
-    right: -16%;
+    animation-name: paper-default;
 }
 
-.game>li:nth-child(5) {
-    left: -16%;
-}
+@keyframes paper-default {
+    30% {
+        transform: translate(-180%, -175%);
+    }
 
-.game>li:nth-child(3),
-.game>li:nth-child(4) {
-    bottom: -10%;
+    100% {
+        transform: translate(-180%, -175%);
+    }
 }
 
 .game>li:nth-child(3) {
-    right: 3%;
+    animation-name: rock-default;
 }
 
-.game>li:nth-child(4) {
-    left: 3%;
+@keyframes rock-default {
+    60% {
+        transform: translate(-50%, -50%);
+    }
+
+    80% {
+        transform: translate(-50%, 35%);
+    }
+
+    100% {
+        transform: translate(-50%, 35%);
+    }
+}
+
+.game>li:nth-child(4),
+.game>li:nth-child(5) {
+    display: none;
+}
+
+.game[data-theme='bonus']>li:nth-child(4),
+.game[data-theme='bonus']>li:nth-child(5) {
+    display: list-item;
+}
+
+.game[data-theme='bonus']>li:nth-child(1) {
+    animation-name: scissors-bonus;
+}
+
+@keyframes scissors-bonus {
+    100% {
+        top: 0;
+    }
+}
+
+.game[data-theme='bonus']>li:nth-child(2) {
+    animation-name: paper-bonus;
+}
+
+@keyframes paper-bonus {
+    100% {
+        top: 40%;
+        left: 100%;
+    }
+}
+
+.game[data-theme='bonus']>li:nth-child(3) {
+    animation-name: rock-bonus;
+}
+
+@keyframes rock-bonus {
+    100% {
+        top: 100%;
+        left: 80%;
+    }
+}
+
+.game[data-theme='bonus']>li:nth-child(4) {
+    animation-name: lizard-bonus;
+}
+
+@keyframes lizard-bonus {
+    100% {
+        top: 100%;
+        left: 20%;
+    }
+}
+
+.game[data-theme='bonus']>li:nth-child(5) {
+    animation-name: spock-bonus;
+}
+
+@keyframes spock-bonus {
+    100% {
+        left: 0;
+        top: 40%
+    }
 }
 
 .rules {
@@ -543,6 +660,12 @@ button {
     color: var(--clr-neutral-000);
     padding-inline: 2.5rem;
     padding-block: 0.35rem;
+
+    transition: scale 0.15s ease-in;
+}
+
+.rules:hover {
+    scale: 1.025;
 }
 
 @media (min-width: 48em) {
@@ -559,6 +682,11 @@ button {
     font-weight: 700;
     padding-inline: 4rem;
     padding-block: 0.75rem;
+    transition: scale 0.15s ease-in;
+}
+
+.play-again:hover {
+    scale: 1.025;
 }
 
 .btn-theme {
@@ -583,20 +711,22 @@ button {
     border-width: 0;
 }
 
-/* .relative {
+.relative {
     position: relative;
-} */
+}
 
-/* .main-axis-center {
+.main-axis-center {
     justify-content: center;
-} */
-
-/* .main-axis-end {
-    justify-content: flex-end;
-} */
+}
 
 .main-axis-space-between {
     justify-content: space-between;
+}
+
+@media (min-width: 48em) {
+    .md\:main-axis-space-between {
+        justify-content: space-between;
+    }
 }
 
 .cross-axis-center {
@@ -609,14 +739,6 @@ button {
     }
 }
 
-/* .cross-axis-end {
-    align-items: flex-end;
-} */
-
-/* .cross-axis-stretch {
-    align-items: stretch;
-} */
-
 .pad-v-d-sm-m {
     padding-block: clamp(0.5rem, 2vw, 1rem);
 }
@@ -625,20 +747,12 @@ button {
     padding-inline: clamp(1.5rem, 5vw, 2.5rem);
 }
 
-/* .pad-m {
-    padding: 1rem;
-} */
-
-.mar-top-l {
-    margin-top: 3rem;
+.pad-sm {
+    padding: 0.5rem;
 }
 
 .mar-v-d-xl-xxl {
     margin-block: clamp(4rem, 13vw, 9rem);
-}
-
-.gap-m {
-    gap: 1rem;
 }
 
 .gap-l {
@@ -647,10 +761,6 @@ button {
 
 .gap-d-l-xl {
     gap: clamp(3rem, 6vw, 7rem);
-}
-
-.gap-xl {
-    gap: 7rem;
 }
 
 .text-center {
@@ -669,29 +779,13 @@ button {
     line-height: 1;
 }
 
-.border {
-    border: 2px solid var(--clr-neutral-400);
-}
-
 .border-radius-sm {
     border-radius: 0.5rem;
 }
 
-/* .fw-semibold {
-    font-weight: 600;
-} */
-
 .fw-bold {
     font-weight: 700;
 }
-
-/* .fs-100 {
-    font-size: var(--scale-100);
-} */
-
-/* .fs-200 {
-    font-size: var(--scale-200);
-} */
 
 .fs-d-300-400 {
     font-size: clamp(var(--scale-300), 3vw, var(--scale-400));
@@ -701,25 +795,9 @@ button {
     font-size: clamp(var(--scale-400), 3vw, var(--scale-500));
 }
 
-/* .fs-400 {
-    font-size: var(--scale-400);
-} */
-
-/* .fs-500 {
-    font-size: var(--scale-500);
-} */
-
-/* .fs-600 {
-    font-size: var(--scale-600);
-} */
-
-/* .fs-700 {
-    font-size: var(--scale-700);
-} */
-
-/* .fs-800 {
-    font-size: var(--scale-800);
-} */
+.fs-d-600-700 {
+    font-size: clamp(var(--scale-600), 4vw, var(--scale-700));
+}
 
 .fs-d-800-900 {
     font-size: clamp(var(--scale-800), 7vw, var(--scale-900));
@@ -727,14 +805,6 @@ button {
 
 .fs-800 {
     font-size: var(--scale-800);
-}
-
-.fs-900 {
-    font-size: var(--scale-900);
-}
-
-.clr-n-000 {
-    color: var(--clr-neutral-000);
 }
 
 .clr-n-600 {
@@ -748,15 +818,3 @@ button {
 .bg-n-000 {
     background-color: var(--clr-neutral-000);
 }
-
-.bg-p-bg-to {
-    background-color: var(--clr-primary-bg-to);
-}
-
-/* ************************* */
-/*        Exceptions         */
-/* ************************* */
-
-/* [data-visible="false"] {
-    display: none;
-} */

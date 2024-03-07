@@ -1,0 +1,45 @@
+{
+    "name": "Paper, Scissors, Rock challenge on Frontend Mentor",
+    "short_name": "Paper, Scissors, Rock",
+    "description": "Simple game.",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#40b9ce",
+    "theme_color": "#40b9ce",
+    "orientation": "portrait-primary",
+    "icons": [
+        {
+            "src": "images/128.png",
+            "sizes": "128x128",
+            "type": "image/png"
+        },
+        {
+            "src": "images/192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "images/512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        },
+        {
+            "src": "images/maskable128.png",
+            "sizes": "128x128",
+            "type": "image/png",
+            "purpose": "maskable"
+        },
+        {
+            "src": "images/maskable192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable"
+        },
+        {
+            "src": "images/maskable512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ]
+}
