@@ -7,8 +7,8 @@ const VERSION = "v1";
 const CACHE_NAME = `period-tracker-${VERSION}`;
 
 // The static resources that the app needs to function.
-// const path = '/frontendmentor.io-solutions/advanced/rock-paper-scissors-master';
-const path = '/advanced/rock-paper-scissors-master';
+const path = '/frontendmentor.io-solutions/advanced/rock-paper-scissors-master';
+// const path = '/advanced/rock-paper-scissors-master';
 
 const APP_STATIC_RESOURCES = [
     `${path}/`,
