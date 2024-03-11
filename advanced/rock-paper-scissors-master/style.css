@@ -750,9 +750,8 @@ dialog>img {
     padding: 0.5rem;
 }
 
-.mar-top-d-xl-xxl {
-    /* margin-block: clamp(4rem, 13vw, 9rem); */
-    margin-top: clamp(4rem, 13vw, 9rem);
+.mar-top-d-l-xl {
+    margin-top: clamp(4rem, 13vw, 7rem);
 }
 
 .gap-l {
