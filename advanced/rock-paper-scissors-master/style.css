@@ -384,7 +384,6 @@ dialog>img {
     width: clamp(200px, 50vw, 300px);
     height: clamp(200px, 50vw, 300px);
     margin-inline: auto;
-    margin-block: 3rem;
 }
 
 .game[data-theme='bonus'] {
@@ -751,8 +750,9 @@ dialog>img {
     padding: 0.5rem;
 }
 
-.mar-v-d-xl-xxl {
-    margin-block: clamp(4rem, 13vw, 9rem);
+.mar-top-d-xl-xxl {
+    /* margin-block: clamp(4rem, 13vw, 9rem); */
+    margin-top: clamp(4rem, 13vw, 9rem);
 }
 
 .gap-l {
