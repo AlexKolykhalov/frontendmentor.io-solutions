@@ -1,10 +1,13 @@
 // https://github.com/mdn/pwa-examples/blob/main/cycletracker/service_workers/sw.js
 
 // The version of the cache.
+const TITLE = "rock-paper-scissors";
+
+// The version of the cache.
 const VERSION = "v1";
 
 // The name of the cache
-const CACHE_NAME = `period-tracker-${VERSION}`;
+const CACHE_NAME = `${TITLE}-${VERSION}`;
 
 // The static resources that the app needs to function.
 const path = '/frontendmentor.io-solutions/advanced/rock-paper-scissors-master';
