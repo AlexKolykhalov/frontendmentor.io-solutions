@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 
-<body class="content">
+<body class="content cros-axis-start">
     <header class="full-width | clr-bg-element box-shadow-bottom">
         <div class="content">
             <div class="row main-axis-space-between cross-axis-center pad-v-m">
@@ -40,31 +40,15 @@
         </div>
     </header>
     <main>
-        <header class="row gap-m main-axis-space-between pad-v-d-m-l">
-            <div class="search-element { box-shadow-bottom border-radius-sm }">
-                <label class="sr-only" for="search">Search</label>
-                <input class="fs-300-400 pad-v-m pad-h-d-m-l clr-bg-element clr-text border-radius-sm" type="search"
-                    id="search" placeholder="Search for a country..." autocomplete="off">
-                <button class="clear-btn" aria-label="Clear">
-                    <img src="images/clear-light.svg" width="40" height="40" alt="">
-                </button>
+        <div class="center-v">
+            <div class="center-h">
+                <h2 class="sr-only">Not found</h2>
+                <p class="fs-900 fw-extrabold">404</p>
+                <p class="fs-400-500">Sorry...</p>
+                <p class="fs-400-500">We can't find the country you're looking for.</p>
+                <p class="fs-400-500">But there's no better place than <a class="fw-semibold underline"
+                        href="index.html">home</a>.</p>
             </div>
-            <div class="filter-element { box-shadow-bottom border-radius-sm }">
-                <label class="sr-only" for="region">Filter by Region</label>
-                <select class="fs-300-400 pad-m clr-bg-element border-radius-sm clr-text" id="region">
-                    <option value="" selected disabled>Filter by Region</option>
-                    <option value="World">Remove Filter</option>
-                    <option value="Africa">Africa</option>
-                    <option value="America">America</option>
-                    <option value="Asia">Asia</option>
-                    <option value="Europe">Europe</option>
-                    <option value="Oceania">Oceania</option>
-                </select>
-            </div>
-        </header>
-        <div class="m:content">
-            <h2 class="sr-only">List of countries</h2>
-            <ul class="country-list { grid gap-xl break-25ch }"></ul>
         </div>
     </main>
     <footer class="full-width | clr-bg-element box-shadow-top">

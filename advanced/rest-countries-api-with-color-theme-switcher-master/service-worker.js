@@ -13,32 +13,37 @@ const path = '/advanced/rest-countries-api-with-color-theme-switcher-master';
 const APP_STATIC_RESOURCES = [
     `${path}/`,
     `${path}/index.html`,
+    `${path}/404.html`,
     `${path}/style.css`,
     `${path}/main.js`,
     `${path}/manifest.json`,
-    `${path}/assets/fonts/Ubuntu-Bold.ttf`,
-    `${path}/assets/fonts/Ubuntu-Bold.woff`,
-    `${path}/assets/fonts/Ubuntu-Bold.woff2`,
-    `${path}/assets/fonts/Ubuntu-Medium.ttf`,
-    `${path}/assets/fonts/Ubuntu-Medium.woff`,
-    `${path}/assets/fonts/Ubuntu-Medium.woff2`,
-    `${path}/assets/fonts/Ubuntu-Regular.ttf`,
-    `${path}/assets/fonts/Ubuntu-Regular.woff`,
-    `${path}/assets/fonts/Ubuntu-Regular.woff2`,
-    `${path}/assets/images/bg-sidebar-desktop.svg`,
-    `${path}/assets/images/bg-sidebar-mobile.svg`,
-    `${path}/assets/images/favicon-32x32.png`,
-    `${path}/assets/images/icon-advanced.svg`,
-    `${path}/assets/images/icon-arcade.svg`,
-    `${path}/assets/images/icon-checkmark.svg`,
-    `${path}/assets/images/icon-pro.svg`,
-    `${path}/assets/images/icon-thank-you.svg`,
-    `${path}/assets/images/128.png`,
-    `${path}/assets/images/192.png`,
-    `${path}/assets/images/512.png`,
-    `${path}/assets/images/maskable128.png`,
-    `${path}/assets/images/maskable192.png`,
-    `${path}/assets/images/maskable512.png`,
+    `${path}/data.json`,
+    `${path}/fonts/NunitoSans10pt-ExtraBold.woff`,
+    `${path}/fonts/NunitoSans10pt-ExtraBold.woff2`,
+    `${path}/fonts/NunitoSans10pt-Light.woff`,
+    `${path}/fonts/NunitoSans10pt-Light.woff2`,
+    `${path}/fonts/NunitoSans10pt-SemiBold.woff`,
+    `${path}/fonts/NunitoSans10pt-SemiBold.woff2`,
+    `${path}/images/un.svg`,
+    `${path}/images/favicon-32x32.png`,
+    `${path}/images/arrow-back-dark.svg`,
+    `${path}/images/arrow-back-light.svg`,
+    `${path}/images/arrow-down-dark.svg`,
+    `${path}/images/arrow-down-light.svg`,
+    `${path}/images/clear-dark.svg`,
+    `${path}/images/clear-light.svg`,
+    `${path}/images/moon-dark.svg`,
+    `${path}/images/moon-light.svg`,
+    `${path}/images/search-dark.svg`,
+    `${path}/images/search-light.svg`,
+    `${path}/images/icons/128.png`,
+    `${path}/images/icons/192.png`,
+    `${path}/images/icons/512.png`,
+    `${path}/images/icons/maskable128.png`,
+    `${path}/images/icons/maskable192.png`,
+    `${path}/images/icons/maskable512.png`,
+    `${path}/images/screenshots/mobile.png`,
+    `${path}/images/screenshots/desktop.png`,
 ];
 
 // On install, cache the static resources
@@ -76,23 +81,37 @@ self.addEventListener("activate", (event) => {
 // On fetch, intercept server requests
 // and respond with cached responses instead of going to network
 self.addEventListener("fetch", (event) => {
-    // // As a single page app, direct app to always go to cached home page.
-    if (event.request.mode === "navigate") {
-        event.respondWith(caches.match(`${path}/`));
-        return;
-    }
-
     // For all other requests, go to the cache first, and then the network.
     event.respondWith(
         (async () => {
+            // Go to the Cache.
             const cache = await caches.open(CACHE_NAME);
+            // Dynamically add to Cache detail.html pages
+            const requestURL = new URL(event.request.url);
+            const pathname = requestURL.pathname;
+            const destination = pathname.substring(pathname.lastIndexOf('/'), pathname.length);
+            if (destination === '/detail.html') {
+                await cache.add(requestURL);
+            }
             const cachedResponse = await cache.match(event.request, { ignoreVary: true });
             if (cachedResponse) {
-                // Return the cached response if it's available.
                 return cachedResponse;
             }
-            // If resource isn't in the cache, return a 404.
-            return new Response(null, { status: 404 });
+
+            // Go to the Web only for .svg
+            try {
+                if (/\.svg$/.test(event.request.url)) {
+                    const networkResponse = await fetch(event.request, { signal: AbortSignal.timeout(2000) });
+                    if (networkResponse && networkResponse.status < 400) {
+                        return networkResponse;
+                    }
+                }
+            } catch (error) {
+                const cachedResponse = await cache.match(`${path}/images/un.svg`, { ignoreVary: true });
+                if (cachedResponse) {
+                    return cachedResponse;
+                }
+            }
         })()
     );
 });

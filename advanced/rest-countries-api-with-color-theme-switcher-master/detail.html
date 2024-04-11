@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 
-<body class="content">
+<body class="content cros-axis-start">
     <header class="full-width | clr-bg-element box-shadow-bottom">
         <div class="content">
             <div class="row main-axis-space-between cross-axis-center pad-v-m">
@@ -41,30 +41,47 @@
     </header>
     <main>
         <header class="row gap-m main-axis-space-between pad-v-d-m-l">
-            <div class="search-element { box-shadow-bottom border-radius-sm }">
-                <label class="sr-only" for="search">Search</label>
-                <input class="fs-300-400 pad-v-m pad-h-d-m-l clr-bg-element clr-text border-radius-sm" type="search"
-                    id="search" placeholder="Search for a country..." autocomplete="off">
-                <button class="clear-btn" aria-label="Clear">
-                    <img src="images/clear-light.svg" width="40" height="40" alt="">
-                </button>
-            </div>
-            <div class="filter-element { box-shadow-bottom border-radius-sm }">
-                <label class="sr-only" for="region">Filter by Region</label>
-                <select class="fs-300-400 pad-m clr-bg-element border-radius-sm clr-text" id="region">
-                    <option value="" selected disabled>Filter by Region</option>
-                    <option value="World">Remove Filter</option>
-                    <option value="Africa">Africa</option>
-                    <option value="America">America</option>
-                    <option value="Asia">Asia</option>
-                    <option value="Europe">Europe</option>
-                    <option value="Oceania">Oceania</option>
-                </select>
-            </div>
+            <a class="back-btn { clr-bg-element border-radius-sm box-shadow-bottom }" href="index.html">Back</a>
         </header>
-        <div class="m:content">
-            <h2 class="sr-only">List of countries</h2>
-            <ul class="country-list { grid gap-xl break-25ch }"></ul>
+        <div class="row gap-xl break-m cross-axis-start">
+            <div>
+                <img class="detail-flag { box-shadow-bottom }" src="images/un.svg" alt="United Nations">
+            </div>
+            <div class="detail { column gap-l }">
+                <h2 class="detail-name { fs-600 }">United Nations</h2>
+                <div class="row gap-l main-axis-space-between">
+                    <div class="column gap-m">
+                        <p class="fs-400-500">
+                            <span class="fw-semibold">Native Name:</span> <span
+                                class="detail-native-name { fw-light }">UN</span>
+                        </p>
+                        <p class="fs-400-500">
+                            <span class="fw-semibold">Population:</span> <span
+                                class="detail-population { fw-light }"></span>
+                        </p>
+                        <p class="fs-400-500">
+                            <span class="fw-semibold">Region:</span> <span class="detail-region">World</span>
+                        </p>
+                        <p class="fs-400-500">
+                            <span class="fw-semibold">Sub Region:</span> <span class="detail-sub-region"></span>
+                        </p>
+                        <p class="fs-400-500">
+                            <span class="fw-semibold">Capital:</span> <span class="detail-capital"></span>
+                        </p>
+                    </div>
+                    <div class="column gap-m">
+                        <p class="fs-400-500">
+                            <span class="fw-semibold">Top Level Domain:</span> <span
+                                class="detail-domain { fw-light }">.org</span>
+                        </p>
+                        <p class="fs-400-500"><span class="fw-semibold">Currencies:</span> <span
+                                class="detail-currencies"></span></p>
+                        <p class="fs-400-500">
+                            <span class="fw-semibold">Languages:</span> <span class="detail-languages"></span>
+                        </p>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
     <footer class="full-width | clr-bg-element box-shadow-top">
