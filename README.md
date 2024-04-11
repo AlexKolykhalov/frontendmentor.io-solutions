@@ -88,5 +88,5 @@ Any comments are welcome.
 | :---: | :--- | :---: | :--- |
 | 01 | Multi-step form | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/advanced/multi-step-form-main/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/advanced/multi-step-form-main) |
 | 02 | Paper-scissors-rock game | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/advanced/rock-paper-scissors-master/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/advanced/rock-paper-scissors-master) |
-| 03 | Rest countries API | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/advanced/rest-countries-api-with-color-theme-switcher-master/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/rest-countries-api-with-color-theme-switcher-master) |
+| 03 | Rest countries API | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/advanced/rest-countries-api-with-color-theme-switcher-master/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/advanced/rest-countries-api-with-color-theme-switcher-master) |
 </details>
