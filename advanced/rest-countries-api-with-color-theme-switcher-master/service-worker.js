@@ -7,8 +7,8 @@ const VERSION = "v1";
 const CACHE_NAME = `${TITLE}-${VERSION}`;
 
 // The static resources that the app needs to function.
-// const path = '/frontendmentor.io-solutions/advanced/rest-countries-api-with-color-theme-switcher-master';
-const path = '/advanced/rest-countries-api-with-color-theme-switcher-master';
+const path = '/frontendmentor.io-solutions/advanced/rest-countries-api-with-color-theme-switcher-master';
+// const path = '/advanced/rest-countries-api-with-color-theme-switcher-master';
 
 const APP_STATIC_RESOURCES = [
     `${path}/`,
