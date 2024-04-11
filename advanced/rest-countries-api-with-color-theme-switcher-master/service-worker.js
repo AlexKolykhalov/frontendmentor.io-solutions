@@ -101,7 +101,7 @@ self.addEventListener("fetch", (event) => {
             // Go to the Web only for .svg
             try {
                 if (/\.svg$/.test(event.request.url)) {
-                    const networkResponse = await fetch(event.request, { signal: AbortSignal.timeout(2000) });
+                    const networkResponse = await fetch(event.request, { signal: AbortSignal.timeout(4000) });
                     if (networkResponse && networkResponse.status < 400) {
                         return networkResponse;
                     }
