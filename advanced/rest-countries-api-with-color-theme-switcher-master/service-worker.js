@@ -107,7 +107,7 @@ self.addEventListener("fetch", (event) => {
                 // or for detail.html
                 if (url.pathname.endsWith('detail.html')) {
                     try {
-                        networkResponse = await fetch(event.request, { signal: AbortSignal.timeout(8000) });
+                        networkResponse = await fetch(event.request, { signal: AbortSignal.timeout(4000) });
                     } catch (error) {
                         throw new Error('html');
                     }
