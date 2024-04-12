@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- displays site properly based on user's device -->
+    <meta name="description" content="REST countries API challenge on Frontend Mentor">
+    <meta name="keywords"
+        content="API, REST, Frontend Mentor, Frontend, Mentor, HTML, CSS, Responsive, Mobile, Desktop, Alex Kolykhalov">
+
+    <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+
+    <!-- ios support -->
+    <link rel="apple-touch-icon" href="images/icons/128.png">
+    <link rel="apple-touch-icon" href="images/icons/192.png">
+    <link rel="apple-touch-icon" href="images/icons/512.png">
+    <meta name="apple-mobile-web-app-status-bar" content="#858585">
+    <meta name="theme-color" content="#858585">
+    <!-- end ios support -->
+
+    <title>Frontend Mentor | Countries</title>
+
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="content cros-axis-start">
+    <header class="full-width | clr-bg-element box-shadow-bottom">
+        <div class="content">
+            <div class="row main-axis-space-between cross-axis-center pad-v-m">
+                <a href="index.html">
+                    <h1 class="fs-300-600">Where in the world?</h1>
+                </a>
+                <button class="dark-mode-btn { row gap-d-xsm-sm cross-axis-center fw-semibold clr-text }">
+                    <img class="dark-mode-icon" src="images/moon-dark.svg" width="25" height="25" alt="">
+                    <span class="fs-300-400">Dark Mode</span>
+                </button>
+            </div>
+        </div>
+    </header>
+    <main>
+        <header class="row gap-m main-axis-space-between pad-v-d-m-l">
+            <a class="back-btn { clr-bg-element border-radius-sm box-shadow-bottom }" href="index.html">Back</a>
+            <p class="fw-semibold fs-400-500">Offline version</p>
+        </header>
+        <div class="row gap-xl break-m cross-axis-start">
+            <div>
+                <img class="detail-flag { box-shadow-bottom }" src="images/un.svg" alt="United Nations">
+            </div>
+            <div class="detail { column gap-l }">
+                <h2 class="detail-name { fs-600 }">United Nations</h2>
+                <div class="row gap-l main-axis-space-between">
+                    <div class="column gap-m">
+                        <p class="fs-400-500">
+                            <span class="fw-semibold">Native Name:</span> <span
+                                class="detail-native-name { fw-light }">UN</span>
+                        </p>
+                        <p class="fs-400-500">
+                            <span class="fw-semibold">Population:</span> <span
+                                class="detail-population { fw-light }"></span>
+                        </p>
+                        <p class="fs-400-500">
+                            <span class="fw-semibold">Region:</span> <span class="detail-region">World</span>
+                        </p>
+                        <p class="fs-400-500">
+                            <span class="fw-semibold">Sub Region:</span> <span class="detail-sub-region"></span>
+                        </p>
+                        <p class="fs-400-500">
+                            <span class="fw-semibold">Capital:</span> <span class="detail-capital"></span>
+                        </p>
+                    </div>
+                    <div class="column gap-m">
+                        <p class="fs-400-500">
+                            <span class="fw-semibold">Top Level Domain:</span> <span
+                                class="detail-domain { fw-light }">.org</span>
+                        </p>
+                        <p class="fs-400-500"><span class="fw-semibold">Currencies:</span> <span
+                                class="detail-currencies"></span></p>
+                        <p class="fs-400-500">
+                            <span class="fw-semibold">Languages:</span> <span class="detail-languages"></span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer class="full-width | clr-bg-element box-shadow-top">
+        <div class="content">
+            <div class="pad-v-m">
+                <p>
+                    Challenge by <a class="fw-semibold underline" href="https://www.frontendmentor.io?ref=challenge"
+                        target="_blank">Frontend
+                        Mentor</a>.
+                    Coded by <a class="fw-semibold underline" href="https://github.com/AlexKolykhalov">Alex Ko</a>.
+                </p>
+            </div>
+        </div>
+    </footer>
+    <script src="main.js"></script>
+</body>
+
+</html>

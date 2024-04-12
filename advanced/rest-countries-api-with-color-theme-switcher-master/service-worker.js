@@ -13,6 +13,7 @@ const path = '/frontendmentor.io-solutions/advanced/rest-countries-api-with-colo
 const APP_STATIC_RESOURCES = [
     `${path}/`,
     `${path}/index.html`,
+    `${path}/offline-detail.html`,
     `${path}/404.html`,
     `${path}/style.css`,
     `${path}/main.js`,
@@ -47,10 +48,13 @@ const APP_STATIC_RESOURCES = [
 ];
 
 // On install, cache the static resources
+/**
+ * @type {String}
+ */
 self.addEventListener("install", (event) => {
     event.waitUntil(
         caches.open(CACHE_NAME)
-            .then((cache) => {
+            .then(async (cache) => {
                 APP_STATIC_RESOURCES.forEach((item) => {
                     cache.add(item).catch(_ => console.log(`can't load ${item}`));
                 });
@@ -84,30 +88,44 @@ self.addEventListener("fetch", (event) => {
     // For all other requests, go to the cache first, and then the network.
     event.respondWith(
         (async () => {
-            // Go to the Cache.
+            // go to the Cache.
             const cache = await caches.open(CACHE_NAME);
-            // Dynamically add to Cache detail.html pages
-            const requestURL = new URL(event.request.url);
-            const pathname = requestURL.pathname;
-            const destination = pathname.substring(pathname.lastIndexOf('/'), pathname.length);
-            if (destination === '/detail.html') {
-                await cache.add(requestURL);
-            }
             const cachedResponse = await cache.match(event.request, { ignoreVary: true });
-            if (cachedResponse) {
-                return cachedResponse;
-            }
+            if (cachedResponse) return cachedResponse;
 
-            // Go to the Web only for .svg
             try {
-                if (/\.svg$/.test(event.request.url)) {
-                    const networkResponse = await fetch(event.request, { signal: AbortSignal.timeout(4000) });
-                    if (networkResponse && networkResponse.status < 400) {
-                        return networkResponse;
+                const url = new URL(event.request.url);
+                let networkResponse = undefined;
+                // go to the Web only for .svg
+                if (url.pathname.endsWith('.svg')) {
+                    try {
+                        networkResponse = await fetch(event.request, { signal: AbortSignal.timeout(4000) });
+                    } catch (error) {
+                        throw new Error('svg');
                     }
                 }
+                // or for detail.html
+                if (url.pathname.endsWith('detail.html')) {
+                    try {
+                        networkResponse = await fetch(event.request, { signal: AbortSignal.timeout(8000) });
+                    } catch (error) {
+                        throw new Error('html');
+                    }
+                }
+                if (networkResponse && networkResponse.status < 400) {
+                    return networkResponse;
+                }
+                // if offline
             } catch (error) {
-                const cachedResponse = await cache.match(`${path}/images/un.svg`, { ignoreVary: true });
+                let cachedResponse = undefined;
+                if (error.message === 'svg') {
+                    // returns default .svg
+                    cachedResponse = await cache.match(`${path}/images/un.svg`, { ignoreVary: true });
+                }
+                if (error.message === 'html') {
+                    // returns defaul detail.html
+                    cachedResponse = await cache.match(`${path}/offline-detail.html`);
+                }
                 if (cachedResponse) {
                     return cachedResponse;
                 }
