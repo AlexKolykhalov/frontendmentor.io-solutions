@@ -136,10 +136,10 @@ uploadImgBtn?.addEventListener('click', () => {
 								      && file.type !== 'image/png'
 								      && file.type !== 'image/bmp')) {
 		    reader.abort();
-		    const warning = uploadImgBtn.nextElementSibling;
-		    if (warning) {
-			const sizeError   = warning.querySelectorAll('span')[0];
-			const formatError = warning.querySelectorAll('span')[1];
+		    const warnings = document.querySelector('.warnings');
+		    if (warnings) {
+			const sizeError   = warnings.querySelectorAll('span')[0];
+			const formatError = warnings.querySelectorAll('span')[1];
 			if (sizeError && formatError) {
 			    if (newImg.width > 1024 && newImg.height > 1024) {
 				sizeError.classList.add('clr-p-red');
@@ -157,9 +157,9 @@ uploadImgBtn?.addEventListener('click', () => {
 		    }
 		} else {
 		    // remove warnings
-		    const warning = uploadImgBtn.nextElementSibling;
-		    if (warning) {
-			const errors = warning.querySelectorAll('span');
+		    const warnings = document.querySelector('.warnings');
+		    if (warnings) {
+			const errors = warnings.querySelectorAll('span');
 			errors.forEach((item) => {
 			    item.classList.remove('clr-p-red');
 			    item.classList.remove('fw-semibold');
@@ -192,6 +192,15 @@ clearImgBtn?.addEventListener('click', () => {
 	// working with mockup-avatar
 	mockupAvatar.src = 'images/icon-upload-image.svg';
 	mockupAvatar.setAttribute('style', 'object-fit: scale-down;');
+	// remove warnings
+	const warnings = document.querySelector('.warnings');
+	if (warnings) {
+	    const errors = warnings.querySelectorAll('span');
+	    errors.forEach((item) => {
+		item.classList.remove('clr-p-red');
+		item.classList.remove('fw-semibold');
+	    });
+	}
     }
 });
 
