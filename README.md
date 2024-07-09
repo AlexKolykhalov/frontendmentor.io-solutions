@@ -90,3 +90,11 @@ Any comments are welcome.
 | 02 | Paper-scissors-rock game | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/advanced/rock-paper-scissors-master/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/advanced/rock-paper-scissors-master) |
 | 03 | Rest countries API | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/advanced/rest-countries-api-with-color-theme-switcher-master/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/advanced/rest-countries-api-with-color-theme-switcher-master) |
 </details>
+
+<details>
+<summary>Guru [1/6] (By self expirience)</summary>
+
+| No | Challenge | Live demo | Source |
+| :---: | :--- | :---: | :--- |
+| 01 | Linksharing app | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/guru/linksharing-app/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/guru/linksharing-app) |
+</details>
