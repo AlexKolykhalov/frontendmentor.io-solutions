@@ -316,6 +316,7 @@ function scrapeData() {
 		const source = item.querySelector('.select > button span');
 		const url    = item.querySelector('input');
 		if (source && url) {
+		    if (!url.value.trim()) throw Error('Link without URL');
 		    const link = {'source': source.textContent?.trim(), 'url': url.value.trim()};
 		    links.push(link);
 		}
