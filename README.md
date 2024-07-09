@@ -92,7 +92,7 @@ Any comments are welcome.
 </details>
 
 <details>
-<summary>Guru [1/6] (By self expirience)</summary>
+<summary>Guru [1/6]</summary>
 
 | No | Challenge | Live demo | Source |
 | :---: | :--- | :---: | :--- |
