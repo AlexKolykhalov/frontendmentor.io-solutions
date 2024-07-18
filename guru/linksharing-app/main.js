@@ -43,6 +43,7 @@ window.addEventListener('load', () => {
 	const destination = url.pathname.substring(url.pathname.lastIndexOf('/'), url.pathname.length);
 	if (destination === '/index.html') {
 	    // fill in part of the Phone Mockup
+	    /** @type {HTMLImageElement|null} */
 	    const phoneMockupAvatar = document.querySelector('.phone-mockup-avatar');
 	    const phoneMockupName   = document.querySelector('.phone-mockup-name');
 	    const phoneMockupEmail  = document.querySelector('.phone-mockup-email');
@@ -61,10 +62,14 @@ window.addEventListener('load', () => {
 		addNewLinkAndMockupBadge(item);
 	    });
 	    // fill in the Profile Details
+	    /** @type {HTMLButtonElement|null} */
 	    const uploadImgBtn = document.querySelector('.upload-image-btn');
 	    const clearImgBtn  = document.querySelector('.clear-image-btn');
+	    /** @type {HTMLInputElement|null} */
 	    const firstName    = document.querySelector('#first_name');
+	    /** @type {HTMLInputElement|null} */
 	    const lastName     = document.querySelector('#last_name');
+	    /** @type {HTMLInputElement|null} */
 	    const email        = document.querySelector('#email');
 	    if (uploadImgBtn && clearImgBtn && firstName && lastName && email) {
 		if (data.avatar) {
@@ -106,7 +111,7 @@ saveBtn?.addEventListener('click', () => {
     try {
 	const data = scrapeData();
 	localStorage.setItem('info', JSON.stringify(data));
-	showPopUpMessage('Your changes have been successfully saved!', 'notification')
+	showPopUpMessage('Your changes have been successfully saved!', 'notification');
     } catch (error) {
 	showPopUpMessage(error, 'error');
     }
@@ -121,7 +126,8 @@ uploadImgBtn?.addEventListener('click', () => {
     input.type = 'file';
     input.accept = '.png, .jpg, .bmp';
     input.onchange = (e) => {
-	const file = e.target.files[0];
+	// @ts-ignore
+	const file = e.target?.files[0];
 	const reader = new FileReader();
 	reader.readAsDataURL(file);
 
@@ -130,6 +136,7 @@ uploadImgBtn?.addEventListener('click', () => {
 	    const content = readerEvent.target?.result; // this is the content!
 
 	    const newImg = new Image();
+	    // @ts-ignore
 	    newImg.src = content;
 	    newImg.onload = _ => {
 		if ((newImg.width > 1024 && newImg.height > 1024) || (file.type !== 'image/jpeg'
@@ -169,9 +176,11 @@ uploadImgBtn?.addEventListener('click', () => {
 		    const textUploadImgBtn = uploadImgBtn.querySelector('span > span');
 		    if (textUploadImgBtn) textUploadImgBtn.textContent = 'Change Image';
 		    if (clearImgBtn) clearImgBtn.removeAttribute('data-visible');
-		    // upload mockup-avatar
+		    // upload mockup-avatar    
+		    /** @type {HTMLImageElement|null} */
 		    const mockupAvatar = document.querySelector('.phone-mockup-avatar');
 		    if (mockupAvatar) {
+			// @ts-ignore
 			mockupAvatar.src = content;
 			mockupAvatar.setAttribute('style', 'object-fit: cover;');
 		    }
@@ -184,6 +193,7 @@ uploadImgBtn?.addEventListener('click', () => {
 
 clearImgBtn?.addEventListener('click', () => {
     clearImgBtn.setAttribute('data-visible', 'false');
+    /** @type {HTMLImageElement|null} */
     const mockupAvatar = document.querySelector('.phone-mockup-avatar');
     if (uploadImgBtn && mockupAvatar) {
 	uploadImgBtn.removeAttribute('style');
@@ -211,9 +221,10 @@ closeDialogBtn?.addEventListener('click', () => {
 
 previewLink?.addEventListener('click', (e) => {
     try {
-	const json      = localStorage.getItem('info') === null ?
-	                  '{"avatar": "", "name": "", "email": "", "links": []}' :
-	                  localStorage.getItem('info');
+	const json = localStorage.getItem('info') ?
+	             localStorage.getItem('info') :
+	             '{"avatar": "", "name": "", "email": "", "links": []}';
+	// @ts-ignore
 	const savedData = JSON.parse(json);
 	const data      = scrapeData();
 	// comparison works only if the order of the keys is the same
@@ -230,7 +241,7 @@ previewLink?.addEventListener('click', (e) => {
     }
 });
 
-firstNameInput?.addEventListener('input', (e) => {
+firstNameInput?.addEventListener('input', () => {
     const mockupName = document.querySelector('.phone-mockup-name');
     if (mockupName) {
 	const firstName = firstNameInput.value.trim() === '' ? '****' : firstNameInput.value.trim();
@@ -283,9 +294,13 @@ popUpMessage?.addEventListener('animationend', () => {
  * Scrape data from index.html page
  */
 function scrapeData() {
+    /** @type {HTMLButtonElement|null} */
     const uploadImgBtn = document.querySelector('.upload-image-btn');
+    /** @type {HTMLInputElement|null} */
     const firstName    = document.querySelector('#first_name');
+    /** @type {HTMLInputElement|null} */
     const lastName     = document.querySelector('#last_name');
+    /** @type {HTMLInputElement|null} */
     const email        = document.querySelector('#email');
     const userLinks    = document.querySelector('.user-links');
 
@@ -306,8 +321,9 @@ function scrapeData() {
 	    throw Error('Links is required');
 	} else {
 	    const bgImage = uploadImgBtn.style.backgroundImage;
-	    if (bgImage && bgImage.match(/url\(["']?([^"']*)["']?\)/)[1] !== null) {
-	        avatar = bgImage.match(/url\(["']?([^"']*)["']?\)/)[1];
+	    if (bgImage) {		
+		const matchArr = bgImage.match(/url\(["']?([^"']*)["']?\)/);
+		if (matchArr) avatar = matchArr[1];
 	    }
 	    name = firstName.value.trim() + ' ' +  lastName.value.trim();
 	    eMail = email.value.trim();
@@ -340,6 +356,7 @@ function addNewLinkAndMockupBadge(linkInfo) {
     const parentDiv = document.querySelector('.user-links');
     const template  = document.querySelector('#template_new_link');
     if (parentDiv && template) {
+	// @ts-ignore
 	const clone = template.content.firstElementChild?.cloneNode(true);
 	if (clone) {
 	    const total = parentDiv.querySelectorAll(':scope>li');
@@ -386,6 +403,7 @@ function addNewLinkAndMockupBadge(linkInfo) {
 
 		const selectOptionsLi   = clone.querySelectorAll('.select>.options>li');
 		selectOptionsLi.forEach((item) => {
+		    // set current selected item
 		    const sourceName = item.querySelector('span');
 		    if (sourceName && sourceName.textContent === linkInfo.source) {
 			setSelectedItem(selectOptions, item);
@@ -497,18 +515,20 @@ function setSelectedItem(optionElement, item) {
 		buttonSpan.textContent = currentTargetSpan.textContent;
 		previuosItem.removeAttribute('data-status');
 		item.setAttribute('data-status', 'selected');
-		// working with badge
+		// working with badge (change title and bg-color)
 		const attr = selectBtn.getAttribute('id');
-		const index = attr?.split('_')[1];
-		const phoneMockupBadges = document.querySelectorAll('.phone-mockup-badge');
-		const badge = phoneMockupBadges[index - 1];
-		if (badge) {
-		    let path    = getLinkAttributeBySourceName(currentTargetSpan.textContent).path;
-		    let bgColor = getLinkAttributeBySourceName(currentTargetSpan.textContent).bgcolor;
-		    badge.classList.remove(...badge.classList);
-		    badge.classList.add('phone-mockup-badge', bgColor, 'row', 'cross-axis-center', 'clr-n-000', 'border-radius-sm');
-		    badge.setAttribute('style', `--image_path: url(${path});`);
-		    badge.textContent = currentTargetSpan.textContent;
+		if (attr) {
+		    const index = Number(attr.split('_')[1]);
+		    const phoneMockupBadges = document.querySelectorAll('.phone-mockup-badge');
+		    const badge = phoneMockupBadges[index - 1];
+		    if (badge && currentTargetSpan.textContent) {
+			let path    = getLinkAttributeBySourceName(currentTargetSpan.textContent).path;
+			let bgColor = getLinkAttributeBySourceName(currentTargetSpan.textContent).bgcolor;
+			badge.classList.remove(...badge.classList);
+			badge.classList.add('phone-mockup-badge', bgColor, 'row', 'cross-axis-center', 'clr-n-000', 'border-radius-sm');
+			badge.setAttribute('style', `--image_path: url(${path});`);
+			badge.textContent = currentTargetSpan.textContent;
+		    }
 		}
 	    }
 	}
