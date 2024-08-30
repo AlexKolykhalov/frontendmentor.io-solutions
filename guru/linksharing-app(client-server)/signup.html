@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Linksharing API challenge on Frontend Mentor">
+  <meta name="keywords" content="Frontend Mentor, Frontend, Mentor, HTML, CSS, Responsive, Mobile, Desktop, Alex Kolykhalov">
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+  <title>Frontend Mentor | Linksharing app</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <main class="content">
+    <div class="center-v">
+      <div class="center-h">
+	<div class="form { column }">
+	  <img class="center-h mar-bottom-xl" alt="logo" src="images/logo-devlinks-large.svg">
+	  <h1 class="clr-n-800 fs-500">Sign Up</h1>
+	  <p class="fs-300 mar-bottom-l">Create your free Devlinks account</p>
+	  <div class="column mar-bottom-m">
+	    <label class="fs-200 clr-n-800" for="signup_email">Email address</label>
+	    <input class="border-radius-sm border-clr-n-400 pad-sm"
+		   id="signup_email"
+		   placeholder="e.g alex@email.com"
+		   type="email"
+		   maxlength="40">
+	  </div>
+	  <div class="column mar-bottom-m">
+	    <label class="fs-200 clr-n-800" for="signup_password">Password</label>
+	    <input class="border-radius-sm border-clr-n-400 pad-sm"
+		   id="signup_password"
+		   placeholder="Enter your password"
+		   type="password"
+		   maxlength="20">
+	  </div>
+	  <div class="column mar-bottom-m">
+	    <label class="fs-200 clr-n-800" for="signup_repeat_password">Repeat Password</label>
+	    <input class="border-radius-sm border-clr-n-400 pad-sm"
+		   id="signup_repeat_password"
+		   placeholder="Repeat your password again"
+		   type="password"
+		   maxlength="20">
+	  </div>
+	  <button class="signup-btn { mar-v-m btn-theme bg-p-purple clr-n-000 }">Sign Up</button>
+	  <span class="text-center">Already have an account? <a href="login.html">Log in</a></span>
+	</div>
+      </div>
+    </div>
+    <div class="[ absolute ] pop-up-message { border-radius-sm bg-n-800 clr-n-000 }">
+      <div class="row no-wrap gap-sm main-axis-center cross-axis-center pad-v-sm pad-h-m">
+	<img alt="" src="images/icon-error.svg">
+	<p class="fs-d-300-400 white-space-nowrap">Your changes have been successfully saved!</p>
+      </div>
+    </div>
+  </main>
+  <script src="main.js"></script>
+</body>
+
+</html>
