@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Linksharing API challenge on Frontend Mentor">
+  <meta name="keywords" content="API, REST, Frontend Mentor, Frontend, Mentor, HTML, CSS, Responsive, Mobile, Desktop, Alex Kolykhalov">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+
+  <!-- ios support -->
+  <!--
+  <link rel="apple-touch-icon" href="images/icons/128.png">
+  <link rel="apple-touch-icon" href="images/icons/192.png">
+  <link rel="apple-touch-icon" href="images/icons/512.png">
+  <meta name="apple-mobile-web-app-status-bar" content="#858585">
+  <meta name="theme-color" content="#858585">
+  -->
+  <!-- end ios support -->
+
+  <title>Frontend Mentor | Linksharing app</title>
+
+  <!-- <link rel="manifest" href="manifest.json"> -->
+  <link rel="stylesheet" href="style.css">
+  <!-- 1. [-] Wave extension
+       2. [-] Clean html, css, js code
+       3. [-] Check Coverage, clean code after that (!!check js before delete unuseless css elements!!)
+       4. [-] Lighthouse
+       5. [-] CheckHTML https://validator.w3.org/#validate-by-input
+       6. [-] Test on Chrome, Firefox
+       7. [-] README.md
+       8. [-] Delete this instruction
+       9. [-] Push to github -->
+</head>
+
+<body>
+  <main class="content">
+    <div class="center-v box-v-90vh">
+      <div class="center-h">
+	<div class="form { column }">
+	  <img class="center-h mar-bottom-xl" alt="logo" src="images/logo-devlinks-large.svg">
+	  <h1 class="clr-n-800 fs-500">Login</h1>
+	  <p class="fs-300 mar-bottom-l">Add your details below to get back into the app</p>
+	  <div class="column">
+	    <label class="fs-200 clr-n-800" for="login_email">Email address</label>
+	    <input class="border-radius-sm border-clr-n-400 pad-sm"
+		   id="login_email"
+		   placeholder="e.g alex@email.com"
+		   type="email"
+		   maxlength="40">
+	  </div>
+	  <div class="column mar-v-m">
+	    <label class="fs-200 clr-n-800" for="login_password">Password</label>
+	    <input class="border-radius-sm border-clr-n-400 pad-sm"
+		   id="login_password"
+		   placeholder="Enter your password"
+		   type="password"
+		   maxlength="20">
+	  </div>
+	  <button class="login-btn { mar-v-m btn-theme bg-p-purple clr-n-000 }">Log in</button>
+	  <span class="text-center">Don't have an account? <a href="signup.html">Create account</a></span>
+	</div>
+      </div>
+    </div>
+    <div class="[ absolute ] pop-up-message { border-radius-sm bg-n-800 clr-n-000 }">
+      <div class="row no-wrap gap-sm main-axis-center cross-axis-center pad-v-sm pad-h-m">
+	<img alt="" src="images/icon-error.svg">
+	<p class="fs-d-300-400 white-space-nowrap">Your changes have been successfully saved!</p>
+      </div>
+    </div>
+  </main>
+
+  <footer class="content | pad-v-m">
+    <p class="clr-n-800 text-center">
+      Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>.
+      Coded by <a href="https://github.com/AlexKolykhalov">Alex Ko</a>.
+    </p>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+
+</html>

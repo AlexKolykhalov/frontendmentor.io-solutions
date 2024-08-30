@@ -13,6 +13,15 @@ const clearImgBtn = document.querySelector('.clear-image-btn');
 const saveBtn = document.querySelector('.save-btn');
 
 /** @type {HTMLButtonElement|null} */
+const signupBtn = document.querySelector('.signup-btn');
+
+/** @type {HTMLButtonElement|null} */
+const loginBtn = document.querySelector('.login-btn');
+
+/** @type {HTMLButtonElement|null} */
+const logoutBtn = document.querySelector('.logout-btn');
+
+/** @type {HTMLButtonElement|null} */
 const closeDialogBtn = document.querySelector('dialog button');
 
 /** @type {NodeListOf<HTMLButtonElement>} */
@@ -114,6 +123,79 @@ saveBtn?.addEventListener('click', () => {
 	showPopUpMessage('Your changes have been successfully saved!', 'notification');
     } catch (error) {
 	showPopUpMessage(error, 'error');
+    }
+});
+
+loginBtn?.addEventListener('click', async () => {
+    /** @type {HTMLInputElement|null} */
+    const email = document.querySelector('#login_email');
+    /** @type {HTMLInputElement|null} */
+    const password = document.querySelector('#login_password');
+    if (email && password) {
+	if (email.value.trim().match(/^[\w\-\.]+@[\w\-\.]+\.[a-z]{2,3}$/) === null) {
+	    showPopUpMessage('The email or password is incorrect', 'error');
+	} else {
+	    const json = localStorage.getItem('users') ?
+	                 localStorage.getItem('users') : 
+	                 '{"email": "", "salt": "", "hash": ""}';
+	    // @ts-ignore
+	    const user = JSON.parse(json);
+	    const salt = new Uint8Array(JSON.parse('['+user.salt+']'));
+	    // get a hash of current user's password
+	    const hash = await getHash(salt, password.value);
+	    if (email.value.trim() === user.email && user.hash === hash) {
+		// set session_id in localStorage and cookie
+		// const salt = window.crypto.getRandomValues(new Uint8Array(16));
+		// const salt = window.crypto.getRandomValues(new Uint8Array(16));
+		// const sessionId = await getHash(salt, password.value);
+		const sessionId = '0000-000-0000-00000';
+		// localStorage.setItem('session_id', sessionId);
+		console.log(`cookie: ${document.cookie}`);
+		document.cookie = `sessionId=${sessionId}; max-age=300`; // 5min
+		console.log(`cookie: ${document.cookie}`);
+		// @ts-ignore
+		window.location = `index.html`;
+	    } else {
+		showPopUpMessage("Email and Password don't match", 'error');
+	    }
+	}
+    }
+});
+
+logoutBtn?.addEventListener('click', () => {
+    // @ts-ignore
+    document.cookie = `sessionId=; expires=${new Date(0)}`;
+    window.location = 'login.html'; //CHECK THIS !!! may be location.href = '/login.html';??
+});
+
+signupBtn?.addEventListener('click', async () => {
+    /** @type {HTMLInputElement|null} */
+    const email = document.querySelector('#signup_email');
+    /** @type {HTMLInputElement|null} */
+    const password = document.querySelector('#signup_password');
+    /** @type {HTMLInputElement|null} */
+    const repeat_password = document.querySelector('#signup_repeat_password');
+    if (email && password && repeat_password) {
+	if (email.value.trim().match(/^[\w\-\.]+@[\w\-\.]+\.[a-z]{2,3}$/) === null) {
+	    showPopUpMessage('Invalid email address', 'error');
+	} else if (!password.value.trim()) {
+	    showPopUpMessage('Empty password', 'error');
+	} else if (password.value !== repeat_password.value) {
+	    showPopUpMessage("Passwords don't match", 'error');
+	} else {
+	    const salt = window.crypto.getRandomValues(new Uint8Array(16));
+	    const hash = await getHash(salt, password.value);
+	    const saltStr = salt.toString();
+	    const userData = JSON.stringify({'email': email.value.trim(), 'salt': saltStr, 'hash': hash});
+	    // create user
+	    // create session
+	    const saltSession = window.crypto.getRandomValues(new Uint8Array(16));
+	    const random = '';
+	    const hashSession = await getHash(saltSession, random);
+	    localStorage.setItem('users', userData);
+	    // @ts-ignore
+	    window.location = 'index.html';
+	}
     }
 });
 
@@ -289,6 +371,26 @@ popUpMessage?.addEventListener('animationend', () => {
 }, false);
 
 // ************************* 2. Functions *******************************//
+
+/**
+ * Creates a new hash from password with a little bit salt
+ * @param {Uint8Array} salt
+ * @param {string} password
+ */
+async function getHash(salt, password) {
+    // https://stackoverflow.com/questions/67993979/using-javascript-web-crypto-api-to-generate-c-sharp-compatible-pbkdf2-key
+    // https://gist.github.com/siscia/5ed3277551370df3eb8b1063923621d4
+    const subtle = window.crypto.subtle;
+    const deriveBitsOptions = {name: "PBKDF2", hash: 'SHA-512', salt: salt, iterations: 10000};
+    const uintPass = new TextEncoder().encode(password);
+    // creating a key with a slow cryptographic secure function (PBKDF2)
+    const ik = await subtle.importKey('raw', uintPass, {name: 'PBKDF2'}, false, ['deriveBits']);
+    // creating array of bits from a key (ik) 
+    const dk = await subtle.deriveBits(deriveBitsOptions, ik, 512);
+    const array = Array.from(new Uint8Array(dk));
+    const hash = array.map((b) => b.toString(16).padStart(2, "0")).join("");
+    return hash;
+}
 
 /**
  * Scrape data from index.html page
