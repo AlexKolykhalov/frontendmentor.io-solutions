@@ -153,8 +153,8 @@ loginBtn?.addEventListener('click', async () => {
 		console.log(`cookie: ${document.cookie}`);
 		document.cookie = `sessionId=${sessionId}; max-age=300`; // 5min
 		console.log(`cookie: ${document.cookie}`);
-		// @ts-ignore
-		window.location = `index.html`;
+		
+		location.href = "/index";
 	    } else {
 		showPopUpMessage("Email and Password don't match", 'error');
 	    }
@@ -165,7 +165,7 @@ loginBtn?.addEventListener('click', async () => {
 logoutBtn?.addEventListener('click', () => {
     // @ts-ignore
     document.cookie = `sessionId=; expires=${new Date(0)}`;
-    window.location = 'login.html'; //CHECK THIS !!! may be location.href = '/login.html';??
+    location.href = '/login'; //CHECK THIS !!! may be location.href = '/login.html';??
 });
 
 signupBtn?.addEventListener('click', async () => {
@@ -193,8 +193,8 @@ signupBtn?.addEventListener('click', async () => {
 	    const random = '';
 	    const hashSession = await getHash(saltSession, random);
 	    localStorage.setItem('users', userData);
-	    // @ts-ignore
-	    window.location = 'index.html';
+	    
+	    location.href = "/index";
 	}
     }
 });
@@ -282,7 +282,7 @@ clearImgBtn?.addEventListener('click', () => {
 	const textUploadImgBtn = uploadImgBtn.querySelector('span > span');
 	if (textUploadImgBtn) textUploadImgBtn.textContent = '+ Upload Image';
 	// working with mockup-avatar
-	mockupAvatar.src = 'images/icon-upload-image.svg';
+	mockupAvatar.src = 'images/icons/icon-upload-image.svg';
 	mockupAvatar.setAttribute('style', 'object-fit: scale-down;');
 	// remove warnings
 	const warnings = document.querySelector('.warnings');
@@ -624,8 +624,8 @@ function setSelectedItem(optionElement, item) {
 		    const phoneMockupBadges = document.querySelectorAll('.phone-mockup-badge');
 		    const badge = phoneMockupBadges[index - 1];
 		    if (badge && currentTargetSpan.textContent) {
-			let path    = getLinkAttributeBySourceName(currentTargetSpan.textContent).path;
-			let bgColor = getLinkAttributeBySourceName(currentTargetSpan.textContent).bgcolor;
+			const path    = getLinkAttributeBySourceName(currentTargetSpan.textContent).path;
+			const bgColor = getLinkAttributeBySourceName(currentTargetSpan.textContent).bgcolor;
 			badge.classList.remove(...badge.classList);
 			badge.classList.add('phone-mockup-badge', bgColor, 'row', 'cross-axis-center', 'clr-n-000', 'border-radius-sm');
 			badge.setAttribute('style', `--image_path: url(${path});`);
@@ -663,7 +663,7 @@ function toggleOptions(optionsElement) {
 		    const index = [...optionsElement.children].indexOf(currentItem);
 		    optionsElement.scrollTo({
 			top: 40 * (index - 2),
-			behavior: 'smooth',
+			behavior: "smooth",
 		    });
 		}
 
@@ -733,59 +733,59 @@ function getLinkAttributeBySourceName(source) {
 		'bgcolor': 'bg-p-purple'};
 
     if (source === 'GitHub') {
-	attr.path  = 'images/icon-github.svg';
+	attr.path  = '../images/icons/icon-github.svg';
 	attr.bgcolor = 'bg-github';
     }
     if (source === 'LinkedIn') {
-	attr.path  = 'images/icon-linkedin.svg';
+	attr.path  = '../images/icons/icon-linkedin.svg';
 	attr.bgcolor = 'bg-linkedin';
     }
     if (source === 'GitLab') {
-	attr.path  = 'images/icon-gitlab.svg';
+	attr.path  = '../images/icons/icon-gitlab.svg';
 	attr.bgcolor = 'bg-gitlab';
     }
     if (source === 'StackOverflow') {
-	attr.path  = 'images/icon-stack-overflow.svg';
+	attr.path  = '../images/icons/icon-stack-overflow.svg';
 	attr.bgcolor = 'bg-stackoverflow';
     }
     if (source === 'YouTube') {
-	attr.path  = 'images/icon-youtube.svg';
+	attr.path  = '../images/icons/icon-youtube.svg';
 	attr.bgcolor = 'bg-youtube';
     }
     if (source === 'Facebook') {
-	attr.path  = 'images/icon-facebook.svg';
+	attr.path  = '../images/icons/icon-facebook.svg';
 	attr.bgcolor = 'bg-facebook';
     }
     if (source === 'Twitch') {
-	attr.path  = 'images/icon-twitch.svg';
+	attr.path  = '../images/icons/icon-twitch.svg';
 	attr.bgcolor = 'bg-twitch';
     }
     if (source === 'Twitter') {
-	attr.path  = 'images/icon-twitter.svg';
+	attr.path  = '../images/icons/icon-twitter.svg';
 	attr.bgcolor = 'bg-twitter';
     }
     if (source === 'Hashnode') {
-	attr.path  = 'images/icon-hashnode.svg';
+	attr.path  = '../images/icons/icon-hashnode.svg';
 	attr.bgcolor = 'bg-hashnode';
     }
     if (source === 'Codepen') {
-	attr.path  = 'images/icon-codepen.svg';
+	attr.path  = '../images/icons/icon-codepen.svg';
 	attr.bgcolor = 'bg-codepen';
     }
     if (source === 'Devto') {
-	attr.path  = 'images/icon-devto-gray.svg';
+	attr.path  = '../images/icons/icon-devto-gray.svg';
 	attr.bgcolor = 'bg-devto';
     }
     if (source === 'Codewars') {
-	attr.path  = 'images/icon-codewars.svg';
+	attr.path  = '../images/icons/icon-codewars.svg';
 	attr.bgcolor = 'bg-codewars';
     }
     if (source === 'Freecodecamp') {
-	attr.path  = 'images/icon-freecodecamp.svg';
+	attr.path  = '../images/icons/icon-freecodecamp.svg';
 	attr.bgcolor = 'bg-freecodecamp';
     }
     if (source === 'Frontend mentor') {
-	attr.path  = 'images/icon-frontend-mentor-gray.svg';
+	attr.path  = '../images/icons/icon-frontend-mentor-gray.svg';
 	attr.bgcolor = 'bg-frontendmentor';
     }
 

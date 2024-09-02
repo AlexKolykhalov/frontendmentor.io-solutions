@@ -1,6 +1,6 @@
 @font-face {
     font-family: 'Instrument Sans';
-    src: url('fonts/instrument-sans-regular.woff2') format('woff2');
+    src: url('../fonts/instrument-sans-regular.woff2') format('woff2');
     font-weight: 400;
     font-style: normal;
     font-display: swap;
@@ -8,7 +8,7 @@
 
 @font-face {
     font-family: 'Instrument Sans';
-    src: url('fonts/instrument-sans-semi-bold.woff2') format('woff2');
+    src: url('../fonts/instrument-sans-semi-bold.woff2') format('woff2');
     font-weight: 600;
     font-style: normal;
     font-display: swap;
@@ -16,7 +16,7 @@
 
 @font-face {
     font-family: 'Instrument Sans';
-    src: url('fonts/instrument-sans-bold.woff2') format('woff2');
+    src: url('../fonts/instrument-sans-bold.woff2') format('woff2');
     font-weight: 700;
     font-style: normal;
     font-display: swap;
@@ -352,7 +352,7 @@ section > article {
 .logo {
     width: 40px;
     height: 100%;    
-    background-image: url("images/logo-devlinks-small.svg");
+    background-image: url("../images/logo-devlinks-small.svg");
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -361,7 +361,7 @@ section > article {
 @media (min-width: 48em) {
     .logo {
 	width: 140px;
-	background-image: url("images/logo-devlinks-large.svg");
+	background-image: url("../images/logo-devlinks-large.svg");
     }
 }
 
@@ -383,7 +383,7 @@ section > article {
 }
 
 .select::after {
-    content: url("images/icon-chevron-down.svg");
+    content: url("../images/icons/icon-chevron-down.svg");
     cursor: pointer;
     pointer-events: none;
     
@@ -437,7 +437,7 @@ section > article {
 }
 
 .input-link:after {
-    content: url("images/icon-link.svg");
+    content: url("../images/icons/icon-link.svg");
 
     position: absolute;
     top: 55%;
@@ -544,7 +544,7 @@ section > article {
 }
 
 .preview-card a::after {
-    content: url('images/icon-arrow-right.svg');
+    content: url('../images/icons/icon-arrow-right.svg');
 
     position: absolute;
     top: 50%;
@@ -641,7 +641,7 @@ section > article {
 }
 
 .phone-mockup-badge::after {
-    content: url('images/icon-arrow-right.svg');
+    content: url('../images/icons/icon-arrow-right.svg');
 
     position: absolute;
     top: 50%;
