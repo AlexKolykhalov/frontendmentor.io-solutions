@@ -1,0 +1,13 @@
+{
+    "name": "database",
+    "type": "commonjs",
+    "scripts": {
+	"db:reset":         "npx sequelize db:migrate:undo:all --debug && npx sequelize db:migrate --debug",
+	"db:seed:reset":    "npx sequelize db:seed:undo:all --debug && npx sequelize db:seed:all --debug",
+	"db:undo":          "npx sequelize db:migrate:undo --debug",
+	"db:migrate":       "npx sequelize db:migrate --debug",
+	"model:create":     "npx sequelize model:create --debug",
+	"migration:create": "npx sequelize migration:create --debug",
+	"seed:create":      "npx sequelize seed:create --debug"
+    }
+}
