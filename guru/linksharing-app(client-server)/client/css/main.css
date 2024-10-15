@@ -200,7 +200,7 @@ button:not([disabled]):hover {
     transition: box-shadow 0.3s ease-in-out;
 }
 
-input:hover {
+input:not([disabled]):hover {
     box-shadow: 0 0 13px 0px var(--clr-primary-purple-shadow);
     transition: box-shadow 0.3s ease-in-out;
 }
@@ -555,14 +555,14 @@ section > article {
     height: 20px;
 }
 
-.pop-up-message {
-    pointer-events: none;
-    opacity: 0;
+/* .pop-up-message { */
+/*     pointer-events: none; */
+/*     opacity: 0; */
     
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-}
+/*     bottom: 0; */
+/*     left: 50%; */
+/*     transform: translateX(-50%); */
+/* } */
 
 .phone-mockup-avatar {
     top: 65px;
@@ -745,7 +745,7 @@ section > article {
 }
 
 .pad-h-d-sm-m {
-    padding-inline: clamp(0.5rem, 3vw, 1.5rem);
+    padding-inline: clamp(0.5rem, 2vw, 1.5rem);
 }
 
 .mar-v-m {
@@ -959,44 +959,4 @@ section > article {
 [data-status="active"] {
     background-color: var(--clr-primary-purple-shadow);
     color: var(--clr-primary-purple-pri);
-}
-
-[animated] {
-    animation: popUp 2s ease-in;   
-}
-
-@keyframes popUp {
-    20% {
-	opacity: 1;
-	bottom: 4rem;
-    }
-
-    90% {
-	opacity: 1;
-	bottom: 4rem;
-    }
-
-    100% {
-	opacity: 0.5;
-	bottom: 0.5rem;
-    }
-}
-
-@media (min-width: 48em) {
-    @keyframes popUp {
-	20% {
-	    opacity: 1;
-	    bottom: 1rem;
-	}
-
-	90% {
-	    opacity: 1;
-	    bottom: 1rem;
-	}
-
-	100% {
-	    opacity: 0.5;
-	    bottom: 0.5rem;
-	}
-    }
 }

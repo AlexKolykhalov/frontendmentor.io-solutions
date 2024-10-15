@@ -8,15 +8,15 @@
   <meta name="keywords" content="Frontend Mentor, Frontend, Mentor, HTML, CSS, Responsive, Mobile, Desktop, Alex Kolykhalov">
   <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
   <title>Frontend Mentor | Linksharing app</title>
-  <link rel="stylesheet" href="./css/main.css">
+  <link rel="stylesheet" href="/css/main.css">
 </head>
 
 <body>
   <header class="content | mar-v-m pad-v-m bg-n-000">
     <div class="breakout-l | row main-axis-space-between cross-axis-center">
-      <a class="logo" href="#" aria-label="Home"></a>
+      <a class="logo" href="/" aria-label="Home"></a>
       <div class="control-btns { row gap-m }">
-	<button class="btn-theme clr-n-700" aria-label="Links" data-status="active">
+	<button class="btn-theme pad-h-d-sm-m clr-n-700" aria-label="Links" data-status="active">
 	  <span class="row gap-sm cross-axis-center">
 	    <svg xmlns="http://www.w3.org/2000/svg"
 		 width="21"
@@ -40,7 +40,7 @@
 	    <span class="m:display-none">Links</span>
 	  </span>
 	</button>
-	<button class="btn-theme clr-n-700" aria-label="Profile details">
+	<button class="btn-theme pad-h-d-sm-m clr-n-700" aria-label="Profile details">
 	  <span class="row gap-sm cross-axis-center">
 	    <svg xmlns="http://www.w3.org/2000/svg"
 		 width="21"
@@ -62,15 +62,21 @@
 	</button>
       </div>
       <div class="row gap-m">
-	<a href="preview.html"
+	<a href="/preview"
 	   class="preview-link { btn-theme pad-h-d-sm-m border-clr-p-purple clr-p-purple }"
-	   aria-label="Go to Preview page">
+	   aria-label="Go to Preview page"
+	   data-visible="false">
 	  <div class="row gap-sm">
 	    <img class="md:display-none" alt="" src="images/icons/icon-preview-header.svg">
 	    <span class="m:display-none">Preview</span>
 	  </div>
 	</a>
-	<button class="logout-btn { btn-theme bg-p-purple clr-n-000 }">Log out</button>
+	<button class="logout-btn { btn-theme pad-h-d-sm-m bg-p-purple clr-n-000 }">
+	  <div class="row gap-sm">
+	    <img class="md:display-none" alt="" src="images/icons/icon-logout.svg">
+	    <span class="m:display-none">Log out</span>
+	  </div>
+	</button>
       </div>
     </div>
   </header>
@@ -94,7 +100,7 @@
 	  <article>
 	    <h4 class="sr-only">List of links</h4>
 	    <div class="grid mar-bottom-l">
-	      <button class="add-new-link-btn { btn-theme border-clr-p-purple clr-p-purple }">+ Add new link</button>
+	      <button class="add-new-link-btn { btn-theme border-clr-p-purple clr-p-purple }" disabled>+ Add new link</button>
 	    </div>
 	    <ul class="user-links { column gap-m pad-v-sm }"></ul>
 	    <template id="template_new_link">
@@ -209,7 +215,7 @@
 		<h5 class="fw-normal fs-400">Profile picture</h5>
 		<div class="grid gap-m break-15ch cross-axis-center">
 		  <div class="[ relative ]">
-		    <button class="upload-image-btn { bg-p-purple-ter border-radius-sm }">
+		    <button class="upload-image-btn { bg-p-purple-ter border-radius-sm }" disabled>
 		      <span class="column main-axis-center cross-axis-center">
 			<img alt="" src="images/icons/icon-upload-image.svg">
 			<span class="fw-semibold clr-p-purple">+ Upload Image</span>
@@ -232,7 +238,8 @@
 		       size="1"
 		       maxlength="15"
 		       type="text"
-		       class="border-radius-sm border-clr-n-400 pad-sm">
+		       class="border-radius-sm border-clr-n-400 pad-sm"
+		       disabled>
 	      </div>
 	      <div class="grid break-20ch cross-axis-center">
 		<label class="fs-d-200-400" for="last_name">Last name*</label>
@@ -240,7 +247,8 @@
 		       size="1"
 		       maxlength="20"
 		       type="text"
-		       class="border-radius-sm border-clr-n-400 pad-sm">
+		       class="border-radius-sm border-clr-n-400 pad-sm"
+		       disabled>
 	      </div>
 	      <div class="grid break-20ch cross-axis-center">
 		<label class="fs-d-200-400" for="email">Email</label>
@@ -248,41 +256,40 @@
 		       size="1"
 		       maxlength="40"
 		       type="email"
-		       class="border-radius-sm border-clr-n-400 pad-sm">
+		       class="border-radius-sm border-clr-n-400 pad-sm"
+		       disabled>
 	      </div>
 	    </section>
 	  </article>
 	</section>
         <footer class="grid md:main-axis-end">
-          <button class="save-btn { btn-theme bg-p-purple clr-n-000 }">Save</button>
+          <button class="save-btn { btn-theme bg-p-purple clr-n-000 }" disabled>
+	    <div class="row gap-sm cross-axis-center">
+	      Save
+	      <img
+		class="clock-spinner"
+		data-visible="false"
+		height="14"
+		width="14"
+		alt=""
+		src="images/icons/clock.svg">
+	    </div>
+	  </button>
 	</footer>
       </section>
-      <div class="[ absolute ] pop-up-message { border-radius-sm bg-n-800 clr-n-000 }">
-	<div class="row no-wrap gap-sm main-axis-center cross-axis-center pad-v-sm pad-h-m">
-	  <img alt="" src="images/icons/icon-changes-saved.svg">
-	  <p class="fs-d-300-400 white-space-nowrap">Your changes have been successfully saved!</p>
-	</div>
-      </div>
     </div>
   </main>
-
-  <!-- <footer class="content | pad-v-m"> -->
-  <!--   <p class="clr-n-800 text-center"> -->
-  <!--     Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. -->
-  <!--     Coded by <a href="https://github.com/AlexKolykhalov">Alex Ko</a>. -->
-  <!--   </p> -->
-  <!-- </footer> -->
 
   <dialog class="border-radius-sm border-clr-n-400">
     <h1 class="fs-700">Warning</h1>
     <p class="mar-bottom-l">You have unsaved changes.</p>
     <div class="row gap-m">
       <button class="btn-theme border-clr-p-purple clr-p-purple">Cancel</button>
-      <a href="preview.html" class="btn-theme bg-p-purple clr-n-000">Go to Preview</a>
+      <a href="/preview" class="btn-theme bg-p-purple clr-n-000">Go to Preview</a>
     </div>
   </dialog>
 
-  <script src="./js/main.js"></script>
+  <script type="module" src="/pages/index/index.js"></script>
 </body>
 
 </html>
