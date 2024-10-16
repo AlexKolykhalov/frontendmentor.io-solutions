@@ -1,0 +1,38 @@
+{
+    "name": "main",
+    "version": "1.0.0",
+    "type": "module",
+    "main": "server/index.js",
+    "scripts": {
+        "dev": "NODE_ENV=development nodemon --env-file=.env index.js",
+	"dev:debug": "NODE_ENV=development nodemon --inspect --env-file=.env index.js",
+        "prod": "NODE_ENV=production nodemon --env-file=.env index.js",
+        "db:reset": "npx sequelize db:migrate:undo:all --debug && npx sequelize db:migrate --debug",
+        "db:seed:reset": "npx sequelize db:seed:undo:all --debug && npx sequelize db:seed:all --debug",
+        "db:undo": "npx sequelize db:migrate:undo --debug",
+        "db:migrate": "npx sequelize db:migrate --debug",
+        "model:create": "npx sequelize model:create --debug",
+        "migration:create": "npx sequelize migration:create --debug",
+        "seed:create": "npx sequelize seed:create --debug"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "description": "",
+    "dependencies": {
+        "bcrypt": "^5.1.1",
+        "cls-hooked": "^4.2.2",
+        "cookie-parser": "^1.4.6",
+        "dotenv": "^16.4.5",
+        "express": "^4.19.2",
+        "express-validator": "^7.2.0",
+        "jsonwebtoken": "^9.0.2",
+        "pg": "^8.12.0",
+        "pg-hstore": "^2.3.4",
+        "sequelize": "^6.37.3"
+    },
+    "devDependencies": {
+        "nodemon": "^3.1.4",
+        "sequelize-cli": "^6.6.2"
+    }
+}
