@@ -1,15 +1,16 @@
 {
     "version": 2,
+    "trailingSlash": true,
     "builds": [
 	{
 	    "src": "server/index.js",
 	    "use": "@vercel/node"
 	}
     ],
-    "routes": [
+    "rewrites": [
 	{
-	    "src": "/(.*)",
-	    "dest": "server"
+	    "source": "/",
+	    "destination": "server/index.js"
 	}
     ]
 }
