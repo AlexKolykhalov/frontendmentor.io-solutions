@@ -16,7 +16,7 @@ app.use(cookieParser());
 app.use(router);
 app.use(errorHandler);
 
-try {
+try {    
     await db.sequelize.authenticate();
     app.listen(port, () => console.log(`Server (${process.env.NODE_ENV}) has been started at port: ${port}...`));
 } catch (error) {
