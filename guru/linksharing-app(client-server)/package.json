@@ -1,8 +1,8 @@
 {
-    "name": "main",
+    "name": "server",
     "version": "1.0.0",
     "type": "module",
-    "main": "server/index.js",
+    "main": "index.js",
     "scripts": {
         "dev": "NODE_ENV=development nodemon --env-file=.env index.js",
 	"dev:debug": "NODE_ENV=development nodemon --inspect --env-file=.env index.js",
