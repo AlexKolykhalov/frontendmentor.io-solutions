@@ -254,7 +254,7 @@ clearImgBtn?.addEventListener('click', () => {
 	const textUploadImgBtn = uploadImgBtn.querySelector('span > span');
 	if (textUploadImgBtn) textUploadImgBtn.textContent = '+ Upload Image';
 	// working with mockup-avatar
-	mockupAvatar.src = 'images/icons/icon-upload-image.svg';
+	mockupAvatar.src = 'client/images/icons/icon-upload-image.svg';
 	mockupAvatar.setAttribute('style', 'object-fit: scale-down;');
 	// remove warnings
 	const warnings = document.querySelector('.warnings');
@@ -274,8 +274,7 @@ closeDialogBtn?.addEventListener('click', () => {
 });
 
 previewLink?.addEventListener('click', (e) => {
-    const changedUserData = getChangedUserData();
-    console.log("preview link click");
+    const changedUserData = getChangedUserData();    
     console.log(`changed user data: ${JSON.stringify(changedUserData, null, 2)}`);
     const arr1 = changedUserData;
     const arr2 = user ?? {userId: "", avatar: "", name: "", email: "", links: []};
@@ -296,7 +295,6 @@ firstNameInput?.addEventListener('input', () => {
     if (mockupName) {
 	const firstName = firstNameInput.value.trim() === '' ? '****' : firstNameInput.value.trim();
 	mockupName.textContent = `${firstName} ${mockupName.textContent?.split(' ')[1]}`;
-	// if (user) user.name = firstNameInput.value.trim() + " " + user.name.split(" ")[1];
     }
 });
 
@@ -304,8 +302,7 @@ lastNameInput?.addEventListener('input', () => {
     const mockupName = document.querySelector('.phone-mockup-name');
     if (mockupName) {
 	const lastName = lastNameInput.value.trim() === '' ? '****' : lastNameInput.value.trim();
-	mockupName.textContent = `${mockupName.textContent?.split(' ')[0]} ${lastName}`;
-	// if (user) user.name = user.name.split(" ")[0] + " " + lastNameInput.value.trim();
+	mockupName.textContent = `${mockupName.textContent?.split(' ')[0]} ${lastName}`;	
     }
 });
 
@@ -313,8 +310,7 @@ emailInput?.addEventListener('input', () => {
     const mockupEmail = document.querySelector('.phone-mockup-email');
     if (mockupEmail) {
 	const email = emailInput.value.trim() === '' ? '***********' : emailInput.value.trim();
-	mockupEmail.textContent = email;
-	// if (user) user.email = emailInput.value.trim();
+	mockupEmail.textContent = email;	
     }
 });
 
