@@ -41,7 +41,9 @@ const lastNameInput = document.querySelector('#last_name');
 const emailInput = document.querySelector('#email');
 
 /** @type {string} */
-const path = "https://frontendmentor-io-solutions.vercel.app";
+const url = (window.location.hostname === "localhost") ?
+      "http://localhost:3000" :
+      "https://frontendmentor-io-solutions.vercel.app";
 
 /** @type {User|null} */
 let user;
@@ -52,7 +54,7 @@ window.addEventListener('load', async () => {
     try {
 	const accessToken = localStorage.getItem("_t1");
 	if (!accessToken) location.replace("/login");
-	const response = await fetch(`${path}/api/user`,
+	const response = await fetch(`${url}/api/user`,
 	    {
 		method: "GET",
 		headers: {"Authorization": `Bearer ${accessToken}`},
@@ -68,7 +70,7 @@ window.addEventListener('load', async () => {
 	    if (refreshResponse.status === 200) {
 		const token = await refreshResponse.json();
 		localStorage.setItem("_t1", token); // accessToken
-		const response = await fetch(`${path}/api/user`,
+		const response = await fetch(`${url}/api/user`,
 		    {
 			method: "GET",
 			headers: {"Authorization": `Bearer ${token}`},
@@ -81,94 +83,22 @@ window.addEventListener('load', async () => {
 		}
 		if (response.status === 500) showPopUpMessage("Internal server error");
 	    }
-	    if (refreshResponse.status === 401) location.replace("/login");
+	    if (refreshResponse.status === 401) window.location.replace("/login");
 	}
 	if (response.status === 500) showPopUpMessage("Internal server error");
     } catch (error) {
 	showPopUpMessage("Internal server error");
     }
-
-    // const json = localStorage.getItem('info');
-    // if (json) {
-    // 	const data        = JSON.parse(json);
-    // 	const url         = window.location;
-    // 	const destination = url.pathname.substring(url.pathname.lastIndexOf('/'), url.pathname.length);
-    // 	if (destination === '/index.html') {
-    // 	    // fill in part of the Phone Mockup
-    // 	    /** @type {HTMLImageElement|null} */
-    // 	    const phoneMockupAvatar = document.querySelector('.phone-mockup-avatar');
-    // 	    const phoneMockupName   = document.querySelector('.phone-mockup-name');
-    // 	    const phoneMockupEmail  = document.querySelector('.phone-mockup-email');
-    // 	    if (phoneMockupAvatar && phoneMockupName && phoneMockupEmail) {
-    // 		if (data.avatar) {
-    // 		    phoneMockupAvatar.src = data.avatar;
-    // 		    phoneMockupAvatar.setAttribute('style', 'object-fit: cover;');
-    // 		} else {
-    // 		    phoneMockupAvatar.setAttribute('style', 'object-fit: scale-down;');
-    // 		}
-    // 		phoneMockupName.textContent  = data.name;
-    // 		phoneMockupEmail.textContent = data.email ? data.email : '***********';
-    // 	    }
-    // 	    // add Links and Phone mockup badges
-    // 	    data.links.forEach((item) => {
-    // 		// REFACTORING on two separate
-    // 		// fn addNewLink and addMockupBadge
-    // 		addNewLinkAndMockupBadge(item);
-    // 	    });
-    // 	    // fill in the Profile Details
-    // 	    /** @type {HTMLButtonElement|null} */
-    // 	    const uploadImgBtn = document.querySelector('.upload-image-btn');
-    // 	    const clearImgBtn  = document.querySelector('.clear-image-btn');
-    // 	    /** @type {HTMLInputElement|null} */
-    // 	    const firstName    = document.querySelector('#first_name');
-    // 	    /** @type {HTMLInputElement|null} */
-    // 	    const lastName     = document.querySelector('#last_name');
-    // 	    /** @type {HTMLInputElement|null} */
-    // 	    const email        = document.querySelector('#email');
-    // 	    if (uploadImgBtn && clearImgBtn && firstName && lastName && email) {
-    // 		if (data.avatar) {
-    // 		    uploadImgBtn.style.backgroundImage = 'linear-gradient(rgba(255,255,255,0.7), rgba(255,255,255,0.7)), url('+ data.avatar +')';
-    // 		    const textUploadImgBtn = uploadImgBtn.querySelector('span > span');
-    // 		    if (textUploadImgBtn) textUploadImgBtn.textContent = 'Change Image';
-    // 		    clearImgBtn.removeAttribute('data-visible');
-    // 		}
-    // 		firstName.value = data.name.split(' ')[0];
-    // 		lastName.value  = data.name.split(' ')[1];
-    // 		email.value     = data.email;
-    // 	    }
-    // 	}
-
-    // 	if (destination === '/preview.html') {
-    // 	    const previewCard  = document.querySelector('.preview-card');
-    // 	    if (previewCard) {
-    // 		const avatar    = previewCard.querySelector('img');
-    // 		const cardName  = previewCard.querySelectorAll('p')[0];
-    // 		const cardEmail = previewCard.querySelectorAll('p')[1];
-    // 		const cardLinks = previewCard.querySelector('ul');
-    // 		if (avatar && cardName && cardEmail && cardLinks) {
-    // 		    if (data.avatar) {
-    // 			avatar.src = data.avatar;
-    // 			avatar.setAttribute('style', 'object-fit: cover;');
-    // 		    } else {
-    // 			avatar.setAttribute('style', 'object-fit: scale-down;');
-    // 		    }
-    // 		    cardName.textContent  = data.name;
-    // 		    cardEmail.textContent = data.email ? data.email : '***********';
-    // 		    cardLinks.innerHTML   = createListOfPreviewLinks(data.links);
-    // 		}
-    // 	    }
-    // 	}
-    // }
 });
 
 saveBtn?.addEventListener('click', async () => {
     try {
 	const accessToken = localStorage.getItem("_t1");
-	if (!accessToken) location.replace("/login");
+	if (!accessToken) window.location.replace("/login");
 	const changedUserData = getChangedUserData();
 	console.log(`changed user data: ${JSON.stringify(changedUserData, null, 2)}`);
 	saveBtn.querySelector(".clock-spinner")?.removeAttribute("data-visible");
-	const response = await fetch(`${path}/api/user/update`,
+	const response = await fetch(`${url}/api/user/update`,
 	    {
 		method: "POST",
 		headers: {
@@ -190,11 +120,11 @@ saveBtn?.addEventListener('click', async () => {
 	    showPopUpMessage(error.message);
 	}
 	if (response.status === 401) {
-	    const refreshResponse = await fetch(`${path}/api/refresh`);
+	    const refreshResponse = await fetch(`${url}/api/refresh`);
 	    if (refreshResponse.status === 200) {
 		const token = await refreshResponse.json();
 		localStorage.setItem("_t1", token); // accessToken
-		const response = await fetch(`${path}/api/user/update`,
+		const response = await fetch(`${url}/api/user/update`,
 		    {
 			method: "POST",
 			headers: {
@@ -220,7 +150,7 @@ saveBtn?.addEventListener('click', async () => {
 		    showPopUpMessage("Internal server error");
 		}
 	    }
-	    if (refreshResponse.status === 401) location.replace("/login");
+	    if (refreshResponse.status === 401) window.location.replace("/login");
 	}
 	if (response.status === 500) {
 	    saveBtn.querySelector(".clock-spinner")?.setAttribute("data-visible", "false");
@@ -233,7 +163,7 @@ saveBtn?.addEventListener('click', async () => {
 });
 
 logoutBtn?.addEventListener('click', () => {
-    location.replace("/login");
+    window.location.replace("/login");
 });
 
 addNewLinkBtn?.addEventListener('click', () => {

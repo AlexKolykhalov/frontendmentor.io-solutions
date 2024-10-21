@@ -1,12 +1,14 @@
 // @ts-check
-// import { config } from "dotenv";
+
 import { showPopUpMessage } from "../../utils/utils.js";
-// config();
 
 /** @type {HTMLButtonElement|null} */
 const loginBtn = document.querySelector('.login-btn');
 
-console.log(`ENV: ${process.env.PORT ?? "http://localhost:3000"}`);
+/** @type {string} */
+const url = (window.location.hostname === "localhost") ?
+      "http://localhost:3000" :
+      "https://frontendmentor-io-solutions.vercel.app";
 
 // ************************** 1. Events *********************************//
 
@@ -18,7 +20,7 @@ loginBtn?.addEventListener('click', async () => {
     if (email && password) {
 	try {
 	    loginBtn.querySelector(".clock-spinner")?.removeAttribute("data-visible");
-	    const response = await fetch("https://frontendmentor-io-solutions.vercel.app/api/login", {
+	    const response = await fetch(`${url}/api/login`, {
 		method: "POST",
 		headers: {"Content-Type": "application/json"},
 		body: JSON.stringify({email: email.value, password: password.value}),
@@ -26,8 +28,8 @@ loginBtn?.addEventListener('click', async () => {
 	    if (response.status === 200) {
 		const token = await response.json();
 		email.value = password.value = "";  // clear, just in case
-		localStorage.setItem("_t1", token); // accessToken		
-		location.replace("/");
+		localStorage.setItem("_t1", token); // accessToken
+		window.location.replace("/");
 	    } else {
 		const error = await response.json();
 		loginBtn.querySelector(".clock-spinner")?.setAttribute("data-visible", "false");
@@ -39,5 +41,3 @@ loginBtn?.addEventListener('click', async () => {
 	}
     }
 });
-
-// ************************* 2. Functions *******************************//

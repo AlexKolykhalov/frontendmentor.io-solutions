@@ -3,16 +3,21 @@
 import { getLinkAttributeBySourceName, showPopUpMessage } from "../../utils/utils.js";
 
 /**
- * @typedef { import("../../../server/src/types/typedefs.js").User } User
- * @typedef { import("../../../server/src/types/typedefs.js").Link } Link
+ * @typedef { import("../../../src/types/typedefs.js").User } User
+ * @typedef { import("../../../src/types/typedefs.js").Link } Link
  */
+
+/** @type {string} */
+const url = (window.location.hostname === "localhost") ?
+      "http://localhost:3000" :
+      "https://frontendmentor-io-solutions.vercel.app";
 
 // ************************** 1. Events *********************************//
 
 window.addEventListener('load', async () => {
     try {
 	const response = await fetch(
-	    `http://localhost:3000/api/user/${window.location.pathname.split("/")[1]}`,
+	    `${url}/api/user/${window.location.pathname.split("/")[1]}`,
 	);
 	if (response.status === 200) {
 	    const user = await response.json();

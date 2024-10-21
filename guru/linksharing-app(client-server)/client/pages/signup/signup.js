@@ -5,6 +5,11 @@ import { showPopUpMessage } from "../../utils/utils.js";
 /** @type {HTMLButtonElement|null} */
 const signupBtn = document.querySelector('.signup-btn');
 
+/** @type {string} */
+const url = (window.location.hostname === "localhost") ?
+      "http://localhost:3000" :
+      "https://frontendmentor-io-solutions.vercel.app";
+
 // ************************** 1. Events *********************************//
 
 signupBtn?.addEventListener('click', async () => {
@@ -15,7 +20,7 @@ signupBtn?.addEventListener('click', async () => {
     if (email && password) {
 	try {
 	    signupBtn.querySelector(".clock-spinner")?.removeAttribute("data-visible");
-	    const response = await fetch("http://localhost:3000/api/signup", {
+	    const response = await fetch(`${url}/api/signup`, {
 		method: "POST",
 		headers: {"Content-Type": "application/json"},
 		body: JSON.stringify({email: email.value, password: password.value}),
@@ -24,7 +29,7 @@ signupBtn?.addEventListener('click', async () => {
 		const token = await response.json();
 		email.value = password.value = "";  // clear, just in case
 		localStorage.setItem("_t1", token); // accessToken		
-		location.replace("/");
+		window.location.replace("/");
 	    } else {
 		const error = await response.json();
 		signupBtn.querySelector(".clock-spinner")?.setAttribute("data-visible", "false");
