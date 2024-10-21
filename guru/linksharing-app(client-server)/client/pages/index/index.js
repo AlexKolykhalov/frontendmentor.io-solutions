@@ -163,6 +163,7 @@ saveBtn?.addEventListener('click', async () => {
 });
 
 logoutBtn?.addEventListener('click', () => {
+    localStorage.removeItem("_t1"); // accessToken
     window.location.replace("/login");
 });
 
