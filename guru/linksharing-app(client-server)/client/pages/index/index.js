@@ -66,7 +66,7 @@ window.addEventListener('load', async () => {
 	    if (user) populateUI(user); else showPopUpMessage("User has been deleted");
 	}
 	if (response.status === 401) {
-	    const refreshResponse = await fetch("${path}/api/refresh");
+	    const refreshResponse = await fetch(`${url}/api/refresh`);
 	    if (refreshResponse.status === 200) {
 		const token = await refreshResponse.json();
 		localStorage.setItem("_t1", token); // accessToken
