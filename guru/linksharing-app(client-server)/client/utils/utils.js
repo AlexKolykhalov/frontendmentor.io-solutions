@@ -27,7 +27,7 @@ export function showPopUpMessage(msg) {
 					  cross-axis-center
 					  pad-v-sm
 					  pad-h-m">
-				<img alt="" src="images/icons/icon-error.svg">
+				<img alt="" src="client/images/icons/icon-error.svg">
 				<p class="fs-d-300-400 white-space-nowrap">${msg}</p>
 			      </div>`;
 	document.body.appendChild(popUpDiv);
