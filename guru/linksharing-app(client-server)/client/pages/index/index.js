@@ -3,8 +3,8 @@
 import { getLinkAttributeBySourceName, showPopUpMessage } from "../../utils/utils.js";
 
 /**
- * @typedef { import("../../../server/src/types/typedefs.js").User } User
- * @typedef { import("../../../server/src/types/typedefs.js").Link } Link
+ * @typedef { import("../../../src/types/typedefs.js").User } User
+ * @typedef { import("../../../src/types/typedefs.js").Link } Link
  */
 
 /** @type {HTMLButtonElement|null} */
@@ -40,6 +40,9 @@ const lastNameInput = document.querySelector('#last_name');
 /** @type {HTMLInputElement|null} */
 const emailInput = document.querySelector('#email');
 
+/** @type {string} */
+const path = "https://frontendmentor-io-solutions.vercel.app";
+
 /** @type {User|null} */
 let user;
 
@@ -49,8 +52,7 @@ window.addEventListener('load', async () => {
     try {
 	const accessToken = localStorage.getItem("_t1");
 	if (!accessToken) location.replace("/login");
-	const response = await fetch(
-	    "http://localhost:3000/api/user",
+	const response = await fetch(`${path}/api/user`,
 	    {
 		method: "GET",
 		headers: {"Authorization": `Bearer ${accessToken}`},
@@ -62,12 +64,11 @@ window.addEventListener('load', async () => {
 	    if (user) populateUI(user); else showPopUpMessage("User has been deleted");
 	}
 	if (response.status === 401) {
-	    const refreshResponse = await fetch("http://localhost:3000/api/refresh");
+	    const refreshResponse = await fetch("${path}/api/refresh");
 	    if (refreshResponse.status === 200) {
 		const token = await refreshResponse.json();
 		localStorage.setItem("_t1", token); // accessToken
-		const response = await fetch(
-		    "http://localhost:3000/api/user",
+		const response = await fetch(`${path}/api/user`,
 		    {
 			method: "GET",
 			headers: {"Authorization": `Bearer ${token}`},
@@ -167,8 +168,7 @@ saveBtn?.addEventListener('click', async () => {
 	const changedUserData = getChangedUserData();
 	console.log(`changed user data: ${JSON.stringify(changedUserData, null, 2)}`);
 	saveBtn.querySelector(".clock-spinner")?.removeAttribute("data-visible");
-	const response = await fetch(
-	    "http://localhost:3000/api/user/update",
+	const response = await fetch(`${path}/api/user/update`,
 	    {
 		method: "POST",
 		headers: {
@@ -190,12 +190,11 @@ saveBtn?.addEventListener('click', async () => {
 	    showPopUpMessage(error.message);
 	}
 	if (response.status === 401) {
-	    const refreshResponse = await fetch("http://localhost:3000/api/refresh");
+	    const refreshResponse = await fetch(`${path}/api/refresh`);
 	    if (refreshResponse.status === 200) {
 		const token = await refreshResponse.json();
 		localStorage.setItem("_t1", token); // accessToken
-		const response = await fetch(
-		    "http://localhost:3000/api/user/update",
+		const response = await fetch(`${path}/api/user/update`,
 		    {
 			method: "POST",
 			headers: {

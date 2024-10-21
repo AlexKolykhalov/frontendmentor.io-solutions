@@ -1,9 +1,12 @@
 // @ts-check
-
+// import { config } from "dotenv";
 import { showPopUpMessage } from "../../utils/utils.js";
+// config();
 
 /** @type {HTMLButtonElement|null} */
 const loginBtn = document.querySelector('.login-btn');
+
+console.log(`ENV: ${process.env.PORT ?? "http://localhost:3000"}`);
 
 // ************************** 1. Events *********************************//
 
@@ -15,7 +18,7 @@ loginBtn?.addEventListener('click', async () => {
     if (email && password) {
 	try {
 	    loginBtn.querySelector(".clock-spinner")?.removeAttribute("data-visible");
-	    const response = await fetch("http://localhost:3000/api/login", {
+	    const response = await fetch("https://frontendmentor-io-solutions.vercel.app/api/login", {
 		method: "POST",
 		headers: {"Content-Type": "application/json"},
 		body: JSON.stringify({email: email.value, password: password.value}),
