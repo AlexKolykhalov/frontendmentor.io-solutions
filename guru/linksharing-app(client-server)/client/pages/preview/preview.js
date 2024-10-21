@@ -63,7 +63,7 @@ window.addEventListener('load', async () => {
 
 shareBtn?.addEventListener("click", async () => {
     try {
-	await navigator.clipboard.writeText(`http://localhost:3000/${user.userId}`);
+	await navigator.clipboard.writeText(`${url}/${user.userId}`);
 	showPopUpMessage("Link copied");
     } catch (error) {
 	showPopUpMessage(error.message)
