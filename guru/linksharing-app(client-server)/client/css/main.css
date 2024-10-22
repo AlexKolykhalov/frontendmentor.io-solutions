@@ -137,7 +137,7 @@ img:not([alt]) {
     --clr-twitch:         #6441a4;
     --clr-twitter:        #55acee;
     --clr-hashnode:       #2563eb;
-    --clr-codepen:        #000000;	  
+    --clr-codepen:        #000000;
     --clr-devto:          #222222;
     --clr-codewars:       #363749;
     --clr-freecodecamp:   #0a0a23;
@@ -231,6 +231,7 @@ dialog::backdrop {
 section > footer {
     border-top: 1px solid var(--clr-neutral-400);
     padding-top: 1rem;
+    padding-bottom: clamp(0rem, 60px - 5vw, 3rem);
 }
 
 section > article {
@@ -351,7 +352,7 @@ section > article {
 
 .logo {
     width: 40px;
-    height: 100%;    
+    height: 100%;
     background-image: url("../images/logo-devlinks-small.svg");
     background-size: contain;
     background-repeat: no-repeat;
@@ -372,9 +373,12 @@ section > article {
     padding-inline: 1.5rem;
 }
 
+.btn-theme.save-btn {
+    padding-block: 0.75rem;
+}
+
 .user-links {
-    height: 45vh;
-    /* height: 55vh; */
+    height: 90%;
     overflow-y: auto;
 }
 
@@ -386,7 +390,7 @@ section > article {
     content: url("../images/icons/icon-chevron-down.svg");
     cursor: pointer;
     pointer-events: none;
-    
+
     position: absolute;
     top: 50%;
     right: 5px;
@@ -412,11 +416,11 @@ section > article {
 }
 
 .options[data-position="above"] {
-    bottom: 50px;    
+    bottom: 50px;
 }
 
 .options[data-position="under"] {
-    top: 50px;    
+    top: 50px;
 }
 
 .options > li:hover {
@@ -463,7 +467,7 @@ section > article {
     height: 20px;
 
     border-radius: 50%;
-    background-color: var(--clr-primary-purple-pri);    
+    background-color: var(--clr-primary-purple-pri);
 }
 
 .clear-image-btn::before {
@@ -473,7 +477,7 @@ section > article {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) rotate(135deg);
-    
+
     width: 10px;
     height: 2px;
     background-color: var(--clr-neutral-000);
@@ -493,7 +497,8 @@ section > article {
 }
 
 .preview-card {
-    width: clamp(250px, 55vw, 300px);
+    /* width: clamp(250px, 55vw, 300px); */
+    width: clamp(280px, 55vw, 325px);
     box-shadow: 0 0 10px 0 var(--clr-primary-purple-shadow);
 }
 
@@ -550,7 +555,7 @@ section > article {
     top: 50%;
     right: 1rem;
     transform: translateY(-50%);
-    
+
     width: 20px;
     height: 20px;
 }
@@ -558,7 +563,7 @@ section > article {
 /* .pop-up-message { */
 /*     pointer-events: none; */
 /*     opacity: 0; */
-    
+
 /*     bottom: 0; */
 /*     left: 50%; */
 /*     transform: translateX(-50%); */
@@ -592,7 +597,7 @@ section > article {
     top: 205px;
     left: 50%;
     transform: translateX(-50%);
-    
+
     background-color: var(--clr-neutral-000);
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -647,7 +652,7 @@ section > article {
     top: 50%;
     right: 1rem;
     transform: translateY(-50%);
-    
+
     width: 20px;
     height: 20px;
 }
