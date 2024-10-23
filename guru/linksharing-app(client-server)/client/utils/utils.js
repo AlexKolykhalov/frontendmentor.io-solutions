@@ -3,20 +3,24 @@
 /**
  * Shows a popup at the bottom of the screen.
  * @param {string} msg
+ * @param {string} type "error" by default or "msg"
  */
-export function showPopUpMessage(msg) {
+export function showPopUpMessage(msg, type = "error") {
     const popUp = document.querySelector(".pop-up-message");
     if (!popUp) {
+	const color = type === "error" ? "var(--clr-primary-red)" : "var(--clr-primary-purple-pri)";
+	const bg    = type === "error" ? "#FF3939" : "#633CFF";
 	const popUpDiv = document.createElement("div");
 	popUpDiv.className = "pop-up-message";
 	const style = `position: absolute;
 		       background-color: var(--clr-neutral-000);
 		       border-radius: 0.35rem;
-		       border: 1px solid var(--clr-primary-red);
-		       color: var(--clr-primary-red);
+		       border: 1px solid ${color};
+		       color: ${color};
 		       pointer-events: none;
 		       opacity: 0;
 		       bottom: 0;
+                       width: 300px;
 		       left: 50%;
 		       transform: translateX(-50%);`;
 	popUpDiv.setAttribute("style", style);
@@ -27,15 +31,24 @@ export function showPopUpMessage(msg) {
 					  cross-axis-center
 					  pad-v-sm
 					  pad-h-m">
-				<img alt="" src="client/images/icons/icon-error.svg">
-				<p class="fs-d-300-400 white-space-nowrap">${msg}</p>
+                                <div style="width:20px;">
+				  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20">
+				    <g fill="none" fill-rule="evenodd"><circle cx="10" cy="10" r="10" fill="${bg}"/>
+				      <g fill="#FFF" transform="translate(9 5)">
+					<rect width="2" height="7" rx="1"/>
+					<rect width="2" height="2" y="8" rx="1"/>
+				      </g>
+				    </g>
+				  </svg>
+                                </div>
+				<p class="fs-d-300-400 text-center">${msg}</p>
 			      </div>`;
 	document.body.appendChild(popUpDiv);
 	const animation = popUpDiv.animate(
 	    [
-		{opacity: 1,   bottom: "10%",   offset: 0.01},
-		{opacity: 1,   bottom: "10%",   offset: 0.9},
-		{opacity: 0.5, bottom: "5%", offset: 1},
+		{opacity: 1,   bottom: "10%", offset: 0.01},
+		{opacity: 1,   bottom: "10%", offset: 0.9},
+		{opacity: 0.5, bottom: "5%",  offset: 1},
 	    ],
 	    {duration: 3000, easing: "ease-in"}
 	);

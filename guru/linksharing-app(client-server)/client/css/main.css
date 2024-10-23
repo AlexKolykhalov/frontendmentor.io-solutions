@@ -781,9 +781,9 @@ section > article {
     text-align: center;
 }
 
-.white-space-nowrap {
-    white-space: nowrap;
-}
+/* .white-space-nowrap { */
+/*     white-space: nowrap; */
+/* } */
 
 .fw-normal {
     font-weight: 400;

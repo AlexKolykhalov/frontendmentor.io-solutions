@@ -112,7 +112,7 @@ saveBtn?.addEventListener('click', async () => {
 	    user = await response.json();
 	    console.log(`User updated data: ${JSON.stringify(user, null, 2)}`);
 	    saveBtn.querySelector(".clock-spinner")?.setAttribute("data-visible", "false");
-	    showPopUpMessage('Your changes have been successfully saved!');
+	    showPopUpMessage('Your changes have been successfully saved!', "msg");
 	}
 	if (response.status === 400) {
 	    const error = await response.json();
@@ -138,7 +138,7 @@ saveBtn?.addEventListener('click', async () => {
 		    user = await response.json();
 		    console.log(`User updated data after resfresh: ${JSON.stringify(user, null, 2)}`);
 		    saveBtn.querySelector(".clock-spinner")?.setAttribute("data-visible", "false");
-		    showPopUpMessage('Your changes have been successfully saved!');
+		    showPopUpMessage('Your changes have been successfully saved!', "msg");
 		}
 		if (response.status === 400) {
 		    const error = await response.json();
