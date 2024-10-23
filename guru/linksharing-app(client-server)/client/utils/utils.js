@@ -19,7 +19,7 @@ export function showPopUpMessage(msg, type = "error") {
 		       color: ${color};
 		       pointer-events: none;
 		       opacity: 0;
-		       bottom: 0;
+		       bottom: 5%;
                        width: 300px;
 		       left: 50%;
 		       transform: translateX(-50%);`;
@@ -33,7 +33,8 @@ export function showPopUpMessage(msg, type = "error") {
 					  pad-h-m">
                                 <div style="width:20px;">
 				  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20">
-				    <g fill="none" fill-rule="evenodd"><circle cx="10" cy="10" r="10" fill="${bg}"/>
+				    <g fill="none" fill-rule="evenodd">
+                                      <circle cx="10" cy="10" r="10" fill="${bg}"/>
 				      <g fill="#FFF" transform="translate(9 5)">
 					<rect width="2" height="7" rx="1"/>
 					<rect width="2" height="2" y="8" rx="1"/>
@@ -43,6 +44,7 @@ export function showPopUpMessage(msg, type = "error") {
                                 </div>
 				<p class="fs-d-300-400 text-center">${msg}</p>
 			      </div>`;
+	document.body.setAttribute("style", "position: relative;");
 	document.body.appendChild(popUpDiv);
 	const animation = popUpDiv.animate(
 	    [
@@ -52,7 +54,10 @@ export function showPopUpMessage(msg, type = "error") {
 	    ],
 	    {duration: 3000, easing: "ease-in"}
 	);
-	animation.addEventListener("finish", () => document.body.removeChild(popUpDiv));
+	animation.addEventListener("finish", () => {
+	    document.body.removeChild(popUpDiv);
+	    document.body.removeAttribute("style");
+	});
     }
 }
 
