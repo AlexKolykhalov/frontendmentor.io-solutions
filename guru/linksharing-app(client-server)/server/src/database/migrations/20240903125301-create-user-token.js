@@ -12,6 +12,10 @@ module.exports = {
 	    token: {
 		type: Sequelize.STRING
 	    },
+	    created_at: {
+		allowNull: false,
+		type: Sequelize.DATE
+	    },
 	    user_id: {
 		type: Sequelize.UUID,
 		references: {

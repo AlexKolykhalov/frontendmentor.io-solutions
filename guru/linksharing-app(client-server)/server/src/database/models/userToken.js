@@ -9,6 +9,12 @@ module.exports = (sequelize, DataTypes) => {
 	    type: DataTypes.STRING,
 	    allowNull: false,	    
 	},
+	createdAt: {
+	    type: DataTypes.DATE,
+	    field: "created_at",
+	    allowNull: false,
+	    defaultValue: DataTypes.NOW
+	},
 	userId: {
 	    type: DataTypes.UUID,
 	    field: "user_id",
@@ -16,8 +22,7 @@ module.exports = (sequelize, DataTypes) => {
 	},
     }, {
 	sequelize,
-	modelName: 'UserToken',
-	timestamps: false
+	modelName: 'UserToken'	
     });
     return UserToken;
 };

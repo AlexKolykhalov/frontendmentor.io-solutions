@@ -20,8 +20,7 @@ module.exports = (sequelize, DataTypes) => {
 	}
     }, {
 	sequelize,
-	modelName: 'Authentication',
-	timestamps: false
+	modelName: 'Authentication'
     });
     return Authentication;
 };

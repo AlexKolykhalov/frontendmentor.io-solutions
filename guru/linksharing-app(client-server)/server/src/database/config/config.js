@@ -7,6 +7,10 @@ module.exports = {
 	"database": process.env.DEV_DB_DATABASE,
 	"host":     process.env.DEV_DB_HOST,
 	"dialect":  "postgres",
+	"timezone": "+00:00",
+	"define": {
+	    timestamps: false
+	},
 	"options": {
 	    "quoteIdentifiers": false
 	}
@@ -24,6 +28,10 @@ module.exports = {
 	"database": process.env.PROD_DB_DATABASE,
 	"host":     process.env.PROD_DB_HOST,
 	"dialect":  "postgres",
+	"timezone": "+00:00",
+	"define": {
+	    timestamps: false
+	},
 	"dialectOptions": {
 	    "dialectModule": require("pg")
 	},
