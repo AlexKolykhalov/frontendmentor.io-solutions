@@ -3,8 +3,8 @@
 import { getLinkAttributeBySourceName, showPopUpMessage } from "../../utils/utils.js";
 
 /**
- * @typedef { import("../../../src/types/typedefs.js").User } User
- * @typedef { import("../../../src/types/typedefs.js").Link } Link
+ * @typedef { import("../../../server/src/types/typedefs.js").User } User
+ * @typedef { import("../../../server/src/types/typedefs.js").Link } Link
  */
 
 /** @type {HTMLButtonElement|null} */
@@ -275,19 +275,27 @@ closeDialogBtn?.addEventListener('click', () => {
 });
 
 previewLink?.addEventListener('click', (e) => {
-    const changedUserData = getChangedUserData();    
-    console.log(`changed user data: ${JSON.stringify(changedUserData, null, 2)}`);
-    const arr1 = changedUserData;
-    const arr2 = user ?? {userId: "", avatar: "", name: "", email: "", links: []};
-    if (arr1.userId       !== arr2.userId ||
-	arr1.avatar       !== arr2.avatar ||
-	arr1.name         !== arr2.name   ||
-	arr1.email        !== arr2.email  ||
-	arr1.links.length !== 0) {
+    try {
+	const changedUserData = getChangedUserData();
+	console.log(`changed user data: ${JSON.stringify(changedUserData, null, 2)}`);
+	const arr1 = changedUserData;
+	const arr2 = user ?? {userId: "", avatar: "", name: "", email: "", links: []};
+	if (arr1 instanceof Error             ||
+	    arr1.userId       !== arr2.userId ||
+	    arr1.avatar       !== arr2.avatar ||
+	    arr1.name         !== arr2.name   ||
+	    arr1.email        !== arr2.email  ||
+	    arr1.links.length !== 0)
+	{
+		e.preventDefault();
+		e.stopPropagation();
+		const dialog = document.querySelector('dialog');
+		if (dialog) dialog.showModal();
+	}
+    } catch (error) {
+	showPopUpMessage(error.message);
 	e.preventDefault();
-	e.stopPropagation();
-	const dialog = document.querySelector('dialog');
-	if (dialog) dialog.showModal();
+	e.stopPropagation();	
     }
 });
 
@@ -396,6 +404,7 @@ function populateUI(data) {
 
 /**
  * Scrape user data from index.html page
+ * @returns {User|Error}
  */
 function getChangedUserData() {
     /** @type {HTMLButtonElement|null} */
