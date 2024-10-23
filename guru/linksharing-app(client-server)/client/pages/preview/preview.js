@@ -64,11 +64,10 @@ window.addEventListener('load', async () => {
 shareBtn?.addEventListener("click", async () => {
     try {
 	await navigator.clipboard.writeText(`${url}/${user.userId}`);
-	showPopUpMessage("Link copied");
+	showPopUpMessage("Link copied", "msg");
     } catch (error) {
 	showPopUpMessage(error.message)
     }
-
 });
 
 // ************************* 2. Functions *******************************//
