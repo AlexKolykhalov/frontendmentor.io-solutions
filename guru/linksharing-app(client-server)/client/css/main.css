@@ -659,6 +659,7 @@ section > article {
 
 .form {
     height: 800px;
+    width: 250px;
 }
 
 @media (min-width: 48em) {
