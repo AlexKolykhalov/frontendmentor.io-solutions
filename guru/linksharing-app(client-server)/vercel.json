@@ -4,9 +4,6 @@
 	{ "src": "server/index.js", "use": "@vercel/node" },
 	{ "src": "client/**", "use": "@vercel/static" }
     ],
-    "rewrites": [
-	{ "source": "/(.*)", "destination": "server/index.js" }
-    ],
     "crons": [
 	{
 	    "path": "/api/clear",
@@ -20,5 +17,8 @@
 	    "path": "/api/every-day",
 	    "schedule": "0 0 * * *"
 	}
+    ],
+    "rewrites": [
+	{ "source": "/(.*)", "destination": "server/index.js" }
     ]
 }
