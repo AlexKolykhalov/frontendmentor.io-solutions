@@ -12,7 +12,7 @@ import db from "../database/models/index.js";
  * @class
  */
 export class TokenService {
-    /**     
+    /**
      * @param {Payload} payload
      * @returns {{access:string, refresh:string}}
      * @throws {Error} Throws an error if the secrets is not defined.
@@ -20,7 +20,7 @@ export class TokenService {
     static generateTokens(payload) {
 	const SECRET_ACCESS_TOKEN  = process.env.SECRET_ACCESS_TOKEN;
 	const SECRET_REFRESH_TOKEN = process.env.SECRET_REFRESH_TOKEN;
-	if (!SECRET_ACCESS_TOKEN || !SECRET_REFRESH_TOKEN) throw new Error("JWT_SECRET is not defined");	
+	if (!SECRET_ACCESS_TOKEN || !SECRET_REFRESH_TOKEN) throw new Error("JWT_SECRET is not defined");
 	const accessToken  = jwt.sign(payload, SECRET_ACCESS_TOKEN, {expiresIn: "10m"});
 	const refreshToken = jwt.sign(payload, SECRET_REFRESH_TOKEN, {expiresIn: "60m"});
 	return {
@@ -59,7 +59,6 @@ export class TokenService {
      * @returns {Promise<string|null>}
      */
     static async findRefreshToken(token) {
-	//TODO check if return null
 	return await db.UserToken.findOne({
 	    attributes: ["token", "userId"],
 	    where: {token: token}
@@ -74,9 +73,12 @@ export class TokenService {
      */
     static async updateRefreshToken(newToken, oldToken) {
 	return await db.UserToken.update(
- 	    { token: newToken},
-	    { where:
-	      {token: oldToken}
+ 	    {
+		token: newToken,
+		createdAt: new Date() // date converts to UTC by config.js
+	    },
+	    {
+		where: {token: oldToken}
 	    }
 	);
     }
@@ -94,5 +96,23 @@ export class TokenService {
 		userId: userId,
 	    }
 	);
+    }
+
+    /**
+     * All refresh tokens created earlier than one hour from the current
+     * date will be deleted
+     * @async
+     * @returns {Promise<void>}
+     */
+    static async deleteRefreshTokens() {
+	return await db.UserToken.destroy({
+	    where : {
+		createdAt: {
+		    // calculate current date in UTC
+		    // and subtrack the 60 min (livetime of resfresh token)
+		    [Op.lt]: new Date(Date.parse(new Date().toISOString()) - 60 * 60 * 1000),
+		}
+	    }
+	});
     }
 }
