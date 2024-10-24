@@ -5,9 +5,8 @@ import { TokenService } from "../services/token.service.js";
 export const accessTokenValidator = [
     header("Authorization")
 	.exists().withMessage("Authozition header is missing.").bail()
-	.custom((value) =>
-	    value.startsWith("Bearer ")
-	).withMessage("Authorization header must start with 'Bearer'.").bail()
+	.custom((value) => value.startsWith("Bearer "))
+	.withMessage("Authorization header must start with 'Bearer'.").bail()
 	.custom((value, {req}) => {
 	    const accessToken = value.split(" ")[1];
 	    const payload = TokenService.verifyAccessToken(accessToken);
