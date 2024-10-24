@@ -8,6 +8,17 @@
 	{ "source": "/(.*)", "destination": "server/index.js" }
     ],
     "crons": [
-	{ "path": "/api/clear", "schedule": "2 * * * *" }
+	{
+	    "path": "/api/clear",
+	    "schedule": "* * * * *"
+	},
+	{
+	    "path": "/api/every-hour",
+	    "schedule": "0 * * * *"
+	},
+	{
+	    "path": "/api/every-day",
+	    "schedule": "0 0 * * *"
+	}
     ]
 }
