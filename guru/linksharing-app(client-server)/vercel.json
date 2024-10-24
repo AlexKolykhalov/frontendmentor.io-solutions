@@ -6,8 +6,5 @@
     ],
     "rewrites": [
 	{ "source": "/(.*)", "destination": "server/index.js" }
-    ],
-    "crons": [
-	{ "path": "/api/clear", "schedule": "*/2 * * * *" }
     ]
 }
