@@ -5,18 +5,7 @@
 	{ "src": "client/**", "use": "@vercel/static" }
     ],
     "crons": [
-	{
-	    "path": "/api/clear",
-	    "schedule": "* * * * *"
-	},
-	{
-	    "path": "/api/every-hour",
-	    "schedule": "0 * * * *"
-	},
-	{
-	    "path": "/api/every-day",
-	    "schedule": "0 0 * * *"
-	}
+	{ "path": "/api/clear", "schedule": "0 9 * * *" }
     ],
     "rewrites": [
 	{ "source": "/(.*)", "destination": "server/index.js" }
