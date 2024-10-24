@@ -8,7 +8,7 @@ export const cronValidator = [
 	.withMessage("Authorization header must start with 'Bearer'.").bail()
 	.custom((value) => {
 	    const cronSecret = value.split(" ")[1];	    
-	    if (cronSecret !== process.env.CRON_SECRET) throw new Error("Invalid cron secret");
+	    if (cronSecret !== process.env.CRON_SECRET) throw new Error("Invalid CRON secret");
 	    return true;
 	}),
     (req, _, next) => {
