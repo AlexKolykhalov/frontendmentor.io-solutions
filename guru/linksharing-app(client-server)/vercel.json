@@ -1,15 +1,14 @@
 {
     "version": 2,
-    "builds": [
-	{ "src": "server/cron.js", "use": "@vercel/node" },
+    "builds": [	
 	{ "src": "server/index.js", "use": "@vercel/node" },
 	{ "src": "client/**", "use": "@vercel/static" }
     ],
     "crons": [
-	{ "path": "/server/cron", "schedule": "0 9 * * *" }
+	{ "path": "/api/clear", "schedule": "0 9 * * *" }
     ],
     "rewrites": [
-	{ "source": "/server/cron", "destination": "server/cron.js" },
+	{ "source": "/api/clear", "destination": "server/index.js" },
 	{ "source": "/(.*)", "destination": "server/index.js" }
     ]
 }
