@@ -9,6 +9,7 @@
 	{ "path": "/server/cron", "schedule": "0 9 * * *" }
     ],
     "rewrites": [
+	{ "source": "/server/cron", "destination": "server/cron.js" },
 	{ "source": "/(.*)", "destination": "server/index.js" }
     ]
 }
