@@ -8,7 +8,6 @@
 	{ "path": "/api/clear", "schedule": "0 9 * * *" }
     ],
     "rewrites": [
-	{ "source": "/api/clear", "destination": "server/cron.js" },
 	{ "source": "/(.*)", "destination": "server/index.js" }
     ]
 }
