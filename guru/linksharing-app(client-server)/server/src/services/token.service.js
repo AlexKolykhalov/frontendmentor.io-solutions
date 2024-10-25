@@ -2,6 +2,7 @@
 
 import jwt from "jsonwebtoken";
 import db from "../database/models/index.js";
+import { Op } from "sequelize";
 
 /**
  * @typedef {import("../types/typedefs.js").JwtPayload} JwtPayload
