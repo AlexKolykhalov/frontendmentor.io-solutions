@@ -3,14 +3,14 @@
 import { getLinkAttributeBySourceName, showPopUpMessage } from "../../utils/utils.js";
 
 /**
- * @typedef { import("../../../src/types/typedefs.js").User } User
- * @typedef { import("../../../src/types/typedefs.js").Link } Link
+ * @typedef { import("../../../server/src/types/typedefs.js").User } User
+ * @typedef { import("../../../server/src/types/typedefs.js").Link } Link
  */
 
 /** @type {string} */
 const url = (window.location.hostname === "localhost") ?
       "http://localhost:3000" :
-      "https://frontendmentor-io-solutions.vercel.app";
+      "https://sharetoyou.vercel.app";
 
 // ************************** 1. Events *********************************//
 

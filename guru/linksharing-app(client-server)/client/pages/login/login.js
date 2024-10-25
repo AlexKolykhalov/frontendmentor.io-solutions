@@ -8,7 +8,7 @@ const loginBtn = document.querySelector('.login-btn');
 /** @type {string} */
 const url = (window.location.hostname === "localhost") ?
       "http://localhost:3000" :
-      "https://frontendmentor-io-solutions.vercel.app";
+      "https://sharetoyou.vercel.app";
 
 // ************************** 1. Events *********************************//
 
