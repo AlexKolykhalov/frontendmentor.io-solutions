@@ -97,5 +97,5 @@ Any comments are welcome.
 | No | Challenge | Live demo | Source |
 | :---: | :--- | :---: | :--- |
 | 01 | Linksharing app | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/guru/linksharing-app/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/guru/linksharing-app) |
-| 02 | Linksharing app (client-server) | [Live demo (under construction)]() | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/guru/linksharing-app(client-server)) |
+| 02 | Linksharing app (client-server) | [Live demo](https://sharetoyou.vercel.app) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/guru/linksharing-app(client-server)) |
 </details>

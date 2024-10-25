@@ -2,7 +2,7 @@
 
 This is a solution to the [Link-sharing app challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/linksharing-app-Fbt7yweGsT). Frontend Mentor challenges help you improve your coding skills by building realistic projects.
 
-[__Live demo__](https://alexkolykhalov.github.io/frontendmentor.io-solutions/guru/linksharing-app/)
+[__Live demo__](https://sharetoyou.vercel.app)
 
 ## Table of contents
 
@@ -44,6 +44,10 @@ Users should be able to:
 - CSS Grid
 - Mobile-first workflow
 - JavaScript
+- client-server architecture
+- Vercel serverless deploy
+- cron job implementation
+- postgres as back ([supabase](https://supabase.com/))
 
 ## Author
 
