@@ -10,7 +10,7 @@ const __dirname = process.env.NODE_ENV === "development" ?
 const router    = Router();
 
 router.use("/api", authRouter);
-router.use("/api", cronRouter);
+// router.use("/api", cronRouter);
 router.use("/api", userRouter);
 
 router.get("/login", (_, res) => {

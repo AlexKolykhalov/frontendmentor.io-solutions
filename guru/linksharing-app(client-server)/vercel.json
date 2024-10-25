@@ -5,9 +5,10 @@
 	{ "src": "client/**", "use": "@vercel/static" }
     ],
     "crons": [
-	{ "path": "/api/clear", "schedule": "0 9 * * *" }
+	{ "path": "/cron/clear", "schedule": "0 9 * * *" }
     ],
     "rewrites": [
+	{ "source": "/cron/(.*)", "destination": "server/cron.js" },
 	{ "source": "/(.*)", "destination": "server/index.js" }
     ]
 }
