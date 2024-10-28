@@ -1,6 +1,6 @@
 // @ts-check
 
-import { getLinkAttributeBySourceName, showPopUpMessage } from "../../utils/utils.js";
+import { getLinkInfoByName, showPopUpMessage } from "../../utils/utils.js";
 
 /**
  * @typedef { import("../../../server/src/types/typedefs.js").User } User
@@ -295,7 +295,7 @@ previewLink?.addEventListener('click', (e) => {
     } catch (error) {
 	showPopUpMessage(error.message);
 	e.preventDefault();
-	e.stopPropagation();	
+	e.stopPropagation();
     }
 });
 
@@ -311,7 +311,7 @@ lastNameInput?.addEventListener('input', () => {
     const mockupName = document.querySelector('.phone-mockup-name');
     if (mockupName) {
 	const lastName = lastNameInput.value.trim() === '' ? '****' : lastNameInput.value.trim();
-	mockupName.textContent = `${mockupName.textContent?.split(' ')[0]} ${lastName}`;	
+	mockupName.textContent = `${mockupName.textContent?.split(' ')[0]} ${lastName}`;
     }
 });
 
@@ -319,7 +319,7 @@ emailInput?.addEventListener('input', () => {
     const mockupEmail = document.querySelector('.phone-mockup-email');
     if (mockupEmail) {
 	const email = emailInput.value.trim() === '' ? '***********' : emailInput.value.trim();
-	mockupEmail.textContent = email;	
+	mockupEmail.textContent = email;
     }
 });
 
@@ -449,11 +449,11 @@ function getChangedUserData() {
     listOfLinks.forEach((item) => {
 	const source = item.querySelector(".select > button span");
 	const url    = item.querySelector("input");
-	if (source && url) {
+	if (source && source.textContent && url) {
 	    if (!url.value.trim()) throw Error("Link without URL");
 	    const link = {
 		linkId: item.getAttribute("id") ?? "",
-		source: source.textContent?.trim() ?? "",
+		source: source.textContent,
 		url: url.value.trim()
 	    };
 	    links.push(link);
@@ -535,6 +535,11 @@ function addNewLinkAndMockupBadge(linkInfo) {
 		input.value = linkInfo.url;
 		input.setAttribute('id', `input_${index}`);
 
+		const { domain, offset } = getLinkInfoByName(linkInfo.source);
+		// working with input
+		input.setAttribute("style", `padding-left: ${offset};`);
+		input.parentElement?.setAttribute("style", `--domain: "${domain}";`);
+
 		selectBtn.addEventListener('mousedown', () => {
 		    toggleOptions(selectOptions);
 		    selectBtn.focus();
@@ -611,10 +616,9 @@ function addNewLinkAndMockupBadge(linkInfo) {
     const phoneMockup = document.querySelector('.phone-mockup');
     if (phoneMockup) {
 	const badge = document.createElement('div');
-	let path    = getLinkAttributeBySourceName(linkInfo.source).path;
-	let bgColor = getLinkAttributeBySourceName(linkInfo.source).bgcolor;
+	const { iconPath, bgColor } = getLinkInfoByName(linkInfo.source);
 	badge.classList.add('phone-mockup-badge', bgColor, 'row', 'cross-axis-center', 'clr-n-000', 'border-radius-sm');
-	badge.setAttribute('style', `--image_path: url(${path});`);
+	badge.setAttribute('style', `--image_path: url(${iconPath});`);
 	badge.textContent = linkInfo.source;
 	phoneMockup.appendChild(badge);
     }
@@ -647,13 +651,13 @@ function moveOptionsItem(optionElement, event) {
 }
 
 /**
- * @param {Element|null} optionElement
- * @param {Element} item
+ * @param {Element|null} optionsElements Droped list of options
+ * @param {Element}      item            The selected item from droped list of options
  */
-function setSelectedItem(optionElement, item) {
-    if (optionElement && optionElement.parentElement) {
-	const selectBtn    = optionElement.parentElement.querySelector('button');
-	const previuosItem = optionElement.querySelector('li[data-status="selected"]');
+function setSelectedItem(optionsElements, item) {
+    if (optionsElements && optionsElements.parentElement) {
+	const selectBtn    = optionsElements.parentElement.querySelector('button');
+	const previuosItem = optionsElements.querySelector('li[data-status="selected"]');
 	if (selectBtn && previuosItem) {
 	    const buttonImg         = selectBtn.querySelector('img');
 	    const buttonSpan        = selectBtn.querySelector('span');
@@ -664,18 +668,23 @@ function setSelectedItem(optionElement, item) {
 		buttonSpan.textContent = currentTargetSpan.textContent;
 		previuosItem.removeAttribute('data-status');
 		item.setAttribute('data-status', 'selected');
-		// working with badge (change title and bg-color)
 		const attr = selectBtn.getAttribute('id');
-		if (attr) {
+		if (attr && currentTargetSpan.textContent) {
+		    const { domain, iconPath, bgColor, offset } = getLinkInfoByName(currentTargetSpan.textContent);
 		    const index = Number(attr.split('_')[1]);
+		    // working with input
+		    const input = document.querySelector(`#input_${index}`);
+		    if (input) {
+			input.setAttribute("style", `padding-left: ${offset};`);
+			input.parentElement?.setAttribute("style", `--domain: "${domain}";`);
+		    }
+		    // working with badge (change title and bg-color)
 		    const phoneMockupBadges = document.querySelectorAll('.phone-mockup-badge');
 		    const badge = phoneMockupBadges[index - 1];
-		    if (badge && currentTargetSpan.textContent) {
-			const path    = getLinkAttributeBySourceName(currentTargetSpan.textContent).path;
-			const bgColor = getLinkAttributeBySourceName(currentTargetSpan.textContent).bgcolor;
+		    if (badge) {
 			badge.classList.remove(...badge.classList);
 			badge.classList.add('phone-mockup-badge', bgColor, 'row', 'cross-axis-center', 'clr-n-000', 'border-radius-sm');
-			badge.setAttribute('style', `--image_path: url(${path});`);
+			badge.setAttribute('style', `--image_path: url(${iconPath});`);
 			badge.textContent = currentTargetSpan.textContent;
 		    }
 		}

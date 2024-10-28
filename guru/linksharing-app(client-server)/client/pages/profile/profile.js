@@ -1,6 +1,6 @@
 // @ts-check
 
-import { getLinkAttributeBySourceName, showPopUpMessage } from "../../utils/utils.js";
+import { getLinkInfoByName, showPopUpMessage } from "../../utils/utils.js";
 
 /**
  * @typedef { import("../../../server/src/types/typedefs.js").User } User
@@ -63,15 +63,14 @@ function populateUI(data) {
  */
 function createListOfPreviewLinks(links) {
     let list = '';
-    links.forEach((item) => {
-	let path    = getLinkAttributeBySourceName(item.source).path;
-	let bgColor = getLinkAttributeBySourceName(item.source).bgcolor;
+    links.forEach((item) => {		
+	const { domain, iconPath, bgColor } = getLinkInfoByName(item.source);
 	const li = `<li>
                       <a
-                        style="--image_path: url(${path});"
+                        style="--image_path: url(${iconPath});"
                         target="_blank"
                         class=${bgColor}
-                        href=${item.url}>
+                        href=${domain}${item.url}>
                           ${item.source}
                       </a>
                     </li>`;

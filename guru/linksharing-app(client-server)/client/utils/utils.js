@@ -62,69 +62,102 @@ export function showPopUpMessage(msg, type = "error") {
 }
 
 /**
- * Returns bg-color and path of icon according to the `source` name.
- * @param {string} source
+ * Returns domain name, bg-color, path of icon and left-padding of input text
+ * according to the `source` name.
+ * @param {string} name
  */
-export function getLinkAttributeBySourceName(source) {
-    let attr = {'path': '',
-		'bgcolor': 'bg-p-purple'};
+export function getLinkInfoByName(name) {
+    const info = {
+	domain: "",
+	iconPath: "",
+	bgColor: "bg-p-purple",
+	offset: "",
+    };
 
-    if (source === 'GitHub') {
-	attr.path  = '../images/icons/icon-github.svg';
-	attr.bgcolor = 'bg-github';
+    if (name === "GitHub") {
+ 	info.domain   = "https://github.com/";
+	info.iconPath = "../images/icons/icon-github.svg";
+	info.bgColor  = "bg-github";
+	info.offset   = "10.8rem";
     }
-    if (source === 'LinkedIn') {
-	attr.path  = '../images/icons/icon-linkedin.svg';
-	attr.bgcolor = 'bg-linkedin';
+    if (name === "LinkedIn") {
+	info.domain   = "https://linkedin.com/";
+	info.iconPath = "../images/icons/icon-linkedin.svg";
+	info.bgColor  = "bg-linkedin";
+	info.offset   = "11.5rem";
     }
-    if (source === 'GitLab') {
-	attr.path  = '../images/icons/icon-gitlab.svg';
-	attr.bgcolor = 'bg-gitlab';
+    if (name === "GitLab") {
+	info.domain   = "https://gitlab.com/";
+	info.iconPath = "../images/icons/icon-gitlab.svg";
+	info.bgColor  = "bg-gitlab";
+	info.offset   = "10.4rem";
     }
-    if (source === 'StackOverflow') {
-	attr.path  = '../images/icons/icon-stack-overflow.svg';
-	attr.bgcolor = 'bg-stackoverflow';
+    if (name === "StackOverflow") {
+	info.domain   = "https://stackoverflow.com/";
+	info.iconPath = "../images/icons/icon-stack-overflow.svg";
+	info.bgColor  = "bg-stackoverflow";
+	info.offset   = "14.2rem";
     }
-    if (source === 'YouTube') {
-	attr.path  = '../images/icons/icon-youtube.svg';
-	attr.bgcolor = 'bg-youtube';
+    if (name === "YouTube") {
+	info.domain   = "https://youtube.com/";
+	info.iconPath = "../images/icons/icon-youtube.svg";
+	info.bgColor  = "bg-youtube";
+	info.offset   = "11.6rem";
     }
-    if (source === 'Facebook') {
-	attr.path  = '../images/icons/icon-facebook.svg';
-	attr.bgcolor = 'bg-facebook';
+    if (name === "Facebook") {
+	info.domain   = "https://facebook.com/";
+	info.iconPath = "../images/icons/icon-facebook.svg";
+	info.bgColor  = "bg-facebook";
+	info.offset   = "12.2rem";
     }
-    if (source === 'Twitch') {
-	attr.path  = '../images/icons/icon-twitch.svg';
-	attr.bgcolor = 'bg-twitch';
+    if (name === "Twitch") {
+	info.domain   = "https://twitch.tv/";
+	info.iconPath = "../images/icons/icon-twitch.svg";
+	info.bgColor  = "bg-twitch";
+	info.offset   = "9.55rem";
     }
-    if (source === 'Twitter') {
-	attr.path  = '../images/icons/icon-twitter.svg';
-	attr.bgcolor = 'bg-twitter';
+    if (name === "Twitter") {
+	info.domain   = "https://x.com/";
+	info.iconPath = "../images/icons/icon-twitter.svg";
+	info.bgColor  = "bg-twitter";
+	info.offset   = "8.4rem";
     }
-    if (source === 'Hashnode') {
-	attr.path  = '../images/icons/icon-hashnode.svg';
-	attr.bgcolor = 'bg-hashnode';
+    if (name === "Hashnode") {
+	info.domain   = "https://hashnode.com/";
+	info.iconPath = "../images/icons/icon-hashnode.svg";
+	info.bgColor  = "bg-hashnode";
+	info.offset   = "12.45rem";
     }
-    if (source === 'Codepen') {
-	attr.path  = '../images/icons/icon-codepen.svg';
-	attr.bgcolor = 'bg-codepen';
+    if (name === "Codepen") {
+	info.domain   = "https://codepen.io/";
+	info.iconPath = "../images/icons/icon-codepen.svg";
+	info.bgColor  = "bg-codepen";
+	info.offset   = "10.7rem";
     }
-    if (source === 'Devto') {
-	attr.path  = '../images/icons/icon-devto-gray.svg';
-	attr.bgcolor = 'bg-devto';
+    if (name === "Devto") {
+	info.domain   = "https://dev.to/";
+	info.iconPath = "../images/icons/icon-devto-gray.svg";
+	info.bgColor  = "bg-devto";
+	info.offset   = "8.35rem";
     }
-    if (source === 'Codewars') {
-	attr.path  = '../images/icons/icon-codewars.svg';
-	attr.bgcolor = 'bg-codewars';
+    if (name === "Codewars") {
+	info.domain   = "https://codewars.com/";
+	info.iconPath = "../images/icons/icon-codewars.svg";
+	info.bgColor  = "bg-codewars";
+	info.offset   = "12.25rem";
     }
-    if (source === 'Freecodecamp') {
-	attr.path  = '../images/icons/icon-freecodecamp.svg';
-	attr.bgcolor = 'bg-freecodecamp';
+    if (name === "Freecodecamp") {
+	info.domain   = "https://freecodecamp.org/";
+	info.iconPath = "../images/icons/icon-freecodecamp.svg";
+	info.bgColor  = "bg-freecodecamp";
+	info.offset   = "14.15rem";
     }
-    if (source === 'Frontend mentor') {
-	attr.path  = '../images/icons/icon-frontend-mentor-gray.svg';
-	attr.bgcolor = 'bg-frontendmentor';
+    if (name === "Frontend mentor") {
+	info.domain   = "https://frontendmentor.io/";
+	info.iconPath = "../images/icons/icon-frontend-mentor-gray.svg";
+	info.bgColor  = "bg-frontendmentor";
+	info.offset   = "14.1rem";
     }
 
-    return attr;
+    return info;
 }
