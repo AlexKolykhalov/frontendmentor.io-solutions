@@ -5,7 +5,7 @@ import userRouter from "./user.route.js";
 import cronRouter from "./cron.route.js";
 
 const __dirname = process.env.NODE_ENV === "development" ?
-      path.resolve():
+      path.resolve(".."):
       path.resolve("guru", "linksharing-app(client-server)");
 const router    = Router();
 
