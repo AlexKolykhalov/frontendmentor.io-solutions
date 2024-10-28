@@ -27,27 +27,8 @@ export class UserService {
 		    required: false,
 		},
 	    ],
-	    where: { userId: userId }
-	});
-    }
-
-    /**
-     * @async
-     * @param {string} shortUrl
-     * @returns {Promise<User|null>}
-     */
-    static async findByShortUrl(shortUrl) {
-	return await db.User.findOne({
-	    attributes: ["userId", "avatar", "name", "email"],
-	    include: [
-		{
-		    model: db.Link,
-		    as: "links",
-		    attributes: ["linkId", "source", "url"],
-		    required: false,
-		},
-	    ],
-	    where: { shortUrl: shortUrl }
+	    where: { userId: userId },
+	    order: [ [{model: db.Link, as: "links"}, "source", "ASC"] ]
 	});
     }
 
