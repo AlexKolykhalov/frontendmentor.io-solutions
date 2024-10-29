@@ -537,7 +537,7 @@ function addNewLinkAndMockupBadge(linkInfo) {
 
 		const { domain, offset } = getLinkInfoByName(linkInfo.source);
 		// working with input
-		input.setAttribute("style", `padding-left: ${offset};`);
+		input.setAttribute("style", `--pad-left: ${offset};`);
 		input.parentElement?.setAttribute("style", `--domain: "${domain}";`);
 
 		selectBtn.addEventListener('mousedown', () => {
@@ -675,7 +675,7 @@ function setSelectedItem(optionsElements, item) {
 		    // working with input
 		    const input = document.querySelector(`#input_${index}`);
 		    if (input) {
-			input.setAttribute("style", `padding-left: ${offset};`);
+			input.setAttribute("style", `--pad-left: ${offset};`);
 			input.parentElement?.setAttribute("style", `--domain: "${domain}";`);
 		    }
 		    // working with badge (change title and bg-color)

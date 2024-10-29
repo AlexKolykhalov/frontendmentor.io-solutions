@@ -433,12 +433,13 @@ section > article {
 }
 
 .input-link {
+    container-type: inline-size;
     position: relative;
 }
 
 .input-link > input {
     width: 100%;
-    padding-left: 2rem;
+    padding-left: var(--pad-left);
 }
 
 .input-link:after {
@@ -457,6 +458,16 @@ section > article {
     top: 50%;
     left: 2rem;    
     transform: translateY(-50%);
+}
+
+@container (max-width: 450px) {
+    .input-link > input {	
+	padding-left: 2.3rem;
+    }
+
+    .input-link:before {
+	content: "/";
+    }
 }
 
 .upload-image-btn {
