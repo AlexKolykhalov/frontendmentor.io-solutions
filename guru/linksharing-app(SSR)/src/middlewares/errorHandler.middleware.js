@@ -13,13 +13,11 @@ export const errorHandler = (err, _, res, __) => {
     },
     html () {      
       if (code === 400)
-	return res.status(400).sendFile("400.html", { root: "public" });
-      if (code === 401) {
+	return res.status(400).sendFile("html/400.html", { root: "public" });
+      if (code === 401) 
 	return res.status(401).redirect("/login");
-      }
       if (code === 404)
-	return res.status(404).sendFile("html/404.html", { root: "public" });
-      // const compiled = getCompileEJS("src/views/500.ejs");
+	return res.status(404).sendFile("html/404.html", { root: "public" });      
       const compiled = getCompileEJS("public/templates/500.ejs");
       const html = compiled({error: err.message});
       res.status(500).send(html);
