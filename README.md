@@ -92,10 +92,11 @@ Any comments are welcome.
 </details>
 
 <details>
-<summary>Guru [2/6]</summary>
+<summary>Guru [3/6]</summary>
 
 | No | Challenge | Live demo | Source |
 | :---: | :--- | :---: | :--- |
 | 01 | Linksharing app | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/guru/linksharing-app/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/guru/linksharing-app) |
 | 02 | Linksharing app (client-server) | [Live demo](https://sharetoyou.vercel.app) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/guru/linksharing-app(client-server)) |
+| 03 | Linksharing app (SSR) | [Live demo (under construction)]() | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/guru/linksharing-app(SSR)) |
 </details>
