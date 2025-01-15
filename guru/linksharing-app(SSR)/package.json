@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "build": "rm -r .parcel-cache dist || parcel build --no-source-maps",
-    "build:dev": "rm -r .parcel-cache dist || NODE_ENV=development parcel build --no-source-maps",    
+    "build:dev": "rm -r .parcel-cache dist || NODE_ENV=development parcel build --no-source-maps",
     "start": "rm -r .parcel-cache dist || parcel --target frontend --port 5000",
     "db:reset": "npx sequelize db:migrate:undo:all --debug && npx sequelize db:migrate --debug",
     "db:seed:reset": "npx sequelize db:seed:undo:all --debug && npx sequelize db:seed:all --debug",
@@ -35,7 +35,8 @@
   },
   "devDependencies": {
     "parcel": "^2.13.2",
-    "sequelize-cli": "^6.6.2"
+    "sequelize-cli": "^6.6.2",
+    "svgo": "^3.3.2"
   },
   "targets": {
     "frontend": {
