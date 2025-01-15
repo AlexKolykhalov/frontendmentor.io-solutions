@@ -1,8 +1,8 @@
 {
   "version": 2,
   "builds": [
-    { "src": "dist/index.js", "use": "@vercel/node" },
-    { "src": "dist/**", "use": "@vercel/static" }
+    { "src": "dist/index.js", "use": "@vercel/node", "config": { "distDir": "" } },
+    { "src": "dist/**", "use": "@vercel/static", "config": { "distDir": "public" } }
   ],
   "rewrites": [
     { "source": "/(.*)", "destination": "index.js" }
