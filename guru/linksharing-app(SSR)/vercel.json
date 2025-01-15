@@ -9,6 +9,6 @@
     }
   ],
   "rewrites": [
-    { "source": "/(.*)", "destination": "index.js" }
+    { "source": "/(.*)", "destination": "dist/index.js" }
   ]
 }
