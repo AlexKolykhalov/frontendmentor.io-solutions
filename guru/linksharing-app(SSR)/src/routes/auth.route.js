@@ -1,5 +1,7 @@
 //@ts-check
 
+import path from "path";
+
 import { Router }                            from "express";
 import { AuthController }                    from "../controllers/auth.controller.js";
 import { emailValidator, passwordValidator } from "../validators/auth.validator.js";
@@ -10,6 +12,7 @@ const staticPath = process.env.NODE_ENV === "development" ?
       process.env.PROD_STATIC_FILES_PATH;
 
 console.log(staticPath);
+console.log(`path: ${path.resolve(process.cwd(), "public")}`);
 
 const router = Router();
 
