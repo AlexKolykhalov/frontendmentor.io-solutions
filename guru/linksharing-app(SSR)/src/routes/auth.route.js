@@ -13,7 +13,7 @@ router.get("/api/refresh", refreshTokenValidator,             AuthController.ref
 router.get("/api/logout",                                     AuthController.logout);
 
 // router.get("/login",  (_, res) => { res.sendFile("html/login.html",  { root: "public" }); });
-router.get("/login",  (_, res) => { res.sendFile("/public/html/login.html"); });
+router.get("/login",  (_, res) => { res.sendFile("/guru/linksharing-app(SSR)/public/html/login.html"); });
 router.get("/signup", (_, res) => { res.sendFile("html/signup.html", { root: "/public" }); });
 
 export default router;
