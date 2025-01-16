@@ -1,6 +1,7 @@
 //@ts-check
 
 import path from "path";
+import { readFileSync } from "fs";
 
 import { Router }                            from "express";
 import { AuthController }                    from "../controllers/auth.controller.js";
@@ -23,7 +24,11 @@ router.get("/api/logout",                                     AuthController.log
 
 // router.get("/login",  (_, res) => { res.sendFile("html/login.html",  { root: staticPath }); });
 // router.get("/login",  (_, res) => { res.sendFile("/var/task/guru/linksharing-app(SSR)/public/html/login.html"); });
-router.get("/login",  (_, res) => { res.json("hello") });
+const html = readFileSync(
+  path.resolve() + "public/html/login.html", "utf-8"),
+      { filename: path.resolve() + "public/html/login.html" }
+);
+router.get("/login",  (_, res) => { res.send(html) });
 router.get("/signup", (_, res) => { res.sendFile("html/signup.html", { root: staticPath }); });
 
 export default router;
