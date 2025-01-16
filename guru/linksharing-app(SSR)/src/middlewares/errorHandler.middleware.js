@@ -1,5 +1,9 @@
 //@ts-check
 
+import ejs from "ejs";
+import path from "path";
+import { readFileSync } from "fs";
+
 import { getCompileEJS } from "../utils.js";
 
 export const errorHandler = (err, _, res, __) => {
@@ -19,7 +23,11 @@ export const errorHandler = (err, _, res, __) => {
       if (code === 404)
 	return res.status(404).sendFile("html/404.html", { root: "public" });      
       // const compiled = getCompileEJS("public/templates/500.ejs");
-      const compiled = getCompileEJS("/public/templates/500.ejs");
+      console.log(`path.resolve: ${path.resolve()} `);
+      const compiled = ejs.compile(
+	readFileSync(path.resolve() + "public/templates/500.ejs", "utf-8"),
+	{ filename: path.resolve() + "public/templates/500.ejs" }
+      );
       const html = compiled({error: err.message});
       res.status(500).send(html);
       // 409
