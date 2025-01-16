@@ -24,7 +24,7 @@ router.get("/api/logout",                                     AuthController.log
 
 // router.get("/login",  (_, res) => { res.sendFile("html/login.html",  { root: staticPath }); });
 // router.get("/login",  (_, res) => { res.sendFile("/var/task/guru/linksharing-app(SSR)/public/html/login.html"); });
-const html = readFileSync(path.resolve() + "public/html/login.html", "utf-8");
+const html = readFileSync(path.resolve() + "/public/html/login.html", "utf-8");
 router.get("/login",  (_, res) => { res.send(html) });
 router.get("/signup", (_, res) => { res.sendFile("html/signup.html", { root: staticPath }); });
 
