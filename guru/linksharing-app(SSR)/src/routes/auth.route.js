@@ -14,6 +14,7 @@ const staticPath = process.env.NODE_ENV === "development" ?
 
 console.log(staticPath);
 console.log(`path: ${path.resolve(process.cwd(), "public")}`);
+console.log(`path of login:${path.resolve() + "/public/html/login.html"}`);
 
 const router = Router();
 
