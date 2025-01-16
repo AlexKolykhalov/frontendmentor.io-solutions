@@ -23,7 +23,7 @@ router.get("/api/logout",                                     AuthController.log
 
 // router.get("/login",  (_, res) => { res.sendFile("html/login.html",  { root: staticPath }); });
 // router.get("/login",  (_, res) => { res.sendFile("/var/task/guru/linksharing-app(SSR)/public/html/login.html"); });
-router.get("/login",  (_, res) => { res.sendFile(path.resolve(process.cwd(), "public", "html", "login.html")); });
+router.get("/login",  (_, res) => { res.json("hello") });
 router.get("/signup", (_, res) => { res.sendFile("html/signup.html", { root: staticPath }); });
 
 export default router;
