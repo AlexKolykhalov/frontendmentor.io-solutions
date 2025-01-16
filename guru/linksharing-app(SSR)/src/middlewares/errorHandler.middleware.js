@@ -21,7 +21,8 @@ export const errorHandler = (err, _, res, __) => {
       if (code === 401)
 	return res.status(401).redirect("/login");
       if (code === 404)
-	return res.status(404).sendFile("html/404.html", { root: staticPath });	
+	// return res.status(404).sendFile("html/404.html", { root: staticPath });
+	return res.status(404).sendFile("/var/task/public/html/404.html");	
       const compiled = getCompileEJS("public/templates/500.ejs");
       const html = compiled({error: err.message});
       res.status(500).send(html);
