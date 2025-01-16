@@ -15,13 +15,14 @@ export const errorHandler = (err, _, res, __) => {
 	message: err.message || "Internal Server Error",
       });
     },
-    html () {      
+    html () {
       if (code === 400)
 	return res.status(400).sendFile("html/400.html", { root: "public" });
-      if (code === 401) 
+      if (code === 401)
 	return res.status(401).redirect("/login");
       if (code === 404)
-	return res.status(404).sendFile("html/404.html", { root: "public" });      
+	// return res.status(404).sendFile("html/404.html", { root: "public" });
+	return res.status(404).sendFile("html/404.html", { root: "guru/linksharing-app(SSR)/public" });
       const compiled = getCompileEJS("public/templates/500.ejs");
       // console.log(`path.resolve: ${path.resolve()} `);
       // const compiled = ejs.compile(
