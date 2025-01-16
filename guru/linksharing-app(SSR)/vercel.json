@@ -1,7 +1,8 @@
 {
   "version": 2,
   "builds": [
-    { "src": "package.json", "use": "@vercel/static-build", "config": { "distDir": "dist" } }    
+    { "src": "package.json", "use": "@vercel/static-build", "config": { "distDir": "dist" } },
+    { "src": "dist/index.js", "use": "@vercel/node" }
   ],
   "rewrites": [
     { "source": "/(.*)", "destination": "index.js" }
