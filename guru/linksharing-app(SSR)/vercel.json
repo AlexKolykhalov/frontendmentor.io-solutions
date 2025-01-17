@@ -6,8 +6,5 @@
   ],
   "rewrites": [
     { "source": "/(.*)", "destination": "index.js" }
-  ],
-  "redirects": [
-    { "source": "/login", "destination": "/public/html/login.html", "permanent": true }
   ]
 }
