@@ -1,11 +1,13 @@
 {
   "version": 2,
-  "outputDirectory": "dist",
   "builds": [
     { "src": "package.json", "use": "@vercel/static-build" },
     { "src": "index.js", "use": "@vercel/node" }
   ],
   "rewrites": [
     { "source": "/(.*)", "destination": "index.js" }
+  ],
+  "redirects": [
+    { "source": "/login", "destination": "/public/html/login.html", "permanent": true }
   ]
 }
