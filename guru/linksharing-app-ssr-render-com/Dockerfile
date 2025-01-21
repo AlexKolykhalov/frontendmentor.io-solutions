@@ -1,6 +1,6 @@
 FROM node:22
 
-ARG HOST=https://vercel-testing-gvc9.onrender.com
+ARG HOST=https://linksharing-app-ssr-render-com.onrender.com
 
 WORKDIR /work
 
