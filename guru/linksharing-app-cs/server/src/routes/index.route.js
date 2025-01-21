@@ -6,7 +6,7 @@ import cronRouter from "./cron.route.js";
 
 const __dirname = process.env.NODE_ENV === "development" ?
       path.resolve(".."):
-      path.resolve("guru", "linksharing-app(client-server)");
+      path.resolve("guru", "linksharing-app-cs");
 const router    = Router();
 
 router.use("/api", authRouter);
