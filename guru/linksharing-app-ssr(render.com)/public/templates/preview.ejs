@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("header") %>
+  <body>
+    <header class="content | mar-v-m">
+      <div class="breakout-l | bg-n-000 pad-m border-radius-sm">
+	<div class="row main-axis-space-between">
+	  <a href="/"
+	     class="btn-theme border-clr-p-purple clr-p-purple pad-h-d-sm-m">Back to Editor</a>
+	  <button class="share-btn { btn-theme pad-h-d-sm-m bg-p-purple clr-n-000 }">Share Link</button>
+	</div>
+      </div>
+    </header>
+
+    <main class="content">
+      <div class="center-v box-v-80vh">
+	<div class="center-h">
+	  <article class="preview-card { column gap-m pad-l bg-n-000 border-radius-m }">
+	    <h1 class="sr-only">Preview card</h1>
+	    <img
+	      class="center-h"
+	      alt="avatar"
+	      ejs-src="<%= user.avatar ? user.avatar : '/public/images/icons/icon-upload-image.svg' %>"
+	      ejs-style="<%= user.avatar ? 'object-fit: cover;' : 'object-fit: scale-down;' %>">
+	    <div class="column cross-axis-center mar-bottom-l">
+	      <p id="userId" hidden><%= user.userId %></p>
+	      <p class="text-center fw-bold fs-d-600-800 clr-n-800"><%= user.name.split(" ")[0] %> <%= user.name.split(" ")[1] %></p>
+	      <p class="text-center clr-n-800"><%= user.email %></p>
+	    </div>
+	    <% if (userLinks.length > 0) { %>
+	    <ul class="column gap-m">
+	      <% userLinks.forEach(item => { %>
+	        <%- include("badge", { data: item }) %>
+	      <% }) %>
+	    </ul>
+	    <% } %>
+	  </article>
+	</div>
+      </div>
+    </main>
+    <script type="module" src="/public/js/preview.js"></script>
+  </body>
+
+</html>

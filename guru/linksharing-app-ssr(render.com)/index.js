@@ -1,0 +1,29 @@
+// @ts-check
+
+import express          from "express";
+import cookieParser     from "cookie-parser";
+import cors             from "cors";
+import router           from "./src/routes/index.route.js";
+import { errorHandler } from "./src/middlewares/errorHandler.middleware.js"
+
+const port = process.env.PORT;
+const app  = express();
+app.use("/public", express.static("public"));
+app.use(express.json());
+app.use(cors());
+app.use(cookieParser());
+app.use(router);
+app.use(errorHandler);
+
+try {
+  app.listen(
+    port,
+    () => {
+      console.log(`Server (${process.env.NODE_ENV}) has been started at port: ${port}...`);
+      console.log(`Some value DEV_HOST: (${process.env.DEV_HOST})`);
+    }
+  );
+} catch (error) {
+  console.error(error);
+}
+
