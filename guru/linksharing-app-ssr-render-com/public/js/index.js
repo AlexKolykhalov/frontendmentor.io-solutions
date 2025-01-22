@@ -22,6 +22,13 @@ window.addEventListener('load', async () => {
   currentUserData.name   = dbUserData.name;
   currentUserData.email  = dbUserData.email;
   // console.log(`DB user data: ${JSON.stringify(dbUserData, null, 2)}`);
+  
+  // const resp = await fetch("/public/templates/link.ejs");
+  // const text = await resp.text();
+  // const ejs  = await import("/scripts/ejs.min.js");
+  // compiledLinkTemplate = ejs.compile(text);    
+
+  fetch("/public/templates/link.ejs").catch((error)=>console.log(error));
 });
 
 // setting event listeners for elements (Links) which comes from server
