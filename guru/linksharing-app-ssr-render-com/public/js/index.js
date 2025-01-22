@@ -271,6 +271,7 @@ firstNameInput.addEventListener("input", () => {
   mockupName.textContent = `${firstName} ${mockupName.textContent?.split(" ")[1]}`;
 
   currentUserData.name = `${firstNameInput.value} ${currentUserData.name.split(" ")[1]}`;
+  console.log(`firstNameInput: ${firstNameInput.value} ${currentUserData.name.split(" ")[1]}`);
   checkDifferences();
 });
 
@@ -284,6 +285,7 @@ lastNameInput.addEventListener("input", () => {
   mockupName.textContent = `${mockupName.textContent?.split(" ")[0]} ${lastName}`;
 
   currentUserData.name = `${currentUserData.name.split(" ")[0]} ${lastNameInput.value}`;
+  console.log(`lastNameInput: ${currentUserData.name.split(" ")[0]} ${lastNameInput.value}`);
   checkDifferences();
 });
 
