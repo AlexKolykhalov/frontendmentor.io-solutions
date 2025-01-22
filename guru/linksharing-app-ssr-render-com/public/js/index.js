@@ -23,12 +23,10 @@ window.addEventListener('load', async () => {
   currentUserData.email  = dbUserData.email;
   // console.log(`DB user data: ${JSON.stringify(dbUserData, null, 2)}`);
   
-  // const resp = await fetch("/public/templates/link.ejs");
-  // const text = await resp.text();
-  // const ejs  = await import("/scripts/ejs.min.js");
-  // compiledLinkTemplate = ejs.compile(text);    
-
-  fetch("/public/templates/link.ejs").catch((error)=>console.log(error));
+  const resp = await fetch("/public/templates/link.ejs");
+  const text = await resp.text();
+  const ejs  = await import("/scripts/ejs.min.js");
+  compiledLinkTemplate = ejs.compile(text);
 });
 
 // setting event listeners for elements (Links) which comes from server
@@ -425,15 +423,7 @@ async function addNewLink(link) {
     source: link.source
   };
 
-  const template = document.createElement("template");
-
-  if (!compiledLinkTemplate) {
-    const resp = await fetch("/public/templates/link.ejs");
-    const text = await resp.text();
-    const ejs  = await import("/scripts/ejs.min.js");
-    compiledLinkTemplate = ejs.compile(text);    
-  }
-  
+  const template     = document.createElement("template");
   template.innerHTML = compiledLinkTemplate({ index: userLinks.children.length + 1, link: newLink });  
   const clone        = template.content.firstChild;
   userLinks.appendChild(clone);
