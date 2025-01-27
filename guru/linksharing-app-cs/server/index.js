@@ -12,7 +12,7 @@ const app = express();
 
 const staticPath = process.env.NODE_ENV === "development" ?
       path.resolve("..", "client"):
-      path.resolve("guru", "linksharing-app-cs", "client");
+      path.resolve("client");
 
 console.log(`my static path: ${staticPath}`);
 
