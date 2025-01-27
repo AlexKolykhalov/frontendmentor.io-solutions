@@ -6,7 +6,7 @@ import cronRouter from "./cron.route.js";
 
 const root = process.env.NODE_ENV === "development" ?
       path.resolve("..", "client"):
-      path.resolve("guru", "linksharing-app-cs", "client");
+      path.resolve("client");
 
 console.log(`my root path: ${root}`);
 
