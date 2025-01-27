@@ -16,25 +16,11 @@ router.use("/api", authRouter);
 router.use("/api", cronRouter);
 router.use("/api", userRouter);
 
-router.get("/login", (_, res) => {
-  res.sendFile("pages/login/login.html", { root: root });
-  // res.sendFile(path.resolve("guru", "linksharing-app-cs", "client", "pages", "login", "login.html"));
-});
-router.get("/signup", (_, res) => {
-  res.sendFile(path.resolve(__dirname, "client", "pages", "signup", "signup.html"));
-});
-router.get("/preview", (_, res) => {
-  res.sendFile(path.resolve(__dirname, "client", "pages", "preview", "preview.html"));
-});
-router.get("/404", (_, res) => {
-  res.sendFile(path.resolve(__dirname, "client", "pages", "404", "404.html"));
-});
-router.get("/:userId", (_, res) => {
-  res.sendFile(path.resolve(__dirname, "client", "pages", "profile", "profile.html"));
-});
-router.get("/", (_, res) => {  
-  res.sendFile("pages/index/index.html", { root: root });
-  // res.sendFile(path.resolve("guru", "linksharing-app-cs", "client", "pages", "index", "index.html"));
-});
+router.get("/login",   (_, res) => { res.sendFile("pages/login/login.html",     { root: root }); });
+router.get("/signup",  (_, res) => { res.sendFile("pages/signup/signup.html",   { root: root }); });
+router.get("/preview", (_, res) => { res.sendFile("pages/preview/preview.html", { root: root }); });
+router.get("/404",     (_, res) => { res.sendFile("pages/404/404.html",         { root: root }); });
+router.get("/:userId", (_, res) => { res.sendFile("pages/profile/profile.html", { root: root }); });
+router.get("/",        (_, res) => { res.sendFile("pages/index/index.html",     { root: root }); });
 
 export default router;
