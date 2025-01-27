@@ -17,8 +17,8 @@ router.use("/api", cronRouter);
 router.use("/api", userRouter);
 
 router.get("/login", (_, res) => {
-  // res.sendFile("pages/login/login.html", { root: root });
-  res.sendFile(path.resolve("guru", "linksharing-app-cs", "client", "pages", "login", "login.html"));
+  res.sendFile("pages/login/login.html", { root: root });
+  // res.sendFile(path.resolve("guru", "linksharing-app-cs", "client", "pages", "login", "login.html"));
 });
 router.get("/signup", (_, res) => {
   res.sendFile(path.resolve(__dirname, "client", "pages", "signup", "signup.html"));
@@ -33,8 +33,8 @@ router.get("/:userId", (_, res) => {
   res.sendFile(path.resolve(__dirname, "client", "pages", "profile", "profile.html"));
 });
 router.get("/", (_, res) => {  
-  // res.sendFile("pages/index/index.html", { root: root });
-  res.sendFile(path.resolve("guru", "linksharing-app-cs", "client", "pages", "index", "index.html"));
+  res.sendFile("pages/index/index.html", { root: root });
+  // res.sendFile(path.resolve("guru", "linksharing-app-cs", "client", "pages", "index", "index.html"));
 });
 
 export default router;
