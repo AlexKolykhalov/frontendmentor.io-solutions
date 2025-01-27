@@ -6,7 +6,7 @@ import cronRouter from "./cron.route.js";
 
 const root = process.env.NODE_ENV === "development" ?
       path.resolve("..", "client"):
-      path.resolve("client");
+      path.resolve("guru", "linksharing-app-cs", "client");
 
 console.log(`my root path: ${root}`);
 
@@ -32,7 +32,8 @@ router.get("/:userId", (_, res) => {
   res.sendFile(path.resolve(__dirname, "client", "pages", "profile", "profile.html"));
 });
 router.get("/", (_, res) => {  
-  res.sendFile("pages/index/index.html", { root: root });
+  // res.sendFile("pages/index/index.html", { root: root });
+  res.sendFile(path.resolve("guru", "linksharing-app-cs", "client", "pages", "login", "login.html"));
 });
 
 export default router;
