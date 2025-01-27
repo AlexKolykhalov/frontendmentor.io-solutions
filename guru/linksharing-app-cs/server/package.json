@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "dev": "NODE_ENV=development nodemon --env-file=.env index.js",
-	"dev:debug": "NODE_ENV=development nodemon --inspect --env-file=.env index.js",
+        "dev:debug": "NODE_ENV=development nodemon --inspect --env-file=.env index.js",
         "prod": "NODE_ENV=production nodemon --env-file=.env index.js",
         "db:reset": "npx sequelize db:migrate:undo:all --debug && npx sequelize db:migrate --debug",
         "db:seed:reset": "npx sequelize db:seed:undo:all --debug && npx sequelize db:seed:all --debug",
@@ -20,7 +20,6 @@
     "license": "ISC",
     "description": "",
     "dependencies": {
-        "bcrypt": "^5.1.1",
         "cls-hooked": "^4.2.2",
         "cookie-parser": "^1.4.6",
         "dotenv": "^16.4.5",

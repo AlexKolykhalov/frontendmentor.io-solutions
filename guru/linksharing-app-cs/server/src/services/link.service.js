@@ -17,7 +17,7 @@ export class LinkService {
      */
     static async findLink(linkId) {
 	return await db.Link.findOne({
-	    attributes: ["link_id", "source", "url"],
+	    attributes: ["link_id", "url"],
 	    where: { linkId: linkId }
 	});
     }
@@ -30,7 +30,7 @@ export class LinkService {
     static async updateLink(link) {
 	return await db.Link.update(
 	    link,
-	    { where: { linkId: link.linkId } }
+	    { where: { linkId: link.id } }
 	);
     }
 
@@ -42,10 +42,9 @@ export class LinkService {
      */
     static async createLink(link, userId) {
 	return await db.Link.create(
-	    {
-		source: link.source,
+	    {		
 		url: link.url,
-		linkId: link.linkId,		
+		linkId: link.id,		
 		userId: userId
 	    }
 	);
@@ -58,7 +57,7 @@ export class LinkService {
      */
     static async deleteLink(link) {
 	return await db.Link.destroy({
-	    where: { linkId: link.linkId }
+	    where: { linkId: link.id }
 	});
     }
 }
