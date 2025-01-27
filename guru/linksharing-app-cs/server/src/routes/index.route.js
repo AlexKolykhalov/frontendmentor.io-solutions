@@ -17,7 +17,8 @@ router.use("/api", cronRouter);
 router.use("/api", userRouter);
 
 router.get("/login", (_, res) => {
-  res.sendFile("pages/login/login.html", { root: root });
+  // res.sendFile("pages/login/login.html", { root: root });
+  res.sendFile(path.resolve("guru", "linksharing-app-cs", "client", "pages", "login", "login.html"));
 });
 router.get("/signup", (_, res) => {
   res.sendFile(path.resolve(__dirname, "client", "pages", "signup", "signup.html"));
