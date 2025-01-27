@@ -4,11 +4,12 @@ import authRouter from "./auth.route.js";
 import userRouter from "./user.route.js";
 import cronRouter from "./cron.route.js";
 
-// const __dirname = process.env.NODE_ENV === "development" ?
-//       path.resolve(".."):
-//       path.resolve("guru", "linksharing-app-cs");
+const root = process.env.NODE_ENV === "development" ?
+      path.resolve("..", "client"):
+      path.resolve("guru", "linksharing-app-cs", "client");
 
-const root = path.resolve(path.resolve(), "..") + "/client";
+console.log(`my root path: ${root}`);
+
 const router    = Router();
 
 router.use("/api", authRouter);
