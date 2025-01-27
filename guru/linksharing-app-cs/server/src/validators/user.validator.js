@@ -9,8 +9,7 @@ export const userDataValidator = [
     body("links")
     	.exists().withMessage("Links is required").bail()
 	.isArray().withMessage("Links must be an array"),
-    body("links.*.linkId").exists().withMessage("Each link must have a 'userId' field"),
-    body("links.*.source").exists().withMessage("Each link must have a 'source' field"),
+    body("links.*.id").exists().withMessage("Each link must have a 'id' field"),    
     body("links.*.url").exists().withMessage("Each link must have a 'url' field"),
     body("name")
 	.exists().withMessage("Name is required").bail()
