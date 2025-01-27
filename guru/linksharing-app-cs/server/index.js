@@ -10,9 +10,13 @@ import { errorHandler } from "./src/middlewares/errorHandler.middleware.js"
 const port = process.env.PORT;
 const app = express();
 
-console.log(`my static path: ${path.resolve(path.resolve(), "..")+"/client"}`);
+const staticPath = process.env.NODE_ENV === "development" ?
+      path.resolve("..", "client"):
+      path.resolve("guru", "linksharing-app-cs", "client");
 
-app.use("/client", express.static(path.resolve(path.resolve(), "..")+"/client"));
+console.log(`my static path: ${staticPath}`);
+
+app.use("/client", express.static(staticPath));
 app.use(express.json());
 app.use(cookieParser());
 app.use(router);
