@@ -34,7 +34,7 @@ router.get("/:userId", (_, res) => {
 });
 router.get("/", (_, res) => {  
   // res.sendFile("pages/index/index.html", { root: root });
-  res.sendFile(path.resolve("client", "pages", "index", "index.html"));
+  res.sendFile(path.resolve("guru", "linksharing-app-cs", "client", "pages", "index", "index.html"));
 });
 
 export default router;
