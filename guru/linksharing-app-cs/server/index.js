@@ -14,8 +14,6 @@ const staticPath = process.env.NODE_ENV === "development" ?
       path.resolve("..", "client"):
       path.resolve("client");
 
-console.log(`my static path: ${staticPath}`);
-
 app.use("/client", express.static(staticPath));
 app.use(express.json());
 app.use(cookieParser());
