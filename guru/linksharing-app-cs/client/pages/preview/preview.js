@@ -12,7 +12,7 @@ const shareBtn = document.querySelector(".share-btn");
 
 /** @type {string} */
 const url = (window.location.hostname === "localhost") ?
-      "http://localhost:3000" :
+      "http://localhost:3001" :
       "https://sharetoyou.vercel.app";
 
 /** @type {User} */
