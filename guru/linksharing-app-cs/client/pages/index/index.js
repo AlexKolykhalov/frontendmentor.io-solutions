@@ -433,10 +433,10 @@ function getChangedUserData() {
   name = firstName.value.trim() + " " +  lastName.value.trim();
   eMail = email.value.trim();
   const listOfLinks = document.querySelectorAll(".user-links > li");
-  listOfLinks.forEach((item) => {    
-    const url = item.querySelector("input");    
-    if (url && !url.value.trim()) throw Error("Link without URL");    
-    links.push({ id: item.getAttribute("id") ?? "", url: url.value.trim() });    
+  listOfLinks.forEach((item) => {
+    const url = item.querySelector("input");
+    if (url && !url.value.trim()) throw Error("Link without URL");
+    links.push({ id: item.getAttribute("id") ?? "", url: url.value.trim() });
   });
 
   // uptading links data
