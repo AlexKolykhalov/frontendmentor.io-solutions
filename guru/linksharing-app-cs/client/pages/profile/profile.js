@@ -7,17 +7,12 @@ import { getLinkInfoByName, showPopUpMessage } from "../../utils/utils.js";
  * @typedef { import("../../../server/src/types/typedefs.js").Link } Link
  */
 
-/** @type {string} */
-const url = (window.location.hostname === "localhost") ?
-      "http://localhost:3000" :
-      "https://sharetoyou.vercel.app";
-
 // ************************** 1. Events *********************************//
 
 window.addEventListener('load', async () => {
     try {
 	const response = await fetch(
-	    `${url}/api/user/${window.location.pathname.split("/")[1]}`,
+	    `/api/user/${window.location.pathname.split("/")[1]}`,
 	);
 	if (response.status === 200) {
 	    const user = await response.json();

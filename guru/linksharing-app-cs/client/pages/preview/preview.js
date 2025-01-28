@@ -24,7 +24,7 @@ window.addEventListener('load', async () => {
     try {
 	const accessToken = localStorage.getItem("_t1");
 	if (!accessToken) location.replace("/login");
-	const response = await fetch(`${url}/api/user`,
+	const response = await fetch(`/api/user`,
 	    {
 		method: "GET",
 		headers: {"Authorization": `Bearer ${accessToken}`},
@@ -36,11 +36,11 @@ window.addEventListener('load', async () => {
 	    if (user) populateUI(user); else showPopUpMessage("User has been deleted");
 	}
 	if (response.status === 401) {
-	    const refreshResponse = await fetch(`${url}/api/refresh`);
+	    const refreshResponse = await fetch(`/api/refresh`);
 	    if (refreshResponse.status === 200) {
 		const token = await refreshResponse.json();
 		localStorage.setItem("_t1", token); // accessToken
-		const response = await fetch(`${url}/api/user`,
+		const response = await fetch(`/api/user`,
 		    {
 			method: "GET",
 			headers: {"Authorization": `Bearer ${token}`},

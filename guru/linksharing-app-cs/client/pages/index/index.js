@@ -40,11 +40,6 @@ const lastNameInput = document.querySelector('#last_name');
 /** @type {HTMLInputElement|null} */
 const emailInput = document.querySelector('#email');
 
-/** @type {string} */
-const url = (window.location.hostname === "localhost") ?
-      "http://localhost:3000" :
-      "https://sharetoyou.vercel.app";
-
 /** @type {User|null} */
 let user;
 
@@ -54,28 +49,24 @@ window.addEventListener('load', async () => {
   try {
     const accessToken = localStorage.getItem("_t1");
     if (!accessToken) location.replace("/login");
-    const response = await fetch(`${url}/api/user`,
-				 {
-				   method: "GET",
-				   headers: {"Authorization": `Bearer ${accessToken}`},
-				 }
-				);
+    const response = await fetch(`/api/user`, {
+      method: "GET",
+      headers: {"Authorization": `Bearer ${accessToken}`},
+    });
     if (response.status === 200) {
       user = await response.json();
       console.log(`User data: ${JSON.stringify(user, null, 2)}`);
       if (user) populateUI(user); else showPopUpMessage("User has been deleted");
     }
     if (response.status === 401) {
-      const refreshResponse = await fetch(`${url}/api/refresh`);
+      const refreshResponse = await fetch(`/api/refresh`);
       if (refreshResponse.status === 200) {
 	const token = await refreshResponse.json();
 	localStorage.setItem("_t1", token); // accessToken
-	const response = await fetch(`${url}/api/user`,
-				     {
-				       method: "GET",
-				       headers: {"Authorization": `Bearer ${token}`},
-				     }
-				    );
+	const response = await fetch(`/api/user`, {
+	  method: "GET",
+	  headers: {"Authorization": `Bearer ${token}`},
+	});
 	if (response.status === 200) {
 	  user = await response.json();
 	  console.log(`User data after resfresh: ${JSON.stringify(user, null, 2)}`);
@@ -98,16 +89,14 @@ saveBtn?.addEventListener('click', async () => {
     const changedUserData = getChangedUserData();
     console.log(`changed user data: ${JSON.stringify(changedUserData, null, 2)}`);
     saveBtn.querySelector(".clock-spinner")?.removeAttribute("data-visible");
-    const response = await fetch(`${url}/api/user/update`,
-				 {
-				   method: "POST",
-				   headers: {
-				     "Content-Type": "application/json",
-				     "Authorization": `Bearer ${accessToken}`
-				   },
-				   body: JSON.stringify(changedUserData)
-				 }
-				);
+    const response = await fetch(`/api/user/update`, {
+      method: "POST",
+      headers: {
+	"Content-Type": "application/json",
+	"Authorization": `Bearer ${accessToken}`
+      },
+      body: JSON.stringify(changedUserData)
+    });
     if (response.status === 200) {
       user = await response.json();
       console.log(`User updated data: ${JSON.stringify(user, null, 2)}`);
@@ -120,20 +109,18 @@ saveBtn?.addEventListener('click', async () => {
       showPopUpMessage(error.message);
     }
     if (response.status === 401) {
-      const refreshResponse = await fetch(`${url}/api/refresh`);
+      const refreshResponse = await fetch(`/api/refresh`);
       if (refreshResponse.status === 200) {
 	const token = await refreshResponse.json();
 	localStorage.setItem("_t1", token); // accessToken
-	const response = await fetch(`${url}/api/user/update`,
-				     {
-				       method: "POST",
-				       headers: {
-					 "Content-Type": "application/json",
-					 "Authorization": `Bearer ${token}`
-				       },
-				       body: JSON.stringify(changedUserData)
-				     }
-				    );
+	const response = await fetch(`/api/user/update`, {
+	  method: "POST",
+	  headers: {
+	    "Content-Type": "application/json",
+	    "Authorization": `Bearer ${token}`
+	  },
+	  body: JSON.stringify(changedUserData)
+	});
 	if (response.status === 200) {
 	  user = await response.json();
 	  console.log(`User updated data after resfresh: ${JSON.stringify(user, null, 2)}`);

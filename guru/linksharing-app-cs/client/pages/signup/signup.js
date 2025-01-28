@@ -5,11 +5,6 @@ import { showPopUpMessage } from "../../utils/utils.js";
 /** @type {HTMLButtonElement|null} */
 const signupBtn = document.querySelector('.signup-btn');
 
-/** @type {string} */
-const url = (window.location.hostname === "localhost") ?
-      "http://localhost:3000" :
-      "https://sharetoyou.vercel.app";
-
 // ************************** 1. Events *********************************//
 
 signupBtn?.addEventListener('click', async () => {
@@ -20,7 +15,7 @@ signupBtn?.addEventListener('click', async () => {
     if (email && password) {
 	try {
 	    signupBtn.querySelector(".clock-spinner")?.removeAttribute("data-visible");
-	    const response = await fetch(`${url}/api/signup`, {
+	    const response = await fetch(`/api/signup`, {
 		method: "POST",
 		headers: {"Content-Type": "application/json"},
 		body: JSON.stringify({email: email.value, password: password.value}),
