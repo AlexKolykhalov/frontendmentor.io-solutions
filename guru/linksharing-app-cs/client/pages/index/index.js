@@ -1,6 +1,6 @@
 // @ts-check
 
-import { getLinkInfoByName, showPopUpMessage } from "../../utils/utils.js";
+import { getParams, showPopUpMessage } from "../../utils/utils.js";
 
 /**
  * @typedef { import("../../../server/src/types/typedefs.js").User } User
@@ -156,9 +156,8 @@ logoutBtn?.addEventListener('click', () => {
 
 addNewLinkBtn?.addEventListener('click', () => {
   const link = {
-    linkId: crypto.randomUUID(),
-    source: "GitHub",
-    url: "",
+    id: crypto.randomUUID(),
+    url: "https://github.com",
   };
   addNewLinkAndMockupBadge(link);
 });
@@ -434,9 +433,13 @@ function getChangedUserData() {
   eMail = email.value.trim();
   const listOfLinks = document.querySelectorAll(".user-links > li");
   listOfLinks.forEach((item) => {
-    const url = item.querySelector("input");
+    const url  = item.querySelector("input");
+    const title = item.querySelector("button span");
+    
     if (url && !url.value.trim()) throw Error("Link without URL");
-    links.push({ id: item.getAttribute("id") ?? "", url: url.value.trim() });
+    if (!title || !title.textContent) throw Error("Empty title of the select button");
+    const params = getParams(title.textContent);
+    links.push({ id: item.getAttribute("id") ?? "", url: params.host + url.value.trim() });
   });
 
   // uptading links data
@@ -511,13 +514,13 @@ function addNewLinkAndMockupBadge(linkInfo) {
 	selectBtn.setAttribute('aria-controls', `options_${index}`);
 	selectOptions.setAttribute('id', `options_${index}`);
 	labelForInput.setAttribute('for', `input_${index}`);
-	input.value = linkInfo.url;
+	input.value = new URL(linkInfo.url).pathname.replace("/", "");
 	input.setAttribute('id', `input_${index}`);
 
-	const { domain, offset } = getLinkInfoByName(linkInfo.source);
+	const params = getParams(new URL(linkInfo.url).hostname);
 	// working with input
-	input.setAttribute("style", `--pad-left: ${offset};`);
-	input.parentElement?.setAttribute("style", `--domain: "${domain}";`);
+	input.setAttribute("style", `--pad-left: ${params?.offset};`);
+	input.parentElement?.setAttribute("style", `--domain: "${params?.host}";`);
 
 	selectBtn.addEventListener('mousedown', () => {
 	  toggleOptions(selectOptions);
@@ -539,7 +542,7 @@ function addNewLinkAndMockupBadge(linkInfo) {
 	selectOptionsLi.forEach((item) => {
 	  // set platform
 	  const sourceName = item.querySelector('span');
-	  if (sourceName && sourceName.textContent === linkInfo.source) {
+	  if (sourceName && sourceName.textContent === params?.title) {
 	    setSelectedItem(selectOptions, item);
 	  }
 	  item.addEventListener('mousedown', (e) => {
@@ -595,10 +598,10 @@ function addNewLinkAndMockupBadge(linkInfo) {
   const phoneMockup = document.querySelector('.phone-mockup');
   if (phoneMockup) {
     const badge = document.createElement('div');
-    const { iconPath, bgColor } = getLinkInfoByName(linkInfo.source);
-    badge.classList.add('phone-mockup-badge', bgColor, 'row', 'cross-axis-center', 'clr-n-000', 'border-radius-sm');
-    badge.setAttribute('style', `--image_path: url(${iconPath});`);
-    badge.textContent = linkInfo.source;
+    const params = getParams(new URL(linkInfo.url).hostname);
+    badge.classList.add('phone-mockup-badge', params?.bgColor, 'row', 'cross-axis-center', 'clr-n-000', 'border-radius-sm');
+    badge.setAttribute('style', `--image_path: url('/client/images/icons/${params.whiteIcon}');`);
+    badge.textContent = params?.title;
     phoneMockup.appendChild(badge);
   }
 }
@@ -649,21 +652,24 @@ function setSelectedItem(optionsElements, item) {
 	item.setAttribute('data-status', 'selected');
 	const attr = selectBtn.getAttribute('id');
 	if (attr && currentTargetSpan.textContent) {
-	  const { domain, iconPath, bgColor, offset } = getLinkInfoByName(currentTargetSpan.textContent);
+	  const params = getParams(currentTargetSpan.textContent);
 	  const index = Number(attr.split('_')[1]);
 	  // working with input
 	  const input = document.querySelector(`#input_${index}`);
 	  if (input) {
-	    input.setAttribute("style", `--pad-left: ${offset};`);
-	    input.parentElement?.setAttribute("style", `--domain: "${domain}";`);
+	    input.setAttribute("style", `--pad-left: ${params?.offset};`);
+	    input.parentElement?.setAttribute("style", `--domain: "${params?.host}";`);
 	  }
 	  // working with badge (change title and bg-color)
 	  const phoneMockupBadges = document.querySelectorAll('.phone-mockup-badge');
 	  const badge = phoneMockupBadges[index - 1];
 	  if (badge) {
 	    badge.classList.remove(...badge.classList);
-	    badge.classList.add('phone-mockup-badge', bgColor, 'row', 'cross-axis-center', 'clr-n-000', 'border-radius-sm');
-	    badge.setAttribute('style', `--image_path: url(${iconPath});`);
+	    badge.classList.add('phone-mockup-badge', params?.bgColor, 'row', 'cross-axis-center', 'clr-n-000', 'border-radius-sm');
+	    badge.setAttribute(
+	      'style',
+	      `--image_path: url('/client/images/icons/${params?.whiteIcon}');`
+	    );
 	    badge.textContent = currentTargetSpan.textContent;
 	  }
 	}
