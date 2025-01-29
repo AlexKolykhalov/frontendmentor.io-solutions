@@ -55,7 +55,7 @@ window.addEventListener('load', async () => {
     });
     if (response.status === 200) {
       user = await response.json();
-      console.log(`User data: ${JSON.stringify(user, null, 2)}`);
+      // console.log(`User data: ${JSON.stringify(user, null, 2)}`);
       if (user) populateUI(user); else showPopUpMessage("User has been deleted");
     }
     if (response.status === 401) {
@@ -69,7 +69,7 @@ window.addEventListener('load', async () => {
 	});
 	if (response.status === 200) {
 	  user = await response.json();
-	  console.log(`User data after resfresh: ${JSON.stringify(user, null, 2)}`);
+	  // console.log(`User data after resfresh: ${JSON.stringify(user, null, 2)}`);
 	  if (user) populateUI(user); else showPopUpMessage("User has been deleted");
 	}
 	if (response.status === 500) showPopUpMessage("Internal server error");
@@ -87,7 +87,7 @@ saveBtn?.addEventListener('click', async () => {
     const accessToken = localStorage.getItem("_t1");
     if (!accessToken) window.location.replace("/login");
     const changedUserData = getChangedUserData();
-    console.log(`changed user data: ${JSON.stringify(changedUserData, null, 2)}`);
+    // console.log(`changed user data: ${JSON.stringify(changedUserData, null, 2)}`);
     saveBtn.querySelector(".clock-spinner")?.removeAttribute("data-visible");
     const response = await fetch(`/api/user/update`, {
       method: "POST",
@@ -99,7 +99,7 @@ saveBtn?.addEventListener('click', async () => {
     });
     if (response.status === 200) {
       user = await response.json();
-      console.log(`User updated data: ${JSON.stringify(user, null, 2)}`);
+      // console.log(`User updated data: ${JSON.stringify(user, null, 2)}`);
       saveBtn.querySelector(".clock-spinner")?.setAttribute("data-visible", "false");
       showPopUpMessage('Your changes have been successfully saved!', "msg");
     }
@@ -123,7 +123,7 @@ saveBtn?.addEventListener('click', async () => {
 	});
 	if (response.status === 200) {
 	  user = await response.json();
-	  console.log(`User updated data after resfresh: ${JSON.stringify(user, null, 2)}`);
+	  // console.log(`User updated data after resfresh: ${JSON.stringify(user, null, 2)}`);
 	  saveBtn.querySelector(".clock-spinner")?.setAttribute("data-visible", "false");
 	  showPopUpMessage('Your changes have been successfully saved!', "msg");
 	}
@@ -263,7 +263,7 @@ closeDialogBtn?.addEventListener('click', () => {
 previewLink?.addEventListener('click', (e) => {
   try {
     const changedUserData = getChangedUserData();
-    console.log(`changed user data: ${JSON.stringify(changedUserData, null, 2)}`);
+    // console.log(`changed user data: ${JSON.stringify(changedUserData, null, 2)}`);
     const arr1 = changedUserData;
     const arr2 = user ?? {userId: "", avatar: "", name: "", email: "", links: []};
     if (arr1 instanceof Error             ||
