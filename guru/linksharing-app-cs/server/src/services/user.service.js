@@ -28,7 +28,7 @@ export class UserService {
 	},
       ],
       where: { userId: userId },
-      order: [ [{model: db.Link, as: "links"}, "url", "ASC"] ]
+      order: [ [{model: db.Link, as: "links"}, "id", "ASC"] ]
     });
   }
 
@@ -46,7 +46,7 @@ export class UserService {
       );
       if (count === 0) throw new Error("Can't update a User");
       for (const item of userData.links) {
-	const link = await LinkService.findLink(item.id);
+	const link = await LinkService.findLink(item.id);	
 	if (!link) await LinkService.createLink(item, userData.userId);
 	if (link && item.url)   await LinkService.updateLink(item);
 	if (link && !item.url) await LinkService.deleteLink(item);
