@@ -5,7 +5,6 @@ module.exports = (sequelize, DataTypes) => {
 	static associate(models) {}
     }
     Link.init({
-	source: DataTypes.STRING,
 	url: DataTypes.STRING,
 	linkId: {
 	    type: DataTypes.UUID,

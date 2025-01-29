@@ -9,9 +9,6 @@ module.exports = {
 		primaryKey: true,
 		type: Sequelize.INTEGER
 	    },
-	    source: {
-		type: Sequelize.STRING
-	    },
 	    url: {
 		type: Sequelize.STRING
 	    },
