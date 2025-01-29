@@ -439,7 +439,7 @@ function getChangedUserData() {
     if (url && !url.value.trim()) throw Error("Link without URL");
     if (!title || !title.textContent) throw Error("Empty title of the select button");
     const params = getParams(title.textContent);
-    links.push({ id: item.getAttribute("id") ?? "", url: params.host + url.value.trim() });
+    links.push({ id: item.getAttribute("id") ?? "", url: params?.host + url.value.trim() });
   });
 
   // uptading links data
@@ -599,9 +599,9 @@ function addNewLinkAndMockupBadge(linkInfo) {
   if (phoneMockup) {
     const badge = document.createElement('div');
     const params = getParams(new URL(linkInfo.url).hostname);
-    badge.classList.add('phone-mockup-badge', params?.bgColor, 'row', 'cross-axis-center', 'clr-n-000', 'border-radius-sm');
-    badge.setAttribute('style', `--image_path: url('/client/images/icons/${params.whiteIcon}');`);
-    badge.textContent = params?.title;
+    badge.classList.add('phone-mockup-badge', params?.bgColor ?? '', 'row', 'cross-axis-center', 'clr-n-000', 'border-radius-sm');
+    badge.setAttribute('style', `--image_path: url('/client/images/icons/${params?.whiteIcon}');`);
+    badge.textContent = params?.title ?? "";
     phoneMockup.appendChild(badge);
   }
 }
@@ -665,7 +665,7 @@ function setSelectedItem(optionsElements, item) {
 	  const badge = phoneMockupBadges[index - 1];
 	  if (badge) {
 	    badge.classList.remove(...badge.classList);
-	    badge.classList.add('phone-mockup-badge', params?.bgColor, 'row', 'cross-axis-center', 'clr-n-000', 'border-radius-sm');
+	    badge.classList.add('phone-mockup-badge', params?.bgColor ?? '', 'row', 'cross-axis-center', 'clr-n-000', 'border-radius-sm');
 	    badge.setAttribute(
 	      'style',
 	      `--image_path: url('/client/images/icons/${params?.whiteIcon}');`
