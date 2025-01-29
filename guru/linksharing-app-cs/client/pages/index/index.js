@@ -434,10 +434,9 @@ function getChangedUserData() {
   const listOfLinks = document.querySelectorAll(".user-links > li");
   listOfLinks.forEach((item) => {
     const url  = item.querySelector("input");
-    const title = item.querySelector("button span");
-    
-    if (url && !url.value.trim()) throw Error("Link without URL");
-    if (!title || !title.textContent) throw Error("Empty title of the select button");
+    const title = item.querySelector("button span");    
+    if (!url || !url.value.trim()) throw new Error("Link without URL");
+    if (!title || !title.textContent) throw new Error("Empty title of the select button");
     const params = getParams(title.textContent);
     links.push({ id: item.getAttribute("id") ?? "", url: params?.host + url.value.trim() });
   });
