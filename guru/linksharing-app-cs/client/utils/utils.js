@@ -62,102 +62,124 @@ export function showPopUpMessage(msg, type = "error") {
 }
 
 /**
- * Returns domain name, bg-color, path of icon and left-padding of input text
- * according to the `source` name.
- * @param {string} name
+ * Returns some params
+ * (title, bg-color, gray & white icons and left-padding of input text)
+ * according to the hostname or title.
+ * @param {string} search
  */
-export function getLinkInfoByName(name) {
-    const info = {
-	domain: "",
-	iconPath: "",
-	bgColor: "bg-p-purple",
-	offset: "",
-    };
-
-    if (name === "GitHub") {
- 	info.domain   = "https://github.com/";
-	info.iconPath = "../images/icons/icon-github.svg";
-	info.bgColor  = "bg-github";
-	info.offset   = "10.8rem";
-    }
-    if (name === "LinkedIn") {
-	info.domain   = "https://linkedin.com/";
-	info.iconPath = "../images/icons/icon-linkedin.svg";
-	info.bgColor  = "bg-linkedin";
-	info.offset   = "11.5rem";
-    }
-    if (name === "GitLab") {
-	info.domain   = "https://gitlab.com/";
-	info.iconPath = "../images/icons/icon-gitlab.svg";
-	info.bgColor  = "bg-gitlab";
-	info.offset   = "10.4rem";
-    }
-    if (name === "StackOverflow") {
-	info.domain   = "https://stackoverflow.com/";
-	info.iconPath = "../images/icons/icon-stack-overflow.svg";
-	info.bgColor  = "bg-stackoverflow";
-	info.offset   = "14.2rem";
-    }
-    if (name === "YouTube") {
-	info.domain   = "https://youtube.com/";
-	info.iconPath = "../images/icons/icon-youtube.svg";
-	info.bgColor  = "bg-youtube";
-	info.offset   = "11.6rem";
-    }
-    if (name === "Facebook") {
-	info.domain   = "https://facebook.com/";
-	info.iconPath = "../images/icons/icon-facebook.svg";
-	info.bgColor  = "bg-facebook";
-	info.offset   = "12.2rem";
-    }
-    if (name === "Twitch") {
-	info.domain   = "https://twitch.tv/";
-	info.iconPath = "../images/icons/icon-twitch.svg";
-	info.bgColor  = "bg-twitch";
-	info.offset   = "9.55rem";
-    }
-    if (name === "Twitter") {
-	info.domain   = "https://x.com/";
-	info.iconPath = "../images/icons/icon-twitter.svg";
-	info.bgColor  = "bg-twitter";
-	info.offset   = "8.4rem";
-    }
-    if (name === "Hashnode") {
-	info.domain   = "https://hashnode.com/";
-	info.iconPath = "../images/icons/icon-hashnode.svg";
-	info.bgColor  = "bg-hashnode";
-	info.offset   = "12.45rem";
-    }
-    if (name === "Codepen") {
-	info.domain   = "https://codepen.io/";
-	info.iconPath = "../images/icons/icon-codepen.svg";
-	info.bgColor  = "bg-codepen";
-	info.offset   = "10.7rem";
-    }
-    if (name === "Devto") {
-	info.domain   = "https://dev.to/";
-	info.iconPath = "../images/icons/icon-devto-gray.svg";
-	info.bgColor  = "bg-devto";
-	info.offset   = "8.35rem";
-    }
-    if (name === "Codewars") {
-	info.domain   = "https://codewars.com/";
-	info.iconPath = "../images/icons/icon-codewars.svg";
-	info.bgColor  = "bg-codewars";
-	info.offset   = "12.25rem";
-    }
-    if (name === "Freecodecamp") {
-	info.domain   = "https://freecodecamp.org/";
-	info.iconPath = "../images/icons/icon-freecodecamp.svg";
-	info.bgColor  = "bg-freecodecamp";
-	info.offset   = "14.15rem";
-    }
-    if (name === "Frontend mentor") {
-	info.domain   = "https://frontendmentor.io/";
-	info.iconPath = "../images/icons/icon-frontend-mentor-gray.svg";
-	info.bgColor  = "bg-frontendmentor";
-	info.offset   = "14.1rem";
-    }
-
-    return info;
+export function getParams(search) {
+  if (search === "github.com" || search === "GitHub") return {
+    title: "GitHub",
+    host: "https://github.com/",
+    whiteIcon: "icon-github.svg",
+    grayIcon: "icon-github-gray.svg",
+    bgColor: "bg-github",
+    offset: "10.8rem"
+  }
+  if (search === "linkedin.com" || search === "LinkedIn") return {
+    title: "LinkedIn",
+    host: "https://linkedin.com/",
+    whiteIcon: "icon-linkedin.svg",
+    grayIcon: "icon-linkedin-gray.svg",
+    bgColor: "bg-linkedin",
+    offset: "11.5rem",
+  }
+  if (search === "gitlab.com" || search === "GitLab") return {
+    title: "GitLab",
+    host: "https://gitlab.com/",
+    whiteIcon: "icon-gitlab.svg",
+    grayIcon: "icon-gitlab-gray.svg",
+    bgColor: "bg-gitlab",
+    offset: "10.4rem",
+  }
+  if (search === "stackoverflow.com" || search === "StackOverflow") return {
+    title: "StackOverflow",
+    host: "https://stackoverflow.com/",
+    whiteIcon: "icon-stack-overflow.svg",
+    grayIcon: "icon-stack-overflow-gray.svg",
+    bgColor: "bg-stackoverflow",
+    offset: "14.2rem",
+  }
+  if (search === "youtube.com" || search === "YouTube") return {
+    title: "YouTube",
+    host: "https://youtube.com/",
+    whiteIcon: "icon-youtube.svg",
+    grayIcon: "icon-youtube-gray.svg",
+    bgColor: "bg-youtube",
+    offset: "11.6rem",
+  }
+  if (search === "facebook.com" || search === "Facebook") return {
+    title: "Facebook",
+    host: "https://facebook.com/",
+    whiteIcon: "icon-facebook.svg",
+    grayIcon: "icon-facebook-gray.svg",
+    bgColor: "bg-facebook",
+    offset: "12.2rem",
+  }  
+  if (search === "twitch.tv" || search === "Twitch") return {
+    title: "Twitch",
+    host: "https://twitch.tv/",
+    whiteIcon: "icon-twitch.svg",
+    grayIcon: "icon-twitch-gray.svg",
+    bgColor: "bg-twitch",
+    offset: "9.55rem",
+  }
+  if (search === "x.com" || search === "Twitter") return {
+    title: "Twitter",
+    host: "https://x.com/",
+    whiteIcon: "icon-twitter.svg",
+    grayIcon: "icon-twitter-gray.svg",
+    bgColor: "bg-twitter",
+    offset: "8.4rem",
+  }
+  if (search === "hashnode.com" || search === "Hashnode") return {
+    title: "Hashnode",
+    host: "https://hashnode.com/",
+    whiteIcon: "icon-hashnode.svg",
+    grayIcon: "icon-hashnode-gray.svg",
+    bgColor: "bg-hashnode",
+    offset: "12.45rem",
+  }
+  if (search === "codepen.io" || search === "Codepen") return {
+    title: "Codepen",
+    host: "https://codepen.io/",
+    whiteIcon: "icon-codepen.svg",
+    grayIcon: "icon-codepen-gray.svg",
+    bgColor: "bg-codepen",
+    offset: "10.7rem",
+  }
+  if (search === "dev.to" || search === "Devto") return {
+    title: "Devto",
+    host: "https://dev.to/",
+    whiteIcon: "icon-devto-gray.svg",
+    grayIcon: "icon-devto-gray.svg",
+    bgColor: "bg-devto",
+    offset: "8.35rem",
+  }
+  if (search === "codewars.com" || search === "Codewars") return {
+    title: "Codewars",
+    host: "https://codewars.com/",
+    whiteIcon: "icon-codewars.svg",
+    grayIcon: "icon-codewars-gray.svg",
+    bgColor: "bg-codewars",
+    offset: "12.25rem",
+  }
+  if (search === "freecodecamp.org" || search === "Freecodecamp") return {
+    title: "Freecodecamp",
+    host: "https://freecodecamp.org/",
+    whiteIcon: "icon-freecodecamp.svg",
+    grayIcon: "icon-freecodecamp-gray.svg",
+    bgColor: "bg-freecodecamp",
+    offset: "14.15rem",
+  }
+  if (search === "frontendmentor.io" || search === "Frontend mentor") return {
+    title: "Frontend mentor",
+    host: "https://frontendmentor.io/",
+    whiteIcon: "icon-frontend-mentor.svg",
+    grayIcon: "icon-frontend-mentor-gray.svg",
+    bgColor: "bg-frontendmentor",
+    offset: "14.1rem",
+  }
 }
+
+
