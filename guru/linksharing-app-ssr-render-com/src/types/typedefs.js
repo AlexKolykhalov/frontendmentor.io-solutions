@@ -31,8 +31,7 @@
 
 /**
  * @typedef {Object} Link
- * @property {string} linkId
- * @property {string} source
+ * @property {string} id 
  * @property {string} url
  */
 
