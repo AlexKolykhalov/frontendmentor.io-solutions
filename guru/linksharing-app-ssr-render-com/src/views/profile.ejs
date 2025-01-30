@@ -9,15 +9,15 @@
 	    <h1 class="sr-only">Profile card</h1>
 	    <img class="center-h"
 		 alt="avatar"
-		 ejs-src="<%= user.avatar ? user.avatar : '/public/images/icons/icon-upload-image.svg' %>"
-		 ejs-style="<%= user.avatar ? 'object-fit: cover;' : 'object-fit: scale-down;' %>">
+		 src="<%= user.avatar ? user.avatar : '/public/images/icons/icon-upload-image.svg' %>"
+		 style="<%= user.avatar ? 'object-fit: cover;' : 'object-fit: scale-down;' %>">
 	    <div class="column cross-axis-center mar-bottom-l">
 	      <p class="text-center fw-bold fs-d-600-800 clr-n-800"><%= user.name.split(" ")[0] %> <%= user.name.split(" ")[1] %></p>
 	      <p class="text-center clr-n-800"><%= user.email %></p>
 	    </div>
-	    <% if (userLinks.length > 0) { %>
+	    <% if (user.links.length > 0) { %>
 	    <ul class="column gap-m">	    
-	      <% userLinks.forEach(item => { %>
+	      <% user.links.forEach((item) => { %>
 	      <%- include("badge", { data: item }) %>
 	      <% }) %>	    
 	    </ul>

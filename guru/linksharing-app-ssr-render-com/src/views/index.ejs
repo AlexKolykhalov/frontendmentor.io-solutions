@@ -85,18 +85,19 @@
 	  <div class="[ relative ] phone-mockup">
 	    <img src="/public/images/illustration-phone-mockup.svg" alt="">
 	    <img class="[ absolute ] phone-mockup-avatar"
-		 ejs-src="<%= user.avatar ? user.avatar : '/public/images/icons/icon-upload-image.svg' %>"
-		 ejs-style="<%= user.avatar ? 'object-fit: cover;' : 'object-fit: scale-down;' %>"
+		 src="<%= user.avatar ? user.avatar : '/public/images/icons/icon-upload-image.svg' %>"
+		 style="<%= user.avatar ? 'object-fit: cover;' : 'object-fit: scale-down;' %>"
 		 alt="">
-	    <div class="[ absolute ] phone-mockup-name { text-center fw-semibold fs-500 clr-n-800 }"><%= user.name.split(" ")[0] %> <%= user.name.split(" ")[1] %></div>
-	    <div class="[ absolute ] phone-mockup-email { text-center fs-300 }"><%= user.email %></div>
-	    <% links.forEach(item => { %>
-	    <div
-	      class="phone-mockup-badge row cross-axis-center clr-n-000 border-radius-sm"
-	      ejs-class="<%= item.bgColor %>"
-	      ejs-style="--image_path: url('/public/images/icons/<%= item.whiteIcon %>');">
-	      <%= item.source %>
+	    <div class="[ absolute ] phone-mockup-name { text-center fw-semibold fs-500 clr-n-800 }">
+	      <%= user.name.split(" ")[0] %> <%= user.name.split(" ")[1] %>
 	    </div>
+	    <div class="[ absolute ] phone-mockup-email { text-center fs-300 }"><%= user.email %></div>
+	    <% user.links.forEach((item) => { %>
+	      <div
+		class="phone-mockup-badge { row cross-axis-center <%= item.params.bgColor %> clr-n-000 border-radius-sm }"
+		style="--image_path: url('/public/images/icons/<%= item.params.whiteIcon %>');">
+		<%= item.params.title %>
+	      </div>
 	    <% }) %>
 	  </div>
 	</section>
@@ -108,12 +109,15 @@
 	    <article>
 	      <h4 class="sr-only">List of links</h4>
 	      <div class="grid mar-bottom-l">
-		<button class="add-new-link-btn { btn-theme border-clr-p-purple clr-p-purple }"
-			ejs-attr="<% if (links.length === 5) { %>disabled<% } %>">+ Add new link</button>
+		<button
+		  class="add-new-link-btn { btn-theme border-clr-p-purple clr-p-purple }"
+		  <% if (user.links.length === 5) { %>disabled<% } %>>
+		  + Add new link
+		</button>
 	      </div>
 	      <ul class="user-links { column gap-m pad-v-sm }">
-		<% links.forEach(item => { %>
-		<%- include("link", { index: links.indexOf(item) + 1, link: item }) %>
+		<% user.links.forEach(item => { %>
+		  <%- include("link", { link: item }) %>
 		<% }) %>
 	      </ul>
 	    </article>
@@ -130,16 +134,20 @@
 		  <div class="grid gap-m break-15ch cross-axis-center">
 		    <div class="[ relative ]">
 		      <button
-			class="upload-image-btn { bg-p-purple-ter border-radius-sm }"			
-			ejs-style="<% if (user.avatar) { %>background-image: linear-gradient(rgba(255,255,255,0.7), rgba(255,255,255,0.7)), url('<%= user.avatar %>');<% } %>">
+			class="upload-image-btn { bg-p-purple-ter border-radius-sm }"
+			<% if (user.avatar) { %>
+			  style="background-image: linear-gradient(rgba(255,255,255,0.7), rgba(255,255,255,0.7)), url('<%= user.avatar %>');"
+			<% } %>>
 			<span class="column main-axis-center cross-axis-center">
 			  <img alt="" src="/public/images/icons/icon-upload-image.svg">
-			  <span class="fw-semibold clr-p-purple"><% if (user.avatar) { %>Change Image<% } else { %>+ Upload Image<% } %></span>
+			  <span class="fw-semibold clr-p-purple">
+			    <% if (user.avatar) { %>Change Image<% } else { %>+ Upload Image<% } %>
+			  </span>
 			</span>
 		      </button>
 		      <button class="[ absolute ] clear-image-btn"
 			      aria-label="Clear image"
-			      ejs-attr="<% if (!user.avatar) { %>data-visible='false'<% } %>"
+			      <% if (!user.avatar) { %>data-visible="false"<% } %>
 		      </button>
 		    </div>
 		    <small class="warnings"><span>Image must be below 1024x1024px.</span> <span>Use PNG, JPG or BMP format.</span></small>
