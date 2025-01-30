@@ -1,5 +1,7 @@
 // @ts-check
 
+import { getParams, showPopUpMessage } from "../helpers.js";
+
 /**
  * @typedef { import("../../src/types/typedefs.js").User } User
  * @typedef { import("../../src/types/typedefs.js").Link } Link
@@ -11,8 +13,6 @@ let dbUserData = { userId: "", avatar: "", name: "", email: "", links: [] };
 /** @type {User} */
 let currentUserData = { userId: "", avatar: "", name: "", email: "", links: [] };
 
-let compiledLinkTemplate;
-
 // ************************** 1. Events *********************************//
 
 window.addEventListener('load', async () => {
@@ -22,11 +22,6 @@ window.addEventListener('load', async () => {
   currentUserData.name   = dbUserData.name;
   currentUserData.email  = dbUserData.email;
   // console.log(`DB user data: ${JSON.stringify(dbUserData, null, 2)}`);
-  
-  const resp = await fetch("/public/templates/link.ejs");
-  const text = await resp.text();
-  const ejs  = await import("/scripts/ejs.min.js");
-  compiledLinkTemplate = ejs.compile(text);
 });
 
 // setting event listeners for elements (Links) which comes from server
@@ -57,16 +52,14 @@ saveBtn.addEventListener('click', async () => {
       dbUserData = await response.json();
       // console.log(`User updated data: ${JSON.stringify(dbUserData, null, 2)}`);
       clockSpinner.setAttribute("data-visible", "false");
-      import("/public/helpers.js").then(fn => fn.showPopUpMessage(
-	"Your changes have been successfully saved!", "msg"
-      ));
+      showPopUpMessage("Your changes have been successfully saved!", "msg");
       saveBtn.setAttribute("disabled", "");
       previewLink.removeAttribute("style");
     }
     if (response.status === 400) {
       const error = await response.json();
       clockSpinner.setAttribute("data-visible", "false");
-      import("/public/helpers.js").then(fn => fn.showPopUpMessage(error.message));
+      showPopUpMessage(error.message);
     }
     if (response.status === 401) {
       const refreshResponse = await fetch(`/api/refresh`);
@@ -84,31 +77,29 @@ saveBtn.addEventListener('click', async () => {
 	  dbUserData = await response.json();
 	  // console.log(`User updated data after resfresh: ${JSON.stringify(dbUserData, null, 2)}`);
 	  clockSpinner.setAttribute("data-visible", "false");
-	  import("/public/helpers.js").then(fn => fn.showPopUpMessage(
-	    'Your changes have been successfully saved!', "msg"
-	  ));
+	  showPopUpMessage("Your changes have been successfully saved!", "msg");
 	  saveBtn.setAttribute("disabled", "");
 	  previewLink.removeAttribute("style");
 	}
 	if (response.status === 400) {
 	  const error = await response.json();
 	  clockSpinner.setAttribute("data-visible", "false");
-	  import("/public/helpers.js").then(fn => fn.showPopUpMessage(error.message));
+	  showPopUpMessage(error.message);
 	}
 	if (response.status === 500) {
 	  clockSpinner.setAttribute("data-visible", "false");
-	  import("/public/helpers.js").then(fn => fn.showPopUpMessage("Internal server error"));
+	  showPopUpMessage("Internal server error");
 	}
       }
       if (refreshResponse.status === 401) window.location.replace("/login");
     }
     if (response.status === 500) {
       clockSpinner.setAttribute("data-visible", "false");
-      import("/public/helpers.js").then(fn => fn.showPopUpMessage("Internal server error"));
+      showPopUpMessage("Internal server error");
     }
   } catch (error) {
     clockSpinner.setAttribute("data-visible", "false");
-    import("/public/helpers.js").then(fn => fn.showPopUpMessage(error.message));
+    showPopUpMessage(error.message);
   }
 });
 
@@ -125,25 +116,24 @@ logoutBtn.addEventListener('click', async () => {
     if (response.status === 200) window.location.replace("/login");
     if (response.status === 500) {
       clockSpinner.setAttribute("data-visible", "false");
-      import("/public/helpers.js").then(fn => fn.showPopUpMessage("Internal server error"));
+      showPopUpMessage("Internal server error");
     }
   } catch (error) {
     clockSpinner.setAttribute("data-visible", "false");
-    import("/public/helpers.js").then(fn => fn.showPopUpMessage(error.message));
+    showPopUpMessage(error.message);
   }
 });
 
 /** @type {HTMLButtonElement|null} */
 const addNewLinkBtn = document.querySelector(".add-new-link-btn");
 if (!addNewLinkBtn) throw new Error("Can't find .add-new-link-btn");
-addNewLinkBtn.addEventListener('click', () => {
+addNewLinkBtn.addEventListener('click', async () => {
   /** @type {Link} */
   const defaultLinkData = {
-    linkId: crypto.randomUUID(),
-    source: "GitHub",
-    url: ""
+    id: crypto.randomUUID(),
+    url: "https://github.com",
   };
-  addNewLink(defaultLinkData);
+  await addNewLink(defaultLinkData);
   addNewMockupBadge(defaultLinkData);
   currentUserData.links.push(defaultLinkData);
   checkDifferences();
@@ -273,9 +263,9 @@ firstNameInput.addEventListener("input", () => {
   const mockupName = document.querySelector(".phone-mockup-name");
   if (!mockupName) throw new Error("Can't find .phone-mockup-name");
   const firstName = firstNameInput.value.trim() === "" ? "****" : firstNameInput.value.trim();
-  mockupName.textContent = `${firstName} ${mockupName.textContent?.split(" ")[1]}`;
-
+  mockupName.textContent = `${firstName} ${mockupName.textContent?.trim().split(" ")[1]}`;
   currentUserData.name = `${firstNameInput.value.trim()} ${currentUserData.name.split(" ")[1]}`;
+
   checkDifferences();
 });
 
@@ -286,9 +276,9 @@ lastNameInput.addEventListener("input", () => {
   const mockupName = document.querySelector(".phone-mockup-name");
   if (!mockupName) throw new Error("Can't find .phone-mockup-name");
   const lastName = lastNameInput.value.trim() === "" ? "****" : lastNameInput.value.trim();
-  mockupName.textContent = `${mockupName.textContent?.split(" ")[0]} ${lastName}`;
-
+  mockupName.textContent = `${mockupName.textContent?.trim().split(" ")[0]} ${lastName}`;
   currentUserData.name = `${currentUserData.name.split(" ")[0]} ${lastNameInput.value.trim()}`;
+
   checkDifferences();
 });
 
@@ -379,17 +369,12 @@ function getUserData() {
   email = emailInput.value.trim();
   const listOfLinks = document.querySelectorAll(".user-links > li");
   listOfLinks.forEach((item) => {
-    const source = item.querySelector(".select > button span");
-    const url    = item.querySelector("input");
-    if (source && source.textContent && url) {
-      if (!item.getAttribute("id")) throw new Error("Link without ID");
-      const link = {
-	linkId: item.getAttribute("id") ?? "",
-	source: source.textContent,
-	url: url.value.trim()
-      };
-      links.push(link);
-    }
+    const url   = item.querySelector("input");
+    const title = item.querySelector("button span");
+    if (!url   || !url.value.trim())  throw new Error("Link without URL");
+    if (!title || !title.textContent) throw new Error("Empty title of the select button");
+    const params = getParams(title.textContent);
+    links.push({ id: item.getAttribute("id") ?? "", url: params.host + url.value.trim() });
   });
 
   updatedUserData.avatar = avatar;
@@ -410,27 +395,22 @@ async function addNewLink(link) {
   if (!addNewLinkBtn) throw new Error("Can'f find .add-new-link-btn");
   if (!userLinks)     throw new Error("Can'f find .user-links");
 
-  const fn = await import("/public/helpers.js");  
-  const { domain, whiteIcon, grayIcon, bgColor, offset } = fn.getLinkInfoByName(link.source);
-  const newLink = {
-    id: link.linkId,
-    domain: domain,
-    whiteIcon: whiteIcon,
-    grayIcon: grayIcon,
-    bgColor: bgColor,
-    offset: offset,
-    url: link.url,
-    source: link.source
-  };
+  try {
+    const number       = userLinks.children.length + 1;
+    const resp         = await fetch(`/new_link?id=${link.id}&number=${number}&url=${link.url}`);
+    const html         = await resp.text();
+    const template     = document.createElement("template");
+    template.innerHTML = html;
+    const clone        = template.content.firstElementChild?.cloneNode(true);
 
-  const template     = document.createElement("template");
-  template.innerHTML = compiledLinkTemplate({ index: userLinks.children.length + 1, link: newLink });  
-  const clone        = template.content.firstChild;
-  userLinks.appendChild(clone);
-  setLinkEventListeners(clone);
+    userLinks.appendChild(clone);
+    setLinkEventListeners(clone);
 
-  // forbid adding new links if only
-  if (userLinks.children.length > 4) addNewLinkBtn.setAttribute("disabled", "");
+    // forbid adding new links if only
+    if (userLinks.children.length > 4) addNewLinkBtn.setAttribute("disabled", "");
+  } catch (error) {
+    showPopUpMessage(error)
+  }
 }
 
 /**
@@ -441,21 +421,14 @@ function addNewMockupBadge (link) {
   const phoneMockup = document.querySelector(".phone-mockup");
   if (!phoneMockup) throw new Error("Can'f find .phone-mockup")
 
-  import("/public/helpers.js").then(fn => {
-    const { whiteIcon, bgColor } = fn.getLinkInfoByName(link.source);
-    const badge = document.createElement("div");
-    badge.classList.add(
-      "phone-mockup-badge",
-      bgColor,
-      "row",
-      "cross-axis-center",
-      "clr-n-000",
-      "border-radius-sm"
-    );
-    badge.setAttribute("style", `--image_path: url(/public/images/icons/${whiteIcon});`);
-    badge.textContent = link.source;
-    phoneMockup.appendChild(badge);
-  });
+  const params = getParams(new URL(link.url).hostname);
+  const badge = document.createElement("div");
+  badge.classList.add(
+    "phone-mockup-badge", params.bgColor, "row", "cross-axis-center", "clr-n-000", "border-radius-sm"
+  );
+  badge.setAttribute("style", `--image_path: url('/public/images/icons/${params.whiteIcon}');`);
+  badge.textContent = params.title;
+  phoneMockup.appendChild(badge);
 }
 
 /**
@@ -537,9 +510,8 @@ function setLinkEventListeners(element) {
     // edit userData.links 'url'
     const id = element.getAttribute("id");
     if (!id) throw new Error("<li> id is empty");
-    editCurrentUserDataLink({ linkId: id,
-			      source: selectBtn.textContent?.trim(),
-			      url: input.value });
+    const params = getParams(selectBtn.textContent?.trim() ?? "");
+    editCurrentUserDataLink({ id: id, url: params.host + input.value });
   });
 }
 
@@ -571,27 +543,33 @@ function setAsSelected(element) {
   previuosItem.removeAttribute('data-status');
   element.setAttribute('data-status', 'selected');
 
-  import("/public/helpers.js").then(helpers => {
-    const { domain, whiteIcon, bgColor, offset } = helpers.getLinkInfoByName(currentTargetText);
-    // working with input
-    /** @type {HTMLInputElement|null|undefined} */
-    const input = element.closest("li[id]")?.querySelector("input[id]");
-    if (!input) throw new Error("Can't find input[id]");
-    input.setAttribute("style", `--pad-left: ${offset};`);
-    input.parentElement?.setAttribute("style", `--domain: "${domain}";`);
-    // working with badge (change title and bg-color)
-    const index = Number(input.getAttribute('id')?.split("_")[1]) ?? 0;
-    const badge = document.querySelectorAll('.phone-mockup-badge')[index - 1];
-    if (!badge) throw new Error(`Can't find badge[${index - 1}]`);
-    badge.classList.remove(...badge.classList);
-    badge.classList.add('phone-mockup-badge', bgColor, 'row', 'cross-axis-center', 'clr-n-000', 'border-radius-sm');
-    badge.setAttribute('style', `--image_path: url(/public/images/icons/${whiteIcon});`);
-    badge.textContent = currentTargetText;
-    // edit userData.links "source" and "url"
-    const id = element.closest("li[id]")?.getAttribute("id");
-    if (!id) throw new Error("<li> ID is empty");
-    editCurrentUserDataLink({linkId: id, source: currentTargetText, url: input.value});
-  });
+  const params = getParams(currentTargetText);
+
+  // working with input
+  /** @type {HTMLInputElement|null|undefined} */
+  const input = element.closest("li[id]")?.querySelector("input[id]");
+  if (!input) throw new Error("Can't find input[id]");
+  input.setAttribute("style", `--pad-left: ${params.offset};`);
+  input.parentElement?.setAttribute("style", `--host: "${params.host}";`);
+  // working with badge (change title and bg-color)
+  const index = Number(input.getAttribute('id')?.split("_")[1]) ?? 0;
+  const badge = document.querySelectorAll('.phone-mockup-badge')[index - 1];
+  if (!badge) throw new Error(`Can't find badge[${index - 1}]`);
+  badge.classList.remove(...badge.classList);
+  badge.classList.add(
+    "phone-mockup-badge",
+    params.bgColor,
+    "row",
+    "cross-axis-center",
+    "clr-n-000",
+    "border-radius-sm"
+  );
+  badge.setAttribute("style", `--image_path: url('/public/images/icons/${params.whiteIcon}');`);
+  badge.textContent = currentTargetText;
+  // edit userData.links "source" and "url"
+  const id = element.closest("li[id]")?.getAttribute("id");
+  if (!id) throw new Error("<li> ID is empty");
+  editCurrentUserDataLink({ id: id, url: params.host + input.value });
 }
 
 /**
@@ -599,19 +577,19 @@ function setAsSelected(element) {
  * @param {HTMLUListElement} ulElement
  */
 function toggleVisibility(ulElement) {
-  const selectBtn = ulElement.parentElement?.querySelector('button');
+  const selectBtn = ulElement.parentElement?.querySelector("button");
   if (!selectBtn) throw new Error("Can't find .select>button");
 
-  if (selectBtn.getAttribute('aria-expanded') === 'true') {
-    ulElement.setAttribute('data-visible', 'false');
-    ulElement.setAttribute('data-position', 'under');
-    selectBtn.setAttribute('aria-expanded', 'false');
+  if (selectBtn.getAttribute("aria-expanded") === "true") {
+    ulElement.setAttribute("data-visible", "false");
+    ulElement.setAttribute("data-position", "under");
+    selectBtn.setAttribute("aria-expanded", "false");
     observerOptions.unobserve(ulElement);
     observerSelect.unobserve(selectBtn);
     // console.log(`Finish observe to ${element.id} and ${selectBtn.id}`);
   } else {
-    ulElement.removeAttribute('data-visible');
-    selectBtn.setAttribute('aria-expanded', 'true');
+    ulElement.removeAttribute("data-visible");
+    selectBtn.setAttribute("aria-expanded", "true");
     // set autoscroll to current item in options list
     const currentItem = ulElement.querySelector('li[data-status="selected"]');
     if (currentItem) {
@@ -635,13 +613,13 @@ function remove() {
   const userLinks     = document.querySelector(".user-links");
   const phoneMockup   = document.querySelector(".phone-mockup");
   const link          = this.closest("li[id]");
-  const linkId        = this.closest("li[id]")?.getAttribute("id");
+  const id            = this.closest("li[id]")?.getAttribute("id");
 
   if (!addNewLinkBtn) throw new Error("Can't find .add-new-link-btn");
   if (!userLinks)     throw new Error("Can't find .user-links");
   if (!phoneMockup)   throw new Error("Can't find .phone-mockup");
   if (!link)          throw new Error("Can't find <li [id]>");
-  if (!linkId)        throw new Error("<li> id is empty");
+  if (!id)            throw new Error("<li> id is empty");
 
   // remove mockup badge (+4 because we have 3 elements before mockup badges)
   phoneMockup.removeChild(
@@ -676,11 +654,11 @@ function remove() {
   // enable to add new links
   if (addNewLinkBtn.hasAttribute("disabled")) addNewLinkBtn.removeAttribute("disabled");
 
-  const arr = dbUserData.links.filter(item => item.linkId === linkId);
+  const arr = dbUserData.links.filter(item => item.id === id);
   if (arr.length === 0) // delete from currentUserData.links because link is not in dbUserData.links
-    editCurrentUserDataLink({ linkId: linkId });
+    editCurrentUserDataLink({ id: id });
   if (arr.length === 1) // edit currentUserData.links
-    editCurrentUserDataLink({ linkId: linkId, source: "", url: "" });
+    editCurrentUserDataLink({ id: id, url: "" });
   if (arr.length > 1) // we have two or more links with same ID
     throw new Error("Two or more links with same ID");
 }
@@ -689,32 +667,27 @@ function remove() {
  * If "source" and "url" are "undefined" then remove from currentUserData.links
  * If "source" and "url" are "" then remove from DB during update operation
  * @param {object} link
- * @param {string} link.linkId
- * @param {string} [link.source]
+ * @param {string} link.id
  * @param {string} [link.url]
  */
-function editCurrentUserDataLink({linkId, source, url}) {
-  if (source === undefined && url === undefined)
-    currentUserData.links = currentUserData.links.filter(item => item.linkId !== linkId);
-  if (source === "" && url === "")
-    currentUserData.links.push({linkId: linkId, source: source, url: url});
-  if (source && (url || url === "")) {
-    const currentLink = currentUserData.links.find(item => item.linkId === linkId);
+function editCurrentUserDataLink({id, url}) {
+  if (url === undefined)
+    currentUserData.links = currentUserData.links.filter((item) => item.id !== id);
+  else {
+    const currentLink = currentUserData.links.find(item => item.id === id);
     if (currentLink) {
-      currentLink.source = source;
-      currentLink.url    = url;
+      currentLink.url = url;
       // remove link from currentUserData.links if after editing we have
       // identical links in currentUserData.links and dbUserData.links
-      const dbLink = dbUserData.links.filter(item => item.linkId === linkId);
+      const dbLink = dbUserData.links.filter(item => item.id === id);
       if (dbLink.length > 1) throw new Error("More than one link found in dbUserData");
-      if (dbLink.length === 1 &&
-	  dbLink[0].source === currentLink.source &&
-	  dbLink[0].url === currentLink.url) {
-	currentUserData.links = currentUserData.links.filter(item => item.linkId !== linkId);
+      if (dbLink.length === 1 && dbLink[0].url === currentLink.url) {
+	currentUserData.links = currentUserData.links.filter(item => item.id !== id);
       }
     } else
-      currentUserData.links.push({linkId: linkId, source: source, url: url});
+      currentUserData.links.push({id: id, url: url});
   }
+
   checkDifferences();
 }
 

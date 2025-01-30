@@ -1,18 +1,23 @@
 // @ts-check
 
+import { showPopUpMessage } from "../helpers.js";
+
 /** @type {HTMLButtonElement|null} */
 const shareBtn = document.querySelector(".share-btn");
+
+/** @type {string} */
+const url = (window.location.hostname === "localhost") ?
+      "http://localhost:3000" :
+      "https://linksharing-app-ssr-render-com.onrender.com";
 
 // ************************** 1. Events *********************************//
 
 shareBtn?.addEventListener("click", async () => {
   try {
     const userId = document.getElementById("userId");
-    await navigator.clipboard.writeText(`${process.env.HOST}/${userId?.textContent}`);
-    const fn = await import("/public/helpers.js");
-    fn.showPopUpMessage("Link copied", "msg");
+    await navigator.clipboard.writeText(`${url}/${userId?.textContent}`);    
+    showPopUpMessage("Link copied", "msg");
   } catch (error) {    
-    const fn = await import("/public/helpers.js");
-    fn.showPopUpMessage(error.message);
+    showPopUpMessage(error.message);
   }
 });

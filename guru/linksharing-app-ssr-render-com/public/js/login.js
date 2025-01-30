@@ -1,5 +1,7 @@
 // @ts-check
 
+import { showPopUpMessage } from "../helpers.js";
+
 /** @type {HTMLButtonElement|null} */
 const loginBtn = document.querySelector('.login-btn');
 
@@ -19,19 +21,16 @@ loginBtn?.addEventListener('click', async () => {
 	body: JSON.stringify({email: email.value, password: password.value}),
       });
       if (response.status === 200) {
-	const token = await response.json();
 	email.value = password.value = "";  // clear, just in case
 	window.location.replace("/");
       } else {
 	const error = await response.json();
-	loginBtn.querySelector(".clock-spinner")?.setAttribute("data-visible", "false");	
-	const fn = await import("/public/helpers.js");
-	fn.showPopUpMessage(error.message);	
+	loginBtn.querySelector(".clock-spinner")?.setAttribute("data-visible", "false");
+	showPopUpMessage(error.message);
       }
     } catch (error) {
-      loginBtn.querySelector(".clock-spinner")?.setAttribute("data-visible", "false");      
-      const fn = await import("/public/helpers.js");
-      fn.showPopUpMessage("Internal server error");
+      loginBtn.querySelector(".clock-spinner")?.setAttribute("data-visible", "false");
+      showPopUpMessage("Internal server error");
     }
   }
 });
