@@ -20,7 +20,6 @@ try {
     port,
     () => {
       console.log(`Server (${process.env.NODE_ENV}) has been started at port: ${port}...`);
-      console.log(`Some value DEV_HOST: (${process.env.DEV_HOST})`);
     }
   );
 } catch (error) {
