@@ -8,6 +8,7 @@ import { userDataValidator, userIdValidator }          from "../validators/user.
 const router = Router();
 router.post("/api/user/update", accessTokenValidator, userDataValidator, UserController.update);
 
+router.get("/new_link",                       UserController.renderLink);
 router.get("/preview", refreshTokenValidator, UserController.renderPreview);
 router.get("/:userId", userIdValidator,       UserController.renderProfile);
 router.get("/",        refreshTokenValidator, UserController.renderIndex);

@@ -112,4 +112,25 @@ export class UserController {
       next(error);
     }
   }
+
+  /**
+   * @param {express.Request} req
+   * @param {express.Response} res
+   * @param {express.NextFunction} next
+   */
+  static renderLink(req, res, next) {
+    const compiled = getCompileEJS("/src/views/link.ejs");
+
+    return res.send(
+      compiled({
+	link: {
+	  number: req.query.number,
+	  id: req.query.id,
+	  url: req.query.url,
+	  params: getParams(new URL(req.query.url).hostname),
+	}
+      })
+    );
+  }
+
 }
