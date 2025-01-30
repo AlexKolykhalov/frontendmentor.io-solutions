@@ -328,10 +328,6 @@ listControlBtns.forEach((item) => {
   });
 });
 
-// popUpMessage?.addEventListener('animationend', () => {
-//     popUpMessage.removeAttribute('animated');
-// }, false);
-
 // ************************* 2. Functions *******************************//
 
 /**
