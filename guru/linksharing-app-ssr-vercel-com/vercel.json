@@ -5,6 +5,6 @@
     { "src": "/api/hello.js", "use": "@vercel/node" }    
   ],
   "rewrites": [
-    { "source": "/(.*)", "destination": "index.js" }
+    { "source": "/(.*)", "destination": "/api" }
   ]
 }
