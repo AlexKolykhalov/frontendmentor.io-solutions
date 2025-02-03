@@ -6,6 +6,7 @@ import { accessTokenValidator, refreshTokenValidator } from "../validators/token
 import { userDataValidator, userIdValidator }          from "../validators/user.validator.js";
 
 const router = Router();
+
 router.post("/api/user/update", accessTokenValidator, userDataValidator, UserController.update);
 
 router.get("/new_link",                       UserController.renderLink);

@@ -7,6 +7,14 @@ const loginBtn = document.querySelector('.login-btn');
 
 // ************************** 1. Events *********************************//
 
+// WebWorker registration
+if ("serviceWorker" in navigator) {
+  window.addEventListener(
+    "load",
+    () => navigator.serviceWorker.register("worker.js", { type: "module" })
+  );
+}
+
 loginBtn?.addEventListener('click', async () => {
   /** @type {HTMLInputElement|null} */
   const email = document.querySelector('#login_email');
