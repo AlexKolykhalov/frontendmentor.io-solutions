@@ -10,7 +10,6 @@ import { errorHandler } from "./src/middlewares/errorHandler.middleware.js"
 const port = process.env.PORT;
 const app  = express();
 app.use("/public", express.static(resolve("public")));
-// app.use(express.static(resolve("public")));
 app.use(express.json());
 app.use(cors());
 app.use(cookieParser());
