@@ -7,7 +7,7 @@ const VERSION = "v1";
 const CACHE_NAME = `${TITLE}-${VERSION}`;
 
 // The static resources that the app needs to function.
-const host = process.env.PROD_HOST;
+const host = "https://linksharing-app-ssr-render-com.onrender.com";
 
 const APP_STATIC_RESOURCES = [
   `${host}/public/helpers.js`,
