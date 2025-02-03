@@ -2,6 +2,7 @@
   "version": 2,
   "builds": [
     { "src": "package.json", "use": "@vercel/static-build" },
+    { "src": "/api/hello.js", "use": "@vercel/node" },
     { "src": "index.js", "use": "@vercel/node" }
   ],
   "rewrites": [
