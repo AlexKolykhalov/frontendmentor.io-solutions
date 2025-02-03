@@ -8,9 +8,10 @@ import workerRouter from "./worker.route.js";
 
 const router = Router();
 
+// the orders of routers matters
 router.use(authRouter);
 router.use(cronRouter);
-router.use(userRouter);
 router.use(workerRouter);
+router.use(userRouter);
 
 export default router;
