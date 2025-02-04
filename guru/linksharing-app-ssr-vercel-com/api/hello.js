@@ -1,4 +1,4 @@
-export function GET(req, res) {
+export function handler(req, res) {
   // return new Response(`Hello from ${process.env.VERCEL_REGION}`);
-  res.status(200).sendFile("/public/html/login.html");
+  res.status(200).json({ text: "/public/html/login.html" });
 }
