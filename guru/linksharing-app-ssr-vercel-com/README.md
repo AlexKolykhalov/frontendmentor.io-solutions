@@ -2,7 +2,7 @@
 
 This is a solution to the [Link-sharing app challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/linksharing-app-Fbt7yweGsT). Frontend Mentor challenges help you improve your coding skills by building realistic projects.
 
-[__Live demo (under construction)__]()
+[__Live demo__](https://linksharing-app-ssr-vercel.app)
 
 ## Table of contents
 
@@ -34,7 +34,9 @@ Users should be able to:
 
 ![](./public/images/design/mobile-prev.webp)
 
-## My process
+## Notice
+
+Due to free plan λ functions starts cold (~1 sec delay)
 
 ### Built with
 
@@ -44,9 +46,8 @@ Users should be able to:
 - CSS Grid
 - Mobile-first workflow
 - JavaScript
-- SSR
-- Vercel serverless deploy
-- cron job implementation
+- SSR ejs
+- λ functions ([vercel](https://vercel.com/))
 - postgres as back ([supabase](https://supabase.com/))
 
 ## Author
