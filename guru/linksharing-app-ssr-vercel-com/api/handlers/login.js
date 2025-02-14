@@ -11,11 +11,4 @@ export default function (_, res) {
       res.send(str);
     }
   );
-  
-  // console.log(`my path: ${path.resolve()}/public/pages/login/login.ejs`);
-  // const compile =  ejs.compile(
-  //   readFileSync(`${path.resolve()}/public/pages/login/login.ejs`, "utf-8"),
-  //   { views: [path.resolve()+"/public/pages/login", path.resolve()+"/public/pages"] }
-  // );
-  // res.send(compile());
 }

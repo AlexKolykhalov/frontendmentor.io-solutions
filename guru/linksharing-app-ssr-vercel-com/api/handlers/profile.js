@@ -30,8 +30,13 @@ export default async function (req, res) {
     };
   });
 
-  ejs.renderFile(`${path.resolve()}/public/pages/profile/profile.ejs`, { user: user }, (err, str) => {
-    if (err) return res.status(500).json({ error: "EJS render error", text: err.message });    
-    res.send(str);
-  });
+  ejs.renderFile(
+    `${path.resolve()}/public/pages/profile/profile.ejs`,
+    { user: user },
+    { views: [`${path.resolve()}/public/pages`] },
+    (err, str) => {
+      if (err) return res.status(500).json({ error: "EJS render error", text: err.message });    
+      res.send(str);
+    }
+  );
 }

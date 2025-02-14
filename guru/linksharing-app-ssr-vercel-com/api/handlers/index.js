@@ -33,10 +33,15 @@ export default async function (req, res) {
     };
   });
 
-  ejs.renderFile(`${path.resolve()}/public/pages/index/index.ejs`, { user: user }, (err, str) => {
-    if (err) return res.status(500).json({ error: "EJS render error", text: err.message });
-    const token = generateSessionToken({ id: result.id });
-    res.setHeader("Set-Cookie", `session=${token}; HttpOnly; Secure; Path=/; Max-Age=1800`);
-    res.send(str);
-  });
+  ejs.renderFile(
+    `${path.resolve()}/public/pages/index/index.ejs`,
+    { user: user },
+    { views: [`${path.resolve()}/public/pages`] },
+    (err, str) => {
+      if (err) return res.status(500).json({ error: "EJS render error", text: err.message });
+      const token = generateSessionToken({ id: result.id });
+      res.setHeader("Set-Cookie", `session=${token}; HttpOnly; Secure; Path=/; Max-Age=1800`);
+      res.send(str);
+    }
+  );
 }
