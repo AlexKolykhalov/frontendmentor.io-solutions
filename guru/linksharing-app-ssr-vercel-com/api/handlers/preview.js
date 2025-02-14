@@ -1,10 +1,10 @@
 import ejs                      from "ejs"
 import path                     from "path";
-import sql                      from "../db.js";
+import sql                      from "../../db.js";
 import { getParams }            from "../../public/helpers.js";
 import { getCookies,
 	 verifySessionToken,
-	 generateSessionToken } from "../utils.js";
+	 generateSessionToken } from "../../utils.js";
 
 export default async function (req, res) {
   const result = verifySessionToken(getCookies(req)["session"]);

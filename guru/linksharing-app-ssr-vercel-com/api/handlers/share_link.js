@@ -1,4 +1,4 @@
-import { getCookies, verifySessionToken, generateSessionToken } from "../utils.js";
+import { getCookies, verifySessionToken, generateSessionToken } from "../../utils.js";
 
 export default async function (req, res) {
   const result = verifySessionToken(getCookies(req)["session"]);

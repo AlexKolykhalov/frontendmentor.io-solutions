@@ -1,6 +1,6 @@
 import ejs                      from "ejs"
 import path                     from "path";
-import sql                      from "../db.js";
+import sql                      from "../../db.js";
 import { getParams }            from "../../public/helpers.js";
 
 export default async function (req, res) {  

@@ -1,7 +1,7 @@
-import sql                      from "../db.js";
+import sql                      from "../../db.js";
 import { getCookies,
 	 verifySessionToken,
-	 generateSessionToken } from "../utils.js";
+	 generateSessionToken } from "../../utils.js";
 
 export default async function (req, res) {
   // TODO check body

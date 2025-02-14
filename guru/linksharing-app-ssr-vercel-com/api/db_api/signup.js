@@ -1,8 +1,8 @@
 import { randomBytes, scrypt, randomUUID } from "crypto";
 import { promisify } from "util";
 
-import sql                      from "../db.js";
-import { generateSessionToken } from "../utils.js";
+import sql                      from "../../db.js";
+import { generateSessionToken } from "../../utils.js";
 
 
 export default async function (req, res) {
