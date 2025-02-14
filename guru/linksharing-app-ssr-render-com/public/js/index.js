@@ -50,7 +50,9 @@ saveBtn.addEventListener('click', async () => {
     });
     if (response.status === 200) {
       dbUserData = await response.json();
-      // console.log(`User updated data: ${JSON.stringify(dbUserData, null, 2)}`);
+      currentUserData.links = [];
+      // console.log(`(update) db: ${JSON.stringify(dbUserData, null, 2)}`);
+      // console.log(`(update) current: ${JSON.stringify(currentUserData, null, 2)}`);
       clockSpinner.setAttribute("data-visible", "false");
       showPopUpMessage("Your changes have been successfully saved!", "msg");
       saveBtn.setAttribute("disabled", "");
@@ -75,6 +77,7 @@ saveBtn.addEventListener('click', async () => {
 	});
 	if (response.status === 200) {
 	  dbUserData = await response.json();
+	  currentUserData.links = [];
 	  // console.log(`User updated data after resfresh: ${JSON.stringify(dbUserData, null, 2)}`);
 	  clockSpinner.setAttribute("data-visible", "false");
 	  showPopUpMessage("Your changes have been successfully saved!", "msg");
@@ -710,7 +713,8 @@ function checkDifferences() {
     saveBtn.setAttribute("disabled", "");
     previewLink.removeAttribute("style");
   }
-  // console.log(`User data link after editing: ${JSON.stringify(currentUserData.links, null, 2)}`);
+  // console.log(`(edit) db: ${JSON.stringify(dbUserData, null, 2)}`);
+  // console.log(`(edit) current: ${JSON.stringify(currentUserData, null, 2)}`);
 }
 
 /**
