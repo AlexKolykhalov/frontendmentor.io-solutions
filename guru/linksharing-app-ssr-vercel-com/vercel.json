@@ -1,11 +1,18 @@
 {
-  "version": 2,
-  "builds": [
-    { "src": "package.json", "use": "@vercel/static-build" },
-    { "src": "/api/hello.js", "use": "@vercel/node" }    
-  ],
   "rewrites": [
-    { "source": "/api/hello", "destination": "/api/hello.js" },
-    { "source": "/(.*)", "destination": "/api" }
+    { "source": "/",           "destination": "/api/handlers/index.js" },    
+    { "source": "/login",      "destination": "/api/handlers/login.js" },
+    { "source": "/signup",     "destination": "/api/handlers/signup.js" },
+    { "source": "/preview",    "destination": "/api/handlers/preview.js" },
+    { "source": "/share",      "destination": "/api/handlers/share_link.js" },
+    { "source": "/worker.js",  "destination": "/api/handlers/worker.js" },
+    { "source": "/api/login",  "destination": "/api/db_api/login.js" },
+    { "source": "/api/signup", "destination": "/api/db_api/signup.js" },
+    { "source": "/api/update", "destination": "/api/db_api/update.js" },
+    { "source": "/api/logout", "destination": "/api/db_api/logout.js" },    
+    {
+      "source": "/:id([0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})",
+      "destination": "/api/handlers/profile.js"
+    }
   ]
 }
