@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("../_components/head.ejs") %>
+  <body>
+    <main class="content">
+      <div class="center-v">
+	<div class="center-h">
+	  <article class="preview-card { column gap-m pad-l bg-n-000 border-radius-m }">
+	    <h1 class="sr-only">Profile card</h1>
+	    <img class="center-h"
+		 alt="avatar"
+		 src="<%= user.avatar ? user.avatar : '/images/icons/icon-upload-image.svg' %>"
+		 style="<%= user.avatar ? 'object-fit: cover;' : 'object-fit: scale-down;' %>">
+	    <div class="column cross-axis-center mar-bottom-l">
+	      <p class="text-center fw-bold fs-d-600-800 clr-n-800"><%= user.name.split(" ")[0] %> <%= user.name.split(" ")[1] %></p>
+	      <p class="text-center clr-n-800"><%= user.email %></p>
+	    </div>
+	    <% if (user.links.length > 0) { %>
+	    <ul class="column gap-m">	    
+	      <% user.links.forEach((item) => { %>
+	      <%- include("../_components/link_badge.ejs", { data: item }) %>
+	      <% }) %>	    
+	    </ul>
+	    <% } %>
+	  </article>
+	</div>
+      </div>
+    </main>
+  </body>
+
+</html>

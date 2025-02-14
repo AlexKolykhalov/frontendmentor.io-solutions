@@ -1,0 +1,19 @@
+<section>
+  <h3 class="clr-n-800 fs-d-600-800">Customize your links</h3>
+  <p class="mar-bottom-l">Add/edit/remove links below and then share all your profiles with the world!</p>
+  <article>
+    <h4 class="sr-only">List of links</h4>
+    <div class="grid mar-bottom-l">
+      <button
+	class="add-new-link-btn { btn-theme border-clr-p-purple clr-p-purple }"
+	<% if (user.links.length === 5) { %>disabled<% } %>>
+	+ Add new link
+      </button>
+    </div>
+    <ul class="user-links { column gap-m pad-v-sm }">
+      <% user.links.forEach((item) => { %>
+      <%- include("link.ejs", { link: item }) %>
+      <% }) %>
+    </ul>
+  </article>
+</section>

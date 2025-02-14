@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include("../_components/head.ejs") %>
+<body>
+  <main class="content">
+    <div class="center-v">
+      <div class="center-h">
+	<div class="form { column }">
+	  <img class="center-h mar-bottom-xl" alt="logo" src="/images/logo-devlinks-large.svg">
+	  <h1 class="clr-n-800 fs-500">Sign Up</h1>
+	  <p class="fs-300 mar-bottom-l">Create your free Devlinks account</p>
+	  <div class="column mar-bottom-m">
+	    <%- include("../_components/input.ejs", { id: "signup_email", title: "Email address", placeholder: "e.g email@example.com", type: "email", maxlength: "40" }) %>
+	  </div>
+	  <div class="column mar-bottom-m">
+	    <%- include("../_components/input.ejs", { id: "signup_password", title: "Password", placeholder: "Enter your password", type: "password", maxlength: "20" }) %>
+	  </div>
+	  <%- include("../_components/btn_with_clock.ejs", { cls: "signup-btn", title: "Sign Up", disabled: false }) %>
+	  <span class="text-center">Already have an account? <a href="/login">Log in</a></span>
+	</div>
+      </div>
+    </div>
+  </main>
+  <script type="module" src="/pages/signup/signup.js"></script>
+</body>
+
+</html>

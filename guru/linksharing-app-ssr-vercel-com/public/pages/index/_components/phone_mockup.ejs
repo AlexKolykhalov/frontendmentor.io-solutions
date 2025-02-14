@@ -1,0 +1,14 @@
+<div class="[ relative ] phone-mockup">
+  <img src="/images/illustration-phone-mockup.svg" alt="">
+  <img class="[ absolute ] phone-mockup-avatar"
+       src="<%= user.avatar ? user.avatar : '/images/icons/icon-upload-image.svg' %>"
+       style="<%= user.avatar ? 'object-fit: cover;' : 'object-fit: scale-down;' %>"
+       alt="">
+  <div class="[ absolute ] phone-mockup-name { text-center fw-semibold fs-500 clr-n-800 }">
+    <%= user.name.split(" ")[0] %> <%= user.name.split(" ")[1] %>
+  </div>
+  <div class="[ absolute ] phone-mockup-email { text-center fs-300 }"><%= user.email %></div>
+  <% user.links.forEach((item) => { %>
+  <%- include("badge.ejs", { link: item }) %>
+  <% }) %>
+</div>

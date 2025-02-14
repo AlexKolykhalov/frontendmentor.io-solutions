@@ -1,0 +1,66 @@
+<% const menuItems = [
+   { title: "GitHub",         src: "/images/icons/icon-github-gray.svg" },
+   { title: "LinkedIn",       src: "/images/icons/icon-linkedin-gray.svg" },
+   { title: "GitLab",         src: "/images/icons/icon-gitlab-gray.svg" },
+   { title: "StackOverflow",  src: "/images/icons/icon-stack-overflow-gray.svg" },
+   { title: "YouTube",        src: "/images/icons/icon-youtube-gray.svg" },
+   { title: "Facebook",       src: "/images/icons/icon-facebook-gray.svg" },
+   { title: "Twitch",         src: "/images/icons/icon-twitch-gray.svg" },
+   { title: "Twitter",        src: "/images/icons/icon-twitter-gray.svg" },
+   { title: "Hashnode",       src: "/images/icons/icon-hashnode-gray.svg" },
+   { title: "Codepen",        src: "/images/icons/icon-codepen-gray.svg" },
+   { title: "Devto",          src: "/images/icons/icon-devto-gray.svg" },
+   { title: "Codewars",       src: "/images/icons/icon-codewars-gray.svg" },
+   { title: "Freecodecamp",   src: "/images/icons/icon-freecodecamp-gray.svg" },
+   { title: "FrontendMentor", src: "/images/icons/icon-frontend-mentor-gray.svg" },
+   ] %>
+<li id="<%= link.id %>">
+  <article class="column gap-m border-radius-sm bg-n-100 pad-m">
+    <div class="row main-axis-space-between">
+      <div class="row gap-sm cross-axis-center">
+	<img alt="" src="/images/icons/icon-drag-and-drop.svg">
+	<h5 class="fs-400">Link #<%= link.number %></h5>
+      </div>
+      <button class="clr-n-700">Remove</button>
+    </div>
+    <div class="column">
+      <p class="fs-200">Platform</p>
+      <div class="select { column gap-sm }">
+	<button id="select_<%= link.number %>"
+		class="pad-sm border-radius-sm border-clr-n-400 bg-n-000"
+		role="combobox"
+		aria-label="Platform"
+		aria-expanded="false"
+		aria-haspopup="menu"
+		aria-controls="options_<%= link.number %>">
+	  <div class="row gap-sm cross-axis-center">
+	    <img alt="" src="/images/icons/<%= link.params.grayIcon %>">
+	    <span><%= link.params.title %></span>
+	  </div>
+	</button>
+	<ul id="options_<%= link.number %>"
+	    role="menu"
+	    data-visible="false"
+	    data-position="under"
+	    class="options { column border-radius-sm border-clr-n-400 bg-n-000 }">
+	  <% menuItems.forEach((item) => { %>
+	  <li role="menuitem" class="row gap-sm pad-sm cross-axis-center"<% if (link.params.title === item.title) { %> data-status="selected"<% } %>>
+	    <img alt="" src="<%= item.src %>">
+	    <span><%= item.title %></span>
+	  </li>
+	  <% }) %>
+	</ul>
+      </div>
+    </div>
+    <div class="column">
+      <label class="fs-200" for="input_<%= link.number %>">Link</label>
+      <div class="input-link" style="--host: '<%= link.params.host %>';">
+	<input id="input_<%= link.number %>"
+	       type="url"
+	       value="<%= new URL(link.url).pathname.replace("/", "") %>"
+	       class="border-radius-sm border-clr-n-400 pad-sm"
+	       style="--pad-left: <%= link.params.offset %>;">
+      </div>
+    </div>
+  </article>
+</li>

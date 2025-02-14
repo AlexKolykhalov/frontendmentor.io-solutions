@@ -1,0 +1,63 @@
+<section hidden>
+  <h3 class="clr-n-800 fs-d-600-800">Profile Details</h3>
+  <p class="mar-bottom-l">Add your details to create a personal touch to your profile.</p>
+  <article class="column gap-m overflow-y-auto">
+    <h4 class="sr-only">Profile information</h4>	      
+    <section class="bg-n-100">
+	<div class="grid break-20ch cross-axis-center">
+	  <h5 class="fw-normal fs-400">Profile picture</h5>
+	  <div class="grid gap-m break-15ch cross-axis-center">
+	    <div class="[ relative ]">
+	      <button
+		class="upload-image-btn { bg-p-purple-ter border-radius-sm }"
+		<% if (user.avatar) { %>
+		  style="background-image: linear-gradient(rgba(255,255,255,0.7), rgba(255,255,255,0.7)), url('<%= user.avatar %>');"
+		<% } %>>
+		<span class="column main-axis-center cross-axis-center">
+		  <img alt="" src="/images/icons/icon-upload-image.svg">
+		  <span class="fw-semibold clr-p-purple">
+		    <% if (user.avatar) { %>Change Image<% } else { %>+ Upload Image<% } %>
+		  </span>
+		</span>
+	      </button>
+	      <button class="[ absolute ] clear-image-btn"
+		      aria-label="Clear image"
+		      <% if (!user.avatar) { %> data-visible="false" <% } %>
+	      </button>
+	    </div>
+	    <small class="warnings"><span>Image must be below 1024x1024px.</span> <span>Use PNG, JPG or BMP format.</span></small>
+	  </div>
+	</div>
+    </section>
+    <section class="column gap-sm bg-n-100">
+	<h4 class="sr-only">Name and email</h4>
+	<div class="grid break-20ch cross-axis-center">
+	  <label class="fs-d-200-400" for="first_name">First name*</label>
+	  <input id="first_name"
+		 size="1"
+		 maxlength="15"
+		 type="text"
+		 class="border-radius-sm border-clr-n-400 pad-sm"
+		 value="<%= user.name.split(' ')[0] %>">
+	</div>
+	<div class="grid break-20ch cross-axis-center">
+	  <label class="fs-d-200-400" for="last_name">Last name*</label>
+	  <input id="last_name"
+		 size="1"
+		 maxlength="20"
+		 type="text"
+		 class="border-radius-sm border-clr-n-400 pad-sm"
+		 value="<%= user.name.split(' ')[1] %>">
+	</div>
+	<div class="grid break-20ch cross-axis-center">
+	  <label class="fs-d-200-400" for="email">Email</label>
+	  <input id="email"
+		 size="1"
+		 maxlength="40"
+		 type="email"
+		 class="border-radius-sm border-clr-n-400 pad-sm"
+		 value="<%= user.email %>">
+	</div>
+    </section>
+  </article>
+</section>

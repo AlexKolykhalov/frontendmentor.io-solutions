@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("../_components/head.ejs") %>
+  <body>
+    <header class="content | mar-v-m pad-v-m bg-n-000">
+      <div class="breakout-l | row main-axis-space-between cross-axis-center">
+	<a class="logo" href="/" aria-label="Home"></a>
+	<div class="control-btns { row gap-m }">
+	  <%- include("_components/links_btn.ejs") %>
+	  <%- include("_components/profile_details_btn.ejs") %>
+	</div>
+	<div class="row gap-m">
+	  <%- include("_components/preview_btn.ejs") %>
+	  <%- include("_components/logout_btn.ejs") %>
+	</div>
+      </div>
+    </header>
+    <main class="content">
+      <h1 class="sr-only">Linksharing app</h1>
+      <div class="row no-wrap gap-m">
+	<section class="m--display-none grid cross-axis-center bg-n-000">
+	  <h2 class="sr-only">Phone mockup illustration</h2>
+	  <%- include("_components/phone_mockup.ejs", { user: user }) %>
+	</section>
+	<section class="flex-1 | column gap-m bg-n-000 main-axis-space-between">
+	  <h2 class="sr-only">Links and personal info</h2>
+	  <%- include("_components/links_section.ejs", { user: user }) %>
+	  <%- include("_components/profile_details_section.ejs", { user: user }) %>
+          <footer class="grid md--main-axis-end">
+	    <%- include("../_components/btn_with_clock.ejs", { cls: "save-btn", title: "Save", disabled: true }) %>
+	  </footer>
+	</section>
+      </div>
+    </main>
+    <script type="module" src="/pages/index/index.js"></script>
+    <script src="/ejs.min.js"></script>
+  </body>
+</html>

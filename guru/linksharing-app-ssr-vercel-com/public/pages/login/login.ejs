@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include("../_components/head.ejs") %>
+<body>  
+  <main class="content">
+    <div class="center-v">
+      <div class="center-h">
+	<div class="form { column }">
+	  <img class="center-h mar-bottom-xl" alt="logo" src="/images/logo-devlinks-large.svg">
+	  <h1 class="clr-n-800 fs-500">Login</h1>
+	  <p class="fs-300 mar-bottom-l">Add your details below to get back into the app</p>
+	  <div class="column">
+	    <%- include("../_components/input.ejs", { id: "login_email", title: "Email address", placeholder: "e.g email@example.com", type: "email", maxlength: "40" }) %>
+	  </div>
+	  <div class="column mar-v-m">
+	    <%- include("../_components/input.ejs", { id: "login_password", title: "Password", placeholder: "Enter your password", type: "password", maxlength: "20" }) %>
+	  </div>
+	  <%- include("../_components/btn_with_clock.ejs", { cls: "login-btn", title: "Log in", disabled: false }) %>
+	  <span class="text-center">Don't have an account? <a href="/signup">Create account</a></span>
+	</div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="content | pad-v-m">
+    <p class="clr-n-800 text-center">
+      Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>.
+      Coded by <a href="https://github.com/AlexKolykhalov">Alex Ko</a>.
+    </p>
+  </footer>
+
+  <script type="module" src="/pages/login/login.js"></script>
+</body>
+
+</html>
