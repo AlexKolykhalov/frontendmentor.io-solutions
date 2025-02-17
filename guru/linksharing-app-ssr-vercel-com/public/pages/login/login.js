@@ -8,8 +8,8 @@ const loginBtn = document.querySelector('.login-btn');
 // ************************** 1. Events *********************************//
 
 // WebWorker registration
-// if ("serviceWorker" in navigator)
-//   window.addEventListener("load", () => navigator.serviceWorker.register("/worker.js"));
+if ("serviceWorker" in navigator)
+  window.addEventListener("load", () => navigator.serviceWorker.register("/worker.js"));
 
 loginBtn?.addEventListener('click', async () => {
   /** @type {HTMLInputElement|null} */
