@@ -37,6 +37,7 @@ Users should be able to:
 ## Notice
 
 Due to free plan λ functions starts cold (~1 sec delay)
+Maximum 12 λ functions
 
 ### Built with
 
