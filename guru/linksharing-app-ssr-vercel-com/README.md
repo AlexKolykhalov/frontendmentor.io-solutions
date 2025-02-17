@@ -2,7 +2,7 @@
 
 This is a solution to the [Link-sharing app challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/linksharing-app-Fbt7yweGsT). Frontend Mentor challenges help you improve your coding skills by building realistic projects.
 
-[__Live demo__](https://linksharing-app-ssr-vercel.app)
+[__Live demo__](https://linksharing-appssr.vercel.app)
 
 ## Table of contents
 
