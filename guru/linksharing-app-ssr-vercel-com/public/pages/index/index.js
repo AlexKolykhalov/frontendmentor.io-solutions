@@ -27,8 +27,8 @@ window.addEventListener('load', () => {
   currentUserData.avatar = dbUserData.avatar;
   currentUserData.name   = dbUserData.name;
   currentUserData.email  = dbUserData.email;
-  console.log(`(init) db: ${JSON.stringify(dbUserData, null, 2)}`);
-  console.log(`(init) current: ${JSON.stringify(currentUserData, null, 2)}`);
+  // console.log(`(init) db: ${JSON.stringify(dbUserData, null, 2)}`);
+  // console.log(`(init) current: ${JSON.stringify(currentUserData, null, 2)}`);
 });
 
 // setting event listeners for elements (Links) which comes from server
@@ -54,8 +54,8 @@ saveBtn.addEventListener('click', async () => {
     if (response.status === 200) {      
       dbUserData = await response.json();
       currentUserData.links = [];
-      console.log(`(update) db: ${JSON.stringify(dbUserData, null, 2)}`);
-      console.log(`(update) current: ${JSON.stringify(currentUserData, null, 2)}`);
+      // console.log(`(update) db: ${JSON.stringify(dbUserData, null, 2)}`);
+      // console.log(`(update) current: ${JSON.stringify(currentUserData, null, 2)}`);
       clockSpinner.setAttribute("data-visible", "false");
       showPopUpMessage("Your changes have been successfully saved!", "msg");
       saveBtn.setAttribute("disabled", "");
@@ -662,7 +662,7 @@ function checkDifferences() {
     saveBtn.setAttribute("disabled", "");
     previewLink.removeAttribute("style");
   }
-  console.log(`(edit) current: ${JSON.stringify(currentUserData, null, 2)}`);
+  // console.log(`(edit) current: ${JSON.stringify(currentUserData, null, 2)}`);
 }
 
 /**
