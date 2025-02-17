@@ -11,6 +11,7 @@ This is a solution to the [Link-sharing app challenge on Frontend Mentor](https:
   - [Screenshot](#screenshot)
 - [My process](#my-process)
   - [Built with](#built-with)
+  - [Notice](#notice)
 - [Author](#author)
 
 ## Overview
@@ -34,10 +35,7 @@ Users should be able to:
 
 ![](./public/images/design/mobile-prev.webp)
 
-## Notice
-
-Due to free plan λ functions starts cold (~1 sec delay)
-Maximum 12 λ functions
+## My process
 
 ### Built with
 
@@ -50,6 +48,11 @@ Maximum 12 λ functions
 - SSR ejs
 - λ functions ([vercel](https://vercel.com/))
 - postgres as back ([supabase](https://supabase.com/))
+
+### Notice
+
+Due to free plan λ functions starts cold (~1 sec delay)
+Maximum 12 λ functions
 
 ## Author
 
