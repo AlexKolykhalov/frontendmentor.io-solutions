@@ -92,11 +92,12 @@ Any comments are welcome.
 </details>
 
 <details>
-<summary>Guru [3/6]</summary>
+<summary>Guru [4/6]</summary>
 
 | No | Challenge | Live demo | Source |
 | :---: | :--- | :---: | :--- |
 | 01 | Linksharing app | [Live demo](https://alexkolykhalov.github.io/frontendmentor.io-solutions/guru/linksharing-app/) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/guru/linksharing-app) |
 | 02 | Linksharing app (client-server) | [Live demo](https://sharetoyou.vercel.app) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/guru/linksharing-app-cs) |
-| 03 | Linksharing app (SSR) | [Live demo](https://linksharing-app-ssr-render-com.onrender.com) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/guru/linksharing-app-ssr-render-com) |
+| 03 | Linksharing app (SSR) (render.com) | [Live demo](https://linksharing-app-ssr-render-com.onrender.com) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/guru/linksharing-app-ssr-render-com) |
+| 04 | Linksharing app (SSR) (vercel.com) | [Live demo](https://linksharing-appssr.vercel.app) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/guru/linksharing-app-ssr-vercel-com) |
 </details>
