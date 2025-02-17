@@ -7,7 +7,7 @@ const VERSION = "v1";
 const CACHE_NAME = `${TITLE}-${VERSION}`;
 
 // The static resources that the app needs to function.
-const host = "http://localhost:3000";
+const host = "https://linksharing-appssr.vercel.app";
 
 const APP_STATIC_RESOURCES = [
   `${host}/helpers.js`,
@@ -107,13 +107,6 @@ self.addEventListener("fetch", (event) => {
   event.respondWith(
     caches.match(event.request)
       .then((response) => {
-	// if (response) return response;
-	// if (new URL(event.request.url).pathname === "/link") {
-	  
-	// };
-	// return fetch(event.request);
-
-	// // Return the cached response if found, otherwise fetch from the network
 	return response || fetch(event.request);
       })
   );
