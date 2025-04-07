@@ -1,0 +1,21 @@
+{
+  "name": "kanban-task-management",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "start": "vercel dev"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "This is a solution to the [Link-sharing app challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/linksharing-app-Fbt7yweGsT). Frontend Mentor challenges help you improve your coding skills by building realistic projects.",
+  "devDependencies": {
+    "vercel": "^41.4.0"
+  },
+  "dependencies": {
+    "@supabase/ssr": "^0.5.2",
+    "@supabase/supabase-js": "^2.49.1",
+    "jsdom": "^26.0.0"
+  }
+}

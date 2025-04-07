@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Kanban task management challenge on Frontend Mentor">
+    <meta name="keywords" content="API, REST, Frontend Mentor, Frontend, Mentor, HTML, CSS, Responsive, Mobile, Desktop, Alex Kolykhalov">
+
+    <!-- <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png"> -->
+
+    <!-- ios support -->
+    <!-- <link rel="apple-touch-icon" href="images/icons/128.png">
+	<link rel="apple-touch-icon" href="images/icons/192.png">
+	<link rel="apple-touch-icon" href="images/icons/512.png">
+	<meta name="apple-mobile-web-app-status-bar" content="#858585">
+	<meta name="theme-color" content="#858585">-->
+	<!-- end ios support -->
+
+	<title>Frontend Mentor | Kanban</title>
+
+	<!-- <link rel="manifest" href="manifest.json"> -->
+	<link rel="stylesheet" href="/main.css">
+	<!-- 1. [-] Wave extension
+	     2. [-] Clean html, css, js code
+	     3. [-] Check Coverage, clean code after that (!!check js before delete unuseless css elements!!)
+	     4. [-] CheckHTML https://validator.w3.org/#validate-by-input
+	     5. [-] Lighthouse
+	     6. [-] Test on Chrome, Firefox
+	     7. [-] README.md
+	     8. [-] Delete this instruction
+	     9. [-] Push to github -->
+  </head>
+  <body>
+    <h1 class="sr-only">Kanban task management</h1>
+    <main class="content bg-n-900">
+      <div class="with-left-sidebar">
+	<section class="bg-n-600">
+	  <div class="column split-after-4">
+	    <img src="images/svg/logo-light.svg" alt="">
+	    <boards-list></boards-list>
+	    <div>
+	      <div class="row gap-m cross-axis-center bg-n-100">
+		<img src="images/svg/icon-light-theme.svg" width="19" height="19" alt="">
+		<label class="toggle" for="toggle_btn">
+		  <span class="sr-only">Toggle</span>
+		  <input type="checkbox" id="toggle_btn">
+		  <span class="toggle-background"></span>
+		</label>
+		<img src="images/svg/icon-dark-theme.svg" width="19" height="19" alt="">
+	      </div>
+	      <button class="hide-sidebar-btn { row gap-m cross-axis-center }">
+		<img src="images/svg/icon-hide-sidebar.svg" alt="">
+		Hide Sidebar
+	      </button>
+	    </div>
+	  </div>
+	</section>
+	<board></board>
+      </div>
+    </main>
+    <script src="/pages/index/js/index.js"></script>    
+    <script type="module">import { injectEvents } from "/pages/index/js/inject.js"; injectEvents(document);</script>
+  </body>
+</html>

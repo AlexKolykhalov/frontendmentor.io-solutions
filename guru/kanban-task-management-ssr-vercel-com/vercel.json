@@ -1,0 +1,18 @@
+{
+  "rewrites": [
+    { "source": "/",                "destination": "/api/handlers/index.js" },
+    { "source": "/login",           "destination": "/api/handlers/login.js" },
+    { "source": "/signup",          "destination": "/api/handlers/signup.js" },
+    { "source": "/worker.js",       "destination": "/api/handlers/worker.js" },
+    { "source": "/api/auth/signin", "destination": "/api/db/auth.js" },
+    { "source": "/api/auth/signup", "destination": "/api/db/auth.js" },
+    { "source": "/api/board",       "destination": "/api/db/board.js" },
+    { "source": "/api/column",      "destination": "/api/db/column.js" },
+    { "source": "/api/task",        "destination": "/api/db/task.js" },
+    { "source": "/api/subtask",     "destination": "/api/db/subtask.js" },
+    {
+      "source": "/:id([0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})",
+      "destination": "/api/handlers/profile.js"
+    }
+  ]
+}
