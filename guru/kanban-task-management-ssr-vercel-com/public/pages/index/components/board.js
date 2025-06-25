@@ -83,8 +83,8 @@ export class Board {
 
     // btn "New Column"
     component.querySelector("button.flex-1")?.addEventListener("click", async () => {
-      const { AddNewColumnDialog } = await import("../components/add_new_column_dialog.js");
-      const dialog = AddNewColumnDialog.init();
+      const { EditBoardDialog } = await import("../components/edit_board_dialog.js");
+      const dialog = EditBoardDialog.init();
       document.querySelector("body")?.appendChild(dialog);
       // @ts-ignore
       dialog.showModal();
