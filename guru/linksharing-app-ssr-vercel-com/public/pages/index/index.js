@@ -639,7 +639,7 @@ function editCurrentUserDataLink({id, url}) {
       currentUserData.links.push({id: id, url: url});
   }
 
-  checkDifferences();
+  checkDifferences();  
 }
 
 /**
