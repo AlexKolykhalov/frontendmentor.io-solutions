@@ -30,34 +30,21 @@
     8. [-] Delete this instruction
     9. [-] Push to github -->
   </head>
-  <body>
+  <body data-theme="light">
     <h1 class="sr-only">Kanban task management</h1>
-    <main class="content bg-n-900">
+    <main-header></main-header>
+    <main>
       <div class="with-left-sidebar">
-        <section class="bg-n-600">
-          <div class="column split-after-4">
-            <img src="images/svg/logo-light.svg" alt="">
-            <boards-list></boards-list>
-            <div>
-              <div class="row gap-m cross-axis-center bg-n-100">
-                <img src="images/svg/icon-light-theme.svg" width="19" height="19" alt="">
-                <label class="toggle" for="toggle_btn">
-                  <span class="sr-only">Toggle</span>
-                  <input type="checkbox" id="toggle_btn">
-                  <span class="toggle-background"></span>
-                </label>
-                <img src="images/svg/icon-dark-theme.svg" width="19" height="19" alt="">
-              </div>
-              <button class="hide-sidebar-btn { row gap-m cross-axis-center }">
-                <img src="images/svg/icon-hide-sidebar.svg" alt="">
-                Hide Sidebar
-              </button>
-            </div>
-          </div>
+        <section id="dropdown_list" class="[ m:display-none ] dropdown-list">
+          <boards-list></boards-list>
+	  <control-btns></control-btns>
         </section>
-        <board></board>
+	<section>
+          <board></board>
+        </section>
       </div>
-    </main>    
+    </main>
     <script type="module">import { injectEvents } from "/pages/index/js/inject.js"; injectEvents(document);</script>
+    <script src="/pages/index/js/load.js"></script>
   </body>
 </html>
