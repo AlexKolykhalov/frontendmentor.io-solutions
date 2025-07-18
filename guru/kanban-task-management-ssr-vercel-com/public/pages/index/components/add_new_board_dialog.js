@@ -3,23 +3,24 @@
 import { Board }        from "./board.js";
 import { BoardsList }   from "./boards_list.js";
 import { DynamicList }  from "./dynamic_list.js";
+import { MainHeader }   from "./main_header.js";
 import { emit, insert } from "./helpers.js";
 
 export class CreateNewBoardDialog {
   /** @returns {string} HTML string */
   static template() {
-    return `<dialog>
+    return `<dialog class="bg-n-000-800">
               <div class="column gap-l">
-                <div class="row gap-m main-axis-space-between">
-                  <h2>Add new board</h2>
-                  <button aria-label="close"><img src="/images/svg/icon-cross.svg" alt=""></button>
+                <div class="row gap-m no-wrap main-axis-space-between cross-axis-start">
+                  <h2 class="fs-900 clr-n-900-000" style="max-width: 80%">Add new board</h2>
+                  <button class="close-btn" aria-label="close"></button>
                 </div>
-                <div class="column">
-                  <label for="board_name">Board Name</label>
-                  <input id="board_name" placeholder="e.g. Home work">
+                <div class="column gap-sm fs-300 fw-medium">
+                  <label class="clr-n-600-000" for="board_name">Board Name</label>
+                  <input class="pad-sm clr-n-900-000 bg-n-100-900" id="board_name" placeholder="e.g. Home work">
                 </div>
                 <dynamic-list></dynamic-list>
-                <button>Create New Board</button>
+                <button class="fw-bold fs-300 clr-n-000 pad-h-m pad-v-sm border-radius-l bg-p-purple">Create New Board</button>
               </div>
             </dialog>`;
   }
@@ -71,12 +72,14 @@ export class CreateNewBoardDialog {
 
       if (!CreateNewBoardDialog.#validation(component)) return;
 
+      const mainHeader = document.querySelector(`#${MainHeader.prefix}`);
       const board      = document.querySelector(`#${Board.prefix}`);
       const boardsList = document.querySelector(`#${BoardsList.prefix}`);
       /** @type {HTMLInputElement|null} */
       const inputBoardName  = component.querySelector("#board_name");
       const boardsOfColumns = component.querySelector("ul");
 
+      if (!mainHeader)      throw new Error(`Missing <header id="${MainHeader.prefix}">`);
       if (!board)           throw new Error(`Missing <section id="${Board.prefix}">`);
       if (!boardsList)      throw new Error(`Missing <article id="${BoardsList.prefix}">`);
       if (!inputBoardName)  throw new Error("Missing <input id=\"board_name\">");
@@ -88,7 +91,7 @@ export class CreateNewBoardDialog {
 	name: inputBoardName.value.trim(),
 	columns: [...boardsOfColumns.children].map(column => {
 	  return { id: "", name: column.querySelector("input")?.value.trim() ?? "", tasks: [] };
-	})	
+	})
       };
 
       const response = await fetch(
@@ -110,6 +113,7 @@ export class CreateNewBoardDialog {
 
       emit("board:created", receivingBoardData, board);
       emit("board:created", receivingBoardData, boardsList);
+      emit("board:created", receivingBoardData, mainHeader);
 
       component.remove();
     });
