@@ -20,33 +20,33 @@ export class AddNewTaskDialog {
 	if (!id) throw new Error(`Missing "id" attribute in "Column" template`);
 	if (!h3) throw new Error(`Missing li id="${Column.prefix}-" <h3>`);
 
-	const idValue = id.slice(`${Column.prefix}-`.length);	
+	const idValue = id.slice(`${Column.prefix}-`.length);
 	const name    = h3.textContent?.slice(0, h3.textContent.lastIndexOf("(") - 1);
 
 	return `<option value="${idValue}" ${index === 0 ? "selected" : ""}>${name}</option>`;
       }
     ).join("");
 
-    return `<dialog>
+    return `<dialog class="bg-n-000-800">
               <div class="column gap-l">
                 <div class="row gap-m main-axis-space-between">
-                  <h2>Add new task</h2>
-                  <button aria-label="close"><img src="/images/svg/icon-cross.svg" alt=""></button>
+                  <h2 class="fs-900 clr-n-900-000">Add new task</h2>
+                  <button class="close-btn" aria-label="close"></button>
                 </div>
-                <div class="column">
-                  <label for="task_name">Task Name</label>
-                  <input id="task_name" placeholder="e.g. Take a break">
+                <div class="column gap-sm fs-300 fw-medium">
+                  <label class="clr-n-600-000" for="task_name">Task Name</label>
+                  <input class="pad-sm clr-n-900-000 bg-n-100-900" id="task_name" placeholder="e.g. Take a break">
                 </div>
-                <div class="column">
-                  <label for="task_description">Description</label>
-                  <textarea id="task_description" maxlength="300" cols="30" rows="6" style="resize:none;"></textarea>
+                <div class="column gap-sm fs-300 fw-medium">
+                  <label class="clr-n-600-000" for="task_description">Description</label>
+                  <textarea class="pad-sm clr-n-900-000 bg-n-100-900" id="task_description" maxlength="300" cols="30" rows="6" style="resize:none;"></textarea>
                 </div>
                 <dynamic-list></dynamic-list>
-                <div class="column">
-                  <label for="current_status">Current Status</label>
-                  <select id="current_status">${columns}</select>
+                <div class="column gap-sm">
+                  <label class="fw-bold fs-200 clr-n-600-000" for="current_status">Current Status</label>
+                  <select class="pad-sm fs-300 fw-medium clr-n-900-000 bg-n-100-900" id="current_status">${columns}</select>
                 </div>
-                <button>Create Task</button>
+                <button class="fw-bold fs-300 pad-h-m clr-n-000 pad-v-sm border-radius-l bg-p-purple">Create Task</button>
               </div>
             </dialog>`;
   }
@@ -96,7 +96,7 @@ export class AddNewTaskDialog {
       select.querySelector("option[selected]")?.removeAttribute("selected");
       // @ts-ignore
       const elem = [...select.children].find(item => item.value === select.value);
-      elem?.setAttribute("selected", "");      
+      elem?.setAttribute("selected", "");
     });
 
     const createNewTaskBtn = component.querySelector("dynamic-list + div + button");
@@ -123,13 +123,13 @@ export class AddNewTaskDialog {
       const task = {
 	id: "",
 	title: taskName.value.trim(),
-	description: description.value.trim(),	
+	description: description.value.trim(),
 	subtasks: [...subtasksList.children].map(
 	  item => {
 	    const input = item.querySelector("input");
 	    if (!input) throw new Error("Missing <input>");
 
-	    return { id: "", title: input.value.trim(), isCompleted: false };	    
+	    return { id: "", title: input.value.trim(), isCompleted: false };
 	  }
 	)
       };
