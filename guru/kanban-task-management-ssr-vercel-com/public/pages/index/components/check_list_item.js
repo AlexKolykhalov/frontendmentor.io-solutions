@@ -22,10 +22,12 @@ export class CheckListItem {
       id      = generateRandomSymbols(4),
       title   = "Checkbox title",
       checked = false } = props;
+    
+    const inputID = generateRandomSymbols(4);
 
-    return `<li id="${this.prefix}-${id}">
-              <label for="x-${id}">
-                <input id="x-${id}" type="checkbox" ${checked ? "checked" : ""}>${title}
+    return `<li id="${this.prefix}-${id}" class="fw-bold fs-200 clr-n-900-000 bg-n-100-900 bg-p-light-purple:hover">
+              <label for="${inputID}" class="row no-wrap gap-sm cross-axis-center pad-sm cursor-pointer">
+                <input id="${inputID}" type="checkbox" ${checked ? "checked" : ""}>${title}
               </label>
             </li>`;
   }
@@ -67,17 +69,17 @@ export class CheckListItem {
 
     input.addEventListener("click", async function() {
       const dialog = document.querySelector("dialog");
-      const idAttr = this.getAttribute("id");
+      const idAttr = component.getAttribute("id");
       if (!dialog) throw new Error("Can't find <dialog>");      
-      if (!idAttr) throw new Error("Missing 'id' attribute");
+      if (!idAttr) throw new Error("Missing 'id' attribute");      
       
       emit(
 	"check-list-item:change",
 	{
-	  id:          idAttr.slice("x-".length),
+	  id:          idAttr.slice(`${CheckListItem.prefix}-`.length),
 	  isCompleted: this.checked
 	},
-	dialog
+	dialog // TaskDialog
       );
     });
   }
