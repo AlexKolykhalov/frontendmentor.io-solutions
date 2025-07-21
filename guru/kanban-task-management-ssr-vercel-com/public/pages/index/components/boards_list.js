@@ -21,10 +21,13 @@ export class BoardsList {
 	}
       )
     ).join("");
+
     return `<article id="${this.prefix}">
-              <header class="pad-left-l">ALL BOARDS (${boards.length})</header>
+              <header class="fs-300 fw-bold clr-n-600 letter-spacing-m pad-left-l pad-v-m">ALL BOARDS (${boards.length})</header>
               <ul>${boardsListItems}</ul>
-              <button class="pad-v-m">+ Create New Board</button>
+              <br>
+              <button class="create-new-board-btn { transparent row gap-m cross-axis-center fw-bold pad-v-m clr-p-purple }"><img src="images/svg/icon-board-purple.svg" alt="" width="16" height="16">+ Create New Board</button>
+              <button class="[ md:display-none ] add-new-task-btn { transparent row gap-m cross-axis-center fw-bold pad-v-m clr-p-purple }"><img src="images/svg/icon-board-purple.svg" alt="" width="16" height="16">+ Add New Task</button>
             </article>`;
   }
 
@@ -57,9 +60,18 @@ export class BoardsList {
    */
   static handleEvents(component) {
     // btn "Create New Board"
-    component.querySelector(":scope > button")?.addEventListener("click", async () => {
-      const { CreateNewBoardDialog } = await import("../components/create_new_board_dialog.js");
+    component.querySelector(".create-new-board-btn")?.addEventListener("click", async () => {
+      const { CreateNewBoardDialog } = await import("../components/add_new_board_dialog.js");
       const dialog = CreateNewBoardDialog.init();
+      document.querySelector("body")?.appendChild(dialog);
+      // @ts-ignore
+      dialog.showModal();
+    });
+
+    // btn "Add New Task"
+    component.querySelector(".add-new-task-btn")?.addEventListener("click", async () => {
+      const { AddNewTaskDialog } = await import("../components/add_new_task_dialog.js");
+      const dialog = AddNewTaskDialog.init();
       document.querySelector("body")?.appendChild(dialog);
       // @ts-ignore
       dialog.showModal();
@@ -72,7 +84,7 @@ export class BoardsList {
       if (!ul)     throw new Error("Can't find <ul>");
 
       header.textContent = `ALL BOARDS (${[...ul.children].length + 1})`;
-      ul.querySelector("li.selected")?.classList.remove("selected");      
+      ul.querySelector("li.selected")?.classList.remove("selected");
       ul.appendChild(
 	// @ts-ignore
         BoardsListItem.init({ id: event.detail.id, title: event.detail.name, selected: true })
@@ -87,7 +99,7 @@ export class BoardsList {
         BoardsListItem.init({id: event.detail.id, title: event.detail.name, selected: true}),
         "ul > li.selected",
         component
-      );      
+      );
 
       console.log("board:updated");
     });
