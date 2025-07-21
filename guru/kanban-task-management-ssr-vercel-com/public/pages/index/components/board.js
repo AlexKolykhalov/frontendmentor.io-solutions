@@ -18,21 +18,18 @@ export class Board {
    * @returns {string} HTML string
    */
   static template(board) {
-    return `<section id="${this.prefix}">
-	      <header class="row main-axis-space-between bg-n-000">
-                <div class="row gap-m">
-	          <h2>${board.name}</h2>
-                  <button>Edit board</button>
-                </div>
-	        <button>+ Add New Task</button>
-	      </header>
-              <div class="row no-wrap bg-n-100">
-	        <ul class="reel flex-5">
+    return `<div class="column" id="${this.prefix}">
+              <div class="row gap-m no-wrap pad-bottom-m bg-n-100-900" style="height: calc(100vh - 4.5rem)">
+	        <ul class="[ flex-5 ] reel">
                   ${board.columns.map(column => Column.template(column)).join("")}
                 </ul>
-                <button class="flex-1">+ New Column</button>
+                <button class="[ flex-1 ] fs-900 fw-bold mar-top-l border-radius-m clr-n-600 clr-p-purple:hover bg-n-000-800">+ New Column</button>
               </div>
-	    </section>`;
+              <button class="[ md:display-none m:display-none ] hide-sidebar-btn show" style="position: absolute; bottom: calc(1rem + 20px);">
+                <img src="images/svg/icon-show-sidebar.svg" alt="">
+                Show Sidebar
+              </button>
+	    </div>`;
   }
 
   /**
@@ -63,24 +60,6 @@ export class Board {
    * @returns {void}
    */
   static handleEvents(component) {
-    // btn "Edit board"
-    component.querySelectorAll("button")[0].addEventListener("click", async () => {
-      const { EditBoardDialog } = await import("../components/edit_board_dialog.js");
-      const dialog = EditBoardDialog.init();
-      document.querySelector("body")?.appendChild(dialog);
-      // @ts-ignore
-      dialog.showModal();
-    });
-
-    // btn "Add New Task"
-    component.querySelectorAll("button")[1].addEventListener("click", async () => {
-      const { AddNewTaskDialog } = await import("../components/add_new_task_dialog.js");
-      const dialog = AddNewTaskDialog.init();
-      document.querySelector("body")?.appendChild(dialog);
-      // @ts-ignore
-      dialog.showModal();
-    });
-
     // btn "New Column"
     component.querySelector("button.flex-1")?.addEventListener("click", async () => {
       const { EditBoardDialog } = await import("../components/edit_board_dialog.js");
@@ -88,6 +67,15 @@ export class Board {
       document.querySelector("body")?.appendChild(dialog);
       // @ts-ignore
       dialog.showModal();
+    });
+
+    // btn "Hide sidebar"
+    component.querySelector(":scope > button")?.addEventListener("click", function() {
+      const sidebar = document.querySelector("main > .with-left-sidebar > :nth-child(1)");
+      if (!sidebar) throw new Error("Missing main > .with-left-sidebar > :nth-child(1)");
+
+      this.classList.add("md:display-none");
+      sidebar.classList.remove("md:display-none");
     });
 
     component.addEventListener("board:selected", (event) => {
@@ -113,14 +101,8 @@ export class Board {
      * @param {BoardType} board
      */
     function operation(type, board) {
-      const boardTitle   = component.querySelector(`h2`);
       const boardColumns = component.querySelector(`ul`);
-      if (!boardTitle)   throw new Error(`Missing #${Board.prefix} <h2>`);
       if (!boardColumns) throw new Error(`Missing #${Board.prefix} <ul>`);
-
-      console.log(board);
-
-      boardTitle.innerHTML = board.name;
 
       if (type === "update") {
 	const columnArray = [...boardColumns.children];
