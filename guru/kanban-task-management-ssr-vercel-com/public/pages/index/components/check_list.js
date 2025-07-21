@@ -18,7 +18,7 @@ export class CheckList {
   static template(props = { items: [] }) {
     const { title = "Checkbox list", items } = props;
     return `<div class="column gap-sm">
-              <p>${title} (${items.filter(item => item.checked).length} of ${items.length})</p>
+              <p class="fw-bold fs-200 clr-n-600 letter-spacing-m">${title} (${items.filter(item => item.checked).length} of ${items.length})</p>
               <ul class="column gap-sm">
                 ${items.map(item => CheckListItem.template({
                   id: item.id,
