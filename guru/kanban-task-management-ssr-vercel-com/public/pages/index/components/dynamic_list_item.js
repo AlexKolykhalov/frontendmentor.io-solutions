@@ -1,5 +1,7 @@
 // @ts-check
 
+import { EditBoardDialog } from "./edit_board_dialog.js";
+import { EditTaskDialog } from "./edit_task_dialog.js";
 import { generateRandomSymbols, emit } from "./helpers.js"
 
 /**
@@ -25,14 +27,10 @@ export class DynamicListItem {
       inputPlaceholder  = "e.g. some text",
       deleteBtnDisabled = false } = props;
 
-    return `<li id="${DynamicListItem.prefix}-${inputID}" class="row main-axis-space-between">
-              <div class="column">
-                <label class="sr-only" for="x-${inputID}">Dynamic list item ${inputID}</label>
-                <input id="x-${inputID}" value="${inputValue}" placeholder="${inputPlaceholder}">
-              </div>
-              <button aria-label="remove"${deleteBtnDisabled ? " disabled" : ""}>
-                <img src="/images/svg/icon-cross.svg" alt="">
-              </button>
+    return `<li id="${DynamicListItem.prefix}-${inputID}" class="row cross-axis-center no-wrap">
+              <label class="sr-only" for="x-${inputID}">Dynamic list item ${inputID}</label>
+              <input class="[ flex-1 ] pad-sm fs-300 fw-medium clr-n-900-000 bg-n-100-900" id="x-${inputID}" value="${inputValue}" placeholder="${inputPlaceholder}"">
+              <button class="close-btn" aria-label="remove"${deleteBtnDisabled ? " disabled" : ""}></button>
             </li>`;
   }
 
@@ -71,17 +69,17 @@ export class DynamicListItem {
     if (!removeBtn) throw new Error("Can't find <button>");
 
     input.addEventListener("input", function() {
-      const dialog = document.querySelector("dialog");
-      if (!dialog) throw new Error("Can't find <dialog>");
+      const editBoardDialog = document.querySelector(`#${EditBoardDialog.prefix}`);
+      const editTaskDialog  = document.querySelector(`#${EditTaskDialog.prefix}`);
+
+      if (editBoardDialog) emit("dynamic-list-item:change", {}, editBoardDialog);
+      if (editTaskDialog)  emit("dynamic-list-item:change", {}, editTaskDialog);
 
       this.removeAttribute("style");
-      emit("dynamic-list-item:change", {}, dialog);
     });
 
     removeBtn.addEventListener("click", function() {
-      const dialog = document.querySelector("dialog");
-      const listOfItems = removeBtn.closest("ul");
-      if (!dialog) throw new Error("Can't find <dialog>");
+      const listOfItems = removeBtn.closest("ul");      
       if (!listOfItems) throw new Error("Can't find <ul>");
 
       const dynamicList = listOfItems.parentElement;
@@ -89,7 +87,10 @@ export class DynamicListItem {
 
       component.remove();
       emit("dynamic-list-item:remove", {}, dynamicList);
-      emit("dynamic-list-item:remove", {}, dialog);
+      const editBoardDialog = document.querySelector(`#${EditBoardDialog.prefix}`);
+      const editTaskDialog  = document.querySelector(`#${EditTaskDialog.prefix}`);
+      if (editBoardDialog) emit("dynamic-list-item:remove", {}, editBoardDialog);
+      if (editTaskDialog)  emit("dynamic-list-item:remove", {}, editTaskDialog);
     });
   }
 }
