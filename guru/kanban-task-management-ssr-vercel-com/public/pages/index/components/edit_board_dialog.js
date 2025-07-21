@@ -5,9 +5,12 @@ import { Column }         from "./column.js";
 import { BoardsList }     from "./boards_list.js";
 import { BoardsListItem } from "./boards_list_item.js";
 import { DynamicList }    from "./dynamic_list.js";
+import { MainHeader }     from "./main_header.js";
 import { emit, insert }   from "./helpers.js";
 
 export class EditBoardDialog {
+
+  static prefix = "edit_board_dialog";
 
   /** @type { import("./board.js").BoardType } */
   static #state = { id: "", name: "", columns: [{ id: "", name: "", tasks: [] }] };
@@ -24,23 +27,21 @@ export class EditBoardDialog {
 
   /** @returns {string} HTML string */
   static template() {
-    const title = document.querySelector(`#${Board.prefix} h2`)?.textContent;
-    return `<dialog>
+    return `<dialog id="${this.prefix}" class="bg-n-000-800">
               <div class="column gap-l">
                 <div class="row gap-m main-axis-space-between">
-                  <h2>Edit board</h2>
-                  <button aria-label="close"><img src="/images/svg/icon-cross.svg" alt=""></button>
+                  <h2 class="fs-900 clr-n-900-000">Edit board</h2>
+                  <button class="close-btn" aria-label="close"></button>
                 </div>
-                <div class="column">
-                  <label for="board_name">Board Name</label>
-                  <input id="board_name" value="${title}">
+                <div class="column gap-sm fs-300 fw-medium">
+                  <label class="clr-n-600-000" for="board_name">Board Name</label>
+                  <input class="pad-sm clr-n-900-000 bg-n-100-900" id="board_name" value="${EditBoardDialog.#getState().name}">
                 </div>
                 <dynamic-list></dynamic-list>
-                <div class="row">
-                  <button disabled>Save Changes</button>
-                  <button disabled>Revert</button>
-                </div>
-                <button>Delete board</button>
+                <div class="row gap-l main-axis-end">
+                  <button class="fw-bold fs-300 pad-h-m clr-n-000 pad-v-sm border-radius-l bg-p-purple" disabled>Save Changes</button>
+                  <button class="fw-bold fs-300 pad-h-m clr-n-000 pad-v-sm border-radius-l bg-p-purple" disabled>Revert</button>                  
+                </div>                
               </div>
             </dialog>`;
   }
@@ -72,7 +73,7 @@ export class EditBoardDialog {
       columns.push({ id: id, name: name, tasks: []});
     });
 
-    const h2 = document.querySelector(`#${Board.prefix} h2`);
+    const h2 = document.querySelector(`#${MainHeader.prefix} h2`);
     if (!h2) throw new Error(`Missing <h2>`);
     const title = h2.textContent;
     if (!title) throw new Error(`<h2> text content is empty`);
@@ -86,13 +87,14 @@ export class EditBoardDialog {
       id:      selectedItemIdAttribute.slice(`${BoardsListItem.prefix}-`.length),
       name:    title,
       columns: columns
-    };    
+    };
 
     this.#setState(state);
 
     const component = EditBoardDialog.#create();
     insert(
       DynamicList.init({
+	id: `dl-${EditBoardDialog.prefix}-1`,
 	title: "Board Columns",
 	items: dynamicListItems,
 	btnText: "+ Add New Column",
@@ -127,7 +129,6 @@ export class EditBoardDialog {
     const controlBtns = component.querySelectorAll("button");
     const saveBtn     = controlBtns[1];
     const revertBtn   = controlBtns[2];
-    const deleteBtn   = controlBtns[3];
 
     const input = component.querySelector("#board_name");
     if (!input) throw new Error("Can't find <input id=\"board_name\">");
@@ -142,12 +143,14 @@ export class EditBoardDialog {
 
       if (!EditBoardDialog.#validation(component)) return;
 
+      const mainHeader = document.querySelector(`#${MainHeader.prefix}`);
       const board      = document.querySelector(`#${Board.prefix}`);
       const boardsList = document.querySelector(`#${BoardsList.prefix}`);
+      if (!mainHeader) throw new Error(`Missing <header id="${MainHeader.prefix}">`);
       if (!board)      throw new Error(`Missing <section id="${Board.prefix}">`);
       if (!boardsList) throw new Error(`Missing <article id="${BoardsList.prefix}">`);
 
-      const sendingBoardData = EditBoardDialog.#getDifferences(component);      
+      const sendingBoardData = EditBoardDialog.#getDifferences(component);
 
       if (sendingBoardData) {
 	const response = await fetch(
@@ -169,14 +172,13 @@ export class EditBoardDialog {
 
 	emit("board:updated", receivingBoardData, board);      // rerenders the board
 	emit("board:updated", receivingBoardData, boardsList); // changes name of the board
+	emit("board:updated", receivingBoardData, mainHeader); // changes name of the board
 
         component.remove();
       }
     });
 
     revertBtn.addEventListener("click", function() {
-      console.log("revertBtn");
-
       const state = EditBoardDialog.#getState();
 
       /** @type {HTMLInputElement|null} */
@@ -196,48 +198,18 @@ export class EditBoardDialog {
 
       insert(
 	DynamicList.init({
+	  id: `dl-${EditBoardDialog.prefix}-1`,
 	  title: "Board Columns",
 	  items: items,
 	  btnText: "+ Add New Column",
 	  limit: 5
-	}),
-	"div.column.gap-sm",
+	}),	
+	`#dl-${EditBoardDialog.prefix}-1`,
 	component
       );
 
       saveBtn.setAttribute("disabled", "");
       revertBtn.setAttribute("disabled", "");
-    });
-
-    // delete btn
-    deleteBtn.addEventListener("click", async function() {
-      const boardsList = document.querySelector(`#${BoardsList.prefix}`);
-      if (!boardsList) throw new Error(`Can't find <article id="${BoardsList.prefix}">`);
-
-      const boardData = EditBoardDialog.#getState();
-
-      try {
-	const response = await fetch(
-	  `http://localhost:4000/rpc/delete_board`,
-	  {
-	    method: "POST",
-	    headers: {
-	      "Content-Type": "application/json",
-	      "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYXV0aF91c2VyIn0.XC5n_hafVOMV1Ve7S2_5A0K5TmWURd_Q-zsoZgBFUTo",
-	    },
-	    body: JSON.stringify({ p_id: boardData.id }),
-	  }
-	);
-
-	if (response.status === 401) throw new Error("Authentication error");
-	if (response.status !== 204) throw new Error("Unexpected response status");
-
-	// remove deleted element from the "Boards list"
-	emit("board:deleted", boardData.id, boardsList);
-        component.remove();
-      } catch (error) {
-	console.log("Internet error connection");
-      }
     });
 
     const closeDialogBtn = component.querySelector('button[aria-label="close"]');
@@ -302,7 +274,7 @@ export class EditBoardDialog {
     if (!listOfColumns)  throw new Error("Can't find <ul>");
 
     let   flag      = false;
-    let   addings   = [];    
+    let   addings   = [];
     const stateData = EditBoardDialog.#getState();
 
     if (stateData.name !== boardNameInput.value.trim()) {
