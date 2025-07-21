@@ -5,8 +5,8 @@
  * @param {number} length - The length of a string with random symbols.
  * @returns {string}
  */
-export function generateRandomSymbols(length) {
-  const symbols     = "0123456789abcdefghABCDEFGH";
+export function generateRandomSymbols(length) {  
+  const symbols     = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
   let randomSymbols = "";
   for (let i = 0; i < length; i++) {
     randomSymbols += symbols[Math.floor(Math.random() * symbols.length)];
