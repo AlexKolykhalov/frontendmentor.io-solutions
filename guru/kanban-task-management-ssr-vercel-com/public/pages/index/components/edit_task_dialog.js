@@ -2,11 +2,12 @@
 
 import { Board }        from "./board.js";
 import { Column }       from "./column.js";
-import { Task }         from "./task.js";
 import { DynamicList }  from "./dynamic_list.js";
-import { emit, insert } from "./helpers.js";
+import { emit, generateRandomSymbols, insert } from "./helpers.js";
 
 export class EditTaskDialog {
+
+  static prefix = "edit_task_dialog";
 
   /** @type { {task:import("./task.js").TaskType, column_id:string} } */
   static #state = {
@@ -51,64 +52,57 @@ export class EditTaskDialog {
       }
     ).join("");
 
-    return `<dialog>
+    const selectID = generateRandomSymbols(5);
+
+    return `<dialog id="${this.prefix}" class="bg-n-000-800">
               <div class="column gap-l">
-                <div class="row gap-m main-axis-space-between">
-                  <h2>Edit task</h2>
-                  <button aria-label="close"><img src="/images/svg/icon-cross.svg" alt=""></button>
+                <div class="row gap-m no-wrap main-axis-space-between cross-axis-start">
+                  <h2 class="fs-900 clr-n-900-000">Edit task</h2>
+                  <button class="close-btn" aria-label="close"></button>
                 </div>
-                <div class="column">
-                  <label for="task_name">Task Name</label>
-                  <input id="task_name" placeholder="e.g. Take a break" value="${state.task.title}">
+                <div class="column gap-sm fs-300 fw-medium">
+                  <label class="clr-n-600-000" for="task_name">Task Name</label>
+                  <input class="pad-sm clr-n-900-000 bg-n-100-900" id="task_name" placeholder="e.g. Take a break" value="${state.task.title}">
                 </div>
-                <div class="column">
-                  <label for="task_description">Description</label>
-                  <textarea id="task_description" maxlength="300" cols="30" rows="6" style="resize:none;">${state.task.description}</textarea>
+                <div class="column gap-sm fs-300 fw-medium">
+                  <label class="clr-n-600-000" for="task_description">Description</label>
+                  <textarea class="pad-sm clr-n-900-000 bg-n-100-900" id="task_description" maxlength="300" cols="30" rows="6" style="resize:none;">${state.task.description}</textarea>
                 </div>
                 <dynamic-list></dynamic-list>
-                <div class="column">
-                  <label for="current_status">Current Status</label>
-                  <select id="current_status">${columns}</select>
+                <div class="column gap-sm">
+                  <label class="fw-bold fs-200 clr-n-600-000" for="${selectID}">Current Status</label>
+                  <select class="pad-sm fs-300 fw-medium clr-n-900-000 bg-n-100-900" id="${selectID}">${columns}</select>
                 </div>
-                <div class="row gap-m">
-                  <button disabled>Save Changes</button>
-                  <button disabled>Revert</button>
+                <div class="row gap-l main-axis-end">
+                  <button class="fw-bold fs-300 pad-h-m clr-n-000 pad-v-sm border-radius-l bg-p-purple" disabled>Save Changes</button>
+                  <button class="fw-bold fs-300 pad-h-m clr-n-000 pad-v-sm border-radius-l bg-p-purple" disabled>Revert</button>
                 </div>
               </div>
             </dialog>`;
   }
 
   /**
-   * @param {import("./task.js").TaskType} task
+   * @param { {task:import("./task.js").TaskType, column_id:string} } dataTask
    *
    * @returns {Element}
    */
-  static init(task) {
-
-    const columnID = document
-      .querySelector(`#${Task.prefix}-${task.id}`) // gets clicked task
-      ?.closest(`[id^='${Column.prefix}-']`)       // find the closest column for this task
-      ?.getAttribute("id")
-      ?.slice(`${Column.prefix}-`.length);         // gets column id
-
-    if (!columnID) throw new Error(`Missing column ID`);
-
-    this.#setState({ task: task, column_id: columnID });
-
+  static init(dataTask) {
+    this.#setState(dataTask);
     const component = EditTaskDialog.#create();
 
     /** @type {import("./dynamic_list_item.js").DynamicListItemType[]} */
-    const dynamicListItems = task.subtasks.map(subtask => {
+    const dynamicListItems = dataTask.task.subtasks.map(subtask => {
       return {
 	inputID: subtask.id,
 	inputPlaceholder: "e.g. Make a coffee",
 	inputValue: subtask.title,
-	deleteBtnDisabled: task.subtasks.length === 1 ? true : false
+	deleteBtnDisabled: dataTask.task.subtasks.length === 1 ? true : false
       };
     });
 
     insert(
       DynamicList.init({
+	id: `dl-${this.prefix}-1`,
 	title: "Subtasks",
 	items: dynamicListItems,
 	btnText: "+ Add New Subtask",
@@ -154,8 +148,8 @@ export class EditTaskDialog {
     if (!textarea) throw new Error("Missing <input id=\"task_description\">");
     textarea.addEventListener("input", () => checkEditTaskDialogState());
 
-    const select = component.querySelector("#current_status");
-    if (!select) throw new Error("Missing <select id=\"current_status\">");
+    const select = component.querySelector("select");
+    if (!select) throw new Error("Missing <select>");
     select.addEventListener("input", function () {
       select.querySelector("option[selected]")?.removeAttribute("selected");
       // @ts-ignore
@@ -173,8 +167,6 @@ export class EditTaskDialog {
       const sendingTaskData = EditTaskDialog.#getDifferences(component);
       if (!sendingTaskData) throw new Error("Missing <select id=\"current_status\">");
 
-      console.log(sendingTaskData);
-
       const response = await fetch("http://localhost:4000/rpc/update_task", {
 	method: "POST",
 	headers: {
@@ -190,7 +182,7 @@ export class EditTaskDialog {
       if (response.status === 401) throw new Error("Authentication error");
       if (response.status !== 200) throw new Error("Unexpected response status");
 
-      const receivingTaskData = await response.json();      
+      const receivingTaskData = await response.json();
 
       if (sendingTaskData.column_id !== state.column_id) {
 	// move task from one column to another
@@ -204,13 +196,13 @@ export class EditTaskDialog {
       } else {
 	const selectedColumn = document.querySelector(`#column-${state.column_id}`);
 	if (!selectedColumn) throw new Error(`Can't find <li id="${state.column_id}">`);
-	
+
 	// update task without moving
 	emit("task:updated", receivingTaskData, selectedColumn);
       }
 
-      component.remove();
-
+      // close all opened dialogs
+      document.querySelectorAll("dialog").forEach(dialog => dialog.remove());
     });
 
     revertBtn.addEventListener("click", function() {
@@ -248,12 +240,13 @@ export class EditTaskDialog {
 
       insert(
 	DynamicList.init({
+	  id: `dl-${EditTaskDialog.prefix}-1`,
 	  title: "Subtasks",
 	  items: dynamicListItems,
 	  btnText: "+ Add New Subtask",
 	  limit: 8
 	}),
-	"div.column.gap-sm",
+	`#dl-${EditTaskDialog.prefix}-1`,
 	component
       );
 
