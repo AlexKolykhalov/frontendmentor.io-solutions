@@ -2,10 +2,13 @@
 
 import { injectEvents }    from "../js/inject.js";
 import { DynamicListItem } from "./dynamic_list_item.js";
-import { emit }            from "./helpers.js";
+import { EditBoardDialog } from "./edit_board_dialog.js";
+import { EditTaskDialog } from "./edit_task_dialog.js";
+import { emit, generateRandomSymbols }            from "./helpers.js";
 
 /**
  * @typedef {object} DynamicListType
+ * @property {string} [id] ID of the dynamic list
  * @property {string} [title] Title of the dynamic list
  * @property {import("./dynamic_list_item.js").DynamicListItemType[]} items
  * @property {string} [btnText]
@@ -18,9 +21,9 @@ export class DynamicList {
    * @returns {string} - HTML string
    */
   static template(props = { items: [] }) {
-    const { title = "", items, btnText = "Add new item", limit = 10 } = props;
-    return `<div class="column gap-sm">
-              <p>${title}</p>
+    const { id = `dl-${generateRandomSymbols(4)}`, title = "", items, btnText = "Add new item", limit = 10 } = props;
+    return `<div id="${id}" class="column gap-sm">
+              <p class="fs-300 fw-bold clr-n-600-000">${title}</p>
               <ul class="column gap-sm">
                 ${items.map(item => DynamicListItem.template({
                     inputID: item.inputID,
@@ -28,7 +31,7 @@ export class DynamicList {
                     inputPlaceholder: item.inputPlaceholder,
                     deleteBtnDisabled: item.deleteBtnDisabled})).join("")}
               </ul>
-              <button>${btnText} <span>(${limit - items.length})</span></button>
+              <button class="fw-bold fs-300 pad-h-m pad-v-sm clr-n-000-p-purple border-radius-l bg-p-purple-n-000">${btnText} <span>(${limit - items.length})</span></button>
             </div>`;
   }
 
@@ -87,10 +90,10 @@ export class DynamicList {
 	"";
       if (limit - [...ul.children].length === 0) this.setAttribute("disabled", "");
 
-      const dialog = document.querySelector("dialog");
-      if (!dialog) throw new Error("Can't find <dialog>");
-
-      emit("dynamic-list-item:add", {}, dialog);
+      const editBoardDialog = document.querySelector(`#${EditBoardDialog.prefix}`);
+      const editTaskDialog  = document.querySelector(`#${EditTaskDialog.prefix}`);
+      if (editBoardDialog) emit("dynamic-list-item:add", {}, editBoardDialog);
+      if (editTaskDialog)  emit("dynamic-list-item:add", {}, editTaskDialog);
     });
 
     component.addEventListener("dynamic-list-item:remove", () => {
