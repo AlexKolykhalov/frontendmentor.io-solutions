@@ -7,6 +7,8 @@ import { Column }          from "../components/column.js";
 import { Task }            from "../components/task.js";
 import { CheckListItem }   from "../components/check_list_item.js";
 import { DynamicListItem } from "../components/dynamic_list_item.js";
+import { ControlBtns }     from "../components/control_btns.js";
+import { MainHeader }      from "../components/main_header.js";
 
 /**
  * Injects an events into child elements.
@@ -46,5 +48,15 @@ export function injectEvents(component) {
   component.querySelectorAll(`[id^="${DynamicListItem.prefix}-"]`).forEach(item => {
     console.log(`injected DynamicListItem`);
     DynamicListItem.handleEvents(item);
+  });
+
+  component.querySelectorAll(`[id^="${ControlBtns.prefix}"]`).forEach(item => {
+    console.log(`injected ControlBtns`);
+    ControlBtns.handleEvents(item);
+  });
+
+  component.querySelectorAll(`[id^="${MainHeader.prefix}"]`).forEach(item => {
+    console.log(`injected MainHeader`);
+    MainHeader.handleEvents(item);
   });
 }
