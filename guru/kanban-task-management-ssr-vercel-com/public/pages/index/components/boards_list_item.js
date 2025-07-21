@@ -2,6 +2,7 @@
 
 import { Board } from "./board.js";
 import { emit }  from "./helpers.js";
+import { MainHeader } from "./main_header.js";
 
 
 /**
@@ -20,8 +21,8 @@ export class BoardsListItem {
    * @returns {string} HTML string
    */
   static template(props) {
-    return `<li id="${this.prefix}-${props.id}" class="boards-list-item { row gap-m cross-axis-center }${props.selected ? " selected" : ""}">
-              <img src="images/svg/icon-board-white.svg" alt="" width="16" height="16">${props.title}
+    return `<li id="${this.prefix}-${props.id}" class="boards-list-item ${props.selected ? " selected" : ""}">
+              <img src="images/svg/icon-board-grey.svg" alt="" width="16" height="16">${props.title}
             </li>`;
   }
 
@@ -69,8 +70,12 @@ export class BoardsListItem {
       );
 
       if (response.status !== 200) throw new Error("Get board error");
+
+      const receivedBoardData = await response.json();
       // @ts-ignore
-      emit("board:selected", await response.json(), document.querySelector(`#${Board.prefix}`));
+      emit("board:selected", receivedBoardData, document.querySelector(`#${Board.prefix}`));
+      // @ts-ignore
+      emit("board:selected", receivedBoardData, document.querySelector(`#${MainHeader.prefix}`));
 
       this.parentElement.querySelector("li.selected")?.classList.remove("selected");
       this.classList.add("selected");
