@@ -4,7 +4,7 @@ import { Board }         from "./board.js";
 import { Column }        from "./column.js";
 import { CheckList }     from "./check_list.js";
 import { Task }          from "./task.js";
-import { emit, insert }  from "./helpers.js";
+import { emit, generateRandomSymbols, insert }  from "./helpers.js";
 import { CheckListItem } from "./check_list_item.js";
 
 export class TaskDialog {
@@ -52,21 +52,23 @@ export class TaskDialog {
       }
     ).join("");
 
-    return `<dialog>
+    const selectID = generateRandomSymbols(5);
+
+    return `<dialog class="bg-n-000-800">
               <div class="column gap-l">
-                <div class="row gap-m main-axis-space-between">
-                  <h2>${state.task.title}</h2>
-                  <button aria-label="close"><img src="/images/svg/icon-cross.svg" alt=""></button>
+                <div class="row gap-m no-wrap main-axis-space-between cross-axis-start">
+                  <h2 class="fs-900 clr-n-900-000" style="max-width: 80%">${state.task.title}</h2>
+                  <button class="close-btn" aria-label="close"></button>
                 </div>
-                <p>${state.task.description}</p>
+                <p class="fs-300 clr-n-600">${state.task.description}</p>
                 <check-list></check-list>
-                <div class="column">
-                  <label for="current_status">Current Status</label>
-                  <select id="current_status" disabled>${columns}</select>
-                </div>
                 <div class="column gap-sm">
-                  <button>Edit</button>
-                  <button>Delete</button>
+                  <label class="fw-bold fs-200 clr-n-600-000" for="${selectID}">Current Status</label>
+                  <select class="pad-sm fs-300 fw-medium" id="${selectID}" disabled>${columns}</select>
+                </div>
+                <div class="row gap-l main-axis-end">
+                  <button class="fw-bold fs-300 pad-h-m clr-n-000 pad-v-sm border-radius-l bg-p-purple">Edit</button>
+                  <button class="fw-bold fs-300 pad-h-m clr-n-000 pad-v-sm border-radius-l bg-p-red">Delete</button>
                 </div>
               </div>
             </dialog>`;
@@ -133,38 +135,18 @@ export class TaskDialog {
 
     editBtn.addEventListener("click", async () => {
       const { EditTaskDialog } = await import("../components/edit_task_dialog.js");
-      const dialog = EditTaskDialog.init(TaskDialog.#getState().task);
+      const dialog = EditTaskDialog.init(TaskDialog.#getState());
       document.querySelector("body")?.appendChild(dialog);
       // @ts-ignore
-      dialog.showModal();
-
-      component.remove();
+      dialog.showModal();      
     });
 
     deleteBtn.addEventListener("click", async () => {
-      const state = TaskDialog.#getState();
-
-      const response = await fetch(
-	`http://localhost:4000/rpc/delete_task`,
-	{
-	  method: "POST",
-	  headers: {
-	    "Content-Type": "application/json",
-	    "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYXV0aF91c2VyIn0.XC5n_hafVOMV1Ve7S2_5A0K5TmWURd_Q-zsoZgBFUTo",
-	  },
-	  body: JSON.stringify({ p_id: state.task.id }),
-	}
-      );
-
-      if (response.status === 401) throw new Error("Authentication error");
-      if (response.status !== 204) throw new Error("Unexpected response status");
-
-      const selectedColumn = document.querySelector(`#column-${state.column_id}`);
-      if (!selectedColumn) throw new Error(`Can't find <li id="${state.column_id}">`);
-
-      emit("task:deleted", { id: state.task.id }, selectedColumn);
-
-      component.remove();
+      const { DeleteTaskDialog } = await import("../components/delete_task_dialog.js");
+      const dialog = DeleteTaskDialog.init(TaskDialog.#getState());
+      document.querySelector("body")?.appendChild(dialog);
+      // @ts-ignore
+      dialog.showModal();
     });
 
     component.addEventListener("check-list-item:change", async (event) => {
