@@ -25,8 +25,8 @@ export class Task {
    */
   static template(task) {
     return `<li id="${this.prefix}-${task.id}" class="task-item" draggable="true">
-              <p>${task.title}</p>
-              <p>${task.subtasks.filter(item => item.isCompleted).length} of ${task.subtasks.length} Subtasks</p>
+              <p class="fw-bold">${task.title}</p>
+              <p class="fs-200 fw-bold clr-n-600">${task.subtasks.filter(item => item.isCompleted).length} of ${task.subtasks.length} Subtasks</p>
             </li>`;
   }
 
