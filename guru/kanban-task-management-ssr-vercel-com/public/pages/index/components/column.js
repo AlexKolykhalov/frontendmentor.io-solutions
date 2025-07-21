@@ -21,8 +21,8 @@ export class Column {
    */
   static template(column) {
     return `<li id="${this.prefix}-${column.id}">
-              <article class="bg-n-600 pad-h-m">
-                <h3 class="pad-v-m">${column.name} (${column.tasks.length})</h3>
+              <article class="pad-h-m">
+                <h3 class="fs-300 clr-n-600 letter-spacing-m pad-v-m">${column.name} (${column.tasks.length})</h3>
                 <ul class="column gap-m">
                   ${column.tasks.map(task => Task.template(task)).join("")}
                 </ul>
