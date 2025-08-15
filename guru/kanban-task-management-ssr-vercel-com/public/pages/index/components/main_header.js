@@ -3,15 +3,19 @@
 import { Board } from "./board.js";
 
 export class MainHeader {
-
-  static prefix = "main_header";
+  
+  static prefix   = "main_header";  // using in add_new_board_dialog.js
+  static selector = `#${this.prefix}`;
 
   /**
    * @param {import("./board.js").BoardType} board
+   *
    * @returns {string} HTML string
    */
   static template(board) {
-    return `<header id="${MainHeader.prefix}" class="bg-n-000-800" style="height: 4.5rem;">
+    const path = `data-path="http://localhost:3000/pages/index/components/main_header.js"`;
+
+    return `<header id="${this.prefix}" class="bg-n-000-800" style="height: 4.5rem;" ${path}>
               <div class="with-left-sidebar">
               	<div class="[ m:display-none ] pad-h-l pad-v-m">
                   <img src="/images/svg/logo-light.svg" height=30 alt="Logo">
@@ -36,30 +40,8 @@ export class MainHeader {
   }
 
   /**
-   * @param {import("./board.js").BoardType} board
-   * @returns {Element}
-   */
-  static init(board) {
-    return MainHeader.#create(board);
-  }
-
-  /**
-   * @param {import("./board.js").BoardType} board
-   * @returns {Element}
-   */
-  static #create(board) {
-    const template     = document.createElement("template");
-    template.innerHTML = MainHeader.template(board);
-    const component    = template.content.firstElementChild;
-    if (!component)    throw new Error("Can't create \"Board\" component");
-
-    MainHeader.handleEvents(component);
-
-    return component;
-  }
-
-  /**
    * @param {Element} component
+   *
    * @returns {void}
    */
   static handleEvents(component) {
@@ -72,11 +54,11 @@ export class MainHeader {
 
       dropdownList.classList.toggle("m:display-none");
       if (this.getAttribute("aria-expanded") === "true") {
-	this.setAttribute("aria-expanded", "false");	
-	// remove backdrop	
-	document.querySelector(".backdrop")?.remove();	
+	this.setAttribute("aria-expanded", "false");
+	// remove backdrop
+	document.querySelector(".backdrop")?.remove();
       } else {
-	this.setAttribute("aria-expanded", "true");	
+	this.setAttribute("aria-expanded", "true");
 	// add backdrop
 	const backdrop = document.createElement("div");
 	backdrop.classList.add("backdrop");
@@ -96,7 +78,7 @@ export class MainHeader {
     });
 
     // btn "Delete board"
-    component.querySelectorAll("button")[2].addEventListener("click", async () => {      
+    component.querySelectorAll("button")[2].addEventListener("click", async () => {
       const { DeleteBoardDialog } = await import("../components/delete_board_dialog.js");
       const dialog = DeleteBoardDialog.init();
       document.querySelector("body")?.appendChild(dialog);
@@ -136,6 +118,7 @@ export class MainHeader {
 
     /**
      * @param {string} name
+     *
      * @returns {void} HTML string
      */
     function updateName(name) {
