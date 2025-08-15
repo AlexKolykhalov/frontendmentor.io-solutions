@@ -247,6 +247,32 @@ label:has(input:checked) {
 /*        Composition        */
 /* ************************* */
 
+.center-v {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* .box-v-80vh { */
+/*   min-height: 80vh; */
+/* } */
+
+/* .box-v-90vh { */
+/*   min-height: 90vh; */
+/* } */
+
+.center-v>* {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.center-h {
+  box-sizing: content-box;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .column {
   display: flex;
   flex-direction: column;
@@ -323,6 +349,73 @@ label:has(input:checked) {
 /*          Blocks           */
 /* ************************* */
 
+.lds-ripple {
+  --size: 35px;
+  --color: var(--clr-primary-purple);
+  --border-width: 2px;
+  --animation-time: 1s;
+  
+  top: calc(50% - var(--size) / 2);  
+  right: 10%;
+  
+  color: var(--color);
+  width: var(--size);
+  height: var(--size);  
+}
+.lds-ripple div:nth-child(1),
+.lds-ripple div:nth-child(1) div
+{
+  box-sizing: border-box;
+}
+.lds-ripple div:nth-child(1)
+{
+  display: inline-block;
+  position: relative;
+  width: var(--size);
+  height: var(--size);
+}
+.lds-ripple div:nth-child(1) div
+{
+  position: absolute;
+  border: var(--border-width) solid currentColor;
+  opacity: 1;
+  border-radius: 50%;
+  animation: lds-ripple var(--animation-time) cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+.lds-ripple div:nth-child(1) div:nth-child(2){
+  animation-delay: calc(-1 * var(--animation-time) / 2);
+}
+@keyframes lds-ripple {
+  0% {
+    top: calc(50% - var(--border-width) / 2);
+    left: calc(50% - var(--border-width) / 2);
+    width: 2px;
+    height: 2px;
+    opacity: 0;
+  }
+  4.9% {
+    top: calc(50% - var(--border-width) / 2);
+    left: calc(50% - var(--border-width) / 2);
+    width: 2px;
+    height: 2px;
+    opacity: 0;
+  }
+  5% {
+    top: calc(50% - var(--border-width) / 2);
+    left: calc(50% - var(--border-width) / 2);
+    width: 2px;
+    height: 2px;
+    opacity: 1;
+  }
+  100% {
+    top: 0;
+    left: 0;
+    width: var(--size);
+    height: var(--size);
+    opacity: 0;
+  }
+}
+
 .create-new-board-btn,
 .edit-board-btn,
 .add-new-task-btn {
@@ -375,6 +468,8 @@ label:has(input:checked) {
 }
 
 .boards-list-item {
+  position: relative;
+  
   font-weight: 700;
   color: var(--clr-neutral-600);
 
@@ -570,6 +665,14 @@ input:checked+.toggle-background:before {
   .md\:display-none {
     display: none;
   }
+}
+
+.absolute {
+  position: absolute;
+}
+
+.relative {
+  position: relative;
 }
 
 .main-axis-center {
