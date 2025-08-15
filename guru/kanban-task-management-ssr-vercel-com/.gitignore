@@ -1,6 +1,7 @@
 
 /.vercel
 /api
+/src
 /node_modules
 
 /public/pages/login
