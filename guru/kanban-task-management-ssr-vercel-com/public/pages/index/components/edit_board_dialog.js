@@ -1,16 +1,19 @@
 // @ts-check
 
-import { Board }          from "./board.js";
-import { Column }         from "./column.js";
-import { BoardsList }     from "./boards_list.js";
-import { BoardsListItem } from "./boards_list_item.js";
-import { DynamicList }    from "./dynamic_list.js";
-import { MainHeader }     from "./main_header.js";
-import { emit, insert }   from "./helpers.js";
+import { Board }                            from "./board.js";
+import { Column }                           from "./column.js";
+import { BoardsList }                       from "./boards_list.js";
+import { BoardsListItem }                   from "./boards_list_item.js";
+import { DynamicList }                      from "./dynamic_list.js";
+import { MainHeader }                       from "./main_header.js";
+import { emit, insert, openRedirectDialog } from "./_helpers.js";
+import { Role, roles } from "../../_shared/roles.js";
 
+
+// listens to [dynamic-list-item:changed, added, removed]
 export class EditBoardDialog {
 
-  static prefix = "edit_board_dialog";
+  static prefix = "edit_board_dialog"; // using in dynamic_list.js
 
   /** @type { import("./board.js").BoardType } */
   static #state = { id: "", name: "", columns: [{ id: "", name: "", tasks: [] }] };
@@ -26,7 +29,7 @@ export class EditBoardDialog {
   }
 
   /** @returns {string} HTML string */
-  static template() {
+  static #template() {
     return `<dialog id="${this.prefix}" class="bg-n-000-800">
               <div class="column gap-l">
                 <div class="row gap-m main-axis-space-between">
@@ -35,13 +38,13 @@ export class EditBoardDialog {
                 </div>
                 <div class="column gap-sm fs-300 fw-medium">
                   <label class="clr-n-600-000" for="board_name">Board Name</label>
-                  <input class="pad-sm clr-n-900-000 bg-n-100-900" id="board_name" value="${EditBoardDialog.#getState().name}">
+                  <input class="pad-sm clr-n-900-000 bg-n-100-900" id="board_name" value="${this.#getState().name}">
                 </div>
                 <dynamic-list></dynamic-list>
                 <div class="row gap-l main-axis-end">
                   <button class="fw-bold fs-300 pad-h-m clr-n-000 pad-v-sm border-radius-l bg-p-purple" disabled>Save Changes</button>
-                  <button class="fw-bold fs-300 pad-h-m clr-n-000 pad-v-sm border-radius-l bg-p-purple" disabled>Revert</button>                  
-                </div>                
+                  <button class="fw-bold fs-300 pad-h-m clr-n-000 pad-v-sm border-radius-l bg-p-purple" disabled>Revert</button>
+                </div>
               </div>
             </dialog>`;
   }
@@ -69,7 +72,7 @@ export class EditBoardDialog {
       // position of " (", e.g Todo (3)
       const name = textContent.slice(0, textContent.lastIndexOf("(") - 1);
 
-      dynamicListItems.push({ inputID: id, inputValue: name, inputPlaceholder: "e.g. TODO" });
+      dynamicListItems.push({ id: id, value: name, placeholder: "e.g. TODO" });
       columns.push({ id: id, name: name, tasks: []});
     });
 
@@ -91,10 +94,10 @@ export class EditBoardDialog {
 
     this.#setState(state);
 
-    const component = EditBoardDialog.#create();
+    const component = this.#create();
+
     insert(
       DynamicList.init({
-	id: `dl-${EditBoardDialog.prefix}-1`,
 	title: "Board Columns",
 	items: dynamicListItems,
 	btnText: "+ Add New Column",
@@ -107,25 +110,24 @@ export class EditBoardDialog {
     return component;
   }
 
-  /**
-   * @returns {Element}
-   */
+  /** @returns {Element} */
   static #create() {
     const template     = document.createElement("template");
-    template.innerHTML = EditBoardDialog.template();
+    template.innerHTML = this.#template();
     const component    = template.content.firstElementChild;
-    if (!component) throw new Error("Can't create \"EditBoardDialog\" component");
+    if (!component)    throw new Error("Can't create \"EditBoardDialog\" component");
 
-    EditBoardDialog.handleEvents(component);
+    this.#handleEvents(component);
 
     return component;
   }
 
   /**
    * @param {Element} component
+   *
    * @returns {void}
    */
-  static handleEvents(component) {
+  static #handleEvents(component) {
     const controlBtns = component.querySelectorAll("button");
     const saveBtn     = controlBtns[1];
     const revertBtn   = controlBtns[2];
@@ -141,7 +143,7 @@ export class EditBoardDialog {
     // save btn
     saveBtn.addEventListener("click", async function() {
 
-      if (!EditBoardDialog.#validation(component)) return;
+      if (!validation()) return;
 
       const mainHeader = document.querySelector(`#${MainHeader.prefix}`);
       const board      = document.querySelector(`#${Board.prefix}`);
@@ -150,22 +152,52 @@ export class EditBoardDialog {
       if (!board)      throw new Error(`Missing <section id="${Board.prefix}">`);
       if (!boardsList) throw new Error(`Missing <article id="${BoardsList.prefix}">`);
 
-      const sendingBoardData = EditBoardDialog.#getDifferences(component);
+      const sendingBoardData = getDifferences();
 
       if (sendingBoardData) {
-	const response = await fetch(
-	  `http://localhost:4000/rpc/update_board`,
-	  {
-	    method: "POST",
-	    headers: {
-	      "Content-Type": "application/json",
-	      "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYXV0aF91c2VyIn0.XC5n_hafVOMV1Ve7S2_5A0K5TmWURd_Q-zsoZgBFUTo",
-	    },
-	    body: JSON.stringify({ p_board: sendingBoardData }),
-	  }
-	);
 
-	if (response.status === 401) throw new Error("Authentication error");
+	if (Role.getRole() === roles.ANONYMOUS) {
+	  sendingBoardData.columns.forEach(
+	    column => { if (column.id === "") column.id = crypto.randomUUID() }
+	  );
+
+	  emit("board:updated", sendingBoardData, board);      // rerenders the board
+	  emit("board:updated", sendingBoardData, boardsList); // changes name of the board
+	  emit("board:updated", sendingBoardData, mainHeader); // changes name of the board
+
+	  component.remove();
+
+	  return;
+	}
+
+	const url     = "http://localhost:4000/rpc/update_board";
+	const options = {
+	  method: "POST",
+	  headers: {
+	    "Content-Type": "application/json",
+	    "Authorization": `Bearer ${ localStorage.getItem("bearer") }`,
+	  },
+	  body: JSON.stringify({ p_board: sendingBoardData }),
+	};
+        // [Errors 400, 401, 403] [Success 200]
+	let response = await fetch(url, options);
+
+	if (response.status === 401) {
+	  // [Errors 400, 401, 500] [Success 201]
+	  const resAuthz = await fetch("http://localhost:3000/api/generate_authz_token", { method: "POST" });
+	  if (resAuthz.status === 401) {
+	    await openRedirectDialog();
+
+	    return;
+	  }
+
+	  if (resAuthz.status !== 201) throw new Error("Get generate_authz_token error");
+
+	  localStorage.setItem("bearer", await resAuthz.json());
+	  options.headers.Authorization = `Bearer ${ localStorage.getItem("bearer") }`;
+	  response = await fetch(url, options);
+	};
+
 	if (response.status !== 200) throw new Error("Unexpected response status");
 
 	const receivingBoardData = await response.json();
@@ -187,24 +219,24 @@ export class EditBoardDialog {
 
       inputBoardName.value = state.name;
 
-      /** @type { import("./dynamic_list_item.js").DynamicListItemType[] } */
+      /** @type {import("./dynamic_list_item.js").DynamicListItemType[]} */
       const items = state.columns.map(column => {
 	return {
-	  inputID: column.id,
-	  inputValue: column.name,
+	  id: column.id,
+	  value: column.name,
 	  deleteBtnDisabled: state.columns.length === 1 ? true : false
 	};
       });
 
+      // revert dynamic list (create a new one and insert the modified one insteed)
       insert(
 	DynamicList.init({
-	  id: `dl-${EditBoardDialog.prefix}-1`,
 	  title: "Board Columns",
 	  items: items,
 	  btnText: "+ Add New Column",
 	  limit: 5
-	}),	
-	`#dl-${EditBoardDialog.prefix}-1`,
+	}),
+	`[id^=${DynamicList.prefix}-]`,
 	component
       );
 
@@ -216,12 +248,15 @@ export class EditBoardDialog {
     if (!closeDialogBtn) throw new Error("Can't find <button aria-label=\"close\">");
     closeDialogBtn.addEventListener("click", () => {console.log("closeBtn");component.remove()});
 
-    component.addEventListener("dynamic-list-item:change", () => checkEditBoardDialogState());
-    component.addEventListener("dynamic-list-item:add",    () => checkEditBoardDialogState());
-    component.addEventListener("dynamic-list-item:remove", () => checkEditBoardDialogState());
+    component.addEventListener("dynamic-list-item:changed", () => checkEditBoardDialogState());
+    component.addEventListener("dynamic-list-item:added",   () => checkEditBoardDialogState());
+    component.addEventListener("dynamic-list-item:removed", () => checkEditBoardDialogState());
 
+    // helper functions
+
+    /** @returns {void} */
     function checkEditBoardDialogState() {
-      if (EditBoardDialog.#getDifferences(component)) {
+      if (getDifferences()) {
 	saveBtn.removeAttribute("disabled");
 	revertBtn.removeAttribute("disabled");
       } else {
@@ -229,90 +264,83 @@ export class EditBoardDialog {
 	revertBtn.setAttribute("disabled", "");
       }
     }
-  }
 
-  /**
-   * @param {Element} component
-   *
-   * @returns {boolean}
-   */
-  static #validation(component) {
-    const inputBoardName  = component.querySelector("#board_name");
-    const listOfColumns = component.querySelector("ul");
+    /** @returns {boolean} */
+    function validation() {
+      const inputBoardName  = component.querySelector("#board_name");
+      const listOfColumns = component.querySelector("ul");
 
-    if (!inputBoardName) throw new Error("Can't find <input id=\"board_name\">");
-    if (!listOfColumns)  throw new Error("Can't find <ul>");
+      if (!inputBoardName) throw new Error("Can't find <input id=\"board_name\">");
+      if (!listOfColumns)  throw new Error("Can't find <ul>");
 
-    let isValid = true;
+      let isValid = true;
 
-    // @ts-ignore
-    if (!inputBoardName.value.trim()) { // input (must not be empty)
-      inputBoardName.setAttribute("style", "border-color: red;");
-      isValid = false;
-    }
-
-    [...listOfColumns.children].forEach((item) => {
-      if (!item.querySelector("input")?.value.trim()) { // board of columns (must not be empty)
-	item.querySelector("input")?.setAttribute("style", "border-color: red;");
+      // @ts-ignore
+      if (!inputBoardName.value.trim()) { // input (must not be empty)
+	inputBoardName.setAttribute("style", "border-color: red;");
 	isValid = false;
       }
-    });
 
-    return isValid;
-  }
+      [...listOfColumns.children].forEach((item) => {
+	if (!item.querySelector("input")?.value.trim()) { // board of columns (must not be empty)
+	  item.querySelector("input")?.setAttribute("style", "border-color: red;");
+	  isValid = false;
+	}
+      });
 
-  /**
-   * @param {Element} component
-   *
-   * @returns {import("./board.js").BoardType|null} Returns differences or null (no differences)
-   */
-  static #getDifferences(component) {
-    /** @type {HTMLInputElement|null} */
-    const boardNameInput = component.querySelector("#board_name");
-    const listOfColumns  = component.querySelector("ul");
-    if (!boardNameInput) throw new Error("Can't find <input id=\"board_name\">");
-    if (!listOfColumns)  throw new Error("Can't find <ul>");
-
-    let   flag      = false;
-    let   addings   = [];
-    const stateData = EditBoardDialog.#getState();
-
-    if (stateData.name !== boardNameInput.value.trim()) {
-      flag = true;
-      stateData.name = boardNameInput.value.trim();
+      return isValid;
     }
 
-    for (let i = 0; i < stateData.columns.length; i++) {
-      let isDelete = true;
-      for (let j = 0; j < [...listOfColumns.children].length; j++) {
-	const input = [...listOfColumns.children][j].querySelector("input");
-	if (!input) throw new Error("Missing <input> in <li> element");
-	const idAttr = input.getAttribute("id");
-	if (!idAttr) throw new Error("Missing ID attribute in <input>");
+    /***
+     * @returns {import("./board.js").BoardType|null} Returns differences or null (no differences)
+     */
+    function getDifferences() {
+      /** @type {HTMLInputElement|null} */
+      const boardNameInput = component.querySelector("#board_name");
+      const listOfColumns  = component.querySelector("ul");
+      if (!boardNameInput) throw new Error("Can't find <input id=\"board_name\">");
+      if (!listOfColumns)  throw new Error("Can't find <ul>");
 
-	const id = idAttr.slice(`x-`.length);
+      let   flag      = false;
+      let   addings   = [];
+      const stateData = EditBoardDialog.#getState();
 
-	if (i === 0 && id.length !== 36) { // i === 0 it's helps push only once
-	  addings.push({ id: "", name: input.value.trim(), tasks: [] }); // ADD
-	  flag = true;
-	};
+      if (stateData.name !== boardNameInput.value.trim()) {
+	flag = true;
+	stateData.name = boardNameInput.value.trim();
+      }
 
-        // checks the state's ID against the ID from the dialog
-	if (stateData.columns[i].id === id) {
-	  isDelete = false; // DO NOTHING
-	  if (stateData.columns[i].name !== input.value.trim()) {
-	    stateData.columns[i].name = input.value.trim(); // UPDATE
+      for (let i = 0; i < stateData.columns.length; i++) {
+	let isDelete = true;
+	for (let j = 0; j < [...listOfColumns.children].length; j++) {
+	  const input = [...listOfColumns.children][j].querySelector("input");
+	  if (!input) throw new Error("Missing <input> in <li> element");
+	  const idAttr = input.getAttribute("id");
+	  if (!idAttr) throw new Error("Missing ID attribute in <input>");
+
+	  let id = idAttr.slice(`x-`.length);
+	  if (i === 0 && id.length !== 36) { // i === 0 it's helps push only once
+	    addings.push({ id: "", name: input.value.trim(), tasks: [] }); // ADD
 	    flag = true;
+	  };
+
+          // checks the state's ID against the ID from the dialog
+	  if (stateData.columns[i].id === id) {
+	    isDelete = false; // DO NOTHING
+	    if (stateData.columns[i].name !== input.value.trim()) {
+	      stateData.columns[i].name = input.value.trim(); // UPDATE
+	      flag = true;
+	    }
 	  }
 	}
+	if (isDelete) {
+	  stateData.columns[i].name = ""; // DELETE
+	  flag = true;
+	}
       }
-      if (isDelete) {
-	stateData.columns[i].name = ""; // DELETE
-	flag = true;
-      }
-    }
-    stateData.columns.push(...addings);
+      stateData.columns.push(...addings);
 
-    return flag ? stateData : null;
+      return flag ? stateData : null;
+    }
   }
 }
