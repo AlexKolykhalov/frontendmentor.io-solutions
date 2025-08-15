@@ -1,13 +1,17 @@
 // @ts-check
 
-import { Board }        from "./board.js";
-import { Column }       from "./column.js";
-import { DynamicList }  from "./dynamic_list.js";
-import { emit, generateRandomSymbols, insert } from "./helpers.js";
+import { Board }                      from "./board.js";
+import { Column }                     from "./column.js";
+import { DynamicList }                from "./dynamic_list.js";
+import { emit, generateRandomSymbols,
+	 insert, openRedirectDialog,
+	 openAuthzDialog }            from "./_helpers.js";
+import { Role, roles } from "../../_shared/roles.js";
 
+// listens to [dynamic-list-item:changed, added, removed]
 export class EditTaskDialog {
 
-  static prefix = "edit_task_dialog";
+  static prefix = "edit_task_dialog"; // using in dynamic_list.js
 
   /** @type { {task:import("./task.js").TaskType, column_id:string} } */
   static #state = {
@@ -31,9 +35,8 @@ export class EditTaskDialog {
   }
 
   /** @returns {string} HTML string */
-  static template() {
-
-    const state = EditTaskDialog.#getState();
+  static #template() {
+    const state = this.#getState();
 
     const ul = document.querySelector(`#${Board.prefix} ul`);
     if (!ul) throw new Error(`Missing #${Board.prefix} <ul>`);
@@ -88,23 +91,22 @@ export class EditTaskDialog {
    */
   static init(dataTask) {
     this.#setState(dataTask);
-    const component = EditTaskDialog.#create();
 
-    /** @type {import("./dynamic_list_item.js").DynamicListItemType[]} */
-    const dynamicListItems = dataTask.task.subtasks.map(subtask => {
-      return {
-	inputID: subtask.id,
-	inputPlaceholder: "e.g. Make a coffee",
-	inputValue: subtask.title,
-	deleteBtnDisabled: dataTask.task.subtasks.length === 1 ? true : false
-      };
-    });
+    const component = this.#create();    
 
     insert(
-      DynamicList.init({
-	id: `dl-${this.prefix}-1`,
+      DynamicList.init({	
 	title: "Subtasks",
-	items: dynamicListItems,
+	items: dataTask.task.subtasks.map(subtask => {
+	  /** @type {import("./dynamic_list_item.js").DynamicListItemType} */
+	  const item = {
+	    id: subtask.id,
+	    placeholder: "e.g. Make a coffee",
+	    value: subtask.title,
+	    deleteBtnDisabled: dataTask.task.subtasks.length === 1 ? true : false
+	  };
+	  return item;
+	}),
 	btnText: "+ Add New Subtask",
 	limit: 8
       }),
@@ -118,11 +120,11 @@ export class EditTaskDialog {
   /** @returns {Element} */
   static #create() {
     const template     = document.createElement("template");
-    template.innerHTML = EditTaskDialog.template();
+    template.innerHTML = this.#template();
     const component    = template.content.firstElementChild;
-    if (!component) throw new Error("Can't create \"AddNewTaskDialog\" component");
+    if (!component)    throw new Error("Can't create \"AddNewTaskDialog\" component");
 
-    EditTaskDialog.handleEvents(component);
+    this.#handleEvents(component);
 
     return component;
   }
@@ -132,7 +134,7 @@ export class EditTaskDialog {
    *
    * @returns {void}
    */
-  static handleEvents(component) {
+  static #handleEvents(component) {
     const controlBtns = component.querySelectorAll("button");
     const saveBtn     = controlBtns[1];
     const revertBtn   = controlBtns[2];
@@ -161,25 +163,46 @@ export class EditTaskDialog {
 
     saveBtn.addEventListener("click", async function() {
 
-      if (!EditTaskDialog.#validation(component)) return;
+      if (!validation()) return;
 
-      const state = EditTaskDialog.#getState();
-      const sendingTaskData = EditTaskDialog.#getDifferences(component);
-      if (!sendingTaskData) throw new Error("Missing <select id=\"current_status\">");
+      if (Role.getRole() === roles.ANONYMOUS) { openAuthzDialog(); return; }
 
-      const response = await fetch("http://localhost:4000/rpc/update_task", {
+      const sendingTaskData = getDifferences();
+
+      if (!sendingTaskData) return;
+      
+      const state   = EditTaskDialog.#getState();
+      const url     = "http://localhost:4000/rpc/update_task";
+      const options = {
 	method: "POST",
 	headers: {
 	  "Content-Type": "application/json",
-	  "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYXV0aF91c2VyIn0.XC5n_hafVOMV1Ve7S2_5A0K5TmWURd_Q-zsoZgBFUTo",
+	  "Authorization": `Bearer ${ localStorage.getItem("bearer") }`,
 	},
 	body: JSON.stringify({
-	  p_task: sendingTaskData.task,
+	  p_task:      sendingTaskData.task,
 	  p_column_id: sendingTaskData.column_id
 	}),
-      });
+      };
+      // [Errors 401, 403] [Success 200]
+      let response = await fetch(url, options);
 
-      if (response.status === 401) throw new Error("Authentication error");
+      if (response.status === 401) {
+	// [Errors 400, 401, 500] [Success 201]
+	const resAuthz = await fetch("http://localhost:3000/api/generate_authz_token", { method: "POST" });
+	if (resAuthz.status === 401) {
+	  await openRedirectDialog();
+
+	  return;
+	}
+
+	if (resAuthz.status !== 201) throw new Error("Get generate_authz_token error");
+
+	localStorage.setItem("bearer", await resAuthz.json());
+	options.headers.Authorization = `Bearer ${ localStorage.getItem("bearer") }`;
+	response = await fetch(url, options);
+      }
+
       if (response.status !== 200) throw new Error("Unexpected response status");
 
       const receivingTaskData = await response.json();
@@ -228,25 +251,23 @@ export class EditTaskDialog {
       select.querySelector("option[selected]")?.removeAttribute("selected");
       elem.setAttribute("selected", "");
 
-      /** @type {import("./dynamic_list_item.js").DynamicListItemType[]} */
-      const dynamicListItems = state.task.subtasks.map(subtask => {
-	return {
-	  inputID: subtask.id,
-	  inputPlaceholder: "e.g. Make a coffee",
-	  inputValue: subtask.title,
-	  deleteBtnDisabled: state.task.subtasks.length === 1 ? true : false
-	};
-      });
-
       insert(
-	DynamicList.init({
-	  id: `dl-${EditTaskDialog.prefix}-1`,
+	DynamicList.init({	  
 	  title: "Subtasks",
-	  items: dynamicListItems,
+	  items: state.task.subtasks.map(subtask => {
+	    /** @type {import("./dynamic_list_item.js").DynamicListItemType} */
+	    const item = {
+	      id: subtask.id,
+	      placeholder: "e.g. Make a coffee",
+	      value: subtask.title,
+	      deleteBtnDisabled: state.task.subtasks.length === 1 ? true : false
+	    };
+	    return item;
+	  }),
 	  btnText: "+ Add New Subtask",
 	  limit: 8
 	}),
-	`#dl-${EditTaskDialog.prefix}-1`,
+	`[id^=${DynamicList.prefix}-]`,
 	component
       );
 
@@ -258,12 +279,14 @@ export class EditTaskDialog {
     if (!closeDialogBtn) throw new Error("Can't find <button aria-label=\"close\">");
     closeDialogBtn.addEventListener("click", () => component.remove());
 
-    component.addEventListener("dynamic-list-item:change", () => checkEditTaskDialogState());
-    component.addEventListener("dynamic-list-item:add",    () => checkEditTaskDialogState());
-    component.addEventListener("dynamic-list-item:remove", () => checkEditTaskDialogState());
+    component.addEventListener("dynamic-list-item:changed", () => checkEditTaskDialogState());
+    component.addEventListener("dynamic-list-item:added",   () => checkEditTaskDialogState());
+    component.addEventListener("dynamic-list-item:removed", () => checkEditTaskDialogState());
+
+    // helper functions
 
     function checkEditTaskDialogState() {
-      if (EditTaskDialog.#getDifferences(component)) {
+      if (getDifferences()) {
 	saveBtn.removeAttribute("disabled");
 	revertBtn.removeAttribute("disabled");
       } else {
@@ -271,104 +294,98 @@ export class EditTaskDialog {
 	revertBtn.setAttribute("disabled", "");
       }
     }
-  }
 
-  /**
-   * @param {Element} component
-   * @returns {boolean}
-   */
-  static #validation(component) {
-    const inputTaskName = component.querySelector("#task_name");
-    const subtasksList  = component.querySelector("ul");
+    /** @returns {boolean} */
+    function validation() {
+      const inputTaskName = component.querySelector("#task_name");
+      const subtasksList  = component.querySelector("ul");
 
-    if (!inputTaskName) throw new Error("Can't find <input id=\"task_name\">");
-    if (!subtasksList)  throw new Error("Can't find <ul>");
+      if (!inputTaskName) throw new Error("Can't find <input id=\"task_name\">");
+      if (!subtasksList)  throw new Error("Can't find <ul>");
 
-    let isValid = true;
+      let isValid = true;
 
-    // @ts-ignore
-    if (!inputTaskName.value.trim()) { // input (must not be empty)
-      inputTaskName.setAttribute("style", "border-color: red;");
-      isValid = false;
-    }
-
-    [...subtasksList.children].forEach((item) => {
-      if (!item.querySelector("input")?.value.trim()) { // board of columns (must not be empty)
-	item.querySelector("input")?.setAttribute("style", "border-color: red;");
+      // @ts-ignore
+      if (!inputTaskName.value.trim()) { // input (must not be empty)
+	inputTaskName.setAttribute("style", "border-color: red;");
 	isValid = false;
       }
-    });
 
-    return isValid;
-  }
+      [...subtasksList.children].forEach((item) => {
+	if (!item.querySelector("input")?.value.trim()) { // board of columns (must not be empty)
+	  item.querySelector("input")?.setAttribute("style", "border-color: red;");
+	  isValid = false;
+	}
+      });
 
-  /**
-   * @param {Element} component
-   *
-   * @returns {{task:import("./task.js").TaskType, column_id:string}|null} Returns differences or null (no differences)
-   */
-  static #getDifferences(component) {
-    /** @type {HTMLInputElement|null} */
-    const taskNameInput    = component.querySelector("#task_name");
-    /** @type {HTMLTextAreaElement|null} */
-    const descriptionInput = component.querySelector("#task_description");
-    const select           = component.querySelector("select"); // contains column id
-    const listOfSubtasks   = component.querySelector("ul");
-    if (!taskNameInput)    throw new Error("Missing <input id=\"task_name\">");
-    if (!descriptionInput) throw new Error("Missing <textarea id=\"task_description\">");
-    if (!select)           throw new Error("Can't find <select>");
-    if (!listOfSubtasks)   throw new Error("Missing <ul>");
-
-    let   flag      = false;
-    let   addings   = [];
-    const stateData = EditTaskDialog.#getState();
-
-    if (stateData.task.title !== taskNameInput.value.trim()) {
-      flag = true;
-      stateData.task.title = taskNameInput.value.trim();
+      return isValid;
     }
 
-    if (stateData.task.description !== descriptionInput.value.trim()) {
-      flag = true;
-      stateData.task.description = descriptionInput.value.trim();
-    }
 
-    if (stateData.column_id !== select.value) {
-      flag = true;
-      stateData.column_id = select.value;
-    }
+    /** @returns {{task:import("./task.js").TaskType, column_id:string}|null} Returns differences or null (no differences) */
+    function getDifferences() {
+      /** @type {HTMLInputElement|null} */
+      const taskNameInput    = component.querySelector("#task_name");
+      /** @type {HTMLTextAreaElement|null} */
+      const descriptionInput = component.querySelector("#task_description");
+      const select           = component.querySelector("select"); // contains column id
+      const listOfSubtasks   = component.querySelector("ul");
+      if (!taskNameInput)    throw new Error("Missing <input id=\"task_name\">");
+      if (!descriptionInput) throw new Error("Missing <textarea id=\"task_description\">");
+      if (!select)           throw new Error("Can't find <select>");
+      if (!listOfSubtasks)   throw new Error("Missing <ul>");
 
-    for (let i = 0; i < stateData.task.subtasks.length; i++) {
-      let isDelete = true;
-      for (let j = 0; j < [...listOfSubtasks.children].length; j++) {
-	const input = [...listOfSubtasks.children][j].querySelector("input");
-	if (!input) throw new Error("Missing <input> in <li> element");
-	const idAttr = input.getAttribute("id");
-	if (!idAttr) throw new Error("Missing ID attribute in <input>");
+      let   flag      = false;
+      let   addings   = [];
+      const stateData = EditTaskDialog.#getState();
 
-	const id = idAttr.slice(`x-`.length);
+      if (stateData.task.title !== taskNameInput.value.trim()) {
+	flag = true;
+	stateData.task.title = taskNameInput.value.trim();
+      }
 
-	if (i === 0 && id.length !== 36) { // i === 0 it's helps push only once
-	  addings.push({ id: "", title: input.value.trim(), isCompleted: false }); // ADD
-	  flag = true;
-	};
+      if (stateData.task.description !== descriptionInput.value.trim()) {
+	flag = true;
+	stateData.task.description = descriptionInput.value.trim();
+      }
 
-        // checks the state's ID against the ID from the dialog
-	if (stateData.task.subtasks[i].id === id) {
-	  isDelete = false; // DO NOTHING
-	  if (stateData.task.subtasks[i].title !== input.value.trim()) {
-	    stateData.task.subtasks[i].title = input.value.trim(); // UPDATE
+      if (stateData.column_id !== select.value) {
+	flag = true;
+	stateData.column_id = select.value;
+      }
+
+      for (let i = 0; i < stateData.task.subtasks.length; i++) {
+	let isDelete = true;
+	for (let j = 0; j < [...listOfSubtasks.children].length; j++) {
+	  const input = [...listOfSubtasks.children][j].querySelector("input");
+	  if (!input) throw new Error("Missing <input> in <li> element");
+	  const idAttr = input.getAttribute("id");
+	  if (!idAttr) throw new Error("Missing ID attribute in <input>");
+
+	  const id = idAttr.slice(`x-`.length);
+
+	  if (i === 0 && id.length !== 36) { // i === 0 it's helps push only once
+	    addings.push({ id: "", title: input.value.trim(), isCompleted: false }); // ADD
 	    flag = true;
+	  };
+
+          // checks the state's ID against the ID from the dialog
+	  if (stateData.task.subtasks[i].id === id) {
+	    isDelete = false; // DO NOTHING
+	    if (stateData.task.subtasks[i].title !== input.value.trim()) {
+	      stateData.task.subtasks[i].title = input.value.trim(); // UPDATE
+	      flag = true;
+	    }
 	  }
 	}
+	if (isDelete) {
+	  stateData.task.subtasks[i].title = ""; // DELETE
+	  flag = true;
+	}
       }
-      if (isDelete) {
-	stateData.task.subtasks[i].title = ""; // DELETE
-	flag = true;
-      }
-    }
-    stateData.task.subtasks.push(...addings);
+      stateData.task.subtasks.push(...addings);
 
-    return flag ? stateData : null;
+      return flag ? stateData : null;
+    }    
   }
 }
