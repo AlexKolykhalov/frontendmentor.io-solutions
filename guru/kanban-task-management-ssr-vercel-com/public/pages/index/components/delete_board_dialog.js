@@ -1,14 +1,16 @@
 // @ts-check
 
-import { BoardsList } from "./boards_list.js";
-import { BoardsListItem } from "./boards_list_item.js";
-import { MainHeader } from "./main_header.js";
-import { emit } from "./helpers.js";
+import { BoardsList }               from "./boards_list.js";
+import { BoardsListItem }           from "./boards_list_item.js";
+import { MainHeader }               from "./main_header.js";
+import { Role, roles }              from "../../_shared/roles.js";
+import { emit, openRedirectDialog } from "./_helpers.js";
 
 export class DeleteBoardDialog {
   /** @returns {string} HTML string */
-  static template() {
+  static #template() {
     const title = document.querySelector(`#${MainHeader.prefix} h2`);
+    
     return `<dialog class="bg-n-000-800">
               <div class="column gap-l">
                 <div class="row gap-m main-axis-space-between">
@@ -25,7 +27,7 @@ export class DeleteBoardDialog {
 
   /** @returns { Element } */
   static init() {
-    return DeleteBoardDialog.#create();
+    return this.#create();
   }
 
   /**
@@ -33,20 +35,21 @@ export class DeleteBoardDialog {
    */
   static #create() {
     const template     = document.createElement("template");
-    template.innerHTML = DeleteBoardDialog.template();
+    template.innerHTML = this.#template();
     const component    = template.content.firstElementChild;
-    if (!component) throw new Error("Can't create \"EditBoardDialog\" component");
+    if (!component)    throw new Error("Can't create \"DeleteBoardDialog\" component");
 
-    DeleteBoardDialog.handleEvents(component);
+    this.#handleEvents(component);
 
     return component;
   }
 
   /**
    * @param {Element} component
+   *
    * @returns {void}
    */
-  static handleEvents(component) {
+  static #handleEvents(component) {
     // delete btn
     component.querySelectorAll("button")[1].addEventListener("click", async function() {
       const boardsList = document.querySelector(`#${BoardsList.prefix}`);
@@ -55,22 +58,39 @@ export class DeleteBoardDialog {
       if (!selectedBoardsListItem) throw new Error(`Missing selected boards list item`);
       const selectedItemIdAttribute = selectedBoardsListItem.getAttribute("id");
       if (!selectedItemIdAttribute) throw new Error(`Missing ID attribute of the selected boards list item`);
-
       const boardID = selectedItemIdAttribute.slice(`${BoardsListItem.prefix}-`.length);
 
-      const response = await fetch(
-	`http://localhost:4000/rpc/delete_board`,
-	{
-	  method: "POST",
-	  headers: {
-	    "Content-Type": "application/json",
-	    "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYXV0aF91c2VyIn0.XC5n_hafVOMV1Ve7S2_5A0K5TmWURd_Q-zsoZgBFUTo",
-	  },
-	  body: JSON.stringify({ p_id: boardID }),
-	}
-      );
+      if (Role.getRole() === roles.ANONYMOUS) {
+	emit("board:deleted", boardID, boardsList); component.remove(); return;
+      }
 
-      if (response.status === 401) throw new Error("Authentication error");
+      const url     = "http://localhost:4000/rpc/delete_board";
+      const options = {
+	method: "POST",
+	headers: {
+	  "Content-Type": "application/json",
+	  "Authorization": `Bearer ${ localStorage.getItem("bearer") }`,
+	},
+	body: JSON.stringify({ p_id: boardID }),
+      };
+      // [Errors 401, 403] [Success 204]
+      let response = await fetch(url, options);
+
+      if (response.status === 401) {
+	const resAuthz = await fetch("http://localhost:3000/api/generate_authz_token", { method: "POST" });
+	if (resAuthz.status === 401) {
+	  await openRedirectDialog();
+
+	  return;
+	}
+
+	if (resAuthz.status !== 201) throw new Error("Get generate_authz_token error");
+
+	localStorage.setItem("bearer", await resAuthz.json());
+	options.headers.Authorization = `Bearer ${ localStorage.getItem("bearer") }`;
+	response = await fetch(url, options);
+      }
+
       if (response.status !== 204) throw new Error("Unexpected response status");
 
       // remove deleted element from the "Boards list"
