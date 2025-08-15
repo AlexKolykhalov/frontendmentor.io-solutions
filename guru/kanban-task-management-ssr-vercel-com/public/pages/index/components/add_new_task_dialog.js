@@ -1,18 +1,18 @@
 // @ts-check
 
-import { Board }        from "./board.js";
-import { Column }       from "./column.js";
-import { DynamicList }  from "./dynamic_list.js";
-import { emit, insert } from "./helpers.js";
+import { Board }                            from "./board.js";
+import { Column }                           from "./column.js";
+import { DynamicList }                      from "./dynamic_list.js";
+import { emit, insert, openRedirectDialog } from "./_helpers.js";
+import { Role, roles }                      from "../../_shared/roles.js";
 
 export class AddNewTaskDialog {
-  /**
-   * @returns {string} HTML string
-   */
-  static template() {
+  /** @returns {string} HTML string */
+  static #template() {
     const ul = document.querySelector(`#${Board.prefix} ul`);
     if (!ul) throw new Error(`Missing #${Board.prefix} <ul>`);
-    const columns = [...ul.children].map(
+
+    const options = [...ul.children].map(
       (column, index) => {
 	const id = column.getAttribute("id");
 	const h3 = column.querySelector("h3");
@@ -44,7 +44,7 @@ export class AddNewTaskDialog {
                 <dynamic-list></dynamic-list>
                 <div class="column gap-sm">
                   <label class="fw-bold fs-200 clr-n-600-000" for="current_status">Current Status</label>
-                  <select class="pad-sm fs-300 fw-medium clr-n-900-000 bg-n-100-900" id="current_status">${columns}</select>
+                  <select class="pad-sm fs-300 fw-medium clr-n-900-000 bg-n-100-900" id="current_status">${options}</select>
                 </div>
                 <button class="fw-bold fs-300 pad-h-m clr-n-000 pad-v-sm border-radius-l bg-p-purple">Create Task</button>
               </div>
@@ -53,15 +53,17 @@ export class AddNewTaskDialog {
 
   /** @returns {Element} */
   static init() {
-    const component = AddNewTaskDialog.#create();
+    const component = this.#create();
 
     insert(
-      DynamicList.init({
-	title: "Subtasks",
-	items: [{ inputPlaceholder: "e.g. Make a coffee", deleteBtnDisabled: true }],
-	btnText: "+ Add New Subtask",
-	limit: 8
-      }),
+      DynamicList.init(
+	{
+	  title: "Subtasks",
+	  items: [{ placeholder: "e.g. Make a coffee", deleteBtnDisabled: true }],
+	  btnText: "+ Add New Subtask",
+	  limit: 8
+	}
+      ),
       "dynamic-list",
       component
     );
@@ -72,26 +74,27 @@ export class AddNewTaskDialog {
   /** @returns {Element} */
   static #create() {
     const template     = document.createElement("template");
-    template.innerHTML = AddNewTaskDialog.template();
+    template.innerHTML = this.#template();
     const component    = template.content.firstElementChild;
-    if (!component) throw new Error("Can't create \"AddNewTaskDialog\" component");
+    if (!component)    throw new Error("Can't create \"AddNewTaskDialog\" component");
 
-    AddNewTaskDialog.handleEvents(component);
+    this.#handleEvents(component);
 
     return component;
   }
 
   /**
    * @param {Element} component
+   *
    * @returns {void}
    */
-  static handleEvents(component) {
+  static #handleEvents(component) {
     const input = component.querySelector("#task_name");
-    if (!input) throw new Error("Can't find <input id=\"task_name\">");
+    if (!input) throw new Error(`Can't find <input id="task_name">`);
     input.addEventListener("input", function() { this.removeAttribute("style"); });
 
     const select = component.querySelector("#current_status");
-    if (!select) throw new Error("Missing <select id=\"current_status\">");
+    if (!select) throw new Error(`Missing <select id="current_status">`);
     select.addEventListener("input", function () {
       select.querySelector("option[selected]")?.removeAttribute("selected");
       // @ts-ignore
@@ -99,10 +102,11 @@ export class AddNewTaskDialog {
       elem?.setAttribute("selected", "");
     });
 
-    const createNewTaskBtn = component.querySelector("dynamic-list + div + button");
-    if (!createNewTaskBtn) throw new Error("Can't find \"Create Task\" button");
+    const createNewTaskBtn = component.querySelector(`dynamic-list + div + button`);
+    if (!createNewTaskBtn) throw new Error(`Can't find "Create Task" button`);
     createNewTaskBtn.addEventListener("click", async function() {
-      if (!AddNewTaskDialog.#validation(component)) return;
+
+      if (!validation()) return;
 
       /** @type {HTMLInputElement|null} */
       const taskName     = component.querySelector("#task_name");
@@ -116,11 +120,11 @@ export class AddNewTaskDialog {
       if (!subtasksList) throw new Error("Can't find <ul>");
       if (!select)       throw new Error("Can't find <select>");
 
-      const selectedColumn = document.querySelector(`#column-${select.value}`);
+      const selectedColumn = document.querySelector(`#${Column.prefix}-${select.value}`);
       if (!selectedColumn) throw new Error(`Can't find <li id="${select.value}">`);
 
       /** @type {import("./task.js").TaskType} */
-      const task = {
+      const task = {	
 	id: "",
 	title: taskName.value.trim(),
 	description: description.value.trim(),
@@ -134,20 +138,47 @@ export class AddNewTaskDialog {
 	)
       };
 
-      const response = await fetch("http://localhost:4000/rpc/create_task", {
+      if (Role.getRole() === roles.ANONYMOUS) {
+	task.id = crypto.randomUUID();
+	emit("task:created", task, selectedColumn);
+
+	component.remove();
+
+	return;
+      }
+
+      const url     = "http://localhost:4000/rpc/create_task";
+      const options = {
 	method: "POST",
 	headers: {
 	  "Content-Type": "application/json",
-	  "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYXV0aF91c2VyIn0.XC5n_hafVOMV1Ve7S2_5A0K5TmWURd_Q-zsoZgBFUTo",
+	  "Authorization": `Bearer ${ localStorage.getItem("bearer") }`,
 	},
 	body: JSON.stringify({
 	  p_task: task,
 	  p_column_id: select.value
 	}),
-      });
+      };
+      // [Errors 400, 401, 403] [Success 201]
+      let response = await fetch(url, options);
 
-      if (response.status === 401) throw new Error("Authentication error");
-      if (response.status !== 200) throw new Error("Unexpected response status");
+      if (response.status === 401) {
+	// [Errors 400, 401, 500] [Success 201]
+	const resAuthz = await fetch("http://localhost:3000/api/generate_authz_token", { method: "POST" });
+	if (resAuthz.status === 401) {
+	  await openRedirectDialog();
+
+	  return;
+	}
+
+	if (resAuthz.status !== 201) throw new Error("Get generate_authz_token error");
+
+	localStorage.setItem("bearer", await resAuthz.json());
+	options.headers.Authorization = `Bearer ${ localStorage.getItem("bearer") }`;
+	response = await fetch(url, options);
+      }
+
+      if (response.status !== 201) throw new Error("Unexpected response status");
 
       emit("task:created", await response.json(), selectedColumn);
 
@@ -157,34 +188,33 @@ export class AddNewTaskDialog {
     const closeDialogBtn = component.querySelector('button[aria-label="close"]');
     if (!closeDialogBtn) throw new Error("Can't find <button aria-label=\"close\">");
     closeDialogBtn.addEventListener("click", () => component.remove());
-  }
 
-  /**
-   * @param {Element} component
-   * @returns {boolean}
-   */
-  static #validation(component) {
-    const inputTaskName = component.querySelector("#task_name");
-    const subtasksList  = component.querySelector("ul");
+    // helper functions
 
-    if (!inputTaskName) throw new Error("Can't find <input id=\"task_name\">");
-    if (!subtasksList)  throw new Error("Can't find <ul>");
+    /** @returns {boolean} */
+    function validation() {
+      const inputTaskName = component.querySelector("#task_name");
+      const subtasksList  = component.querySelector("ul");
 
-    let isValid = true;
+      if (!inputTaskName) throw new Error("Can't find <input id=\"task_name\">");
+      if (!subtasksList)  throw new Error("Can't find <ul>");
 
-    // @ts-ignore
-    if (!inputTaskName.value.trim()) { // input (must not be empty)
-      inputTaskName.setAttribute("style", "border-color: red;");
-      isValid = false;
-    }
+      let isValid = true;
 
-    [...subtasksList.children].forEach((item) => {
-      if (!item.querySelector("input")?.value.trim()) { // board of columns (must not be empty)
-	item.querySelector("input")?.setAttribute("style", "border-color: red;");
+      // @ts-ignore
+      if (!inputTaskName.value.trim()) { // input (must not be empty)
+	inputTaskName.setAttribute("style", "border-color: red;");
 	isValid = false;
       }
-    });
 
-    return isValid;
+      [...subtasksList.children].forEach((item) => {
+	if (!item.querySelector("input")?.value.trim()) { // board of columns (must not be empty)
+	  item.querySelector("input")?.setAttribute("style", "border-color: red;");
+	  isValid = false;
+	}
+      });
+
+      return isValid;
+    }
   }
 }
