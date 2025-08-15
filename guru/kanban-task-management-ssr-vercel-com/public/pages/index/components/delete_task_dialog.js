@@ -1,9 +1,7 @@
 // @ts-check
 
-import { BoardsList } from "./boards_list.js";
-import { BoardsListItem } from "./boards_list_item.js";
-import { MainHeader } from "./main_header.js";
-import { emit } from "./helpers.js";
+import { Role, roles } from "../../_shared/roles.js";
+import { emit, openRedirectDialog } from "./_helpers.js";
 
 export class DeleteTaskDialog {
 
@@ -29,7 +27,7 @@ export class DeleteTaskDialog {
   }
 
   /** @returns {string} HTML string */
-  static template() {
+  static #template() {
     return `<dialog class="bg-n-000-800">
               <div class="column gap-l">
                 <div class="row gap-m main-axis-space-between">
@@ -51,17 +49,18 @@ export class DeleteTaskDialog {
    */
   static init(dataTask) {
     this.#setState(dataTask);
-    return DeleteTaskDialog.#create();
+    
+    return this.#create();
   }
 
   /** @returns { Element } */
   static #create() {
     const template     = document.createElement("template");
-    template.innerHTML = DeleteTaskDialog.template();
+    template.innerHTML = this.#template();
     const component    = template.content.firstElementChild;
-    if (!component) throw new Error("Can't create \"EditBoardDialog\" component");
+    if (!component)    throw new Error("Can't create \"EditBoardDialog\" component");
 
-    DeleteTaskDialog.handleEvents(component);
+    this.#handleEvents(component);
 
     return component;
   }
@@ -70,28 +69,51 @@ export class DeleteTaskDialog {
    * @param {Element} component
    * @returns {void}
    */
-  static handleEvents(component) {
+  static #handleEvents(component) {
     // delete btn
     component.querySelectorAll("button")[1].addEventListener("click", async function() {
       const state = DeleteTaskDialog.#getState();
-
-      const response = await fetch(
-	`http://localhost:4000/rpc/delete_task`,
-	{
-	  method: "POST",
-	  headers: {
-	    "Content-Type": "application/json",
-	    "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYXV0aF91c2VyIn0.XC5n_hafVOMV1Ve7S2_5A0K5TmWURd_Q-zsoZgBFUTo",
-	  },
-	  body: JSON.stringify({ p_id: state.task.id }),
-	}
-      );
-
-      if (response.status === 401) throw new Error("Authentication error");
-      if (response.status !== 204) throw new Error("Unexpected response status");
-
       const selectedColumn = document.querySelector(`#column-${state.column_id}`);
       if (!selectedColumn) throw new Error(`Can't find <li id="${state.column_id}">`);
+
+      if (Role.getRole() === roles.ANONYMOUS) {
+	emit("task:deleted", { id: state.task.id }, selectedColumn);
+
+	// close all opened dialogs
+	document.querySelectorAll("dialog").forEach(dialog => dialog.remove());
+
+	return;
+      }
+
+      const url     = "http://localhost:4000/rpc/delete_task";
+      const options = {
+	method: "POST",
+	headers: {
+	  "Content-Type": "application/json",
+	  "Authorization": `Bearer ${ localStorage.getItem("bearer") }`,
+	},
+	body: JSON.stringify({ p_id: state.task.id }),
+      };
+      // [Errors 401, 403] [Success 204]
+      let response = await fetch(url, options);
+
+      if (response.status === 401) {
+	const resAuthz = await fetch("http://localhost:3000/api/generate_authz_token", { method: "POST" });
+	if (resAuthz.status === 401) {
+	  await openRedirectDialog();
+
+	  return;
+	}
+
+	if (resAuthz.status !== 201) throw new Error("Get generate_authz_token error");
+
+	localStorage.setItem("bearer", await resAuthz.json());
+	options.headers.Authorization = `Bearer ${ localStorage.getItem("bearer") }`;
+	response = await fetch(url, options);	
+      }
+      
+      if (response.status !== 204 && response.status !== 403)
+	throw new Error("Unexpected response status");
 
       emit("task:deleted", { id: state.task.id }, selectedColumn);
 
