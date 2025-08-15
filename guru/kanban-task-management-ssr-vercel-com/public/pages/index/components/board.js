@@ -9,20 +9,24 @@ import { Column } from "./column.js";
  * @property {import("./column.js").ColumnType[]} columns
  */
 
+// listens to [board:selected, created, updated]
 export class Board {
 
-  static prefix = "board";
+  static prefix   = "board"; // using in add_new_task_dialog.js
+  static selector = `#${this.prefix}`;
 
   /**
-   * @param {BoardType} board
+   * @param {BoardType} props
+   *
    * @returns {string} HTML string
    */
-  static template(board) {
-    return `<div class="column" id="${this.prefix}">
+  static template(props) {
+    const path    = `data-path="http://localhost:3000/pages/index/components/board.js"`;
+    const columns = props.columns.map(column => Column.template({ column: column }, { SSR: true })).join("");
+
+    return `<div id="${this.prefix}" class="column" ${path}>
               <div class="row gap-m no-wrap pad-bottom-m bg-n-100-900" style="height: calc(100vh - 4.5rem)">
-	        <ul class="[ flex-5 ] reel">
-                  ${board.columns.map(column => Column.template(column)).join("")}
-                </ul>
+                <ul class="[ flex-5 ] reel">${columns}</ul>
                 <button class="[ flex-1 ] fs-900 fw-bold mar-top-l border-radius-m clr-n-600 clr-p-purple:hover bg-n-000-800">+ New Column</button>
               </div>
               <button class="[ md:display-none m:display-none ] hide-sidebar-btn show" style="position: absolute; bottom: calc(1rem + 20px);">
@@ -33,30 +37,8 @@ export class Board {
   }
 
   /**
-   * @param {BoardType} board
-   * @returns {Element}
-   */
-  static init(board) {
-    return Board.#create(board);
-  }
-
-  /**
-   * @param {BoardType} board
-   * @returns {Element}
-   */
-  static #create(board) {
-    const template     = document.createElement("template");
-    template.innerHTML = Board.template(board);
-    const component    = template.content.firstElementChild;
-    if (!component)    throw new Error("Can't create \"Board\" component");
-
-    Board.handleEvents(component);
-
-    return component;
-  }
-
-  /**
    * @param {Element} component
+   *
    * @returns {void}
    */
   static handleEvents(component) {
@@ -98,6 +80,7 @@ export class Board {
 
     /**
      * @param {string} type Available values are "select" and "update"
+     *
      * @param {BoardType} board
      */
     function operation(type, board) {
@@ -110,8 +93,7 @@ export class Board {
 	  const currentColumn = columnArray[i];
 	  // create
 	  if (!currentColumn) {
-	    console.log("create column");
-	    boardColumns.appendChild(Column.init(column));
+	    boardColumns.appendChild(Column.init({ column: column }));
 	  } else {
 	    const id = currentColumn.getAttribute("id")?.slice(`${Column.prefix}-`.length);
             // update
@@ -129,7 +111,7 @@ export class Board {
       if (type === "select") {
 	boardColumns.innerHTML = "";
 	board.columns.forEach((/** @type {import("./column.js").ColumnType} */ column) => {
-	  boardColumns.appendChild(Column.init(column));
+	  boardColumns.appendChild(Column.init({ column: column }));
 	});
       }
     }
