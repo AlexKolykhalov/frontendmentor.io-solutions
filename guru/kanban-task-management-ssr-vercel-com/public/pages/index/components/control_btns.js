@@ -1,21 +1,17 @@
 // @ts-check
 
+import { ColorSchemeToggle } from "../../_shared/components/color-scheme-toggle.js";
+
 export class ControlBtns {
 
-  static prefix = "control_btns";
+  static selector = `#control_btns`;
 
   /** @returns {string} HTML string */
   static template() {
-    return `<div id="${ControlBtns.prefix}" class="column gap-m pad-m" style="margin-bottom: 20px;">
-              <div class="row gap-m main-axis-center cross-axis-center border-radius-m pad-m bg-n-100-900">
-                <img src="images/svg/icon-light-theme.svg" width="19" height="19" alt="">
-                <label class="toggle" for="toggle_btn">
-                  <span class="sr-only">Toggle</span>
-                  <input type="checkbox" id="toggle_btn">
-                  <span class="toggle-background"></span>
-                </label>
-                <img src="images/svg/icon-dark-theme.svg" width="19" height="19" alt="">
-              </div>
+    const path  = `data-path="http://localhost:3000/pages/index/components/control_btns.js"`;
+    
+    return `<div id="control_btns" class="column gap-m pad-m" style="margin-bottom: 20px;" ${path}>
+              ${ColorSchemeToggle.template()}
               <button class="[ m:display-none ] hide-sidebar-btn hide" style="position: relative; left: -1rem; width: calc(100% + 1rem); padding-left: 2rem;">
                 <img src="images/svg/icon-hide-sidebar.svg" alt="">
                 Hide Sidebar
@@ -23,25 +19,9 @@ export class ControlBtns {
             </div>`;
   }
 
-  /** @returns {Element} */
-  static init() {
-    return ControlBtns.#create();
-  }
-
-  /** @returns {Element} */
-  static #create() {
-    const template     = document.createElement("template");
-    template.innerHTML = ControlBtns.template();
-    const component    = template.content.firstElementChild;
-    if (!component)    throw new Error("Can't create \"Board\" component");
-
-    ControlBtns.handleEvents(component);
-
-    return component;
-  }
-
   /**
    * @param {Element} component
+   *
    * @returns {void}
    */
   static handleEvents(component) {
@@ -55,23 +35,6 @@ export class ControlBtns {
 
       sidebar.classList.add("md:display-none");
       hideSidebarBtnInBoardComponent.classList.remove("md:display-none");
-    });
-
-    const toggleColorThemeBtn = component.querySelector('input[type="checkbox"]');
-    if (!toggleColorThemeBtn) throw new Error('input[type="checkbox"]');
-
-    localStorage.getItem("color-scheme") === "light" ?
-      toggleColorThemeBtn.checked = false :
-      toggleColorThemeBtn.checked = true;
-
-    toggleColorThemeBtn.addEventListener("click", () => {
-      if (document.body.getAttribute("data-theme") === "dark") {
-	document.body.setAttribute("data-theme", "light");
-	localStorage.setItem("color-scheme", "light");
-      } else {
-	document.body.setAttribute("data-theme", "dark");
-	localStorage.setItem("color-scheme", "dark");
-      }
     });
   }
 }
