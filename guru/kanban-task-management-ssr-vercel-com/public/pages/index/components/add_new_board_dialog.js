@@ -1,14 +1,15 @@
 // @ts-check
 
-import { Board }        from "./board.js";
-import { BoardsList }   from "./boards_list.js";
-import { DynamicList }  from "./dynamic_list.js";
-import { MainHeader }   from "./main_header.js";
-import { emit, insert } from "./helpers.js";
+import { Board }                            from "./board.js";
+import { BoardsList }                       from "./boards_list.js";
+import { DynamicList }                      from "./dynamic_list.js";
+import { MainHeader }                       from "./main_header.js";
+import { emit, insert, openRedirectDialog } from "./_helpers.js";
+import { Role, roles } from "../../_shared/roles.js";
 
-export class CreateNewBoardDialog {
+export class AddNewBoardDialog {
   /** @returns {string} HTML string */
-  static template() {
+  static #template() {
     return `<dialog class="bg-n-000-800">
               <div class="column gap-l">
                 <div class="row gap-m no-wrap main-axis-space-between cross-axis-start">
@@ -27,15 +28,17 @@ export class CreateNewBoardDialog {
 
   /** @returns {Element} */
   static init() {
-    const component = CreateNewBoardDialog.#create();
+    const component = this.#create();
 
     insert(
-      DynamicList.init({
-	title: "Board Columns",
-	items: [{ inputPlaceholder: "e.g. TODO", deleteBtnDisabled: true }],
-	btnText: "+ Add New Column",
-	limit: 5
-      }),
+      DynamicList.init(
+	{
+	  title: "Board Columns",
+	  items: [{ placeholder: "e.g. TODO", deleteBtnDisabled: true }],
+	  btnText: "+ Add New Column",
+	  limit: 5
+	}
+      ),
       "dynamic-list",
       component
     );
@@ -43,25 +46,24 @@ export class CreateNewBoardDialog {
     return component;
   }
 
-  /**
-   * @returns {Element}
-   */
+  /** @returns {Element} */
   static #create() {
     const template     = document.createElement("template");
-    template.innerHTML = CreateNewBoardDialog.template();
+    template.innerHTML = this.#template();
     const component    = template.content.firstElementChild;
-    if (!component)    throw new Error("Can't create \"CreateNewBoardDialog\" component");
+    if (!component)    throw new Error("Can't create \"AddNewBoardDialog\" component");
 
-    CreateNewBoardDialog.handleEvents(component);
+    this.#handleEvents(component);
 
     return component;
   }
 
   /**
    * @param {Element} component
+   *
    * @returns {void}
    */
-  static handleEvents(component) {
+  static #handleEvents(component) {
     const input = component.querySelector("#board_name");
     if (!input) throw new Error("Can't find <input id=\"board_name\">");
     input.addEventListener("input", function() { this.removeAttribute("style"); });
@@ -70,7 +72,7 @@ export class CreateNewBoardDialog {
     if (!createNewBoardBtn) throw new Error("Can't find <button>");
     createNewBoardBtn.addEventListener("click", async function() {
 
-      if (!CreateNewBoardDialog.#validation(component)) return;
+      if (!validation()) return;
 
       const mainHeader = document.querySelector(`#${MainHeader.prefix}`);
       const board      = document.querySelector(`#${Board.prefix}`);
@@ -94,20 +96,48 @@ export class CreateNewBoardDialog {
 	})
       };
 
-      const response = await fetch(
-	`http://localhost:4000/rpc/create_board`,
-	{
-	  method: "POST",
-	  headers: {
-	    "Content-Type": "application/json",
-	    "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYXV0aF91c2VyIn0.XC5n_hafVOMV1Ve7S2_5A0K5TmWURd_Q-zsoZgBFUTo",
-	  },
-	  body: JSON.stringify({ p_board: sendingBoardData })
-	}
-      )
+      if (Role.getRole() === roles.ANONYMOUS) {
+	sendingBoardData.id = crypto.randomUUID();
+	sendingBoardData.columns.forEach(column => column.id = crypto.randomUUID());
 
-      if (response.status === 401) throw new Error("Authentication error");
-      if (response.status !== 200) throw new Error("Unexpected response status");
+	emit("board:created", sendingBoardData, board);
+	emit("board:created", sendingBoardData, boardsList);
+	emit("board:created", sendingBoardData, mainHeader);
+
+	component.remove();
+
+	return;
+      }
+
+      const url     = "http://localhost:4000/rpc/create_board";
+      const options = {
+	method: "POST",
+	headers: {
+	  "Content-Type":  "application/json",
+	  "Authorization": `Bearer ${ localStorage.getItem("bearer") }`,
+	},
+	body: JSON.stringify({ p_board: sendingBoardData })
+      };
+      // [Errors 401, 403] [Success 201]
+      let response = await fetch(url, options);
+
+      if (response.status === 401) {
+	// [Errors 400, 401, 500] [Success 201]
+	const resAuthz = await fetch("http://localhost:3000/api/generate_authz_token", { method: "POST" });
+	if (resAuthz.status === 401) {
+	  await openRedirectDialog();
+
+	  return;
+	}
+
+	if (resAuthz.status !== 201) throw new Error("Get generate_authz_token error");
+
+	localStorage.setItem("bearer", await resAuthz.json());
+	options.headers.Authorization = `Bearer ${ localStorage.getItem("bearer") }`;
+	response = await fetch(url, options);
+      };
+
+      if (response.status !== 201) throw new Error("Unexpected response status");
 
       const receivingBoardData = await response.json();
 
@@ -121,34 +151,33 @@ export class CreateNewBoardDialog {
     const closeDialogBtn = component.querySelector('button[aria-label="close"]');
     if (!closeDialogBtn) throw new Error("Can't find <button aria-label=\"close\">");
     closeDialogBtn.addEventListener("click", () => component.remove());
-  }
 
-  /**
-   * @param {Element} component
-   * @returns {boolean}
-   */
-  static #validation(component) {
-    const inputBoardName  = component.querySelector("#board_name");
-    const boardsOfColumns = component.querySelector("ul");
+    // helper functions
 
-    if (!inputBoardName)  throw new Error("Can't find <input id=\"board_name\">");
-    if (!boardsOfColumns) throw new Error("Can't find <ul>");
+    /** @returns {boolean} */
+    function validation() {
+      const inputBoardName  = component.querySelector("#board_name");
+      const boardsOfColumns = component.querySelector("ul");
 
-    let isValid = true;
+      if (!inputBoardName)  throw new Error("Can't find <input id=\"board_name\">");
+      if (!boardsOfColumns) throw new Error("Can't find <ul>");
 
-    // @ts-ignore
-    if (!inputBoardName.value.trim()) { // input (must not be empty)
-      inputBoardName.setAttribute("style", "border-color: red;");
-      isValid = false;
-    }
+      let isValid = true;
 
-    [...boardsOfColumns.children].forEach((item) => {
-      if (!item.querySelector("input")?.value.trim()) { // board of columns (must not be empty)
-	item.querySelector("input")?.setAttribute("style", "border-color: red;");
+      // @ts-ignore
+      if (!inputBoardName.value.trim()) { // input (must not be empty)
+	inputBoardName.setAttribute("style", "border-color: red;");
 	isValid = false;
       }
-    });
 
-    return isValid;
+      [...boardsOfColumns.children].forEach((item) => {
+	if (!item.querySelector("input")?.value.trim()) { // board of columns (must not be empty)
+	  item.querySelector("input")?.setAttribute("style", "border-color: red;");
+	  isValid = false;
+	}
+      });
+
+      return isValid;
+    }
   }
 }
