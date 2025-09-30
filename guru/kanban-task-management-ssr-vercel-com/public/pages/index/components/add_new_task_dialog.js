@@ -4,7 +4,6 @@ import { Board }                            from "./board.js";
 import { Column }                           from "./column.js";
 import { DynamicList }                      from "./dynamic_list.js";
 import { emit, insert, openRedirectDialog } from "./_helpers.js";
-import { Role, roles }                      from "../../_shared/roles.js";
 
 export class AddNewTaskDialog {
   /** @returns {string} HTML string */
@@ -46,7 +45,7 @@ export class AddNewTaskDialog {
                   <label class="fw-bold fs-200 clr-n-600-000" for="current_status">Current Status</label>
                   <select class="pad-sm fs-300 fw-medium clr-n-900-000 bg-n-100-900" id="current_status">${options}</select>
                 </div>
-                <button class="fw-bold fs-300 pad-h-m clr-n-000 pad-v-sm border-radius-l bg-p-purple">Create Task</button>
+                <button class="[ relative ] fw-bold fs-300 pad-h-m clr-n-000 pad-v-sm border-radius-l bg-p-purple">Create Task</button>
               </div>
             </dialog>`;
   }
@@ -58,10 +57,11 @@ export class AddNewTaskDialog {
     insert(
       DynamicList.init(
 	{
-	  title: "Subtasks",
-	  items: [{ placeholder: "e.g. Make a coffee", deleteBtnDisabled: true }],
+	  title: "Subtasks",	  
+	  items: [],
 	  btnText: "+ Add New Subtask",
-	  limit: 8
+	  min: 0,
+	  max: 8
 	}
       ),
       "dynamic-list",
@@ -138,7 +138,9 @@ export class AddNewTaskDialog {
 	)
       };
 
-      if (Role.getRole() === roles.ANONYMOUS) {
+      console.log(task);
+      
+      if (globalThis.role === "anonymous") {
 	task.id = crypto.randomUUID();
 	emit("task:created", task, selectedColumn);
 
@@ -146,6 +148,14 @@ export class AddNewTaskDialog {
 
 	return;
       }
+
+      this.setAttribute("disabled", "");
+      // add indicator
+      const { LoaderRipple } = await import("../../_shared/components/loader_ripple.js");
+      const loader = LoaderRipple.init();
+      loader.classList.add("clr-n-000");
+      loader.setAttribute("style", "--size: 25px; right: 5%;");
+      this.appendChild(loader);
 
       const url     = "http://localhost:4000/rpc/create_task";
       const options = {
@@ -159,7 +169,7 @@ export class AddNewTaskDialog {
 	  p_column_id: select.value
 	}),
       };
-      // [Errors 400, 401, 403] [Success 201]
+      // [Errors 400, 401, 403] [Success 200]
       let response = await fetch(url, options);
 
       if (response.status === 401) {
@@ -171,14 +181,38 @@ export class AddNewTaskDialog {
 	  return;
 	}
 
-	if (resAuthz.status !== 201) throw new Error("Get generate_authz_token error");
+	if (resAuthz.status !== 201) {
+	  const { PopUp } = await import("../../_shared/components/pop_up.js");
+	  document.body.appendChild(
+	    PopUp.init({
+	      title: "Authentication token error",
+	      message: "Something went wrong. Try again."
+	    })
+	  );
+	  this.removeAttribute("disabled");
+	  loader.remove();
+
+	  return;
+	}
 
 	localStorage.setItem("bearer", await resAuthz.json());
 	options.headers.Authorization = `Bearer ${ localStorage.getItem("bearer") }`;
 	response = await fetch(url, options);
       }
 
-      if (response.status !== 201) throw new Error("Unexpected response status");
+      if (response.status !== 200) {
+	const { PopUp } = await import("../../_shared/components/pop_up.js");
+	document.body.appendChild(
+	  PopUp.init({
+	    title: "Server error",
+	    message: "Something went wrong. Try again."
+	  })
+	);
+	this.removeAttribute("disabled");
+	loader.remove();
+
+	return;
+      }
 
       emit("task:created", await response.json(), selectedColumn);
 
@@ -189,7 +223,7 @@ export class AddNewTaskDialog {
     if (!closeDialogBtn) throw new Error("Can't find <button aria-label=\"close\">");
     closeDialogBtn.addEventListener("click", () => component.remove());
 
-    // helper functions
+    // *** ADDITIONAL FUNCTIONS ***
 
     /** @returns {boolean} */
     function validation() {
@@ -202,13 +236,13 @@ export class AddNewTaskDialog {
       let isValid = true;
 
       // @ts-ignore
-      if (!inputTaskName.value.trim()) { // input (must not be empty)
+      if (!inputTaskName.value.trim()) { // task name must not be empty
 	inputTaskName.setAttribute("style", "border-color: red;");
 	isValid = false;
       }
 
       [...subtasksList.children].forEach((item) => {
-	if (!item.querySelector("input")?.value.trim()) { // board of columns (must not be empty)
+	if (!item.querySelector("input")?.value.trim()) { // subtask must not be empty
 	  item.querySelector("input")?.setAttribute("style", "border-color: red;");
 	  isValid = false;
 	}
