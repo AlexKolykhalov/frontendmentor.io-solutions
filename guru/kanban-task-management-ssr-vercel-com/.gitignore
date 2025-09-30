@@ -4,7 +4,7 @@
 /src
 /node_modules
 
-/public/pages/login
+/public/useless_css.sh
 
 /src/db/create_secret.sh
 /src/db/roles.sql
@@ -19,5 +19,3 @@ postgREST(using in SUPABASE).txt
 postgrest.conf
 vercel.json
 worker.js
-
-
