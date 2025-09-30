@@ -11,4 +11,3 @@ document.body.dataset.paths.split(";").forEach(async (path) => {
   });
 });
 delete document.body.dataset.paths;
-
