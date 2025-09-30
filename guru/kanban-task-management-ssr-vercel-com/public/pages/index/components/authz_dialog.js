@@ -5,7 +5,7 @@ export class AuthzDialog {
   static #template() {
     return `<dialog class="bg-n-000-800">
               <div class="column gap-l">
-                <div class="row gap-m main-axis-space-between">
+                <div class="row gap-m no-wrap main-axis-space-between cross-axis-start">
                   <h2 class="fs-900 clr-n-900-000">Authorization Required</h2>
                   <button class="close-btn" aria-label="close"></button>
                 </div>
