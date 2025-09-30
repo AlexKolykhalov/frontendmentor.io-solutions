@@ -5,7 +5,6 @@ import { BoardsList }                       from "./boards_list.js";
 import { DynamicList }                      from "./dynamic_list.js";
 import { MainHeader }                       from "./main_header.js";
 import { emit, insert, openRedirectDialog } from "./_helpers.js";
-import { Role, roles } from "../../_shared/roles.js";
 
 export class AddNewBoardDialog {
   /** @returns {string} HTML string */
@@ -21,7 +20,7 @@ export class AddNewBoardDialog {
                   <input class="pad-sm clr-n-900-000 bg-n-100-900" id="board_name" placeholder="e.g. Home work">
                 </div>
                 <dynamic-list></dynamic-list>
-                <button class="fw-bold fs-300 clr-n-000 pad-h-m pad-v-sm border-radius-l bg-p-purple">Create New Board</button>
+                <button class="[ relative ] fw-bold fs-300 clr-n-000 pad-h-m pad-v-sm border-radius-l bg-p-purple">Create New Board</button>
               </div>
             </dialog>`;
   }
@@ -36,7 +35,8 @@ export class AddNewBoardDialog {
 	  title: "Board Columns",
 	  items: [{ placeholder: "e.g. TODO", deleteBtnDisabled: true }],
 	  btnText: "+ Add New Column",
-	  limit: 5
+	  min: 1,
+	  max: 5
 	}
       ),
       "dynamic-list",
@@ -95,8 +95,8 @@ export class AddNewBoardDialog {
 	  return { id: "", name: column.querySelector("input")?.value.trim() ?? "", tasks: [] };
 	})
       };
-
-      if (Role.getRole() === roles.ANONYMOUS) {
+      
+      if (globalThis.role === "anonymous") {
 	sendingBoardData.id = crypto.randomUUID();
 	sendingBoardData.columns.forEach(column => column.id = crypto.randomUUID());
 
@@ -109,6 +109,14 @@ export class AddNewBoardDialog {
 	return;
       }
 
+      this.setAttribute("disabled", "");
+      // add indicator
+      const { LoaderRipple } = await import("../../_shared/components/loader_ripple.js");
+      const loader = LoaderRipple.init();
+      loader.classList.add("clr-n-000");
+      loader.setAttribute("style", "--size: 25px; right: 5%;");
+      this.appendChild(loader);
+
       const url     = "http://localhost:4000/rpc/create_board";
       const options = {
 	method: "POST",
@@ -118,7 +126,7 @@ export class AddNewBoardDialog {
 	},
 	body: JSON.stringify({ p_board: sendingBoardData })
       };
-      // [Errors 401, 403] [Success 201]
+      // [Errors 401, 403] [Success 200]
       let response = await fetch(url, options);
 
       if (response.status === 401) {
@@ -130,14 +138,38 @@ export class AddNewBoardDialog {
 	  return;
 	}
 
-	if (resAuthz.status !== 201) throw new Error("Get generate_authz_token error");
+	if (resAuthz.status !== 201) {
+	  const { PopUp } = await import("../../_shared/components/pop_up.js");
+	  document.body.appendChild(
+	    PopUp.init({
+	      title: "Authentication token error",
+	      message: "Something went wrong. Try again."
+	    })
+	  );
+	  this.removeAttribute("disabled");
+	  loader.remove();
+	  
+	  return;
+	}
 
 	localStorage.setItem("bearer", await resAuthz.json());
 	options.headers.Authorization = `Bearer ${ localStorage.getItem("bearer") }`;
 	response = await fetch(url, options);
       };
 
-      if (response.status !== 201) throw new Error("Unexpected response status");
+      if (response.status !== 200) {
+	const { PopUp } = await import("../../_shared/components/pop_up.js");
+	document.body.appendChild(
+	  PopUp.init({
+	    title: "Server error",
+	    message: "Something went wrong. Try again."
+	  })
+	);
+	this.removeAttribute("disabled");
+	loader.remove();
+
+	return;
+      }
 
       const receivingBoardData = await response.json();
 
