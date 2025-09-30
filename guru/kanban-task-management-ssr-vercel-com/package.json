@@ -4,12 +4,13 @@
   "type": "module",
   "private": true,
   "scripts": {
+    "css:check": ". ./public/useless_css.sh",
     "vercel:start": "vercel dev",
     "pg:start": "sudo systemctl start postgresql",
-    "nginx:check": "sudo nginx -t -c /home/alex2/Documents/work/html_css_js/frontendmentor.io-solutions/guru/kanban-task-management-ssr-vercel-com/nginx.conf",
+    "rest:start": "/opt/postgrest/postgrest ./postgrest.conf",
     "nginx:start": "sudo nginx -c /home/alex2/Documents/work/html_css_js/frontendmentor.io-solutions/guru/kanban-task-management-ssr-vercel-com/nginx.conf",
-    "nginx:reload": "sudo nginx -s reload -c /home/alex2/Documents/work/html_css_js/frontendmentor.io-solutions/guru/kanban-task-management-ssr-vercel-com/nginx.conf",
-    "rest:start": "/opt/postgrest/postgrest ./postgrest.conf"
+    "nginx:check": "sudo nginx -t -c /home/alex2/Documents/work/html_css_js/frontendmentor.io-solutions/guru/kanban-task-management-ssr-vercel-com/nginx.conf",
+    "nginx:reload": "sudo nginx -s reload -c /home/alex2/Documents/work/html_css_js/frontendmentor.io-solutions/guru/kanban-task-management-ssr-vercel-com/nginx.conf"
   },
   "keywords": [],
   "author": "",
