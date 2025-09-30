@@ -22,7 +22,7 @@ export class Board {
    */
   static template(props) {
     const path    = `data-path="http://localhost:3000/pages/index/components/board.js"`;
-    const columns = props.columns.map(column => Column.template({ column: column }, { SSR: true })).join("");
+    const columns = props.columns.map(column => Column.template({ column: column })).join("");
 
     return `<div id="${this.prefix}" class="column" ${path}>
               <div class="row gap-m no-wrap pad-bottom-m bg-n-100-900" style="height: calc(100vh - 4.5rem)">
