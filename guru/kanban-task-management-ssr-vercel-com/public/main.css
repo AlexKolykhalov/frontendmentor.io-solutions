@@ -210,6 +210,7 @@ dialog::backdrop {
 button {
   border: none;
   cursor: pointer;
+  padding: 0;
 }
 
 button[disabled] {
@@ -312,24 +313,24 @@ label:has(input:checked) {
   flex-wrap: wrap;
 }
 
-.with-left-sidebar> :first-child {
+.with-left-sidebar > :first-child {
   flex-basis: clamp(15rem, 30vw, 20rem);
   flex-grow: 1;
 }
 
 @media (max-width: 48em) {
-  .with-left-sidebar> :first-child {
+  .with-left-sidebar > :first-child {
     flex-basis: 0;
   }
 }
 
-.with-left-sidebar> :last-child {
+.with-left-sidebar > :last-child {
   flex-basis: 0;
   flex-grow: 999;
   min-width: 50%;
 }
 
-.reel{
+.reel {
   --gap: 0rem;
   display: grid;
   gap: var(--gap);
@@ -416,23 +417,23 @@ label:has(input:checked) {
   }
 }
 
-.create-new-board-btn,
-.edit-board-btn,
-.add-new-task-btn {
-  border-top-right-radius: 2rem;
-  border-bottom-right-radius: 2rem;
+/* .create-new-board-btn, */
+/* /\* .edit-board-btn, *\/ */
+/* .add-new-task-btn { */
+/*   border-top-right-radius: 2rem; */
+/*   border-bottom-right-radius: 2rem; */
 
-  padding-left: 2rem;
-  user-select: none; /* whether user can select text */
+/*   padding-left: 2rem; */
+/*   user-select: none; /\* whether user can select text *\/ */
 
-  width: 95%;
-}
+/*   width: 95%; */
+/* } */
 
-.create-new-board-btn:hover,
-.edit-board-btn:hover,
-.add-new-task-btn:hover {
-  background: var(--bg-p-light-purple-n-000);
-}
+/* .create-new-board-btn:hover, */
+/* /\* .edit-board-btn:hover, *\/ */
+/* .add-new-task-btn:hover { */
+/*   background: var(--bg-p-light-purple-n-000); */
+/* } */
 
 .hide-sidebar-btn {
   font-weight: 700;
@@ -497,6 +498,51 @@ label:has(input:checked) {
   background: var(--bg-p-light-purple-n-000);
   color: var(--clr-primary-purple);
 }
+
+
+
+
+/* .create-new-board-btn, */
+/* /\* .edit-board-btn, *\/ */
+/* .add-new-task-btn { */
+/*   border-top-right-radius: 2rem; */
+/*   border-bottom-right-radius: 2rem; */
+
+/*   padding-left: 2rem; */
+/*   user-select: none; /\* whether user can select text *\/ */
+
+/*   width: 95%; */
+/* } */
+
+/* .create-new-board-btn:hover, */
+/* /\* .edit-board-btn:hover, *\/ */
+/* .add-new-task-btn:hover { */
+/*   background: var(--bg-p-light-purple-n-000); */
+/* } */
+
+
+
+
+.boards-list-btn {
+  border-top-right-radius: 2rem;
+  border-bottom-right-radius: 2rem;
+
+  color: var(--clr-primary-purple);
+  background-color: transparent;
+
+  font-weight: bold;
+
+  padding-left: 2rem;
+  padding-block: 1rem;
+  user-select: none; /* whether user can select text */
+
+  width: 95%;
+}
+
+.boards-list-btn:hover {
+  background: var(--bg-p-light-purple-n-000);
+}
+
 
 .task-item {
   background-color: var(--bg-n-000-800);
@@ -635,7 +681,7 @@ input:checked+.toggle-background:before {
   border-radius: 50%;
 }
 
-.close-btn:hover {
+.close-btn:not([disabled]):hover {
   background-color: var(--bg-n-100-900);
 }
 
@@ -740,7 +786,7 @@ input:checked+.toggle-background:before {
 }
 
 .gap-d-sm-m {
-  gap: clamp(0.5rem, 4vw, 1rem);
+  gap: clamp(0.5rem, 1vw, 1rem);
 }
 
 .gap-l {
@@ -767,6 +813,10 @@ input:checked+.toggle-background:before {
   border-radius: 1.5rem;
 }
 
+/* .border-radius-max { */
+/*   border-radius: 50%; */
+/* } */
+
 .cursor-pointer {
   cursor: pointer;
 }
@@ -789,6 +839,10 @@ input:checked+.toggle-background:before {
 
 .fs-300 {
   font-size: var(--scale-300);
+}
+
+.fs-d-300-500 {
+  font-size: clamp(var(--scale-300), 1.5vw, var(--scale-500));
 }
 
 .fs-d-300-900 {
@@ -823,9 +877,9 @@ input:checked+.toggle-background:before {
   color: var(--clr-n-900-000);
 }
 
-.clr-p-light-purple {
-  color: var(--clr-primary-light-purple);
-}
+/* .clr-p-light-purple { */
+/*   color: var(--clr-primary-light-purple); */
+/* } */
 
 .clr-p-purple {
   color: var(--clr-primary-purple);
@@ -843,17 +897,17 @@ input:checked+.toggle-background:before {
   background-color: var(--clr-neutral-100);
 }
 
-.bg-n-600 {
-  background-color: var(--clr-neutral-600);
-}
+/* .bg-n-600 { */
+/*   background-color: var(--clr-neutral-600); */
+/* } */
 
-.bg-n-800 {
-  background-color: var(--clr-neutral-800);
-}
+/* .bg-n-800 { */
+/*   background-color: var(--clr-neutral-800); */
+/* } */
 
-.bg-n-900 {
-  background-color: var(--clr-neutral-900);
-}
+/* .bg-n-900 { */
+/*   background-color: var(--clr-neutral-900); */
+/* } */
 
 .bg-p-red {
   opacity: 85%;
