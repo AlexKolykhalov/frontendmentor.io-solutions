@@ -9,17 +9,17 @@
 export class PopUp {
 
   static #prefix = "popup";
-  
+
   /**
    * @param {Props} props
    *
    * @returns {string} HTML string
    */
   static #template(props) {
-    const style = "opacity: 0; bottom: 80px; left: 50%; transform: translateX(-50%) translateY(5%); box-shadow: 0 0 6px var(--clr-primary-red);";
-    return `<div id="${this.#prefix}" class="[ absolute ] row no-wrap gap-m cross-axis-center bg-n-000-800 pad-m border-radius-l" style="${style}">
+    const style = "opacity: 0; max-width: 300px; width: 80vw; bottom: 80px; left: 50%; transform: translateX(-50%) translateY(5%); box-shadow: 0 0 6px var(--clr-primary-red);";
+    return `<div id="${this.#prefix}" class="[ absolute ] row no-wrap gap-m main-axis-space-between cross-axis-center bg-n-000-800 pad-m border-radius-l" style="${style}">
               <img src="images/svg/icon-warning.svg" alt="" width="36" height="36">
-              <div class="column gp-sm">
+              <div class="column">
                 <p class="fw-bold clr-n-900-000">${props.title}</p>
                 <p class="clr-n-900-000">${props.message}</p>
               </div>
@@ -33,7 +33,7 @@ export class PopUp {
    */
   static init(props) {
     document.querySelector(`#${this.#prefix}`)?.remove();
-    
+
     return this.#create(props);
   }
 
