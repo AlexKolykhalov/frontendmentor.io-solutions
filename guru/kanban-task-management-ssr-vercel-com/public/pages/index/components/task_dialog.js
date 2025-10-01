@@ -5,10 +5,7 @@ import { Board }                       from "./board.js";
 import { Column }                      from "./column.js";
 import { CheckList }                   from "./check_list.js";
 import { CheckListItem }               from "./check_list_item.js";
-import { emit, generateRandomSymbols,
-	 insert, openRedirectDialog,
-	 openAuthzDialog }             from "./_helpers.js";
-import { Role, roles } from "../../_shared/roles.js";
+import { generateRandomSymbols, insert } from "./_helpers.js";
 
 // listens to [check-list-item:changed]
 export class TaskDialog {
@@ -18,7 +15,8 @@ export class TaskDialog {
       id: "",
       title: "",
       description: "",
-      subtasks: [{ id: "", title: "", isCompleted: false }]
+      // subtasks: [{ id: "", title: "", isCompleted: false }]
+      subtasks: []
     },
     column_id: ""
   };
@@ -155,13 +153,13 @@ export class TaskDialog {
       dialog.showModal();
     });
 
-    component.addEventListener("check-list-item:changed", async (event) => {      
+    component.addEventListener("check-list-item:changed", async (event) => {
       /** @type {import("./task.js").SubtaskType} */
       // @ts-ignore
-      const subtask = event.detail;
-      
-      //find subtask and set previous value (what was before click)      
-      const subtaskElement = component.querySelector(`#${CheckListItem.prefix}-${subtask.id}`);      
+      const subtask = event.detail;      
+
+      //find subtask and set previous value (what was before click)
+      const subtaskElement = component.querySelector(`#${CheckListItem.prefix}-${subtask.id}`);
       if (!subtaskElement) throw new Error(`Missing <li id="${CheckListItem.prefix}-${subtask.id}">`);
       const input        = subtaskElement.querySelector("input");
       const listSubtasks = subtaskElement.closest("ul");
@@ -172,15 +170,20 @@ export class TaskDialog {
       if (!checkList) throw new Error(`Can't find parent element for <ul>`);
 
       // set the same status what was before checkbox click
-      // if will be fetch error than status of the checkbox will be the same      
-      input.checked = !subtask.isCompleted;
+      // if will be fetch error than status of the checkbox will be the same
+      input.checked = !subtask.isCompleted;      
       
-      if (Role.getRole() === roles.ANONYMOUS) { openAuthzDialog(); return; }
+      if (globalThis.role === "anonymous") {
+	const { openAuthzDialog } = await import("./_helpers.js");
+	openAuthzDialog();
+
+	return;
+      }
 
       const state = TaskDialog.#getState();      
-      const index = state.task.subtasks.findIndex(subtask => subtask.id === subtask.id);      
+      const index = state.task.subtasks.findIndex(item => item.id === subtask.id);      
       if (index === -1) throw new Error(`Can't find subtask with ${subtask.id} ID">`);
-      
+
       state.task.subtasks[index].isCompleted = subtask.isCompleted;
 
       const url     = "http://localhost:4000/rpc/update_task";
@@ -202,19 +205,34 @@ export class TaskDialog {
 	// [Errors 400, 401, 500] [Success 201]
 	const resAuthz = await fetch("http://localhost:3000/api/generate_authz_token", { method: "POST" });
 	if (resAuthz.status === 401) {
-	  await openRedirectDialog();
+	  const { openRedirectDialog } = await import("./_helpers.js");
+	  openRedirectDialog();
 
 	  return;
 	}
 
-	if (resAuthz.status !== 201) throw new Error("Get generate_authz_token error");
+	if (resAuthz.status !== 201) {
+	  const { PopUp } = await import("../../_shared/components/pop_up.js");
+	  document.body.appendChild(
+	    PopUp.init({ title: "Authentication token error", message: "Something went wrong. Try again." })
+	  );
+
+	  return;
+	}
 
 	localStorage.setItem("bearer", await resAuthz.json());
 	options.headers.Authorization = `Bearer ${ localStorage.getItem("bearer") }`;
 	response = await fetch(url, options);
       }
 
-      if (response.status !== 200) throw new Error("Unexpected response status");
+      if (response.status !== 200) {
+	const { PopUp } = await import("../../_shared/components/pop_up.js");
+	document.body.appendChild(
+	  PopUp.init({ title: "Server error", message: "Something went wrong. Try again." })
+	);
+
+	return;
+      }
 
       const receivingTaskData = await response.json();
 
@@ -225,6 +243,7 @@ export class TaskDialog {
       const selectedColumn = document.querySelector(`#${Column.prefix}-${state.column_id}`);
       if (!selectedColumn) throw new Error(`Can't find <li id="${state.column_id}">`);
 
+      const { emit } = await import("./_helpers.js");
       // update Task component (change the number of completed subtasks)
       emit("task:updated", receivingTaskData, selectedColumn);
       // update "title" of the CheckList component (change the number of completed subtasks)
