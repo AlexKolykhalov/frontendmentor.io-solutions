@@ -6,7 +6,6 @@ import { DynamicList }                from "./dynamic_list.js";
 import { emit, generateRandomSymbols,
 	 insert, openRedirectDialog,
 	 openAuthzDialog }            from "./_helpers.js";
-import { Role, roles } from "../../_shared/roles.js";
 
 // listens to [dynamic-list-item:changed, added, removed]
 export class EditTaskDialog {
@@ -15,12 +14,7 @@ export class EditTaskDialog {
 
   /** @type { {task:import("./task.js").TaskType, column_id:string} } */
   static #state = {
-    task: {
-      id: "",
-      title: "",
-      description: "",
-      subtasks: [{ id: "", title: "", isCompleted: false }]
-    },
+    task: { id: "", title: "", description: "", subtasks: [] },
     column_id: ""
   };
 
@@ -77,7 +71,7 @@ export class EditTaskDialog {
                   <select class="pad-sm fs-300 fw-medium clr-n-900-000 bg-n-100-900" id="${selectID}">${columns}</select>
                 </div>
                 <div class="row gap-l main-axis-end">
-                  <button class="fw-bold fs-300 pad-h-m clr-n-000 pad-v-sm border-radius-l bg-p-purple" disabled>Save Changes</button>
+                  <button class="[ relative ] fw-bold fs-300 pad-h-l clr-n-000 pad-v-sm border-radius-l bg-p-purple" disabled>Save Changes</button>
                   <button class="fw-bold fs-300 pad-h-m clr-n-000 pad-v-sm border-radius-l bg-p-purple" disabled>Revert</button>
                 </div>
               </div>
@@ -92,23 +86,23 @@ export class EditTaskDialog {
   static init(dataTask) {
     this.#setState(dataTask);
 
-    const component = this.#create();    
+    const component = this.#create();
 
     insert(
-      DynamicList.init({	
+      DynamicList.init({
 	title: "Subtasks",
 	items: dataTask.task.subtasks.map(subtask => {
 	  /** @type {import("./dynamic_list_item.js").DynamicListItemType} */
 	  const item = {
 	    id: subtask.id,
 	    placeholder: "e.g. Make a coffee",
-	    value: subtask.title,
-	    deleteBtnDisabled: dataTask.task.subtasks.length === 1 ? true : false
+	    value: subtask.title	    
 	  };
 	  return item;
 	}),
 	btnText: "+ Add New Subtask",
-	limit: 8
+	min: 0,
+	max: 8
       }),
       "dynamic-list",
       component
@@ -162,16 +156,22 @@ export class EditTaskDialog {
     });
 
     saveBtn.addEventListener("click", async function() {
-
       if (!validation()) return;
 
-      if (Role.getRole() === roles.ANONYMOUS) { openAuthzDialog(); return; }
+      if (globalThis.role === "anonymous") { openAuthzDialog(); return; }
 
       const sendingTaskData = getDifferences();
 
       if (!sendingTaskData) return;
-      
-      const state   = EditTaskDialog.#getState();
+
+      this.setAttribute("disabled", "");
+      // add indicator
+      const { LoaderRipple } = await import("../../_shared/components/loader_ripple.js");
+      const loader = LoaderRipple.init();
+      loader.classList.add("clr-n-000");
+      loader.setAttribute("style", "--size: 25px; right: 5%;");
+      this.appendChild(loader);
+
       const url     = "http://localhost:4000/rpc/update_task";
       const options = {
 	method: "POST",
@@ -196,17 +196,42 @@ export class EditTaskDialog {
 	  return;
 	}
 
-	if (resAuthz.status !== 201) throw new Error("Get generate_authz_token error");
+	if (resAuthz.status !== 201) {
+	  const { PopUp } = await import("../../_shared/components/pop_up.js");
+	  document.body.appendChild(
+	    PopUp.init({
+	      title: "Authentication token error",
+	      message: "Something went wrong. Try again."
+	    })
+	  );
+	  this.removeAttribute("disabled");
+	  loader.remove();
+
+	  return;
+	}
 
 	localStorage.setItem("bearer", await resAuthz.json());
 	options.headers.Authorization = `Bearer ${ localStorage.getItem("bearer") }`;
 	response = await fetch(url, options);
       }
 
-      if (response.status !== 200) throw new Error("Unexpected response status");
+      if (response.status !== 200) {
+	const { PopUp } = await import("../../_shared/components/pop_up.js");
+	document.body.appendChild(
+	  PopUp.init({
+	    title: "Server error",
+	    message: "Something went wrong. Try again."
+	  })
+	);
+	this.removeAttribute("disabled");
+	loader.remove();
+
+	return;
+      }
 
       const receivingTaskData = await response.json();
 
+      const state = EditTaskDialog.#getState();
       if (sendingTaskData.column_id !== state.column_id) {
 	// move task from one column to another
 	const increasedColumn = document.querySelector(`#column-${sendingTaskData.column_id}`);
@@ -243,6 +268,7 @@ export class EditTaskDialog {
       const state = EditTaskDialog.#getState();
 
       taskNameInput.value    = state.task.title;
+      taskNameInput.removeAttribute("style");
       descriptionInput.value = state.task.description;
       // @ts-ignore
       const elem = [...select.children].find(item => item.value === state.column_id);
@@ -252,20 +278,20 @@ export class EditTaskDialog {
       elem.setAttribute("selected", "");
 
       insert(
-	DynamicList.init({	  
+	DynamicList.init({
 	  title: "Subtasks",
 	  items: state.task.subtasks.map(subtask => {
 	    /** @type {import("./dynamic_list_item.js").DynamicListItemType} */
 	    const item = {
 	      id: subtask.id,
 	      placeholder: "e.g. Make a coffee",
-	      value: subtask.title,
-	      deleteBtnDisabled: state.task.subtasks.length === 1 ? true : false
+	      value: subtask.title	      
 	    };
 	    return item;
 	  }),
 	  btnText: "+ Add New Subtask",
-	  limit: 8
+	  min: 0,
+	  max: 8
 	}),
 	`[id^=${DynamicList.prefix}-]`,
 	component
@@ -279,11 +305,13 @@ export class EditTaskDialog {
     if (!closeDialogBtn) throw new Error("Can't find <button aria-label=\"close\">");
     closeDialogBtn.addEventListener("click", () => component.remove());
 
+    // *** ADDITIONAL LISTENERS ***
+
     component.addEventListener("dynamic-list-item:changed", () => checkEditTaskDialogState());
     component.addEventListener("dynamic-list-item:added",   () => checkEditTaskDialogState());
     component.addEventListener("dynamic-list-item:removed", () => checkEditTaskDialogState());
 
-    // helper functions
+    // *** ADDITIONAL FUNCTIONS ***
 
     function checkEditTaskDialogState() {
       if (getDifferences()) {
@@ -321,7 +349,6 @@ export class EditTaskDialog {
       return isValid;
     }
 
-
     /** @returns {{task:import("./task.js").TaskType, column_id:string}|null} Returns differences or null (no differences) */
     function getDifferences() {
       /** @type {HTMLInputElement|null} */
@@ -352,6 +379,17 @@ export class EditTaskDialog {
       if (stateData.column_id !== select.value) {
 	flag = true;
 	stateData.column_id = select.value;
+      }
+
+      if (stateData.task.subtasks.length === 0 && [...listOfSubtasks.children].length > 0) {
+	[...listOfSubtasks.children].forEach(item => {
+	  const input = item.querySelector("input");
+	  if (!input) throw new Error("Missing <input> in <li> element");
+
+	  addings.push({ id: "", title: input.value.trim(), isCompleted: false }); // ADD
+	});	
+
+	flag = true;
       }
 
       for (let i = 0; i < stateData.task.subtasks.length; i++) {
@@ -386,6 +424,6 @@ export class EditTaskDialog {
       stateData.task.subtasks.push(...addings);
 
       return flag ? stateData : null;
-    }    
+    }
   }
 }
