@@ -1,10 +1,7 @@
 // @ts-check
 
-import { Board }                from "./board.js";
-import { MainHeader }           from "./main_header.js";
-import { emit, openAuthzDialog,
-	 openRedirectDialog }   from "./_helpers.js";
-
+import { Board }      from "./board.js";
+import { MainHeader } from "./main_header.js";
 
 /**
  * @typedef {object} BoardsListItemType
@@ -21,19 +18,16 @@ export class BoardsListItem {
 
   /**
    * @param {BoardsListItemType} props
-   * @param { {SSR:boolean} }    render
    *
    * @returns {string} HTML string
    */
-  static template(props, render = { SSR: false }) {
-    if (!render.SSR && typeof window === 'undefined' && typeof document === 'undefined')
-      throw new Error("Render template error: try to add { SSR: true }");
-
+  static template(props) {
+    const isSSR    = typeof window === "undefined" && typeof document === "undefined";
     const attr     = props.locked   ? `data-locked="true"` : "";
-    const selected = props.selected ? " selected"   : "";
-    const path     = render.SSR     ? `data-path="http://localhost:3000/pages/index/components/boards_list_item.js"` : "";
+    const selected = props.selected ? "selected" : "";
+    const path     = isSSR          ? `data-path="http://localhost:3000/pages/index/components/boards_list_item.js"` : "";    
 
-    return `<li id="${this.prefix}-${props.id}" class="boards-list-item${selected}" ${attr} ${path}>
+    return `<li id="${this.prefix}-${props.id}" class="boards-list-item ${selected}" ${attr} ${path}>
               <img src="images/svg/${props.locked ? "icon-locked" : "icon-board-grey"}.svg" alt="" width="16" height="16">${props.title}
             </li>`;
   }
@@ -70,16 +64,19 @@ export class BoardsListItem {
    */
   static handleEvents(component) {
     // @ts-ignore
-    const isLocked = component.dataset.locked === "true"; delete component.dataset.locked;
+    const isLocked = component.dataset.locked === "true"; delete component.dataset.locked;    
 
-    if (isLocked) component.addEventListener("click", () => openAuthzDialog());
+    if (isLocked) component.addEventListener("click", async () => {
+      const { openAuthzDialog } = await import("./_helpers.js");
+      openAuthzDialog();
+    });
     if (!isLocked) {
       component.addEventListener("click", async function() {
 
 	if (this.classList.contains("selected")) return;
 
 	// add indicator
-	const { LoaderRipple } = await import("../../_shared/components/loader-ripple.js");
+	const { LoaderRipple } = await import("../../_shared/components/loader_ripple.js");
 	const loader = LoaderRipple.init();
 	component.appendChild(loader);
 
@@ -87,9 +84,8 @@ export class BoardsListItem {
 	const url     = `http://localhost:4000/rpc/get_board?p_board_id=${id}`;
 	const options = {
 	  headers: {
-	    "Accept":         "application/vnd.pgrst.object+json",
-	    "Accept-Profile": "api",
-	    "Authorization":  `Bearer ${ localStorage.getItem("bearer") }`,
+	    "Accept":        "application/vnd.pgrst.object+json",
+	    "Authorization": `Bearer ${ localStorage.getItem("bearer") }`,
 	  }
 	};
 	// [Errors 401, 403, 404] [Success 200]
@@ -99,32 +95,56 @@ export class BoardsListItem {
 	  // [Errors 400, 401, 500] [Success 201]
 	  const resAuthz = await fetch("http://localhost:3000/api/generate_authz_token", { method: "POST" });
 	  if (resAuthz.status === 401) {
-	    await openRedirectDialog();
+	    const { openRedirectDialog } = await import("./_helpers.js");
+	    openRedirectDialog();
 
 	    return;
 	  }
 
-	  if (resAuthz.status !== 201) throw new Error("Get generate_authz_token error");
+	  if (resAuthz.status !== 201) {
+	    const { PopUp } = await import("../../_shared/components/pop_up.js");
+	    document.body.appendChild(
+	      PopUp.init({ title: "Authentication token error", message: "Something went wrong. Try again." })
+	    );
+	    loader.remove();
+
+	    return;
+	  }
 
 	  localStorage.setItem("bearer", await resAuthz.json());
 	  options.headers.Authorization = `Bearer ${ localStorage.getItem("bearer") }`;
 	  response = await fetch(url, options);
 	};
 
-	// if (response.status === 404) { openAuthzDialog(); loader.remove(); return; }
+	if (response.status !== 200) {
+	  const { PopUp } = await import("../../_shared/components/pop_up.js");
+	  document.body.appendChild(
+	    PopUp.init({ title: "Server error", message: "Something went wrong. Try again." })
+	  );
+	  loader.remove();
 
-	if (response.status !== 200) throw new Error("Unexpected response status");
+	  return;
+	};
 
 	const receivedBoardData = await response.json();
 
 	// update title of the boards_list_item
 	// Anonymous update board on client, not in DB, so refresh it in another click
 	component.childNodes[2].nodeValue = receivedBoardData.name;
-	
-	// @ts-ignore
-	emit("board:selected", receivedBoardData, document.querySelector(`#${Board.prefix}`));
-	// @ts-ignore
-	emit("board:selected", receivedBoardData, document.querySelector(`#${MainHeader.prefix}`));
+
+	const { emit } = await import("./_helpers.js");
+	emit(
+	  "board:selected",
+	  receivedBoardData,
+	  // @ts-ignore
+	  document.querySelector(`#${Board.prefix}`)
+	);	
+	emit(
+	  "board:selected",
+	  receivedBoardData,
+	  // @ts-ignore
+	  document.querySelector(`#${MainHeader.prefix}`)
+	);
 
 	this.parentElement.querySelector("li.selected")?.classList.remove("selected");
 	this.classList.add("selected");
