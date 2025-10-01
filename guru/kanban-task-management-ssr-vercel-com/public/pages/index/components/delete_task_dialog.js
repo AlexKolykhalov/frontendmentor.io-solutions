@@ -1,6 +1,5 @@
 // @ts-check
 
-import { Role, roles } from "../../_shared/roles.js";
 import { emit, openRedirectDialog } from "./_helpers.js";
 
 export class DeleteTaskDialog {
@@ -36,7 +35,7 @@ export class DeleteTaskDialog {
                 </div>
                 <p class="fs-300 clr-n-600">Are you sure you want to delete the <strong class="clr-n-900-000">"${this.#getState().task.title}"</strong> task and its subtasks? This action cannot be reversed.</p>
                 <div class="row gap-l main-axis-end">
-                  <button class="fw-bold fs-300 pad-h-m clr-n-000 pad-v-sm border-radius-l bg-p-red">Delete</button>
+                  <button class="[ relative ] fw-bold fs-300 pad-h-l clr-n-000 pad-v-sm border-radius-l bg-p-red">Delete</button>
                 </div>
               </div>
             </dialog>`;
@@ -58,7 +57,7 @@ export class DeleteTaskDialog {
     const template     = document.createElement("template");
     template.innerHTML = this.#template();
     const component    = template.content.firstElementChild;
-    if (!component)    throw new Error("Can't create \"EditBoardDialog\" component");
+    if (!component)    throw new Error("Can't create \"DeleteTaskDialog\" component");
 
     this.#handleEvents(component);
 
@@ -74,9 +73,9 @@ export class DeleteTaskDialog {
     component.querySelectorAll("button")[1].addEventListener("click", async function() {
       const state = DeleteTaskDialog.#getState();
       const selectedColumn = document.querySelector(`#column-${state.column_id}`);
-      if (!selectedColumn) throw new Error(`Can't find <li id="${state.column_id}">`);
-
-      if (Role.getRole() === roles.ANONYMOUS) {
+      if (!selectedColumn) throw new Error(`Can't find <li id="${state.column_id}">`);      
+      
+      if (globalThis.role === "anonymous") {
 	emit("task:deleted", { id: state.task.id }, selectedColumn);
 
 	// close all opened dialogs
@@ -84,6 +83,14 @@ export class DeleteTaskDialog {
 
 	return;
       }
+
+      this.setAttribute("disabled", "");
+      // add indicator
+      const { LoaderRipple } = await import("../../_shared/components/loader_ripple.js");
+      const loader = LoaderRipple.init();
+      loader.classList.add("clr-n-000");
+      loader.setAttribute("style", "--size: 25px; right: 5%;");
+      this.appendChild(loader);
 
       const url     = "http://localhost:4000/rpc/delete_task";
       const options = {
@@ -105,15 +112,38 @@ export class DeleteTaskDialog {
 	  return;
 	}
 
-	if (resAuthz.status !== 201) throw new Error("Get generate_authz_token error");
+	if (resAuthz.status !== 201) {
+	  const { PopUp } = await import("../../_shared/components/pop_up.js");
+	  document.body.appendChild(
+	    PopUp.init({
+	      title: "Authentication token error",
+	      message: "Something went wrong. Try again."
+	    })
+	  );
+	  this.removeAttribute("disabled");
+	  loader.remove();
+
+	  return;
+	}
 
 	localStorage.setItem("bearer", await resAuthz.json());
 	options.headers.Authorization = `Bearer ${ localStorage.getItem("bearer") }`;
 	response = await fetch(url, options);	
       }
       
-      if (response.status !== 204 && response.status !== 403)
-	throw new Error("Unexpected response status");
+      if (response.status !== 204) {
+	const { PopUp } = await import("../../_shared/components/pop_up.js");
+	document.body.appendChild(
+	  PopUp.init({
+	    title: "Server error",
+	    message: "Something went wrong. Try again."
+	  })
+	);
+	this.removeAttribute("disabled");
+	loader.remove();
+
+	return;	
+      }
 
       emit("task:deleted", { id: state.task.id }, selectedColumn);
 
