@@ -7,8 +7,6 @@ import { BoardsListItem }                   from "./boards_list_item.js";
 import { DynamicList }                      from "./dynamic_list.js";
 import { MainHeader }                       from "./main_header.js";
 import { emit, insert, openRedirectDialog } from "./_helpers.js";
-import { Role, roles } from "../../_shared/roles.js";
-
 
 // listens to [dynamic-list-item:changed, added, removed]
 export class EditBoardDialog {
@@ -16,7 +14,7 @@ export class EditBoardDialog {
   static prefix = "edit_board_dialog"; // using in dynamic_list.js
 
   /** @type { import("./board.js").BoardType } */
-  static #state = { id: "", name: "", columns: [{ id: "", name: "", tasks: [] }] };
+  static #state =  { id: "", name: "", columns: [{ id: "", name: "", tasks: [] }] };
 
   /** @returns { import("./board.js").BoardType } */
   static #getState() {
@@ -42,7 +40,7 @@ export class EditBoardDialog {
                 </div>
                 <dynamic-list></dynamic-list>
                 <div class="row gap-l main-axis-end">
-                  <button class="fw-bold fs-300 pad-h-m clr-n-000 pad-v-sm border-radius-l bg-p-purple" disabled>Save Changes</button>
+                  <button class="[ relative ] fw-bold fs-300 pad-h-l clr-n-000 pad-v-sm border-radius-l bg-p-purple" disabled>Save Changes</button>
                   <button class="fw-bold fs-300 pad-h-m clr-n-000 pad-v-sm border-radius-l bg-p-purple" disabled>Revert</button>
                 </div>
               </div>
@@ -57,7 +55,7 @@ export class EditBoardDialog {
     /** @type { import("./column.js").ColumnType[] } */
     const columns = [];
 
-    const ul = document.querySelector(`#${Board.prefix} ul`);
+    const ul = document.querySelector(`#${Board.prefix} ul`); // current columns
     if (!ul) throw new Error(`Missing #${Board.prefix} <ul>`);
 
     [...ul.children].forEach(column => {
@@ -72,7 +70,13 @@ export class EditBoardDialog {
       // position of " (", e.g Todo (3)
       const name = textContent.slice(0, textContent.lastIndexOf("(") - 1);
 
-      dynamicListItems.push({ id: id, value: name, placeholder: "e.g. TODO" });
+      dynamicListItems.push({
+	id:                id,
+	value:             name,
+	placeholder:       "e.g. TODO",
+	deleteBtnDisabled: [...ul.children].length === 1
+      });
+
       columns.push({ id: id, name: name, tasks: []});
     });
 
@@ -101,7 +105,8 @@ export class EditBoardDialog {
 	title: "Board Columns",
 	items: dynamicListItems,
 	btnText: "+ Add New Column",
-	limit: 5
+	min: 1,
+	max: 5
       }),
       "dynamic-list",
       component
@@ -155,8 +160,7 @@ export class EditBoardDialog {
       const sendingBoardData = getDifferences();
 
       if (sendingBoardData) {
-
-	if (Role.getRole() === roles.ANONYMOUS) {
+	if (globalThis.role === "anonymous") {
 	  sendingBoardData.columns.forEach(
 	    column => { if (column.id === "") column.id = crypto.randomUUID() }
 	  );
@@ -169,6 +173,14 @@ export class EditBoardDialog {
 
 	  return;
 	}
+
+	this.setAttribute("disabled", "");
+	// add indicator
+	const { LoaderRipple } = await import("../../_shared/components/loader_ripple.js");
+	const loader = LoaderRipple.init();
+	loader.classList.add("clr-n-000");
+	loader.setAttribute("style", "--size: 25px; right: 5%;");
+	this.appendChild(loader);
 
 	const url     = "http://localhost:4000/rpc/update_board";
 	const options = {
@@ -191,14 +203,38 @@ export class EditBoardDialog {
 	    return;
 	  }
 
-	  if (resAuthz.status !== 201) throw new Error("Get generate_authz_token error");
+	  if (resAuthz.status !== 201) {
+	    const { PopUp } = await import("../../_shared/components/pop_up.js");
+	    document.body.appendChild(
+	      PopUp.init({
+		title: "Authentication token error",
+		message: "Something went wrong. Try again."
+	      })
+	    );
+	    this.removeAttribute("disabled");
+	    loader.remove();
+
+	    return;
+	  }
 
 	  localStorage.setItem("bearer", await resAuthz.json());
 	  options.headers.Authorization = `Bearer ${ localStorage.getItem("bearer") }`;
 	  response = await fetch(url, options);
 	};
 
-	if (response.status !== 200) throw new Error("Unexpected response status");
+	if (response.status !== 200) {
+	  const { PopUp } = await import("../../_shared/components/pop_up.js");
+	  document.body.appendChild(
+	    PopUp.init({
+	      title: "Server error",
+	      message: "Something went wrong. Try again."
+	    })
+	  );
+	  this.removeAttribute("disabled");
+	  loader.remove();
+
+	  return;
+	}
 
 	const receivingBoardData = await response.json();
 
@@ -218,6 +254,7 @@ export class EditBoardDialog {
       if (!inputBoardName)  throw new Error("Can't find <input id=\"board_name\">");
 
       inputBoardName.value = state.name;
+      inputBoardName.removeAttribute("style");
 
       /** @type {import("./dynamic_list_item.js").DynamicListItemType[]} */
       const items = state.columns.map(column => {
@@ -226,7 +263,7 @@ export class EditBoardDialog {
 	  value: column.name,
 	  deleteBtnDisabled: state.columns.length === 1 ? true : false
 	};
-      });
+      });      
 
       // revert dynamic list (create a new one and insert the modified one insteed)
       insert(
@@ -234,8 +271,9 @@ export class EditBoardDialog {
 	  title: "Board Columns",
 	  items: items,
 	  btnText: "+ Add New Column",
-	  limit: 5
-	}),
+	  min: 1,
+	  max: 5
+	}),	
 	`[id^=${DynamicList.prefix}-]`,
 	component
       );
@@ -246,13 +284,15 @@ export class EditBoardDialog {
 
     const closeDialogBtn = component.querySelector('button[aria-label="close"]');
     if (!closeDialogBtn) throw new Error("Can't find <button aria-label=\"close\">");
-    closeDialogBtn.addEventListener("click", () => {console.log("closeBtn");component.remove()});
+    closeDialogBtn.addEventListener("click", () => component.remove());
+
+    // *** ADDITIONAL LISTENERS ***
 
     component.addEventListener("dynamic-list-item:changed", () => checkEditBoardDialogState());
     component.addEventListener("dynamic-list-item:added",   () => checkEditBoardDialogState());
     component.addEventListener("dynamic-list-item:removed", () => checkEditBoardDialogState());
 
-    // helper functions
+    // *** ADDITIONAL FUNCTIONS ***
 
     /** @returns {void} */
     function checkEditBoardDialogState() {
@@ -269,7 +309,6 @@ export class EditBoardDialog {
     function validation() {
       const inputBoardName  = component.querySelector("#board_name");
       const listOfColumns = component.querySelector("ul");
-
       if (!inputBoardName) throw new Error("Can't find <input id=\"board_name\">");
       if (!listOfColumns)  throw new Error("Can't find <ul>");
 
