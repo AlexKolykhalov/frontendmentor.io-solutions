@@ -1,6 +1,6 @@
 // @ts-check
 
-import { ColorSchemeToggle } from "../../_shared/components/color-scheme-toggle.js";
+import { ColorSchemeToggle } from "../../_shared/components/color_scheme_toggle.js";
 
 export class ControlBtns {
 
