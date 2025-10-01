@@ -1,9 +1,7 @@
 // @ts-check
 
-import { Task }               from "./task.js";
-import { emit, insert,
-	 openRedirectDialog } from "./_helpers.js";
-import { Role, roles }        from "../../_shared/roles.js";
+import { Task }         from "./task.js";
+import { emit, insert } from "./_helpers.js";
 
 /**
  * @typedef {Object} ColumnType
@@ -25,16 +23,15 @@ export class Column {
 
   /**
    * @param {ColumnComponentType} props
-   * @param { {SSR:boolean} }     render
    *
    * @returns {string} HTML string
    */
-  static template(props, render = { SSR: false }) {
-    if (!render.SSR && typeof window === 'undefined' && typeof document === 'undefined')
-      throw new Error("Render template error: try to add { SSR: true }");
-
-    const path  = render.SSR ? `data-path="http://localhost:3000/pages/index/components/column.js"` : "";
-    const tasks = render.SSR ? props.column.tasks.map(task => Task.template({ task: task }, { SSR: true })).join("") : "<tasks></tasks>";
+  static template(props) {
+    const isSSR = typeof window === "undefined" && typeof document === "undefined";
+    const path  = isSSR ? `data-path="http://localhost:3000/pages/index/components/column.js"` : "";
+    const tasks = isSSR ?
+	  props.column.tasks.map(task => Task.template({ task: task })).join("") :
+	  "<tasks></tasks>";
 
     return `<li id="${this.prefix}-${props.column.id}" ${path}>
               <article class="pad-h-m">
@@ -115,18 +112,17 @@ export class Column {
 
       moving.classList.remove("moving");
 
-      if (columnIDFrom !== columnIDTo) {
-	if (Role.getRole() === roles.ANONYMOUS) {
+      if (columnIDFrom !== columnIDTo) {	
+	if (globalThis.role === "anonymous") {
 	  increasedColumn.querySelector("ul")?.appendChild(moving);
-	  
+
 	  emit("column:updated", {}, increasedColumn);
 	  emit("column:updated", {}, reducedColumn);
 
 	  return;
 	}
 
-	// very similar on update_task in task_dialog.js
-	const url     = "http://localhost:4000/rpc/drag_drop_task";
+	const url     = "http://localhost:4000/rpc/update_task_column_id";
 	const options = {
 	  method: "POST",
 	  headers: {
@@ -134,36 +130,51 @@ export class Column {
 	    "Authorization": `Bearer ${ localStorage.getItem("bearer") }`,
 	  },
 	  body: JSON.stringify({
-	    p_column_id_to: columnIDTo,
-	    p_task_id:      taskID,
+	    p_task_id:   taskID,
+	    p_column_id: columnIDTo,
 	  }),
 	};
 
-	// [Errors 401, 403] [Success 200]
+	// [Errors 401, 403] [Success 204]
 	let response = await fetch(url, options);
 
 	if (response.status === 401) {
 	  // [Errors 400, 401, 500] [Success 201]
 	  const resAuthz = await fetch("http://localhost:3000/api/generate_authz_token", { method: "POST" });
 	  if (resAuthz.status === 401) {
-	    await openRedirectDialog();
+	    const { openRedirectDialog } = await import("./_helpers.js");
+	    openRedirectDialog();
 
 	    return;
 	  }
 
-	  if (resAuthz.status !== 201) throw new Error("Get generate_authz_token error");
+	  if (resAuthz.status !== 201) {
+	    const { PopUp } = await import("../../_shared/components/pop_up.js");
+	    document.body.appendChild(
+	      PopUp.init({ title: "Authentication token error", message: "Something went wrong. Try again." })
+	    );
+
+	    return;
+	  }
 
 	  localStorage.setItem("bearer", await resAuthz.json());
 	  options.headers.Authorization = `Bearer ${ localStorage.getItem("bearer") }`;
 	  response = await fetch(url, options);
 	}
 
-	if (response.status !== 200) throw new Error("Unexpected response status");
+	if (response.status !== 204) {
+	  const { PopUp } = await import("../../_shared/components/pop_up.js");
+	  document.body.appendChild(
+	    PopUp.init({ title: "Server error", message: "Something went wrong. Try again." })
+	  );
 
-	const receivingTaskData = await response.json();
+	  return;
+	}
 
-	emit("task:deleted", receivingTaskData, reducedColumn);
-	emit("task:created", receivingTaskData, increasedColumn);
+	increasedColumn.querySelector("ul")?.appendChild(moving);
+
+	emit("column:updated", {}, increasedColumn);
+	emit("column:updated", {}, reducedColumn);
       }
     });
 
@@ -187,7 +198,7 @@ export class Column {
       // @ts-ignore
       const task = event.detail;
       // insert new task
-      ul.appendChild( Task.init({ task: task, locked: Role.getRole() === roles.ANONYMOUS }) );
+      ul.appendChild( Task.init({ task: task, locked: globalThis.role === "anonymous" }) );
 
       emit("column:updated", {}, component);
 
