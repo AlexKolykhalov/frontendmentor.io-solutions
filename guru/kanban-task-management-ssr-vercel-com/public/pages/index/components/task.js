@@ -1,7 +1,5 @@
 // @ts-check
 
-import { openAuthzDialog, openRedirectDialog } from "./_helpers.js";
-
 /**
  * @typedef {Object} SubtaskType
  * @property {string}  id
@@ -30,19 +28,18 @@ export class Task {
 
   /**
    * @param {TaskComponentType} props
-   * @param { {SSR:boolean} }   render
    *
    * @returns {string} HTML string
    */
-  static template(props, render = { SSR: false }) {
-    if (!render.SSR && typeof window === 'undefined' && typeof document === 'undefined')
-      throw new Error("Render template error: try to add { SSR: true }");
+  static template(props) {
 
+    const isSSR = typeof window === "undefined" && typeof document === "undefined";
     const classes    = props.locked ? "[ relative ] task-item" : "task-item";
     const lockedAttr = props.locked ? `data-locked="true"`: "";
-    // const draggable  = props.locked ? "" : `draggable="true"`;
-    const lockedImg  = props.locked ? `<img class="absolute" src="images/svg/icon-locked.svg" alt="" width="16" height="16" style="top: 7px; right: 7px;">`: "";
-    const path       = render.SSR   ? `data-path="http://localhost:3000/pages/index/components/task.js"` : "";
+    const lockedImg  = props.locked ?
+	  `<img class="absolute" src="images/svg/icon-locked.svg" alt="" width="16" height="16" style="top: 7px; right: 7px;">`:
+	  "";
+    const path = isSSR ? `data-path="http://localhost:3000/pages/index/components/task.js"` : "";
     
     return `<li id="${this.prefix}-${props.task.id}" class="${classes}" draggable="true" ${lockedAttr} ${path}}>
               <p class="fw-bold">${props.task.title}</p>
@@ -85,7 +82,11 @@ export class Task {
     // @ts-ignore
     const isLocked = component.dataset.locked === "true"; delete component.dataset.locked;
     
-    if (isLocked) component.addEventListener("click", () => openAuthzDialog());
+    if (isLocked) component.addEventListener("click", async () => {
+      const { openAuthzDialog } = await import("./_helpers.js");
+      openAuthzDialog();
+    });
+    
     if (!isLocked) {
       component.addEventListener("click", async () => {
 	const id      = component.getAttribute("id")?.slice(`${Task.prefix}-`.length);
@@ -104,19 +105,37 @@ export class Task {
 	  // [Errors 400, 401, 500] [Success 201]
 	  const resAuthz = await fetch("http://localhost:3000/api/generate_authz_token", { method: "POST" });
 	  if (resAuthz.status === 401) {
-	    await openRedirectDialog();
+	    const { openRedirectDialog } = await import("./_helpers.js");
+	    openRedirectDialog();
 
 	    return;
 	  }
 
-	  if (resAuthz.status !== 201) throw new Error("Get generate_authz_token error");
+	  if (resAuthz.status !== 201) {
+	    const { PopUp } = await import("../../_shared/components/pop_up.js");
+	    document.body.appendChild(
+	      PopUp.init({
+		title:   "Authentication token error",
+		message: "Something went wrong. Try again."
+	      })
+	    );	    
+
+	    return;
+	  }
 
 	  localStorage.setItem("bearer", await resAuthz.json());
 	  options.headers.Authorization = `Bearer ${ localStorage.getItem("bearer") }`;
 	  response = await fetch(url, options);
 	};
 	
-	if (response.status !== 200) throw new Error("Unexpected response status");
+	if (response.status !== 200) {
+	  const { PopUp } = await import("../../_shared/components/pop_up.js");
+	  document.body.appendChild(
+	    PopUp.init({ title: "Server error", message: "Something went wrong. Try again." })
+	  );	  
+
+	  return;
+	}
 
 	const { TaskDialog } = await import("../components/task_dialog.js");
 	const dialog = TaskDialog.init(await response.json());
