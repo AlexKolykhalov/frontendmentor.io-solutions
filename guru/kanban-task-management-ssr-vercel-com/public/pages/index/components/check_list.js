@@ -5,15 +5,15 @@ import { CheckListItem } from "./check_list_item.js";
 
 /**
  * @typedef {object} CheckListType
- * @property {string} [title] By default "Check list".
- * @property {import("./check_list_item.js").CheckListItemType[]} [items] By default [].
+ * @property {string}                                             title
+ * @property {import("./check_list_item.js").CheckListItemType[]} items
  */
 
 // listens to [check-list-item:changed]
 export class CheckList {
 
   /**
-   * @param {CheckListType} [props]
+   * @param {CheckListType} props
    *
    * @returns {string} HTML string
    */
@@ -31,7 +31,7 @@ export class CheckList {
   }
 
   /**
-   * @param {CheckListType} [props]
+   * @param {CheckListType} props
    *
    * @returns {Element}
    */
@@ -39,22 +39,18 @@ export class CheckList {
     const component = this.#create(props);
 
     const fragment = document.createDocumentFragment();
-    if (props) {
-      props.items?.forEach(
-	item => {
-	  fragment.appendChild(
-	    CheckListItem.init({ id: item.id, value: item.value, checked: item.checked })
-	  );
-	}
+    props.items.forEach(item => {
+      fragment.appendChild(
+	CheckListItem.init({ id: item.id, value: item.value, checked: item.checked })
       );
-    }
+    });
     insert(fragment, "check-list-items", component);
 
     return component;
   }
 
   /**
-   * @param {CheckListType} [props]
+   * @param {CheckListType} props
    *
    * @returns {Element}
    */
