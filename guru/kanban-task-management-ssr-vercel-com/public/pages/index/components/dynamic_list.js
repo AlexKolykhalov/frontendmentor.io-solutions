@@ -9,42 +9,45 @@ import { emit, generateRandomSymbols, insert } from "./_helpers.js";
 
 /**
  * @typedef {object} DynamicListType
- * @property {string}                [title] By default "Dynamic list".
- * @property {DynamicListItemType[]} [items] By default [].
+ * @property {string}                title
+ * @property {DynamicListItemType[]} items
  * @property {string}                [btnText] By default "Add new item".
- * @property {number}                [limit]   By default 10.
+ * @property {number}                [min]     By default 0.
+ * @property {number}                [max]     By default 10.
  */
 // listens to [dynamic-list-item:removed]
 export class DynamicList {
 
   static prefix = "dynamic_list"; // using in edit_board_dialog.js (revert btn)
 
-  /** @type {{title:string, items:DynamicListItemType[], btnText:string, limit:number}} */
-  static #state = { title: "Dynamic list", items: [], btnText: "Add new item", limit: 10 };
+  /** @type {{title:string, items:DynamicListItemType[], btnText:string, min:number, max:number}} */
+  static #state = { title: "Dynamic list", items: [], btnText: "Add new item", min: 0, max: 10 };
 
-  /** @returns {{title:string, items:DynamicListItemType[], btnText:string, limit:number}} */
+  /** @returns {{title:string, items:DynamicListItemType[], btnText:string, min:number, max:number}} */
   static #getState() {
     return JSON.parse(JSON.stringify(this.#state));
   }
 
-  /** @param {{title:string, items:DynamicListItemType[], btnText:string, limit:number}} value */
+  /** @param {{title:string, items:DynamicListItemType[], btnText:string, min:number, max:number}} value */
   static #setState(value) {
     return this.#state = value;
   }
 
   /**
-   * @param {DynamicListType} [props]
+   * @param {DynamicListType} props
    *
    * @returns {string} HTML string
    */
   static #template(props) {
     const state   = this.#getState();
-    const title   = props ? props.title   ?? state.title   : state.title;
-    const items   = props ? props.items   ?? state.items   : state.items;
-    const btnText = props ? props.btnText ?? state.btnText : state.btnText;
-    const limit   = props ? props.limit   ?? state.limit   : state.limit;
 
-    this.#setState({title: title, items: items, btnText: btnText, limit: limit});
+    const title   = props.title;
+    const items   = props.items;    
+    const btnText = props.btnText ?? state.btnText;
+    const min     = props.min     ?? state.min;
+    const max     = props.max     ?? state.max;    
+
+    this.#setState({title: title, items: items, btnText: btnText, min: min, max: max});
 
     // An ID required if there are two or more "checklists" in one parent component
     const text = `<div id="${this.prefix}-${generateRandomSymbols(4)}" class="column gap-sm">
@@ -52,14 +55,14 @@ export class DynamicList {
                     <ul class="column gap-sm">
                       <dynamic-list-items></dynamic-list-items>
                     </ul>
-                    <button class="fw-bold fs-300 pad-h-m pad-v-sm clr-n-000-p-purple border-radius-l bg-p-purple-n-000">${btnText} <span>(${limit - items.length})</span></button>
+                    <button class="fw-bold fs-300 pad-h-m pad-v-sm clr-n-000-p-purple border-radius-l bg-p-purple-n-000">${btnText} <span>(${max - items.length})</span></button>
                   </div>`;
 
     return text;
   }
 
   /**
-   * @param {DynamicListType} [props]
+   * @param {DynamicListType} props
    *
    * @returns {Element}
    */
@@ -67,27 +70,23 @@ export class DynamicList {
     const component = this.#create(props);
 
     const fragment = document.createDocumentFragment();
-    if (props) {
-      props.items?.forEach(
-	item => {
-	  fragment.appendChild(
-	    DynamicListItem.init({
-	      id:                item.id,
-	      value:             item.value,
-	      placeholder:       item.placeholder,
-	      deleteBtnDisabled: item.deleteBtnDisabled
-	    })
-	  );
-	}
+    props.items.forEach(item => {
+      fragment.appendChild(
+	DynamicListItem.init({
+	  id:                item.id,
+	  value:             item.value,
+	  placeholder:       item.placeholder,
+	  deleteBtnDisabled: item.deleteBtnDisabled
+	})
       );
-    }
+    });
     insert(fragment, "dynamic-list-items", component);
 
     return component;
   }
 
   /**
-   * @param {DynamicListType} [props]
+   * @param {DynamicListType} props
    *
    * @returns {Element}
    */
@@ -111,19 +110,19 @@ export class DynamicList {
     const ul = component.querySelector("ul");
     if (!ul) throw new Error("Can't find <ul>");
 
-    const addNewColumnBtn = component.querySelector(":scope > button");
-    if (!addNewColumnBtn) throw new Error("Can't find <button>");
-    addNewColumnBtn.addEventListener("click", function() {
+    const addBtn = component.querySelector(":scope > button");
+    if (!addBtn) throw new Error("Can't find <button>");
+    addBtn.addEventListener("click", function() {
       ul.querySelector("button[disabled]")?.removeAttribute("disabled");
 
       const state = DynamicList.#getState();
       // adding DynamicListItem
-      ul.appendChild(DynamicListItem.init({ placeholder: state.items[0].placeholder }));
+      ul.appendChild(DynamicListItem.init({ placeholder: state.items.length > 0 ? state.items[0].placeholder : "" }));
 
-      this.querySelector("span").textContent = (state.limit - [...ul.children].length) > 0 ?
-	`(${state.limit - [...ul.children].length})` :
+      this.querySelector("span").textContent = (state.max - [...ul.children].length) > 0 ?
+	`(${state.max - [...ul.children].length})` :
 	"";
-      if (state.limit - [...ul.children].length === 0) this.setAttribute("disabled", "");
+      if (state.max - [...ul.children].length === 0) this.setAttribute("disabled", "");
 
       // Notifies EditBoardDialog or EditTaskDialog that a new DynamicListItem has been added
       const editBoardDialog = document.querySelector(`#${EditBoardDialog.prefix}`);
@@ -132,14 +131,16 @@ export class DynamicList {
       if (editTaskDialog)  emit("dynamic-list-item:added", {}, editTaskDialog);
     });
 
+    // *** ADDITIONAL LISTENERS ***
+
     component.addEventListener("dynamic-list-item:removed", () => {
-      const span = addNewColumnBtn.querySelector("span");
+      const span = addBtn.querySelector("span");
       if (!span) throw new Error("Missing <span>");
 
       const state = DynamicList.#getState();
-      span.textContent = `(${state.limit - [...ul.children].length})`;
-      if ([...ul.children].length === state.limit - 1) addNewColumnBtn.removeAttribute("disabled");
-      if (state.items.length > 0 && [...ul.children].length === 1)
+      span.textContent = `(${state.max - [...ul.children].length})`;
+      if ([...ul.children].length === state.max - 1) addBtn.removeAttribute("disabled");      
+      if ([...ul.children].length === state.min)
 	ul.querySelectorAll("button").forEach(item => item.setAttribute("disabled", ""));
     });
   }
