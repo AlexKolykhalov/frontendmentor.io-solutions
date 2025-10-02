@@ -17,7 +17,7 @@ export class MainHeader {
    */
   static template(board) {
     const deleteBoardBtn = globalThis.boardsList.length === 1 ?
-	  `<button class="[ m:display-none ] transparent pad-sm border-radius-sm" title="Delete board" aria-label="Delete board"><img src="images/svg/icon-delete-gray.svg" alt=""></button>` :
+	  `<button class="[ m:display-none ] transparent pad-sm border-radius-sm" title="Delete board" aria-label="Delete board" disabled><img src="images/svg/icon-delete-gray.svg" alt=""></button>` :
 	  `<button class="[ m:display-none ] transparent pad-sm border-radius-sm" title="Delete board" aria-label="Delete board"><img src="images/svg/icon-delete.svg" alt=""></button>`;
     const deleteUserBtn = globalThis.role === "auth" ?
 	  `<button class="transparent pad-sm border-radius-sm" title="Delete user" aria-label="Delete user"><img src="images/svg/icon-user-delete.svg" alt=""></button>` :
