@@ -27,7 +27,7 @@ export class Board {
     return `<div id="${this.prefix}" class="column" ${path}>
               <div class="row gap-m no-wrap pad-bottom-m bg-n-100-900" style="height: calc(100vh - 4.5rem)">
                 <ul class="[ flex-5 ] reel">${columns}</ul>
-                <button class="[ flex-1 ] fs-900 fw-bold mar-top-l border-radius-m clr-n-600 clr-p-purple:hover bg-n-000-800">+ New Column</button>
+                <button class="[ flex-1 m:display-none ] fs-900 fw-bold mar-top-l border-radius-m clr-n-600 clr-p-purple:hover bg-n-000-800">+ New Column</button>
               </div>
               <button class="[ md:display-none m:display-none ] hide-sidebar-btn show" style="position: absolute; bottom: calc(1rem + 20px);">
                 <img src="images/svg/icon-show-sidebar.svg" alt="">
