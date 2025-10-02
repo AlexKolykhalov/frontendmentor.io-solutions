@@ -37,7 +37,7 @@ export class MainHeader {
                             aria-controls="dropdown_list"
                             aria-expanded="false"
                             aria-label="Dropdown list toggle button">
-                      <img src="images/svg/icon-chevron-down.svg" alt="Icon chevron down">
+                      <img src="images/svg/icon-chevron-down.svg" width="15" alt="Icon chevron down">
                     </button>
                     <button class="[ m:display-none ] transparent pad-sm border-radius-sm" title="Edit board" aria-label="Edit board"><img src="images/svg/icon-edit.svg" alt=""></button>
                     ${deleteBoardBtn}
