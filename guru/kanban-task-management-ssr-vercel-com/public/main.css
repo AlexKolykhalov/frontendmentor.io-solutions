@@ -665,8 +665,13 @@ input:checked+.toggle-background:before {
 }
 
 .dropdown-list-toggle-btn {
+  width: 30px;
+  height: 30px;
   background-color: transparent;
   border-width: 0;
+
+  display: grid;
+  place-items: center;  
 }
 
 .dropdown-list-toggle-btn[aria-expanded="true"] {
