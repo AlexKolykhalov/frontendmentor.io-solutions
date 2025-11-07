@@ -1,10 +1,6 @@
 // @ts-check
 
-import { Board }                            from "./board.js";
-import { BoardsList }                       from "./boards_list.js";
-import { DynamicList }                      from "./dynamic_list.js";
-import { MainHeader }                       from "./main_header.js";
-import { emit, insert, openRedirectDialog } from "./_helpers.js";
+import { DynamicList } from "./dynamic_list.js";
 
 export class AddNewBoardDialog {
   /** @returns {string} HTML string */
@@ -28,19 +24,17 @@ export class AddNewBoardDialog {
   /** @returns {Element} */
   static init() {
     const component = this.#create();
+    const element   = component.querySelector("dynamic-list");
+    if (!element)   throw new Error("<dynamic-list> is missing");
 
-    insert(
-      DynamicList.init(
-	{
-	  title: "Board Columns",
-	  items: [{ placeholder: "e.g. TODO", deleteBtnDisabled: true }],
-	  btnText: "+ Add New Column",
-	  min: 1,
-	  max: 5
-	}
-      ),
-      "dynamic-list",
-      component
+    element.replaceWith(
+      DynamicList.init({
+	title: "Board Columns",
+	items: [{ placeholder: "e.g. TODO", deleteBtnDisabled: true }],
+	btnText: "+ Add New Column",
+	min: 1,
+	max: 5
+      })
     );
 
     return component;
@@ -51,7 +45,7 @@ export class AddNewBoardDialog {
     const template     = document.createElement("template");
     template.innerHTML = this.#template();
     const component    = template.content.firstElementChild;
-    if (!component)    throw new Error("Can't create \"AddNewBoardDialog\" component");
+    if (!component)    throw new Error(`Can't create ${this.name} component`);
 
     this.#handleEvents(component);
 
@@ -64,28 +58,32 @@ export class AddNewBoardDialog {
    * @returns {void}
    */
   static #handleEvents(component) {
+    // "Board name" input
     const input = component.querySelector("#board_name");
-    if (!input) throw new Error("Can't find <input id=\"board_name\">");
-    input.addEventListener("input", function() { this.removeAttribute("style"); });
+    if (!input) throw new Error(`<input id="board_name"> is missing`);
+    input.addEventListener("input", function() { this.removeAttribute("style") });
 
-    const createNewBoardBtn = component.querySelector("dynamic-list + button");
-    if (!createNewBoardBtn) throw new Error("Can't find <button>");
-    createNewBoardBtn.addEventListener("click", async function() {
-
+    // "Create new board" btn
+    const createNewBtn = component.querySelector("dynamic-list + button");
+    if (!createNewBtn) throw new Error(`<dynamic-list> + <button> is missing`);
+    createNewBtn.addEventListener("click", async function() {
       if (!validation()) return;
 
-      const mainHeader = document.querySelector(`#${MainHeader.prefix}`);
-      const board      = document.querySelector(`#${Board.prefix}`);
-      const boardsList = document.querySelector(`#${BoardsList.prefix}`);
+      const { Board }      = await import("./board.js");
+      const { MainHeader } = await import("./main_header.js");
+      const { BoardsList } = await import("./boards_list.js");
+      const mainHeader = document.querySelector(`[data-prefix="${MainHeader.prefix}"]`);
+      const board      = document.querySelector(`[data-prefix="${Board.prefix}"]`);
+      const boardsList = document.querySelector(`[data-prefix="${BoardsList.prefix}"]`);
       /** @type {HTMLInputElement|null} */
       const inputBoardName  = component.querySelector("#board_name");
       const boardsOfColumns = component.querySelector("ul");
 
-      if (!mainHeader)      throw new Error(`Missing <header id="${MainHeader.prefix}">`);
-      if (!board)           throw new Error(`Missing <section id="${Board.prefix}">`);
-      if (!boardsList)      throw new Error(`Missing <article id="${BoardsList.prefix}">`);
-      if (!inputBoardName)  throw new Error("Missing <input id=\"board_name\">");
-      if (!boardsOfColumns) throw new Error("Missing <ul>");
+      if (!mainHeader)      throw new Error(`[data-prefix="${MainHeader.prefix}"] is missing`);
+      if (!board)           throw new Error(`[data-prefix="${Board.prefix}"] is missing`);
+      if (!boardsList)      throw new Error(`[data-prefix="${BoardsList.prefix}"] is missing`);
+      if (!inputBoardName)  throw new Error(`<input id="board_name"> is missing`);
+      if (!boardsOfColumns) throw new Error("<ul> is missing");
 
       /** @type {import("./board.js").BoardType} */
       const sendingBoardData = {
@@ -95,21 +93,22 @@ export class AddNewBoardDialog {
 	  return { id: "", name: column.querySelector("input")?.value.trim() ?? "", tasks: [] };
 	})
       };
-      
-      if (globalThis.role === "anonymous") {
+
+      if (globalThis.client_variables.is_anonymous) {
 	sendingBoardData.id = crypto.randomUUID();
 	sendingBoardData.columns.forEach(column => column.id = crypto.randomUUID());
 
-	emit("board:created", sendingBoardData, board);
-	emit("board:created", sendingBoardData, boardsList);
-	emit("board:created", sendingBoardData, mainHeader);
+	component.remove(); // close this dialog
 
-	component.remove();
+	[board, boardsList, mainHeader].forEach(item => {
+	  item.dispatchEvent(new CustomEvent("board:created", { detail: sendingBoardData }));
+	});
 
 	return;
       }
 
-      this.setAttribute("disabled", "");
+      this.setAttribute("disabled", ""); // disabled createNewBoardBtn
+
       // add indicator
       const { LoaderRipple } = await import("../../_shared/components/loader_ripple.js");
       const loader = LoaderRipple.init();
@@ -117,82 +116,61 @@ export class AddNewBoardDialog {
       loader.setAttribute("style", "--size: 25px; right: 5%;");
       this.appendChild(loader);
 
-      const url     = "http://localhost:4000/rpc/create_board";
+      const url = "http://localhost:3000/v1/boards";
       const options = {
 	method: "POST",
-	headers: {
-	  "Content-Type":  "application/json",
-	  "Authorization": `Bearer ${ localStorage.getItem("bearer") }`,
-	},
-	body: JSON.stringify({ p_board: sendingBoardData })
-      };
-      // [Errors 401, 403] [Success 200]
-      let response = await fetch(url, options);
-
-      if (response.status === 401) {
-	// [Errors 400, 401, 500] [Success 201]
-	const resAuthz = await fetch("http://localhost:3000/api/generate_authz_token", { method: "POST" });
-	if (resAuthz.status === 401) {
-	  await openRedirectDialog();
-
-	  return;
-	}
-
-	if (resAuthz.status !== 201) {
-	  const { PopUp } = await import("../../_shared/components/pop_up.js");
-	  document.body.appendChild(
-	    PopUp.init({
-	      title: "Authentication token error",
-	      message: "Something went wrong. Try again."
-	    })
-	  );
-	  this.removeAttribute("disabled");
-	  loader.remove();
-	  
-	  return;
-	}
-
-	localStorage.setItem("bearer", await resAuthz.json());
-	options.headers.Authorization = `Bearer ${ localStorage.getItem("bearer") }`;
-	response = await fetch(url, options);
+	headers: { "Content-Type": "application/json" },
+	body: JSON.stringify({ board: sendingBoardData })
       };
 
-      if (response.status !== 200) {
-	const { PopUp } = await import("../../_shared/components/pop_up.js");
-	document.body.appendChild(
-	  PopUp.init({
-	    title: "Server error",
-	    message: "Something went wrong. Try again."
-	  })
-	);
-	this.removeAttribute("disabled");
+      // [Errors 401, 403, 405, 500] [Success 201]
+      const response = await fetch(url, options);
+
+      if (response.status === 401 || response.status === 403) {
+	if (response.status === 401) {
+	  const { openAuthzDialog } = await import("../functions.js");
+	  await openAuthzDialog();
+	}
+
+	if (response.status === 403) {
+	  const { openSessionExpiredDialog } = await import("../functions.js");
+	  await openSessionExpiredDialog();
+	}
+
+	this.removeAttribute("disabled"); // enabled createNewBoardBtn
 	loader.remove();
 
 	return;
       }
 
-      const receivingBoardData = await response.json();
+      if (response.status !== 201) {
+	component.remove();
+	const { openPopUp } = await import("../../_shared/functions.js");
+	await openPopUp("Server error", "Something went wrong. Try again");
 
-      emit("board:created", receivingBoardData, board);
-      emit("board:created", receivingBoardData, boardsList);
-      emit("board:created", receivingBoardData, mainHeader);
+	return;
+      };
 
-      component.remove();
+      component.remove(); // close this dialog
+
+      const receivedBoardData = await response.json();
+      [board, boardsList, mainHeader].forEach(item => {
+	item.dispatchEvent(new CustomEvent("board:created", { detail: receivedBoardData }));
+      });
     });
 
     const closeDialogBtn = component.querySelector('button[aria-label="close"]');
-    if (!closeDialogBtn) throw new Error("Can't find <button aria-label=\"close\">");
+    if (!closeDialogBtn) throw new Error(`<button aria-label="close"> is missing`);
     closeDialogBtn.addEventListener("click", () => component.remove());
 
-    // helper functions
+    // *** ADDITIONAL FUNCTIONS ***
 
     /** @returns {boolean} */
     function validation() {
       const inputBoardName  = component.querySelector("#board_name");
       const boardsOfColumns = component.querySelector("ul");
-
-      if (!inputBoardName)  throw new Error("Can't find <input id=\"board_name\">");
-      if (!boardsOfColumns) throw new Error("Can't find <ul>");
+      if (!inputBoardName)  throw new Error(`<input id="board_name"> is missing`);
+      if (!boardsOfColumns) throw new Error("<ul> is missing");
 
       let isValid = true;
 
