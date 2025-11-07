@@ -1,39 +1,32 @@
 // @ts-check
 
-import { generateRandomSymbols, emit } from "./_helpers.js"
+import { generateRandomSymbols } from "../functions.js";
 
 /**
- * @typedef {object} CheckListItemType
- * @property {string}  [id]      By default random 4 symbols.
- * @property {string}  [value]   By default "Check listitem".
- * @property {boolean} [checked] By default "false".
+ * @typedef  {object}  CheckListItemType
+ *
+ * @property {string}  id
+ * @property {string}  value
+ * @property {boolean} checked
  */
 
 export class CheckListItem {
-
-  static prefix = "check_list_item"; // using in task_dialog.js
-  
   /**
-   * @param {CheckListItemType} [props]
-   *
+   * @param {CheckListItemType} props
    * @returns {string} HTML string
    */
   static #template(props) {
-    const id      = props ? props.id ?? generateRandomSymbols(4) : generateRandomSymbols(4);
-    const value   = props ? props.value ?? "Check list item" : "Check list item";
-    const checked = props ? props.checked ?? false : false;
-    const inputID = generateRandomSymbols(4);
+    const id = generateRandomSymbols(4);
 
-    return `<li id="${this.prefix}-${id}" class="fw-bold fs-200 clr-n-900-000 bg-n-100-900 bg-p-light-purple:hover">
-              <label for="${inputID}" class="row no-wrap gap-sm cross-axis-center pad-sm cursor-pointer">
-                <input id="${inputID}" type="checkbox" ${checked ? "checked" : ""}>${value}
+    return `<li class="[ relative ] fw-bold fs-200 clr-n-900-000 bg-n-100-900 bg-p-light-purple:hover" data-id="${props.id}">
+              <label for="${id}" class="row no-wrap gap-sm cross-axis-center pad-sm cursor-pointer">
+                <input id="${id}" type="checkbox" ${props.checked ? "checked" : ""}>${props.value}
               </label>
             </li>`;
   }
 
   /**
-   * @param {CheckListItemType} [props]
-   *
+   * @param {CheckListItemType} props
    * @returns {Element}
    */
   static init(props) {
@@ -41,15 +34,14 @@ export class CheckListItem {
   }
 
   /**
-   * @param {CheckListItemType} [props]
-   *
+   * @param {CheckListItemType} props
    * @returns {Element}
    */
   static #create(props) {
     const template     = document.createElement("template");
     template.innerHTML = this.#template(props);
     const component    = template.content.firstElementChild;
-    if (!component)    throw new Error("Can't create \"CheckListItem\" component");
+    if (!component)    throw new Error(`Can't create ${this.name} component`);
 
     this.#handleEvents(component);
 
@@ -58,23 +50,77 @@ export class CheckListItem {
 
   /**
    * @param {Element} component
-   *
    * @returns {void}
    */
   static #handleEvents(component) {
     const input = component.querySelector("input");
-    if (!input) throw new Error("Missing <input>");
-
+    if (!input) throw new Error("<input> is missing");
     input.addEventListener("click", async function() {
-      const taskDialog = document.querySelector("dialog");
-      const idAttr     = component.getAttribute("id");
-      if (!taskDialog) throw new Error("Can't find <dialog>");
-      if (!idAttr)     throw new Error("Missing 'id' attribute");
+      if (this.hasAttribute("disabled")) return; // disable checkbox
 
-      emit(
-	"check-list-item:changed",
-	{ id: idAttr.slice(`${CheckListItem.prefix}-`.length), isCompleted: this.checked },
-	taskDialog
+      if (globalThis.client_variables.is_anonymous) {
+	Reflect.set(this, "checked", !this.checked); // returns previous value
+	const { openAuthzDialog } = await import("../functions.js");
+	openAuthzDialog();
+
+	return;
+      }
+
+      component.querySelector("label")?.classList.remove("cursor-pointer");
+      this.setAttribute("disabled", ""); // enable checkbox
+      // add indicator
+      const { LoaderRipple } = await import("../../_shared/components/loader_ripple.js");
+      const loader = LoaderRipple.init();
+      loader.setAttribute("style", "--size: 25px; right: 2.5%;");
+      component.appendChild(loader);
+
+      const subtaskID = component.getAttribute("data-id");
+      if (!subtaskID) throw new Error(`[data-id] is missing`);
+
+      const url     = `http://localhost:3000/v1/subtasks/${subtaskID}`;
+      const options = {
+	method: "PATCH",
+	headers: { "Content-Type": "application/json" },
+	body: JSON.stringify({ isCompleted: this.checked }),
+      };
+
+      // [Errors 401, 403, 404, 405, 500] [Success 200]
+      const response = await fetch(url, options);
+
+      if (response.status === 401 || response.status === 403) {
+	if (response.status === 401) {
+	  const { openAuthzDialog } = await import("../functions.js");
+	  await openAuthzDialog();
+	}
+
+	if (response.status === 403) {
+	  const { openSessionExpiredDialog } = await import("../functions.js");
+	  await openSessionExpiredDialog();
+	}
+
+	return;
+      }
+
+      if (response.status === 404 || response.status !== 200) {
+	component.dispatchEvent( new CustomEvent("check-list-item:error", { bubbles: true })); // closes the dialog
+	const { openPopUp } = await import("../../_shared/functions.js");
+	await openPopUp(
+	  response.status === 404 ? "Search error" : "Server error",
+	  response.status === 404 ? "Subtask not found" : "Something went wrong. Try again"
+	);
+
+	return;
+      }
+
+      component.querySelector("label")?.classList.add("cursor-pointer");
+      this.removeAttribute("disabled"); // enable checkbox
+
+      loader.remove();
+
+      const subtask = await response.json();
+      component.dispatchEvent(
+	// listen to CheckList & TaskDialog
+	new CustomEvent("check-list-item:changed", { detail: subtask, bubbles: true })
       );
     });
   }
