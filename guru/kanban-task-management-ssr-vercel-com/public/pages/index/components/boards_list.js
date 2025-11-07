@@ -2,11 +2,8 @@
 
 import { BoardsListItem } from "./boards_list_item.js";
 
-// listens to [board:selected, created, updated, deleted]
 export class BoardsList {
-
-  static prefix   = "boards_list"; // add_new_board_dialog.js
-  static selector = `#${this.prefix}`;
+  static prefix = "boards-list"; // add_new_board_dialog.js
 
   /**
    * @param {import("./board.js").BoardType[]} props
@@ -14,15 +11,13 @@ export class BoardsList {
    * @returns {string} HTML string
    */
   static template(props) {
-    const path           = `data-path="http://localhost:3000/pages/index/components/boards_list.js"`;
-    const boardsListItem = props.map(
-      (board, index) => BoardsListItem.template({
-	id: board.id, title: board.name, selected: index === 0
-      })
-    ).join("");
+    const boardsListItem = props.map((board, index) =>
+      BoardsListItem.template({ id: board.id, title: board.name, selected: index === 0 })
+    ).join("");    
+    globalThis.paths[this.prefix] = "/pages/index/components/boards_list.js";
 
-    return `<article id="${this.prefix}" ${path}>
-              <header class="fs-300 fw-bold clr-n-600 letter-spacing-m pad-left-l pad-v-m">ALL BOARDS (${props.length})</header>
+    return `<article data-prefix="${this.prefix}">
+              <h3 class="fs-300 fw-bold clr-n-600 letter-spacing-m pad-left-l pad-v-m">ALL BOARDS (${props.length})</h3>
               <ul>${boardsListItem}</ul>
               <br>
               <button class="boards-list-btn { row gap-m cross-axis-center }"><img src="images/svg/icon-create.svg" alt="">Create New Board</button>
@@ -43,7 +38,7 @@ export class BoardsList {
 
     // btn "Create New Board"
     btns[0].addEventListener("click", async () => {
-      const { AddNewBoardDialog } = await import("../components/add_new_board_dialog.js");
+      const { AddNewBoardDialog } = await import("./add_new_board_dialog.js");
       const dialog = AddNewBoardDialog.init();
       document.querySelector("body")?.appendChild(dialog);
       // @ts-ignore
@@ -52,7 +47,7 @@ export class BoardsList {
 
     // btn "Edit Board"
     btns[1].addEventListener("click", async () => {
-      const { EditBoardDialog } = await import("../components/edit_board_dialog.js");
+      const { EditBoardDialog } = await import("./edit_board_dialog.js");
       const dialog = EditBoardDialog.init();
       document.querySelector("body")?.appendChild(dialog);
       // @ts-ignore
@@ -61,7 +56,7 @@ export class BoardsList {
 
     // btn "Delete Board"
     btns[2].addEventListener("click", async () => {
-      const { DeleteBoardDialog } = await import("../components/delete_board_dialog.js");
+      const { DeleteBoardDialog } = await import("./delete_board_dialog.js");
       const dialog = DeleteBoardDialog.init();
       document.querySelector("body")?.appendChild(dialog);
       // @ts-ignore
@@ -70,66 +65,61 @@ export class BoardsList {
 
     // btn "Add New Task"
     btns[3].addEventListener("click", async () => {
-      const { AddNewTaskDialog } = await import("../components/add_new_task_dialog.js");
+      const { AddNewTaskDialog } = await import("./add_new_task_dialog.js");
       const dialog = AddNewTaskDialog.init();
       document.querySelector("body")?.appendChild(dialog);
       // @ts-ignore
       dialog.showModal();
     });
 
-    component.addEventListener("board:created", (event) => {
-      const header = component.querySelector("header");
-      const ul     = component.querySelector("ul");
-      if (!header) throw new Error("Can't find <header>");
-      if (!ul)     throw new Error("Can't find <ul>");
+    // *** ADDITIONAL LISTENERS ***
 
-      header.textContent = `ALL BOARDS (${[...ul.children].length + 1})`;
-      ul.querySelector("li.selected")?.classList.remove("selected");
+    component.addEventListener("board:created", (event) => {
       // @ts-ignore
-      const data = event.detail;
+      const board  = event.detail;
+      const header = component.querySelector("h3");
+      const ul     = component.querySelector("ul");
+      if (!header) throw new Error(`<h3> is missing`);
+      if (!ul)     throw new Error(`<ul> is missing`);
+
+      ul.querySelector("li.selected")?.classList.remove("selected");
+      const locked = globalThis.client_variables.is_anonymous;
       ul.appendChild(
-	BoardsListItem.init({
-	  id: data.id,
-	  title: data.name,
-	  selected: true,	  
-	  locked: globalThis.role === "anonymous"
-	})
+	BoardsListItem.init({ id: board.id, title: board.name, selected: true, locked: locked })
       );
+      header.textContent = `ALL BOARDS (${ul.children.length})`;
 
       console.log("board:created");
     });
 
-    component.addEventListener("board:updated", async (event) => {
+    component.addEventListener("board:updated", (event) => {
       // @ts-ignore
-      const data = event.detail;
-      const { insert } = await import("./_helpers.js");
-      insert(
-	BoardsListItem.init({ id: data.id, title: data.name, selected: true }),
-        "ul > li.selected",
-        component
+      const board           = event.detail;
+      const selectedElement = component.querySelector("ul > li.selected");
+      if (!selectedElement) throw new Error(`<li class="selected"> is missing`);
+
+      selectedElement.replaceWith(
+	BoardsListItem.init({ id: board.id, title: board.name, selected: true })
       );
 
       console.log("board:updated");
     });
 
     component.addEventListener("board:deleted", (event) => {
+      // @ts-ignore
+      const boardID         = event.detail;
       const header          = component.querySelector("header");
       const ul              = component.querySelector("ul");
-      // @ts-ignore
-      const firstElement    = component.querySelector(`ul > li:not(#${BoardsListItem.prefix}-${event.detail})`);
-      // @ts-ignore
-      const removingElement = component.querySelector(`#${BoardsListItem.prefix}-${event.detail}`);
+      const removingElement = component.querySelector(`[data-id="${boardID}"]`);
+      if (!header)          throw new Error(`<header> is missing`);
+      if (!ul)              throw new Error(`<ul> is missing`);
+      if (!removingElement) throw new Error(`${BoardsListItem.prefix} [data-id="${boardID}"] is missing`);
 
-      if (!header)          throw new Error("Missing <header>");
-      if (!ul)              throw new Error("Missing <ul>");
-      // @ts-ignore
-      if (!removingElement) throw new Error(`Missing id=\"${BoardsListItem.prefix}-${event.detail}\"`);
-      if (!firstElement)    throw new Error("Missing the first element in \"Boards list\"");
-
-      header.textContent = `ALL BOARDS (${[...ul.children].length - 1})`;
       removingElement.remove();
+      header.textContent = `ALL BOARDS (${ul.children.length})`;
+
       // @ts-ignore
-      firstElement.click(); // make the first item of the Boards list selected
+      [...ul.children][0].click(); // click on the first element after remove
 
       console.log("board:deleted");
     });
