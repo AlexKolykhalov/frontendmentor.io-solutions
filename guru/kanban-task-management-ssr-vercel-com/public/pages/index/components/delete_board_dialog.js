@@ -1,15 +1,12 @@
 // @ts-check
 
-import { BoardsList }               from "./boards_list.js";
-import { BoardsListItem }           from "./boards_list_item.js";
-import { MainHeader }               from "./main_header.js";
-import { emit, openRedirectDialog } from "./_helpers.js";
+import { MainHeader } from "./main_header.js";
 
 export class DeleteBoardDialog {
   /** @returns {string} HTML string */
   static #template() {
-    const title = document.querySelector(`#${MainHeader.prefix} h2`);
-    
+    const title = document.querySelector(`[data-prefix="${MainHeader.prefix}"] h2`);
+
     return `<dialog class="bg-n-000-800">
               <div class="column gap-l">
                 <div class="row gap-m main-axis-space-between">
@@ -36,7 +33,7 @@ export class DeleteBoardDialog {
     const template     = document.createElement("template");
     template.innerHTML = this.#template();
     const component    = template.content.firstElementChild;
-    if (!component)    throw new Error("Can't create \"DeleteBoardDialog\" component");
+    if (!component)    throw new Error(`Can't create ${this.name} component`);
 
     this.#handleEvents(component);
 
@@ -45,30 +42,31 @@ export class DeleteBoardDialog {
 
   /**
    * @param {Element} component
-   *
    * @returns {void}
    */
   static #handleEvents(component) {
     // delete btn
     component.querySelectorAll("button")[1].addEventListener("click", async function() {
-      const mainHeader = document.querySelector(`#${MainHeader.prefix}`);
-      const boardsList = document.querySelector(`#${BoardsList.prefix}`);
-      if (!mainHeader) throw new Error(`Missing <article id="${MainHeader.prefix}">`);
-      if (!boardsList) throw new Error(`Missing <article id="${BoardsList.prefix}">`);
-      const selectedBoardsListItem = document.querySelector(`#${BoardsList.prefix} ul > li.selected`);
-      if (!selectedBoardsListItem) throw new Error(`Missing selected boards list item`);
-      const selectedItemIdAttribute = selectedBoardsListItem.getAttribute("id");
-      if (!selectedItemIdAttribute) throw new Error(`Missing ID attribute of the selected boards list item`);
-      const boardID = selectedItemIdAttribute.slice(`${BoardsListItem.prefix}-`.length);
+      const { BoardsList }     = await import("./boards_list.js");
+      const { BoardsListItem } = await import("./boards_list_item.js");
+      const mainHeader = document.querySelector(`[data-prefix="${MainHeader.prefix}"]`);
+      const boardsList = document.querySelector(`[data-prefix="${BoardsList.prefix}"]`);
+      if (!mainHeader) throw new Error(`[data-prefix="${MainHeader.prefix}"] is missing`);
+      if (!boardsList) throw new Error(`[data-prefix="${BoardsList.prefix}"] is missing`);
 
-      if (globalThis.role === "anonymous") {
-	emit("board:deleted", boardID, boardsList);
-	emit("board:deleted", {}, mainHeader);
+      const boardID = boardsList.querySelector(`ul > li.selected`)?.getAttribute("data-id");
+      if (!boardID) throw new Error(`${BoardsListItem.prefix} [data-id] is missing`);
+
+      if (globalThis.client_variables.is_anonymous) {
 	component.remove();
+	[boardsList, mainHeader].forEach(item => {
+	  item.dispatchEvent(new CustomEvent("board:deleted", { detail: boardID }));
+	})
+
 	return;
       }
 
-      this.setAttribute("disabled", "");
+      this.setAttribute("disabled", ""); // disable deleteBtn
       // add indicator
       const { LoaderRipple } = await import("../../_shared/components/loader_ripple.js");
       const loader = LoaderRipple.init();
@@ -76,68 +74,48 @@ export class DeleteBoardDialog {
       loader.setAttribute("style", "--size: 25px; right: 5%;");
       this.appendChild(loader);
 
-      const url     = "http://localhost:4000/rpc/delete_board";
-      const options = {
-	method: "POST",
-	headers: {
-	  "Content-Type": "application/json",
-	  "Authorization": `Bearer ${ localStorage.getItem("bearer") }`,
-	},
-	body: JSON.stringify({ p_id: boardID }),
-      };
-      // [Errors 401, 403] [Success 204]
-      let response = await fetch(url, options);
+      const url     = `http://localhost:3000/v1/boards/${boardID}`;
+      const options = { method: "DELETE" };
+      // [Errors 401, 403, 404, 405, 500] [Success 204]
+      const response = await fetch(url, options);
 
-      if (response.status === 401) {
-	const resAuthz = await fetch("http://localhost:3000/api/generate_authz_token", { method: "POST" });
-	if (resAuthz.status === 401) {
-	  await openRedirectDialog();
-
-	  return;
+      if (response.status === 401 || response.status === 403) {
+	if (response.status === 401) {
+	  const { openAuthzDialog } = await import("../functions.js");
+	  await openAuthzDialog();
 	}
 
-	if (resAuthz.status !== 201) {
-	  const { PopUp } = await import("../../_shared/components/pop_up.js");
-	  document.body.appendChild(
-	    PopUp.init({
-	      title: "Authentication token error",
-	      message: "Something went wrong. Try again."
-	    })
-	  );
-	  this.removeAttribute("disabled");
-	  loader.remove();
-
-	  return;
+	if (response.status === 403) {
+	  const { openSessionExpiredDialog } = await import("../functions.js");
+	  await openSessionExpiredDialog();
 	}
-
-	localStorage.setItem("bearer", await resAuthz.json());
-	options.headers.Authorization = `Bearer ${ localStorage.getItem("bearer") }`;
-	response = await fetch(url, options);
-      }
-
-      if (response.status !== 204) {
-	const { PopUp } = await import("../../_shared/components/pop_up.js");
-	document.body.appendChild(
-	  PopUp.init({
-	    title: "Server error",
-	    message: "Something went wrong. Try again."
-	  })
-	);
-	this.removeAttribute("disabled");
+	
+	this.removeAttribute("disabled"); // enable deleteBtn
 	loader.remove();
 
 	return;
       }
 
-      // remove deleted element from the "Boards list"
-      emit("board:deleted", boardID, boardsList);
-      // update deleteBoardBtn disable status
-      emit("board:deleted", {}, mainHeader);
+      if (response.status === 404 || response.status !== 204) {
+	component.remove();
+	const { openPopUp } = await import("../../_shared/functions.js");
+	await openPopUp(
+	  response.status === 404 ? "Search error" : "Server error",
+	  response.status === 404 ? "Board not found" : "Something went wrong. Try again"
+	)
+
+	return;
+      }
+
       component.remove();
+
+      [boardsList, mainHeader].forEach(item => {
+	item.dispatchEvent(new CustomEvent("board:deleted", { detail: boardID }))
+      });
     });
 
     const closeDialogBtn = component.querySelector('button[aria-label="close"]');
-    if (!closeDialogBtn) throw new Error("Can't find <button aria-label=\"close\">");
+    if (!closeDialogBtn) throw new Error(`Can't find <button aria-label="close">`);
     closeDialogBtn.addEventListener("click", () => component.remove());
   }
 }
