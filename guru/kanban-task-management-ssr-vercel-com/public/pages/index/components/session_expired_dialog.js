@@ -1,6 +1,6 @@
 // @ts-check
 
-export class RedirectDialog {
+export class SessionExpiredDialog {
   /** @returns {string} HTML string */
   static #template() {
     return `<dialog class="bg-n-000-800">
@@ -24,7 +24,7 @@ export class RedirectDialog {
     const template     = document.createElement("template");
     template.innerHTML = this.#template();
     const component    = template.content.firstElementChild;
-    if (!component)    throw new Error("Can't create \"RedirectDialog\" component");
+    if (!component)    throw new Error(`Can't create ${this.name} component`);
 
     this.#handleEvents(component);
 
@@ -38,6 +38,14 @@ export class RedirectDialog {
   static #handleEvents(component) {
     component.querySelector("button")?.addEventListener("click", () => {
       window.location.replace("/auth");
+    });
+
+    component.addEventListener("keydown", (event) => {
+      // @ts-ignore
+      if (event.key === "Escape") {
+	event.preventDefault();
+	event.stopPropagation();
+      }
     });
   }
 }
