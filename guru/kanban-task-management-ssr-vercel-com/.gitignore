@@ -1,21 +1,11 @@
 
 /.vercel
 /api
-/src
 /node_modules
 
 /public/useless_css.sh
 
-/src/db/create_secret.sh
-/src/db/roles.sql
-/src/db/seed.sql
-/src/db/tables.sql
-
 .env
-db.js
-nginx.conf
 package-lock.json
-postgREST(using in SUPABASE).txt
-postgrest.conf
 vercel.json
 worker.js
