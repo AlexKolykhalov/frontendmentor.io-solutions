@@ -27,7 +27,7 @@ export class AuthzDialog {
     const template     = document.createElement("template");
     template.innerHTML = this.#template();
     const component    = template.content.firstElementChild;
-    if (!component)    throw new Error("Can't create \"AuthzDialog\" component");
+    if (!component)    throw new Error(`Can't create ${this.name} component`);
 
     this.#handleEvents(component);
 
@@ -45,7 +45,7 @@ export class AuthzDialog {
     });
 
     const closeDialogBtn = component.querySelector('button[aria-label="close"]');
-    if (!closeDialogBtn) throw new Error("Can't find <button aria-label=\"close\">");
+    if (!closeDialogBtn) throw new Error(`<button aria-label="close"> is missing`);
     closeDialogBtn.addEventListener("click", () => component.remove());
   }
 }
