@@ -5,19 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Kanban task management challenge on Frontend Mentor">
     <meta name="keywords" content="API, REST, Frontend Mentor, Frontend, Mentor, HTML, CSS, Responsive, Mobile, Desktop, Alex Kolykhalov">
-
-    <!-- <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png"> -->
-
-    <!-- ios support -->
-    <!-- <link rel="apple-touch-icon" href="images/icons/128.png">
-    <link rel="apple-touch-icon" href="images/icons/192.png">
-    <link rel="apple-touch-icon" href="images/icons/512.png">
-    <meta name="apple-mobile-web-app-status-bar" content="#858585">
-    <meta name="theme-color" content="#858585">-->
-    <!-- end ios support -->
-
     <title>Frontend Mentor | Kanban</title>
-
     <!-- <link rel="manifest" href="manifest.json"> -->
     <link rel="stylesheet" href="/main.css">
     <!-- 1. [-] Wave extension
@@ -35,17 +23,18 @@
     <main-header></main-header>
     <main>
       <div class="with-left-sidebar">
-        <section id="dropdown_list" class="[ m:display-none ] dropdown-list">
+        <section id="dropdown_list" class="[ m:display-none ] dropdown-list" aria-labelledby="sidebar_heading">
+	  <h2 id="sidebar_heading" class="sr-only">Sidebar</h2>
           <boards-list></boards-list>
 	  <control-btns></control-btns>
         </section>
-	<section>
+	<section aria-labelledby="board_heading">
+	  <h2 id="board_heading" class="sr-only">Board</h2>
           <board></board>
         </section>
       </div>
     </main>
-    <script src="/pages/_shared/js/role.js"></script>    
-    <script src="/pages/_shared/js/add_events.js"></script>
-    <script src="/pages/_shared/js/color_scheme.js"></script>
+    <script src="/pages/_shared/scripts/unpack_datasets.js"></script>
+    <script src="/pages/_shared/scripts/color_scheme.js"></script>
   </body>
 </html>
