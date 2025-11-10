@@ -172,8 +172,6 @@ export class EditTaskDialog {
 	// close all opened dialogs
 	document.querySelectorAll("dialog").forEach(dialog => dialog.remove());
 
-	console.log(sendingTaskData);
-
 	if (columnFrom !== columnTo) {
 	  // move Task from one Column to another
 	  columnFrom.dispatchEvent(new CustomEvent("task:deleted", { detail: sendingTaskData.task.id }));
