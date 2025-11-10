@@ -191,7 +191,7 @@ export class Column { // listens to [column:updated, task:created, updated, dele
     component.addEventListener("task:updated", (event) => {
       // @ts-ignore
       const task = event.detail;
-      const element = component.querySelector(`[data-id=${task.id}]`);
+      const element = component.querySelector(`[data-id="${task.id}"]`);
       if (!element) throw new Error(`${Task.prefix} [data-id="${task.id}"] is missing`);
 
       element.replaceWith(
