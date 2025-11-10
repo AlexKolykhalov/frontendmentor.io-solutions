@@ -1,11 +1,6 @@
-
 /.vercel
-/api
 /node_modules
 
 /public/useless_css.sh
-
 .env
 package-lock.json
-vercel.json
-worker.js
