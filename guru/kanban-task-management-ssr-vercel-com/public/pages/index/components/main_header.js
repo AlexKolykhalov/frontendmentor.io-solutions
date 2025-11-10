@@ -63,13 +63,13 @@ export class MainHeader { // listens to [board:selected, created, updated, delet
 
       dropdownList.classList.toggle("m:display-none");
       if (this.getAttribute("aria-expanded") === "true") {
-	this.setAttribute("aria-expanded", "false");	
+	this.setAttribute("aria-expanded", "false");
 	document.querySelector(`[data-prefix="backdrop"]`)?.remove(); // remove backdrop
       } else {
-	this.setAttribute("aria-expanded", "true");	
+	this.setAttribute("aria-expanded", "true");
 	const backdrop = document.createElement("div"); // create backdrop
 	backdrop.classList.add("md:display-none");
-	backdrop.setAttribute("data-prefix", "backdrop");	
+	backdrop.setAttribute("data-prefix", "backdrop");
 	backdrop.setAttribute("style", "background: rgba(0,0,0,0.5); position: fixed; width: 100%; height: 100%");
 	const { Board } = await import("./board.js");
 	document.querySelector(`[data-prefix="${Board.prefix}"]`)?.appendChild(backdrop);
@@ -106,12 +106,19 @@ export class MainHeader { // listens to [board:selected, created, updated, delet
     // btn "Signout" in "anon" mode or "Delete user" in "auth" mode
     component.querySelectorAll("button")[4].addEventListener("click", async function() {
       if (globalThis.client_variables.is_anonymous) {
+	const img = this.querySelector("img");
+	if (!img) throw new Error("Signout btn <img> is missing");
+
 	const { LoaderRipple } = await import("../../_shared/components/loader_ripple.js");
 	const loader = LoaderRipple.init();
 	loader.setAttribute("style", "--size: 20px; position: relative;");
 	this.replaceChildren(loader);
-	
-	await signout();
+
+	try {
+	  await signout();  
+	} catch (error) {
+	  this.replaceChildren(img);  
+	}	
       }
       if (!globalThis.client_variables.is_anonymous) {
 	const { DeleteUserDialog } = await import("../components/delete_user_dialog.js");
@@ -124,12 +131,19 @@ export class MainHeader { // listens to [board:selected, created, updated, delet
 
     // btn "Signout" in "auth" mode
     component.querySelectorAll("button")[5]?.addEventListener("click", async function() {
+      const img = this.querySelector("img");
+      if (!img) throw new Error("Signout btn <img> is missing");
+      
       const { LoaderRipple } = await import("../../_shared/components/loader_ripple.js");
       const loader = LoaderRipple.init();
       loader.setAttribute("style", "--size: 20px; position: relative;");
       this.replaceChildren(loader);
-      
-      await signout();
+
+      try {
+	await signout();  
+      } catch (error) {
+	this.replaceChildren(img);  
+      }
     });
 
     // *** ADDITIONAL LISTENERS ***
@@ -199,8 +213,7 @@ export class MainHeader { // listens to [board:selected, created, updated, delet
     /**
      * Implements procedure of signout.
      *
-     * @throws {Error} Throws an error
-     * if authz_token could not be generating or response.status !== 204
+     * @throws {Error} Throws an error is response.status !== 204
      * @returns {Promise<void>}
      */
     async function signout() {
@@ -214,14 +227,14 @@ export class MainHeader { // listens to [board:selected, created, updated, delet
 	const { openAuthzDialog } = await import("../functions.js");
 	await openAuthzDialog();
 
-	return;
+	throw new Error("Unauthorized");
       }
 
       if (response.status !== 204) {
 	const { openPopUp } = await import("../../_shared/functions.js");
 	openPopUp("Server error", "Something went wrong. Try again.");
 
-	return;
+	throw new Error("Server error");
       }
 
       window.location.replace("/auth");
