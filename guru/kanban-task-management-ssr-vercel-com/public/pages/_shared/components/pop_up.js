@@ -15,13 +15,14 @@ export class PopUp {
    *
    * @returns {string} HTML string
    */
-  static #template(props) {
-    const style = "opacity: 0; max-width: 300px; width: 80vw; bottom: 80px; left: 50%; transform: translateX(-50%) translateY(5%); box-shadow: 0 0 6px var(--clr-primary-red);";
-    return `<div id="${this.#prefix}" class="[ absolute ] row no-wrap gap-m main-axis-space-between cross-axis-center bg-n-000-800 pad-m border-radius-l" style="${style}">
-              <img src="images/svg/icon-warning.svg" alt="" width="36" height="36">
-              <div class="column">
-                <p class="fw-bold clr-n-900-000">${props.title}</p>
-                <p class="clr-n-900-000">${props.message}</p>
+  static #template(props) {    
+    return `<div id="${this.#prefix}" class="[ absolute ] pop-up">
+              <div class="row no-wrap gap-sm cross-axis-center">
+                <img src="images/svg/icon-warning.svg" alt="" width="36" height="36">
+                <div class="column">
+                  <p class="fw-bold clr-n-900-000">${props.title}</p>
+                  <p class="clr-n-900-000">${props.message}</p>
+                </div>
               </div>
               <button class="close-btn" aria-label="close"></button>
             </div>`;
@@ -46,7 +47,7 @@ export class PopUp {
     const template     = document.createElement("template");
     template.innerHTML = this.#template(props);
     const component    = template.content.firstElementChild;
-    if (!component)    throw new Error("Can't create \"PopUp\" component");
+    if (!component)    throw new Error(`Can't create ${this.name} component`);
 
     this.#handleEvents(component);
 
@@ -60,7 +61,7 @@ export class PopUp {
    */
   static #handleEvents(component) {
     const closeDialogBtn = component.querySelector('button[aria-label="close"]');
-    if (!closeDialogBtn) throw new Error("Can't find <button aria-label=\"close\">");
+    if (!closeDialogBtn) throw new Error(`<button aria-label="close"> is missing`);
     closeDialogBtn.addEventListener("click", () => component.remove());
 
     // implement animation
