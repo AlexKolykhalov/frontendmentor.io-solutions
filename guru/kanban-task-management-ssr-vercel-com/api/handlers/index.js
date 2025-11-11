@@ -12,7 +12,14 @@ import { ControlBtns } from "../../public/pages/index/components/control_btns.js
 import { Board }       from "../../public/pages/index/components/board.js";
 
 export default async function (req, res) {
-  fs.readFile(`${path.resolve()}/public/pages/index/index.html`, "utf-8", async (err, text) => {
+  const prefix   = process.env.NODE_ENV === "prod" ? "guru/kanban-task-management-ssr-vercel-com" : "";
+  const dir      = "public/pages"; // it's "pages" in vercel output 
+  const subdir   = "index";
+  const filename = "index.html";
+  const filePath = path.resolve(process.cwd(), prefix, dir, subdir, filename);
+  // vercel specific ? (index.html didn't see without it)
+  path.resolve(`${process.cwd()}/${dir}`, `${process.cwd()}/${dir}/${subdir}/${filename}`);
+  fs.readFile(filePath, "utf-8", async (err, text) => {
     if (err) return res.status(500).json({ error: "File reading error", text: err.message });
     try {
       const supabase = serverClient(req, res);
@@ -37,7 +44,6 @@ export default async function (req, res) {
       if (!board)       throw new Error("<board> is missing");
 
       const { data, error } = await supabase.rpc("get_initial_data");
-      console.log(error);
       if (error) return res.status(500).json({
 	error: "Server error",
 	text: "get_initial_data failed",

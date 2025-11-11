@@ -3,9 +3,8 @@
 if (!document.body.dataset.paths) throw new Error("<body> [data-paths] is missing");
 
 // adding events
-Object.entries(JSON.parse(document.body.dataset.paths)).forEach(async ([prefix, path]) => {
-  const url          = "http://localhost:3000" + path;
-  const module       = await import(url);
+Object.entries(JSON.parse(document.body.dataset.paths)).forEach(async ([prefix, path]) => {  
+  const module       = await import(path);
   const className    = Object.keys(module)[0];
   const DynamicClass = module[className];
   const elements     = document.querySelectorAll(`[data-prefix=${prefix}]`);
