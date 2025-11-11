@@ -1,0 +1,17 @@
+{
+  "rewrites": [
+    { "source": "/",     "destination": "/api/handlers/index.js" },    
+    { "source": "/auth", "destination": "/api/handlers/auth.js" },
+
+    { "source": "/v1/signin",  "destination": "/api/v1/signin.js" },
+    { "source": "/v1/signup",  "destination": "/api/v1/signup.js" },
+    { "source": "/v1/signout", "destination": "/api/v1/signout.js" },
+    
+    { "source": "/v1/boards",               "destination": "/api/v1/boards.js" },
+    { "source": "/v1/boards/:id",           "destination": "/api/v1/boards.js" },
+    { "source": "/v1/tasks",                "destination": "/api/v1/tasks.js" },
+    { "source": "/v1/tasks/:id",            "destination": "/api/v1/tasks.js" },
+    { "source": "/v1/subtasks/:id",         "destination": "/api/v1/subtasks.js" },
+    { "source": "/v1/users/delete_current", "destination": "/api/v1/users.js" }
+  ]
+}
