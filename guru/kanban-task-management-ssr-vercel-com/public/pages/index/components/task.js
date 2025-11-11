@@ -67,7 +67,6 @@ export class Task {
 
   /**
    * @param {Element} component
-   *
    * @returns {void}
    */
   static handleEvents(component) {

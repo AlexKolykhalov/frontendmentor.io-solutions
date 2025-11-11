@@ -63,7 +63,6 @@ export class DynamicList { // listens to [dynamic-list-item:removed]
 
   /**
    * @param {DynamicListType} props
-   *
    * @returns {Element}
    */
   static init(props) {
@@ -89,7 +88,6 @@ export class DynamicList { // listens to [dynamic-list-item:removed]
 
   /**
    * @param {DynamicListType} props
-   *
    * @returns {Element}
    */
   static #create(props) {
@@ -105,7 +103,6 @@ export class DynamicList { // listens to [dynamic-list-item:removed]
 
   /**
    * @param {Element} component
-   *
    * @returns {void}
    */
   static #handleEvents(component) {
