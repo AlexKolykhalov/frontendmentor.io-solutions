@@ -12,7 +12,7 @@ export default async function (req, res) {
   
   try {
     const supabase = serverClient(req, res);
-    const { email, password } = req.body;
+    const { email, password } = req.body || {};
     const { error } = (email && password) ?
 	  await supabase.auth.signInWithPassword({ email: email, password: password }) :
 	  await supabase.auth.signInAnonymously();
