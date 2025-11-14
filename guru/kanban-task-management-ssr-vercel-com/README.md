@@ -2,7 +2,7 @@
 
 This is a solution to the [Kanban task management web app challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/kanban-task-management-web-app-wgQLt-HlbB). Frontend Mentor challenges help you improve your coding skills by building realistic projects.
 
-[__Live demo__](https://example.com)
+[__Live demo__](https://kanban-task-management-ssr.vercel.app)
 
 ## Table of contents
 
@@ -40,7 +40,7 @@ Users should be able to:
 - CSS Grid
 - Mobile-first workflow
 - JavaScript
-- SSR ejs
+- SSR (custom components)
 - λ functions ([vercel](https://vercel.com/))
 - postgres as back ([supabase](https://supabase.com/))
 
