@@ -92,7 +92,7 @@ Any comments are welcome.
 </details>
 
 <details>
-<summary>Guru [4/6]</summary>
+<summary>Guru [5/6]</summary>
 
 | No | Challenge | Live demo | Source |
 | :---: | :--- | :---: | :--- |
@@ -100,4 +100,5 @@ Any comments are welcome.
 | 02 | Linksharing app (client-server) | [Live demo](https://sharetoyou.vercel.app) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/guru/linksharing-app-cs) |
 | 03 | Linksharing app (SSR) (render.com) | [Live demo](https://linksharing-app-ssr-render-com.onrender.com) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/guru/linksharing-app-ssr-render-com) |
 | 04 | Linksharing app (SSR) (vercel.com) | [Live demo](https://linksharing-appssr.vercel.app) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/guru/linksharing-app-ssr-vercel-com) |
+| 05 | Kanban app (SSR) (vercel.com) | [Live demo](https://kanban-task-management-ssr.vercel.app) | [Source](https://github.com/AlexKolykhalov/frontendmentor.io-solutions/tree/master/guru/kanban-task-management-ssr-vercel-com) |
 </details>
