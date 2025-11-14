@@ -108,7 +108,7 @@ export class BoardsList {
     component.addEventListener("board:deleted", (event) => {
       // @ts-ignore
       const boardID         = event.detail;
-      const header          = component.querySelector("header");
+      const header          = component.querySelector("h3");
       const ul              = component.querySelector("ul");
       const removingElement = component.querySelector(`[data-id="${boardID}"]`);
       if (!header)          throw new Error(`<header> is missing`);
