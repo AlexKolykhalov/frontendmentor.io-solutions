@@ -105,7 +105,7 @@ export class Column { // listens to [column:updated, task:created, updated, dele
       if (!taskID)   throw new Error(`${Task.prefix} [data-id] is missing`);
       if (!columnID) throw new Error(`${Column.prefix} [data-id] is missing`);
       
-      const url      = `http://localhost:3000/v1/tasks/${taskID}`;
+      const url      = `/v1/tasks/${taskID}`;
       const options  = {
 	method: "PATCH",
 	headers: { "Content-Type": "application/json" },

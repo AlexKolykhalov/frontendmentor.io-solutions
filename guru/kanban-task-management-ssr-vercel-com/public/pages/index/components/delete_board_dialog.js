@@ -74,7 +74,7 @@ export class DeleteBoardDialog {
       loader.setAttribute("style", "--size: 25px; right: 5%;");
       this.appendChild(loader);
 
-      const url     = `http://localhost:3000/v1/boards/${boardID}`;
+      const url     = `/v1/boards/${boardID}`;
       const options = { method: "DELETE" };
       // [Errors 401, 403, 404, 405, 500] [Success 204]
       const response = await fetch(url, options);

@@ -56,7 +56,7 @@ export class AuthForm {
       this.setAttribute("disabled", "");
 
       // [Errors 400, 500] [Success 200]
-      const response = await fetch(`http://localhost:3000/v1/signin`, { method: "POST" });
+      const response = await fetch(`/v1/signin`, { method: "POST" });
 
       if (response.status !== 200) {
 	this.removeAttribute("disabled");
@@ -84,18 +84,18 @@ export class AuthForm {
       // disable SignIn btn
       this.setAttribute("disabled", "");
 
+      const url     = "/v1/signin";
+      const options = {
+	method: "POST",
+	headers: { "Content-Type": "application/json" },
+	body: JSON.stringify({
+	  email:    inputEmail.value.trim(),
+	  password: inputPassword.value.trim(),
+	})
+      };
+      
       // [Errors 400, 500] [Success 200]
-      const response = await fetch(
-	`http://localhost:3000/v1/signin`,
-	{
-	  method: "POST",
-	  headers: { "Content-Type": "application/json" },
-	  body: JSON.stringify({
-	    email:    inputEmail.value.trim(),
-	    password: inputPassword.value.trim(),
-	  })
-	}
-      );
+      const response = await fetch(url, options);
 
       if (response.status !== 200) {
 	this.removeAttribute("disabled");
@@ -127,18 +127,18 @@ export class AuthForm {
       // disable SignIn btn
       this.setAttribute("disabled", "");
 
+      const url     = "/v1/signup";
+      const options = {
+	method: "POST",
+	headers: { "Content-Type": "application/json" },
+	body: JSON.stringify({
+	  email:    inputEmail.value.trim(),
+	  password: inputPassword.value.trim(),
+	})
+      };
+      
       // [Errors 400, 401, 422, 500] [Success 201]
-      const response = await fetch(
-	`http://localhost:3000/v1/signup`,
-	{
-	  method: "POST",
-	  headers: { "Content-Type": "application/json" },
-	  body: JSON.stringify({
-	    email:    inputEmail.value.trim(),
-	    password: inputPassword.value.trim(),
-	  })
-	}
-      );
+      const response = await fetch(url, options);
 
       if (response.status !== 201) {
 	this.removeAttribute("disabled");

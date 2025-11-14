@@ -217,7 +217,7 @@ export class MainHeader { // listens to [board:selected, created, updated, delet
      * @returns {Promise<void>}
      */
     async function signout() {
-      const url     = "http://localhost:3000/v1/signout";
+      const url     = "/v1/signout";
       const options = { method: "POST" };
 
       // [Errors 401, 500] [Success 204]

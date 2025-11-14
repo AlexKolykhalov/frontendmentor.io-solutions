@@ -50,7 +50,7 @@ export class DeleteUserDialog {
       loader.setAttribute("style", "--size: 25px; right: 5%;");
       this.appendChild(loader);
 
-      const url     = "http://localhost:3000/v1/users/delete_current";
+      const url     = "/v1/users/delete_current";
       const options = { method: "POST" };
       // [Errors 400, 401, 403, 500] [Success 200]
       const response = await fetch(url, options);

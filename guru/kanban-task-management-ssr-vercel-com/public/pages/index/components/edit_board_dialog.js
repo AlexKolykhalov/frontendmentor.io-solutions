@@ -178,7 +178,7 @@ export class EditBoardDialog {
       loader.setAttribute("style", "--size: 25px; right: 5%;");
       this.appendChild(loader);
 
-      const url = `http://localhost:3000/v1/boards/${sendingBoardData.id}`;
+      const url     = `/v1/boards/${sendingBoardData.id}`;
       const options = {
 	method: "PUT",
 	headers: { "Content-Type": "application/json" },

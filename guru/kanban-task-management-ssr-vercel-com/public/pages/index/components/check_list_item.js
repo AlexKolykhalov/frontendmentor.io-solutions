@@ -77,7 +77,7 @@ export class CheckListItem {
       const subtaskID = component.getAttribute("data-id");
       if (!subtaskID) throw new Error(`[data-id] is missing`);
 
-      const url     = `http://localhost:3000/v1/subtasks/${subtaskID}`;
+      const url     = `/v1/subtasks/${subtaskID}`;
       const options = {
 	method: "PATCH",
 	headers: { "Content-Type": "application/json" },

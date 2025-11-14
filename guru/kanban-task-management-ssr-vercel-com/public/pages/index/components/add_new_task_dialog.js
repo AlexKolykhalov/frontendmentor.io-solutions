@@ -153,7 +153,7 @@ export class AddNewTaskDialog {
       loader.setAttribute("style", "--size: 25px; right: 5%;");
       this.appendChild(loader);
 
-      const url     = "http://localhost:3000/v1/tasks";
+      const url     = "/v1/tasks";
       const options = {
 	method: "POST",
 	headers: { "Content-Type": "application/json" },

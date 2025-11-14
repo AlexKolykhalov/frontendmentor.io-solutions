@@ -93,7 +93,7 @@ export class Task {
 	if (!taskID) throw new Error("[data-id] is missing")
 	
 	// [Errors 401, 403, 404, 405, 500] [Success 200]
-	const response = await fetch(`http://localhost:3000/v1/tasks/${taskID}`);
+	const response = await fetch(`/v1/tasks/${taskID}`);
 
 	if (response.status === 401 || response.status === 403) {
 	  if (response.status === 401) {
