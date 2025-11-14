@@ -71,7 +71,7 @@ export class Board { // listens to [board:selected, created, updated]
 
     component.addEventListener("board:updated", (event) => {
       // @ts-ignore
-      operation("update", event.detail);
+      operation(globalThis.client_variables.is_anonymous ? "update" : "select", event.detail);      
       console.log("board:updated");
     });
 
