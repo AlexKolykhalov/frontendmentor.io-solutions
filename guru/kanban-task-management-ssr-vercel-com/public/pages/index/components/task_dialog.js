@@ -33,12 +33,12 @@ export class TaskDialog {
     if (!columnID)    throw new Error(`[data-prefix="${Column.prefix}"] is missing`);
 
     const options = [...columnsList.children].map(
-      column=> {	
+      column=> {
 	const h3 = column.querySelector("h3");
 	const id = column.getAttribute("data-id");
 	if (!id) throw new Error(`[data-prefix="${Column.prefix}"] [data-id] is missing`);
 	if (!h3) throw new Error(`[data-prefix="${Column.prefix}"] <h3> is missing`);
-	
+
 	const name = h3.textContent?.slice(0, h3.textContent.lastIndexOf("(")).trim();
 
 	return `<option value="${id}" ${id === columnID ? "selected" : ""}>${name}</option>`;
@@ -140,7 +140,7 @@ export class TaskDialog {
       // @ts-ignore
       const updatedSubtask = event.detail;
       const task = this.#getState();
-      const column = document.querySelector(`[data-id="${task.id}"]`)?.closest(`[data-prefix="${Column.prefix}]"`);
+      const column = document.querySelector(`[data-id="${task.id}"]`)?.closest(`[data-prefix="${Column.prefix}"]`);
       if (!column) throw new Error(`Column containing the Task [data-id="${task.id}"] is missing`);
 
       const subtask = task.subtasks.find(item => item.id === updatedSubtask.id);
