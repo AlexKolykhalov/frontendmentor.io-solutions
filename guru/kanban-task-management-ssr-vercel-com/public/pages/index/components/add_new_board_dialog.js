@@ -54,7 +54,6 @@ export class AddNewBoardDialog {
 
   /**
    * @param {Element} component
-   *
    * @returns {void}
    */
   static #handleEvents(component) {

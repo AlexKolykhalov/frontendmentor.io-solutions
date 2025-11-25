@@ -3,14 +3,14 @@
 import { Task } from "./task.js";
 
 /**
- * @typedef {Object}                          ColumnType
+ * @typedef  {Object}                         ColumnType
  * @property {string}                         id
  * @property {string}                         name
  * @property {import("./task.js").TaskType[]} tasks
  */
 
 /**
- * @typedef {Object}      ColumnComponentType
+ * @typedef  {Object}     ColumnComponentType
  * @property {ColumnType} column
  */
 

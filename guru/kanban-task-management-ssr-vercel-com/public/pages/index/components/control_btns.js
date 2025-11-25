@@ -20,7 +20,6 @@ export class ControlBtns {
 
   /**
    * @param {Element} component
-   *
    * @returns {void}
    */
   static handleEvents(component) {

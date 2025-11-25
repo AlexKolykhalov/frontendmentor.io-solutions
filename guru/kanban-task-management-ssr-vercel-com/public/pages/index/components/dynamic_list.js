@@ -49,7 +49,7 @@ export class DynamicList { // listens to [dynamic-list-item:removed]
 
     this.#setState({title: title, items: items, btnText: btnText, min: min, max: max});
 
-    // An ID required if there are two or more "checklists" in one parent component    
+    // An ID required if there are two or more "checklists" in one parent component
     const text = `<div class="column gap-sm" data-id="${generateRandomSymbols(4)}">
                     <p class="fs-300 fw-bold clr-n-600-000">${title}</p>
                     <ul class="column gap-sm">
@@ -70,7 +70,7 @@ export class DynamicList { // listens to [dynamic-list-item:removed]
     const fragment         = document.createDocumentFragment();
     const dynamicListItems = component.querySelector("dynamic-list-items");
     if (!dynamicListItems) throw new Error("<dynamic-list-items> is missing");
-    
+
     props.items.forEach(item => {
       fragment.appendChild(
 	DynamicListItem.init({
@@ -80,7 +80,7 @@ export class DynamicList { // listens to [dynamic-list-item:removed]
 	  deleteBtnDisabled: item.deleteBtnDisabled
 	})
       );
-    });    
+    });
     dynamicListItems.replaceWith(fragment);
 
     return component;
@@ -111,9 +111,9 @@ export class DynamicList { // listens to [dynamic-list-item:removed]
     addBtn.addEventListener("click", function() {
       const ul = component.querySelector("ul");
       if (!ul) throw new Error("<ul> is missing");
-      
+
       ul.querySelector("button[disabled]")?.removeAttribute("disabled");
-      const state = DynamicList.#getState();      
+      const state = DynamicList.#getState();
       ul.appendChild(
 	DynamicListItem.init({ placeholder: state.items.length > 0 ? state.items[0].placeholder : "" })
       );
@@ -121,7 +121,7 @@ export class DynamicList { // listens to [dynamic-list-item:removed]
 	`(${state.max - ul.children.length})` :
 	"";
       if (state.max - ul.children.length === 0) this.setAttribute("disabled", "");
-      
+
       // listens to EditBoardDialog or EditTaskDialog
       component.dispatchEvent(new CustomEvent("dynamic-list-item:added", { bubbles: true }));
 
@@ -134,14 +134,14 @@ export class DynamicList { // listens to [dynamic-list-item:removed]
       const span = addBtn.querySelector("span");
       const ul   = component.querySelector("ul");
       if (!ul)   throw new Error("<ul> is missing");
-      if (!span) throw new Error(`<button> <span> is missing`);      
-      
+      if (!span) throw new Error(`<button> <span> is missing`);
+
       const state      = DynamicList.#getState();
       span.textContent = `(${state.max - ul.children.length})`;
       if (ul.children.length === state.max - 1)
 	addBtn.removeAttribute("disabled");
       if (ul.children.length === state.min)
-	ul.querySelectorAll("button").forEach(item => item.setAttribute("disabled", ""));      
+	ul.querySelectorAll("button").forEach(item => item.setAttribute("disabled", ""));
     });
   }
 }

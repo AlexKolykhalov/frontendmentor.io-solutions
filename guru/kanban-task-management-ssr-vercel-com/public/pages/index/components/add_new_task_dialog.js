@@ -1,9 +1,8 @@
 // @ts-check
 
-import { Board }              from "./board.js";
-import { Column }             from "./column.js";
-import { Task }               from "./task.js";
-import { DynamicList }        from "./dynamic_list.js";
+import { Board }       from "./board.js";
+import { Column }      from "./column.js";
+import { DynamicList } from "./dynamic_list.js";
 
 export class AddNewTaskDialog {
   /** @returns {string} HTML string */
@@ -16,7 +15,7 @@ export class AddNewTaskDialog {
       const id = column.getAttribute("data-id");
       if (!id) throw new Error(`[data-prefix="${Column.prefix}"] [data-id] is missing`);
       if (!h3) throw new Error(`[data-prefix="${Column.prefix}"] <h3> is missing`);
-      
+
       const name = h3.textContent?.slice(0, h3.textContent.lastIndexOf("(") - 1);
 
       return `<option value="${id}" ${index === 0 ? "selected" : ""}>${name}</option>`;
@@ -98,7 +97,7 @@ export class AddNewTaskDialog {
     const createNewTaskBtn = component.querySelector(`dynamic-list + div + button`);
     if (!createNewTaskBtn) throw new Error(`"Create Task" button is missing`);
     createNewTaskBtn.addEventListener("click", async function() {
-      
+
       if (!validation()) return;
 
       /** @type {HTMLInputElement|null} */
@@ -124,7 +123,7 @@ export class AddNewTaskDialog {
 	subtasks: [...subtasksList.children].map(
 	  item => {
 	    const input = item.querySelector("input");
-	    if (!input) throw new Error("<input> element is missing");
+	    if (!input) throw new Error("<input> is missing");
 
 	    return { id: "", title: input.value.trim(), isCompleted: false };
 	  }
@@ -136,7 +135,7 @@ export class AddNewTaskDialog {
 
 	const taskList = selectedColumn.querySelector("ul");
 	if (!taskList) throw new Error(`#${Column.prefix} [data-id="${select.value}"] <ul> is missing`);
-
+	const { Task } = await import("./task.js");
 	taskList.appendChild(Task.init({ task: sendingTaskData, locked: true }));
 	component.remove();
 	selectedColumn.dispatchEvent(new CustomEvent("column:updated"));
@@ -166,6 +165,8 @@ export class AddNewTaskDialog {
       let response = await fetch(url, options);
 
       if (response.status === 401 || response.status === 403) {
+	component.remove(); // close this dialog
+
 	if (response.status === 401) {
 	  const { openAuthzDialog } = await import("../functions.js");
 	  await openAuthzDialog();
@@ -175,9 +176,6 @@ export class AddNewTaskDialog {
 	  const { openSessionExpiredDialog } = await import("../functions.js");
 	  await openSessionExpiredDialog();
 	}
-	
-	this.removeAttribute("disabled"); // enable createNewTaskBtn
-	loader.remove();
 
 	return;
       }
@@ -186,12 +184,12 @@ export class AddNewTaskDialog {
 	component.remove();
 	const { openPopUp } = await import("../../_shared/functions.js");
 	await openPopUp("Server error", "Something went wrong. Try again");
-	
+
 	return;
       }
 
       component.remove();
-      
+
       const receivedTaskData = await response.json();
       selectedColumn.dispatchEvent(new CustomEvent("task:created", { detail: receivedTaskData }));
     });

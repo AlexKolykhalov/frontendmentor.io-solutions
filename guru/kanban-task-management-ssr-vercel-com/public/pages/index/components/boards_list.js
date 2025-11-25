@@ -7,7 +7,6 @@ export class BoardsList {
 
   /**
    * @param {import("./board.js").BoardType[]} props
-   *
    * @returns {string} HTML string
    */
   static template(props) {
@@ -30,7 +29,6 @@ export class BoardsList {
 
   /**
    * @param {Element} component
-   *
    * @returns {void}
    */
   static handleEvents(component) {

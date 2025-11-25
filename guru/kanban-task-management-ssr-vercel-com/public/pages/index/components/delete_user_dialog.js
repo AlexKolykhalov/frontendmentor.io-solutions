@@ -36,7 +36,6 @@ export class DeleteUserDialog {
 
   /**
    * @param {Element} component
-   *
    * @returns {void}
    */
   static #handleEvents(component) {

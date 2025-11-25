@@ -4,7 +4,6 @@ import { generateRandomSymbols } from "../functions.js";
 
 /**
  * @typedef {object} DynamicListItemType
- *
  * @property {string}  [id]                By default random 4 symbols.
  * @property {string}  [value]             By default "".
  * @property {string}  [placeholder]       By default "dynamic listitem".
@@ -17,7 +16,7 @@ export class DynamicListItem {
    * @returns {string} HTML string
    */
   static #template(props) {
-    const id          = generateRandomSymbols(4);    
+    const id          = generateRandomSymbols(4);
     const value       = props.value ?? "";
     const placeholder = props.placeholder ?? "dynamic listitem";
     const disabled    = props.deleteBtnDisabled ?? false;
@@ -38,7 +37,7 @@ export class DynamicListItem {
   }
 
   /**
-   * @param {DynamicListItemType} props *
+   * @param {DynamicListItemType} props
    * @returns {Element}
    */
   static #create(props) {
@@ -63,7 +62,7 @@ export class DynamicListItem {
     if (!removeBtn) throw new Error("<button> is missing");
 
     input.addEventListener("input", function() {
-      this.removeAttribute("style");      
+      this.removeAttribute("style");
       // listens to EditBoardDialog or EditTaskDialog
       component.dispatchEvent(new CustomEvent("dynamic-list-item:changed", { bubbles: true }));
 

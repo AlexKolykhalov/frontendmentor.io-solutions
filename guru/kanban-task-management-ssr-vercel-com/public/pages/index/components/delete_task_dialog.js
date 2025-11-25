@@ -64,7 +64,7 @@ export class DeleteTaskDialog {
    */
   static #handleEvents(component) {
     // delete btn
-    component.querySelectorAll("button")[1].addEventListener("click", async function () {
+    component.querySelectorAll("button")[1].addEventListener("click", async function() {
       const { Column } = await import("./column.js");
       const task   = DeleteTaskDialog.#getState();
       const column = document.querySelector(`[data-id="${task.id}"]`)?.closest(`[data-prefix="${Column.prefix}"]`);
@@ -93,6 +93,7 @@ export class DeleteTaskDialog {
       const response = await fetch(url, options);
 
       if (response.status === 401 || response.status === 403) {
+	document.querySelectorAll("dialog").forEach(dialog => dialog.remove()); // close all opened dialogs
 	if (response.status === 401) {
 	  const { openAuthzDialog } = await import("../functions.js");
 	  await openAuthzDialog();
@@ -103,9 +104,6 @@ export class DeleteTaskDialog {
 	  await openSessionExpiredDialog();
 	}
 	
-	this.removeAttribute("disabled"); // enable deleteBtn
-	loader.remove();
-
 	return;
       }
 

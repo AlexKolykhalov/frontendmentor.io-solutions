@@ -36,7 +36,6 @@ export class AuthzDialog {
 
   /**
    * @param {Element} component
-   *
    * @returns {void}
    */
   static #handleEvents(component) {

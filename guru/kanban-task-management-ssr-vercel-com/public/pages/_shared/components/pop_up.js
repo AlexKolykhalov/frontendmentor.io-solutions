@@ -12,7 +12,6 @@ export class PopUp {
 
   /**
    * @param {Props} props
-   *
    * @returns {string} HTML string
    */
   static #template(props) {    
@@ -40,7 +39,6 @@ export class PopUp {
 
   /**
    * @param {Props} props
-   *
    * @returns {Element}
    */
   static #create(props) {
@@ -56,7 +54,6 @@ export class PopUp {
 
   /**
    * @param {Element} component
-   *
    * @returns {void}
    */
   static #handleEvents(component) {

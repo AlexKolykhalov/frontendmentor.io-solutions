@@ -2,12 +2,10 @@
 
 import { Board }                 from "./board.js";
 import { Column }                from "./column.js";
-import { Task }                  from "./task.js";
 import { DynamicList }           from "./dynamic_list.js";
 import { generateRandomSymbols } from "../functions.js";
 
-// listens to [dynamic-list-item:changed, added, removed]
-export class EditTaskDialog {
+export class EditTaskDialog { // listens to [dynamic-list-item:changed, added, removed]
   /** @type {{task:import("./task.js").TaskType, columnID:string}} */
   static #state = {
     task: { id: "", title: "", description: "", subtasks: [] },
@@ -207,6 +205,8 @@ export class EditTaskDialog {
       const response = await fetch(url, options);
 
       if (response.status === 401 || response.status === 403) {
+	// close all opened dialogs
+	document.querySelectorAll("dialog").forEach(dialog => dialog.remove());
 	if (response.status === 401) {
 	  const { openAuthzDialog } = await import("../functions.js");
 	  await openAuthzDialog();
@@ -216,9 +216,6 @@ export class EditTaskDialog {
 	  const { openSessionExpiredDialog } = await import("../functions.js");
 	  await openSessionExpiredDialog();
 	}
-
-	this.removeAttribute("disabled"); // enabled saveBtn
-	loader.remove();
 
 	return;
       }
@@ -344,7 +341,7 @@ export class EditTaskDialog {
       return isValid;
     }
 
-    /** @returns {{task:import("./task.js").TaskType, columnID:string}|null} Returns differences or null (no differences) */
+    /** @returns {{task:import("./task.js").TaskType, columnID:string} | null} Returns differences or null (no differences) */
     function getDifferences() {
       /** @type {HTMLInputElement|null} */
       const taskNameInput    = component.querySelector("#task_name");

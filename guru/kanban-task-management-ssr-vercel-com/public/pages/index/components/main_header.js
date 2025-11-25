@@ -7,7 +7,6 @@ export class MainHeader { // listens to [board:selected, created, updated, delet
 
   /**
    * @param {import("./board.js").BoardType} board
-   *
    * @returns {string} HTML string
    */
   static template(board) {
@@ -50,7 +49,6 @@ export class MainHeader { // listens to [board:selected, created, updated, delet
 
   /**
    * @param {Element} component
-   *
    * @returns {void}
    */
   static handleEvents(component) {
@@ -58,8 +56,8 @@ export class MainHeader { // listens to [board:selected, created, updated, delet
     const dropdownListToggleBtn = document.querySelector(".dropdown-list-toggle-btn");
     if (!dropdownListToggleBtn) throw new Error(".dropdown-list-toggle-btn is missing");
     dropdownListToggleBtn.addEventListener("click", async function() {
-      const dropdownList = document.querySelector("#dropdown_list");
-      if (!dropdownList) throw new Error(`#dropdown-list is missing`);
+      const dropdownList = document.querySelector("#dropdown_list"); // see index.html
+      if (!dropdownList) throw new Error(`#dropdown_list is missing`);
 
       dropdownList.classList.toggle("m:display-none");
       if (this.getAttribute("aria-expanded") === "true") {

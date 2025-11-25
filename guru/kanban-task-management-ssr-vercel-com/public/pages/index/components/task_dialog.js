@@ -119,7 +119,7 @@ export class TaskDialog {
     closeDialogBtn.addEventListener("click", () => component.remove());
 
     editBtn.addEventListener("click", async () => {
-      const { EditTaskDialog } = await import("../components/edit_task_dialog.js");
+      const { EditTaskDialog } = await import("./edit_task_dialog.js");
       const dialog = EditTaskDialog.init(TaskDialog.#getState());
       document.querySelector("body")?.appendChild(dialog);
       // @ts-ignore
@@ -127,7 +127,7 @@ export class TaskDialog {
     });
 
     deleteBtn.addEventListener("click", async () => {
-      const { DeleteTaskDialog } = await import("../components/delete_task_dialog.js");
+      const { DeleteTaskDialog } = await import("./delete_task_dialog.js");
       const dialog = DeleteTaskDialog.init(TaskDialog.#getState());
       document.querySelector("body")?.appendChild(dialog);
       // @ts-ignore

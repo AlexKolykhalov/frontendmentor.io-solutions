@@ -6,8 +6,7 @@ import { BoardsList }     from "./boards_list.js";
 import { DynamicList }    from "./dynamic_list.js";
 import { MainHeader }     from "./main_header.js";
 
-// listens to [dynamic-list-item:changed, added, removed]
-export class EditBoardDialog {
+export class EditBoardDialog { // listens to [dynamic-list-item:changed, added, removed]
   /** @type { import("./board.js").BoardType } */
   static #state =  {
     id: "",
@@ -159,7 +158,7 @@ export class EditBoardDialog {
 	  column => { if (column.id === "") column.id = crypto.randomUUID() }
 	);
 
-	console.log(sendingBoardData);
+	// console.log(sendingBoardData);
 
 	component.remove(); // close this dialog
 	[board, boardsList, mainHeader].forEach(item => {
@@ -275,7 +274,7 @@ export class EditBoardDialog {
     // *** ADDITIONAL FUNCTIONS ***
 
     /** @returns {void} */
-    function checkEditBoardDialogState() {      
+    function checkEditBoardDialogState() {
       if (getDifferences()) {
 	saveBtn.removeAttribute("disabled");
 	revertBtn.removeAttribute("disabled");
@@ -308,7 +307,7 @@ export class EditBoardDialog {
 	  const input = [...listOfColumns.children][j].querySelector("input");
 	  if (!input) throw new Error("<input> is missing");
 
-	  const id = input.getAttribute("data-id");	  
+	  const id = input.getAttribute("data-id");
 	  if (i === 0 && !id) { // i === 0 it's helps push only once
 	    addings.push({ id: "", name: input.value.trim(), tasks: [] }); // ADD
 	    flag = true;

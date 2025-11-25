@@ -56,7 +56,7 @@ export class CheckListItem {
     const input = component.querySelector("input");
     if (!input) throw new Error("<input> is missing");
     input.addEventListener("click", async function() {
-      if (this.hasAttribute("disabled")) return; // disable checkbox
+      if (this.hasAttribute("disabled")) return; // multi-click protection
 
       if (globalThis.client_variables.is_anonymous) {
 	Reflect.set(this, "checked", !this.checked); // returns previous value
@@ -67,7 +67,7 @@ export class CheckListItem {
       }
 
       component.querySelector("label")?.classList.remove("cursor-pointer");
-      this.setAttribute("disabled", ""); // enable checkbox
+      this.setAttribute("disabled", ""); // disable clicks
       // add indicator
       const { LoaderRipple } = await import("../../_shared/components/loader_ripple.js");
       const loader = LoaderRipple.init();
@@ -88,6 +88,7 @@ export class CheckListItem {
       const response = await fetch(url, options);
 
       if (response.status === 401 || response.status === 403) {
+	component.dispatchEvent( new CustomEvent("check-list-item:error", { bubbles: true })); // close the dialog
 	if (response.status === 401) {
 	  const { openAuthzDialog } = await import("../functions.js");
 	  await openAuthzDialog();
@@ -96,13 +97,13 @@ export class CheckListItem {
 	if (response.status === 403) {
 	  const { openSessionExpiredDialog } = await import("../functions.js");
 	  await openSessionExpiredDialog();
-	}
-
+	}	
+	
 	return;
       }
 
       if (response.status === 404 || response.status !== 200) {
-	component.dispatchEvent( new CustomEvent("check-list-item:error", { bubbles: true })); // closes the dialog
+	component.dispatchEvent( new CustomEvent("check-list-item:error", { bubbles: true })); // close the dialog
 	const { openPopUp } = await import("../../_shared/functions.js");
 	await openPopUp(
 	  response.status === 404 ? "Search error" : "Server error",
@@ -113,7 +114,7 @@ export class CheckListItem {
       }
 
       component.querySelector("label")?.classList.add("cursor-pointer");
-      this.removeAttribute("disabled"); // enable checkbox
+      this.removeAttribute("disabled"); // enabled clicks
 
       loader.remove();
 

@@ -49,7 +49,7 @@ export class Board { // listens to [board:selected, created, updated]
     // btn "Hide sidebar"
     component.querySelector(":scope > button")?.addEventListener("click", function() {
       const sidebar = document.querySelector("main > .with-left-sidebar > :nth-child(1)");
-      if (!sidebar) throw new Error("Missing main > .with-left-sidebar > :nth-child(1)");
+      if (!sidebar) throw new Error("<main> > .with-left-sidebar > :nth-child(1) is missing");
 
       this.classList.add("md:display-none");
       sidebar.classList.remove("md:display-none");
@@ -71,7 +71,7 @@ export class Board { // listens to [board:selected, created, updated]
 
     component.addEventListener("board:updated", (event) => {
       // @ts-ignore
-      operation(globalThis.client_variables.is_anonymous ? "update" : "select", event.detail);      
+      operation(globalThis.client_variables.is_anonymous ? "update" : "select", event.detail);
       console.log("board:updated");
     });
 

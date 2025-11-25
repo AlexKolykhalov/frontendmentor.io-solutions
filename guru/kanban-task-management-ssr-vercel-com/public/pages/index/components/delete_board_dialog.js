@@ -26,9 +26,7 @@ export class DeleteBoardDialog {
     return this.#create();
   }
 
-  /**
-   * @returns {Element}
-   */
+  /** @returns {Element} */
   static #create() {
     const template     = document.createElement("template");
     template.innerHTML = this.#template();
@@ -89,7 +87,7 @@ export class DeleteBoardDialog {
 	  const { openSessionExpiredDialog } = await import("../functions.js");
 	  await openSessionExpiredDialog();
 	}
-	
+
 	this.removeAttribute("disabled"); // enable deleteBtn
 	loader.remove();
 
@@ -115,7 +113,7 @@ export class DeleteBoardDialog {
     });
 
     const closeDialogBtn = component.querySelector('button[aria-label="close"]');
-    if (!closeDialogBtn) throw new Error(`Can't find <button aria-label="close">`);
+    if (!closeDialogBtn) throw new Error(`<button aria-label="close"> is missing`);
     closeDialogBtn.addEventListener("click", () => component.remove());
   }
 }

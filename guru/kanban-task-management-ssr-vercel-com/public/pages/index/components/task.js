@@ -70,7 +70,6 @@ export class Task {
    * @returns {void}
    */
   static handleEvents(component) {
-    // @ts-ignore    
     if (component.hasAttribute("data-locked")) {
       component.addEventListener("click", async () => {
 	const { openAuthzDialog } = await import("../functions.js");
@@ -91,7 +90,7 @@ export class Task {
 
 	const taskID = component.getAttribute("data-id");
 	if (!taskID) throw new Error("[data-id] is missing")
-	
+
 	// [Errors 401, 403, 404, 405, 500] [Success 200]
 	const response = await fetch(`/v1/tasks/${taskID}`);
 
@@ -105,7 +104,7 @@ export class Task {
 	    const { openSessionExpiredDialog } = await import("../functions.js");
 	    await openSessionExpiredDialog();
 	  }
-	  
+
 	  loader.remove();
 
 	  return;
@@ -117,27 +116,27 @@ export class Task {
 	    response.status === 404 ? "Search error" : "Server error",
 	    response.status === 404 ? "Task not found" : "Something went wrong. Try again"
 	  );
-	  
+
 	  loader.remove();
 
 	  return;
 	};
 
-	const { TaskDialog } = await import("../components/task_dialog.js");
+	const { TaskDialog } = await import("./task_dialog.js");
 	const dialog = TaskDialog.init(await response.json());
 	document.querySelector("body")?.appendChild(dialog);
 	// @ts-ignore
 	dialog.showModal();
 
 	loader.remove();
-      });  
+      });
     }
-    
+
     component.addEventListener("dragstart", (event) => { // dragover & drop see in column.js
       if (!event.target) throw new Error("Target element is missing");
 
       // @ts-ignore
       event.target.classList.add("moving");
-    }); 
+    });
   }
 }
