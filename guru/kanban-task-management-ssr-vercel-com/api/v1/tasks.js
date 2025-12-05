@@ -16,7 +16,7 @@ export default async function (req, res) {
     if (req.method === "POST") {
       const { data, error } = await supabase.rpc("create_task", {
 	p_task: req.body.task,
-	p_column_id: req.body.column_id
+	p_column_id: req.body.columnID
       });
       if (error) {
 	if (error.code === "PT403") return res.status(403).end();
