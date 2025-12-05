@@ -1,30 +1,25 @@
 // @ts-check
 
-import { Board }                            from "./board.js";
-import { Column }                           from "./column.js";
-import { DynamicList }                      from "./dynamic_list.js";
-import { emit, insert, openRedirectDialog } from "./_helpers.js";
+import { Board }       from "./board.js";
+import { Column }      from "./column.js";
+import { DynamicList } from "./dynamic_list.js";
 
 export class AddNewTaskDialog {
   /** @returns {string} HTML string */
   static #template() {
-    const ul = document.querySelector(`#${Board.prefix} ul`);
-    if (!ul) throw new Error(`Missing #${Board.prefix} <ul>`);
+    const ul = document.querySelector(`[data-prefix="${Board.prefix}"] ul`);
+    if (!ul) throw new Error(`[data-prefix="${Board.prefix}"] <ul> element is missing`);
 
-    const options = [...ul.children].map(
-      (column, index) => {
-	const id = column.getAttribute("id");
-	const h3 = column.querySelector("h3");
+    const options = [...ul.children].map((column, index) => {
+      const h3 = column.querySelector("h3");
+      const id = column.getAttribute("data-id");
+      if (!id) throw new Error(`[data-prefix="${Column.prefix}"] [data-id] is missing`);
+      if (!h3) throw new Error(`[data-prefix="${Column.prefix}"] <h3> is missing`);
 
-	if (!id) throw new Error(`Missing "id" attribute in "Column" template`);
-	if (!h3) throw new Error(`Missing li id="${Column.prefix}-" <h3>`);
+      const name = h3.textContent?.slice(0, h3.textContent.lastIndexOf("(") - 1);
 
-	const idValue = id.slice(`${Column.prefix}-`.length);
-	const name    = h3.textContent?.slice(0, h3.textContent.lastIndexOf("(") - 1);
-
-	return `<option value="${idValue}" ${index === 0 ? "selected" : ""}>${name}</option>`;
-      }
-    ).join("");
+      return `<option value="${id}" ${index === 0 ? "selected" : ""}>${name}</option>`;
+    }).join("");
 
     return `<dialog class="bg-n-000-800">
               <div class="column gap-l">
@@ -53,19 +48,17 @@ export class AddNewTaskDialog {
   /** @returns {Element} */
   static init() {
     const component = this.#create();
+    const element   = component.querySelector("dynamic-list");
+    if (!element)   throw new Error("<dynamic-list> is missing");
 
-    insert(
-      DynamicList.init(
-	{
-	  title: "Subtasks",	  
-	  items: [],
-	  btnText: "+ Add New Subtask",
-	  min: 0,
-	  max: 8
-	}
-      ),
-      "dynamic-list",
-      component
+    element.replaceWith(
+      DynamicList.init({
+	title: "Subtasks",
+	items: [],
+	btnText: "+ Add New Subtask",
+	min: 0,
+	max: 8
+      })
     );
 
     return component;
@@ -76,7 +69,7 @@ export class AddNewTaskDialog {
     const template     = document.createElement("template");
     template.innerHTML = this.#template();
     const component    = template.content.firstElementChild;
-    if (!component)    throw new Error("Can't create \"AddNewTaskDialog\" component");
+    if (!component)    throw new Error(`Can't create ${this.name} component`);
 
     this.#handleEvents(component);
 
@@ -85,17 +78,16 @@ export class AddNewTaskDialog {
 
   /**
    * @param {Element} component
-   *
    * @returns {void}
    */
   static #handleEvents(component) {
     const input = component.querySelector("#task_name");
-    if (!input) throw new Error(`Can't find <input id="task_name">`);
-    input.addEventListener("input", function() { this.removeAttribute("style"); });
+    if (!input) throw new Error(`<input id="task_name"> is missing`);
+    input.addEventListener("input", function() { this.removeAttribute("style") });
 
     const select = component.querySelector("#current_status");
-    if (!select) throw new Error(`Missing <select id="current_status">`);
-    select.addEventListener("input", function () {
+    if (!select) throw new Error(`<select id="current_status"> is missing`);
+    select.addEventListener("input", () => {
       select.querySelector("option[selected]")?.removeAttribute("selected");
       // @ts-ignore
       const elem = [...select.children].find(item => item.value === select.value);
@@ -103,7 +95,7 @@ export class AddNewTaskDialog {
     });
 
     const createNewTaskBtn = component.querySelector(`dynamic-list + div + button`);
-    if (!createNewTaskBtn) throw new Error(`Can't find "Create Task" button`);
+    if (!createNewTaskBtn) throw new Error(`"Create Task" button is missing`);
     createNewTaskBtn.addEventListener("click", async function() {
 
       if (!validation()) return;
@@ -115,41 +107,47 @@ export class AddNewTaskDialog {
       const subtasksList = component.querySelector("ul");
       const select       = component.querySelector("select"); // contains column id
 
-      if (!taskName)     throw new Error("Can't find <input id=\"task_name\">");
-      if (!description)  throw new Error("Can't find <textarea id=\"task_description\">");
-      if (!subtasksList) throw new Error("Can't find <ul>");
-      if (!select)       throw new Error("Can't find <select>");
+      if (!taskName)     throw new Error(`<input id="task_name"> is missing`);
+      if (!description)  throw new Error(`<textarea id="task_description"> is missing`);
+      if (!subtasksList) throw new Error(`<ul> is missing`);
+      if (!select)       throw new Error(`<select> is missing`);
 
-      const selectedColumn = document.querySelector(`#${Column.prefix}-${select.value}`);
-      if (!selectedColumn) throw new Error(`Can't find <li id="${select.value}">`);
+      const selectedColumn = document.querySelector(`[data-id="${select.value}"]`);
+      if (!selectedColumn) throw new Error(`${Column.prefix} [data-id="${select.value}"] is missing`);
 
       /** @type {import("./task.js").TaskType} */
-      const task = {	
+      const sendingTaskData = {
 	id: "",
 	title: taskName.value.trim(),
 	description: description.value.trim(),
 	subtasks: [...subtasksList.children].map(
 	  item => {
 	    const input = item.querySelector("input");
-	    if (!input) throw new Error("Missing <input>");
+	    if (!input) throw new Error("<input> is missing");
 
 	    return { id: "", title: input.value.trim(), isCompleted: false };
 	  }
 	)
       };
 
-      console.log(task);
-      
-      if (globalThis.role === "anonymous") {
-	task.id = crypto.randomUUID();
-	emit("task:created", task, selectedColumn);
+      if (globalThis.client_variables.is_anonymous) {
+	sendingTaskData.id = crypto.randomUUID();
 
+	const taskList = selectedColumn.querySelector("ul");
+	if (!taskList) throw new Error(`#${Column.prefix} [data-id="${select.value}"] <ul> is missing`);
+	const { Task } = await import("./task.js");
+	taskList.appendChild(Task.init({ task: sendingTaskData, locked: true }));
 	component.remove();
+	// @ts-ignore (mob-view click dropdownListToggleBtn)
+	document.querySelector(".dropdown-list-toggle-btn")?.click();
+
+	selectedColumn.dispatchEvent(new CustomEvent("column:updated"));
 
 	return;
       }
 
-      this.setAttribute("disabled", "");
+      this.setAttribute("disabled", ""); // disabled createNewTaskBtn
+
       // add indicator
       const { LoaderRipple } = await import("../../_shared/components/loader_ripple.js");
       const loader = LoaderRipple.init();
@@ -157,7 +155,7 @@ export class AddNewTaskDialog {
       loader.setAttribute("style", "--size: 25px; right: 5%;");
       this.appendChild(loader);
 
-      const url     = "http://localhost:4000/rpc/create_task";
+      const url     = "/v1/tasks";
       const options = {
 	method: "POST",
 	headers: {
@@ -165,62 +163,72 @@ export class AddNewTaskDialog {
 	  "Authorization": `Bearer ${ localStorage.getItem("bearer") }`,
 	},
 	body: JSON.stringify({
-	  p_task: task,
-	  p_column_id: select.value
+	  task:     sendingTaskData,
+	  columnID: select.value
 	}),
       };
-      // [Errors 400, 401, 403] [Success 200]
+      // [Errors 401, 403, 405, 500] [Success 201]
       let response = await fetch(url, options);
 
       if (response.status === 401) {
 	// [Errors 400, 401, 500] [Success 201]
-	const resAuthz = await fetch("http://localhost:3000/api/generate_authz_token", { method: "POST" });
-	if (resAuthz.status === 401) {
-	  await openRedirectDialog();
+	const responseBearer = await fetch("/v1/bearers/generate", { method: "POST" });
+
+	if (responseBearer.status !== 201) {
+	  if (responseBearer.status === 401) {
+	    const { openSessionExpiredDialog } = await import("../functions.js");
+	    await openSessionExpiredDialog();
+	  } else {
+	    const { openPopUp } = await import("../../_shared/functions.js");
+	    await openPopUp("Authentication token error", "Something went wrong. Try again.");
+	  }
+
+	  component.remove(); // close this dialog
+	  // @ts-ignore (mob-view click dropdownListToggleBtn)
+	  document.querySelector(".dropdown-list-toggle-btn")?.click();
 
 	  return;
 	}
 
-	if (resAuthz.status !== 201) {
-	  const { PopUp } = await import("../../_shared/components/pop_up.js");
-	  document.body.appendChild(
-	    PopUp.init({
-	      title: "Authentication token error",
-	      message: "Something went wrong. Try again."
-	    })
-	  );
-	  this.removeAttribute("disabled");
-	  loader.remove();
+	const bearer = await responseBearer.json();
 
-	  return;
-	}
-
-	localStorage.setItem("bearer", await resAuthz.json());
-	options.headers.Authorization = `Bearer ${ localStorage.getItem("bearer") }`;
+	localStorage.setItem("bearer", bearer);
+	options.headers.Authorization = `Bearer ${ bearer }`;
 	response = await fetch(url, options);
       }
 
-      if (response.status !== 200) {
-	const { PopUp } = await import("../../_shared/components/pop_up.js");
-	document.body.appendChild(
-	  PopUp.init({
-	    title: "Server error",
-	    message: "Something went wrong. Try again."
-	  })
-	);
-	this.removeAttribute("disabled");
-	loader.remove();
+      if (response.status === 403) {
+	component.remove(); // close this dialog
+	// @ts-ignore (mob-view click dropdownListToggleBtn)
+	document.querySelector(".dropdown-list-toggle-btn")?.click();
+
+	const { openAuthzDialog } = await import("../functions.js");
+	await openAuthzDialog();
 
 	return;
       }
 
-      emit("task:created", await response.json(), selectedColumn);
+      if (response.status !== 201) {
+	component.remove(); // close this dialog
+	// @ts-ignore (mob-view click dropdownListToggleBtn)
+	document.querySelector(".dropdown-list-toggle-btn")?.click();
 
-      component.remove();
+	const { openPopUp } = await import("../../_shared/functions.js");
+	await openPopUp("Server error", "Something went wrong. Try again");
+
+	return;
+      }
+
+      component.remove(); // close this dialog
+      // @ts-ignore (mob-view click dropdownListToggleBtn)
+      document.querySelector(".dropdown-list-toggle-btn")?.click();
+
+      const receivedTaskData = await response.json();
+      selectedColumn.dispatchEvent(new CustomEvent("task:created", { detail: receivedTaskData }));
     });
 
     const closeDialogBtn = component.querySelector('button[aria-label="close"]');
-    if (!closeDialogBtn) throw new Error("Can't find <button aria-label=\"close\">");
+    if (!closeDialogBtn) throw new Error(`<button aria-label="close"> is missing`);
     closeDialogBtn.addEventListener("click", () => component.remove());
 
     // *** ADDITIONAL FUNCTIONS ***
@@ -229,9 +237,8 @@ export class AddNewTaskDialog {
     function validation() {
       const inputTaskName = component.querySelector("#task_name");
       const subtasksList  = component.querySelector("ul");
-
-      if (!inputTaskName) throw new Error("Can't find <input id=\"task_name\">");
-      if (!subtasksList)  throw new Error("Can't find <ul>");
+      if (!inputTaskName) throw new Error(`<input id="task_name"> is missing`);
+      if (!subtasksList)  throw new Error(`<ul> is missing`);
 
       let isValid = true;
 
