@@ -1,29 +1,22 @@
 // @ts-check
 
-import { generateRandomSymbols, insert } from "./_helpers.js";
 import { CheckListItem } from "./check_list_item.js";
 
 /**
- * @typedef {object} CheckListType
+ * @typedef  {object}                                             CheckListType
  * @property {string}                                             title
  * @property {import("./check_list_item.js").CheckListItemType[]} items
  */
 
-// listens to [check-list-item:changed]
-export class CheckList {
+export class CheckList { // listens to [check-list-item:changed]
 
   /**
    * @param {CheckListType} props
-   *
    * @returns {string} HTML string
    */
   static #template(props) {
-    const title = props ? props.title ?? "Check list" : "Check list";
-    const items = props ? props.items ?? [] : [];
-
-    // An ID required if there are two or more "checklists" in one parent component
-    return `<div id="${generateRandomSymbols(4)}" class="column gap-sm">
-              <p class="fw-bold fs-200 clr-n-600 letter-spacing-m">${title} (${items.filter(item => item.checked).length} of ${items.length})</p>
+    return `<div class="column gap-sm">
+              <p class="fw-bold fs-200 clr-n-600 letter-spacing-m">${props.title} (${props.items.filter(item => item.checked).length} of ${props.items.length})</p>
               <ul class="column gap-sm">
                 <check-list-items></check-list-items>
               </ul>
@@ -32,33 +25,33 @@ export class CheckList {
 
   /**
    * @param {CheckListType} props
-   *
    * @returns {Element}
    */
   static init(props) {
-    const component = this.#create(props);
+    const component      = this.#create(props);
+    const fragment       = document.createDocumentFragment();
+    const checkListItems = component.querySelector("check-list-items");
+    if (!checkListItems) throw new Error("<check-list-items> is missing");
 
-    const fragment = document.createDocumentFragment();
     props.items.forEach(item => {
       fragment.appendChild(
 	CheckListItem.init({ id: item.id, value: item.value, checked: item.checked })
       );
     });
-    insert(fragment, "check-list-items", component);
+    checkListItems.replaceWith(fragment);
 
     return component;
   }
 
   /**
    * @param {CheckListType} props
-   *
    * @returns {Element}
    */
   static #create(props) {
     const template     = document.createElement("template");
     template.innerHTML = this.#template(props);
     const component    = template.content.firstElementChild;
-    if (!component)    throw new Error("Can't create \"CheckList\" component");
+    if (!component)    throw new Error(`Can't create ${this.name} component`);
 
     this.#handleEvents(component);
 
@@ -67,19 +60,17 @@ export class CheckList {
 
   /**
    * @param {Element} component
-   *
    * @returns {void}
    */
   static #handleEvents(component) {
     component.addEventListener("check-list-item:changed", () => {
       const titleElement = component.querySelector("p");
-      if (!titleElement) throw new Error("Missing <p>");
-      const title = titleElement.textContent?.slice(0, titleElement.textContent.lastIndexOf("(")).trim();
+      if (!titleElement) throw new Error("<p> is missing");
 
       const allCheckboxes     = [...component.querySelectorAll("input")];
       const checkedCheckboxes = allCheckboxes.filter(input => input.checked);
+      const title = titleElement.textContent?.slice(0, titleElement.textContent.lastIndexOf("(")).trim();
       titleElement.textContent=`${title} (${checkedCheckboxes.length} of ${allCheckboxes.length})`;
     });
   }
 }
-
