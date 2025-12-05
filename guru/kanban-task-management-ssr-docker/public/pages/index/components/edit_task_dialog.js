@@ -1,57 +1,49 @@
 // @ts-check
 
-import { Board }                      from "./board.js";
-import { Column }                     from "./column.js";
-import { DynamicList }                from "./dynamic_list.js";
-import { emit, generateRandomSymbols,
-	 insert, openRedirectDialog,
-	 openAuthzDialog }            from "./_helpers.js";
+import { Board }                 from "./board.js";
+import { Column }                from "./column.js";
+import { DynamicList }           from "./dynamic_list.js";
+import { generateRandomSymbols } from "../functions.js";
 
-// listens to [dynamic-list-item:changed, added, removed]
-export class EditTaskDialog {
-
-  static prefix = "edit_task_dialog"; // using in dynamic_list.js
-
-  /** @type { {task:import("./task.js").TaskType, column_id:string} } */
+export class EditTaskDialog { // listens to [dynamic-list-item:changed, added, removed]
+  /** @type {{task:import("./task.js").TaskType, columnID:string}} */
   static #state = {
     task: { id: "", title: "", description: "", subtasks: [] },
-    column_id: ""
+    columnID: ""
   };
 
-  /** @returns { {task:import("./task.js").TaskType, column_id:string} } */
+  /** @returns {{task:import("./task.js").TaskType, columnID:string}} */
   static #getState() {
     return JSON.parse(JSON.stringify(this.#state));
   }
 
-  /** @param { {task:import("./task.js").TaskType, column_id:string} } value */
+  /** @param {{task:import("./task.js").TaskType, columnID:string}} value */
   static #setState(value) {
-    return this.#state = value;
+    this.#state = value;
   }
 
   /** @returns {string} HTML string */
   static #template() {
-    const state = this.#getState();
+    const columnsList = document.querySelector(`[data-prefix="${Board.prefix}"] ul`);
+    if (!columnsList) throw new Error(`[data-prefix="${Board.prefix}"] <ul> is missing`);
 
-    const ul = document.querySelector(`#${Board.prefix} ul`);
-    if (!ul) throw new Error(`Missing #${Board.prefix} <ul>`);
-    const columns = [...ul.children].map(
+    const state   = this.#getState();
+    const options = [...columnsList.children].map(
       column => {
-	const id = column.getAttribute("id");
 	const h3 = column.querySelector("h3");
+	const id = column.getAttribute("data-id");
+	if (!h3) throw new Error(`${Column.prefix} <h3> is missing`);
+	if (!id) throw new Error(`${Column.prefix} [data-id] is missing`);
 
-	if (!id) throw new Error(`Missing "id" attribute in "Column" template`);
-	if (!h3) throw new Error(`Missing li id="${Column.prefix}-" <h3>`);
+	const taskElement = column.querySelector(`[data-id="${state.task.id}"]`);
+	const name = h3.textContent?.slice(0, h3.textContent.lastIndexOf("(") - 1);
 
-	const idValue = id.slice(`${Column.prefix}-`.length);
-	const name    = h3.textContent?.slice(0, h3.textContent.lastIndexOf("(") - 1);
-
-	return `<option value="${idValue}" ${idValue === state.column_id ? "selected" : ""}>${name}</option>`;
+	return `<option value="${id}" ${taskElement ? "selected" : ""}>${name}</option>`;
       }
     ).join("");
 
-    const selectID = generateRandomSymbols(5);
-
-    return `<dialog id="${this.prefix}" class="bg-n-000-800">
+    const id = generateRandomSymbols(5);
+    return `<dialog class="bg-n-000-800">
               <div class="column gap-l">
                 <div class="row gap-m no-wrap main-axis-space-between cross-axis-start">
                   <h2 class="fs-900 clr-n-900-000">Edit task</h2>
@@ -67,8 +59,8 @@ export class EditTaskDialog {
                 </div>
                 <dynamic-list></dynamic-list>
                 <div class="column gap-sm">
-                  <label class="fw-bold fs-200 clr-n-600-000" for="${selectID}">Current Status</label>
-                  <select class="pad-sm fs-300 fw-medium clr-n-900-000 bg-n-100-900" id="${selectID}">${columns}</select>
+                  <label class="fw-bold fs-200 clr-n-600-000" for="${id}">Current Status</label>
+                  <select class="pad-sm fs-300 fw-medium clr-n-900-000 bg-n-100-900" id="${id}">${options}</select>
                 </div>
                 <div class="row gap-l main-axis-end">
                   <button class="[ relative ] fw-bold fs-300 pad-h-l clr-n-000 pad-v-sm border-radius-l bg-p-purple" disabled>Save Changes</button>
@@ -79,33 +71,36 @@ export class EditTaskDialog {
   }
 
   /**
-   * @param { {task:import("./task.js").TaskType, column_id:string} } dataTask
-   *
+   * @param {import("./task.js").TaskType} task
    * @returns {Element}
    */
-  static init(dataTask) {
-    this.#setState(dataTask);
+  static init(task) {
+    const columnID = document.querySelector(`[data-id="${task.id}"]`)?.
+      closest(`[data-prefix="${Column.prefix}"]`)?.
+      getAttribute("data-id");
 
-    const component = this.#create();
+    if (!columnID) throw new Error(`Column [data-id] is missing`);
 
-    insert(
+    this.#setState({ task: task, columnID: columnID });
+
+    const component   = this.#create();
+    const dynamicList = component.querySelector("dynamic-list");
+    if (!dynamicList) throw new Error("<dynamic-list> is missing");
+
+    dynamicList.replaceWith(
       DynamicList.init({
 	title: "Subtasks",
-	items: dataTask.task.subtasks.map(subtask => {
-	  /** @type {import("./dynamic_list_item.js").DynamicListItemType} */
-	  const item = {
+	items: task.subtasks.map(subtask => {
+	  return {
 	    id: subtask.id,
 	    placeholder: "e.g. Make a coffee",
-	    value: subtask.title	    
-	  };
-	  return item;
+	    value: subtask.title
+	  }
 	}),
 	btnText: "+ Add New Subtask",
 	min: 0,
 	max: 8
-      }),
-      "dynamic-list",
-      component
+      })
     );
 
     return component;
@@ -116,7 +111,7 @@ export class EditTaskDialog {
     const template     = document.createElement("template");
     template.innerHTML = this.#template();
     const component    = template.content.firstElementChild;
-    if (!component)    throw new Error("Can't create \"AddNewTaskDialog\" component");
+    if (!component)    throw new Error(`Can't create ${this.name} component`);
 
     this.#handleEvents(component);
 
@@ -125,7 +120,6 @@ export class EditTaskDialog {
 
   /**
    * @param {Element} component
-   *
    * @returns {void}
    */
   static #handleEvents(component) {
@@ -134,22 +128,23 @@ export class EditTaskDialog {
     const revertBtn   = controlBtns[2];
 
     const input = component.querySelector("#task_name");
-    if (!input) throw new Error("Missing <input id=\"task_name\">");
+    if (!input) throw new Error(`<input id="task_name"> is missing`);
     input.addEventListener("input", function() {
       this.removeAttribute("style");
       checkEditTaskDialogState();
     });
 
     const textarea = component.querySelector("#task_description");
-    if (!textarea) throw new Error("Missing <input id=\"task_description\">");
+    if (!textarea) throw new Error(`<input id="task_description"> is missing`);
     textarea.addEventListener("input", () => checkEditTaskDialogState());
 
     const select = component.querySelector("select");
-    if (!select) throw new Error("Missing <select>");
-    select.addEventListener("input", function () {
+    if (!select) throw new Error("<select> is missing");
+    select.addEventListener("input", () => {
       select.querySelector("option[selected]")?.removeAttribute("selected");
+      
       // @ts-ignore
-      const elem = [...select.children].find(item => item.value === select.value);
+      const elem = [...select.children].find(option => option.value === select.value);
       elem?.setAttribute("selected", "");
 
       checkEditTaskDialogState();
@@ -158,13 +153,37 @@ export class EditTaskDialog {
     saveBtn.addEventListener("click", async function() {
       if (!validation()) return;
 
-      if (globalThis.role === "anonymous") { openAuthzDialog(); return; }
-
       const sendingTaskData = getDifferences();
+      if (!sendingTaskData) return; // if no differences do nothing
+      const state      = EditTaskDialog.#getState();
+      const columnFrom = document.querySelector(`[data-id="${state.columnID}"]`);
+      const columnTo   = document.querySelector(`[data-id="${sendingTaskData.columnID}"]`);
+      if (!columnFrom) throw new Error(`[data-id="${state.columnID}"] is missing`);
+      if (!columnTo)   throw new Error(`[data-id="${sendingTaskData.columnID}"] is missing`);
 
-      if (!sendingTaskData) return;
+      if (globalThis.client_variables.is_anonymous) {
+	// remove all deleted subtasks
+	sendingTaskData.task.subtasks = sendingTaskData.task.subtasks.filter(
+	  subtask => subtask.title !== ""
+	);
 
-      this.setAttribute("disabled", "");
+	// close all opened dialogs
+	document.querySelectorAll("dialog").forEach(dialog => dialog.remove());
+
+	if (columnFrom !== columnTo) {
+	  // move Task from one Column to another
+	  columnFrom.dispatchEvent(new CustomEvent("task:deleted", { detail: sendingTaskData.task.id }));
+	  columnTo.dispatchEvent(new CustomEvent("task:created", { detail: sendingTaskData.task }));
+	} else {
+	  // update Task without moving
+	  columnFrom.dispatchEvent(new CustomEvent("task:updated", { detail: sendingTaskData.task }));
+	}
+
+	return;
+      }
+
+      this.setAttribute("disabled", ""); // disabled saveBtn
+
       // add indicator
       const { LoaderRipple } = await import("../../_shared/components/loader_ripple.js");
       const loader = LoaderRipple.init();
@@ -172,98 +191,96 @@ export class EditTaskDialog {
       loader.setAttribute("style", "--size: 25px; right: 5%;");
       this.appendChild(loader);
 
-      const url     = "http://localhost:4000/rpc/update_task";
+      const url     = `/v1/tasks/${sendingTaskData.task.id}`;
       const options = {
-	method: "POST",
+	method: "PUT",
 	headers: {
 	  "Content-Type": "application/json",
 	  "Authorization": `Bearer ${ localStorage.getItem("bearer") }`,
 	},
 	body: JSON.stringify({
-	  p_task:      sendingTaskData.task,
-	  p_column_id: sendingTaskData.column_id
+	  task:     sendingTaskData.task,
+	  columnID: sendingTaskData.columnID
 	}),
       };
-      // [Errors 401, 403] [Success 200]
+
+      // [Errors 401, 403, 404, 405, 500] [Success 200]
       let response = await fetch(url, options);
 
       if (response.status === 401) {
 	// [Errors 400, 401, 500] [Success 201]
-	const resAuthz = await fetch("http://localhost:3000/api/generate_authz_token", { method: "POST" });
-	if (resAuthz.status === 401) {
-	  await openRedirectDialog();
+	const responseBearer = await fetch("/v1/bearers/generate", { method: "POST" });
+
+	if (responseBearer.status !== 201) {
+	  // close all opened dialogs
+	  document.querySelectorAll("dialog").forEach(dialog => dialog.remove());
+	  if (responseBearer.status === 401) {
+	    const { openSessionExpiredDialog } = await import("../functions.js");
+	    await openSessionExpiredDialog();
+	  } else {
+	    const { openPopUp } = await import("../../_shared/functions.js");
+	    await openPopUp("Authentication token error", "Something went wrong. Try again.");
+	  }
 
 	  return;
 	}
 
-	if (resAuthz.status !== 201) {
-	  const { PopUp } = await import("../../_shared/components/pop_up.js");
-	  document.body.appendChild(
-	    PopUp.init({
-	      title: "Authentication token error",
-	      message: "Something went wrong. Try again."
-	    })
-	  );
-	  this.removeAttribute("disabled");
-	  loader.remove();
+	const bearer = await responseBearer.json();
 
-	  return;
-	}
-
-	localStorage.setItem("bearer", await resAuthz.json());
-	options.headers.Authorization = `Bearer ${ localStorage.getItem("bearer") }`;
+	localStorage.setItem("bearer", bearer);
+	options.headers.Authorization = `Bearer ${ bearer }`;
 	response = await fetch(url, options);
-      }
+      };
 
-      if (response.status !== 200) {
-	const { PopUp } = await import("../../_shared/components/pop_up.js");
-	document.body.appendChild(
-	  PopUp.init({
-	    title: "Server error",
-	    message: "Something went wrong. Try again."
-	  })
-	);
-	this.removeAttribute("disabled");
-	loader.remove();
+      if (response.status === 403) {
+	// close all opened dialogs
+	document.querySelectorAll("dialog").forEach(dialog => dialog.remove());
+	const { openAuthzDialog } = await import("../functions.js");
+	await openAuthzDialog();
 
 	return;
       }
 
-      const receivingTaskData = await response.json();
+      if (response.status === 404 || response.status !== 200) {
+	// close all opened dialogs
+	document.querySelectorAll("dialog").forEach(dialog => dialog.remove());
+	const { openPopUp } = await import("../../_shared/functions.js");
+	await openPopUp(
+	  response.status === 404 ? "Search error" : "Server error",
+	  response.status === 404 ? "Task not found" : "Something went wrong. Try again"
+	);
 
-      const state = EditTaskDialog.#getState();
-      if (sendingTaskData.column_id !== state.column_id) {
-	// move task from one column to another
-	const increasedColumn = document.querySelector(`#column-${sendingTaskData.column_id}`);
-	const reducedColumn   = document.querySelector(`#column-${state.column_id}`);
-	if (!increasedColumn) throw new Error(`Can't find <li id="${sendingTaskData.column_id}">`);
-	if (!reducedColumn)   throw new Error(`Can't find <li id="${state.column_id}">`);
-
-	emit("task:deleted", receivingTaskData, reducedColumn);
-	emit("task:created", receivingTaskData, increasedColumn);
-      } else {
-	const selectedColumn = document.querySelector(`#column-${state.column_id}`);
-	if (!selectedColumn) throw new Error(`Can't find <li id="${state.column_id}">`);
-
-	// update task without moving
-	emit("task:updated", receivingTaskData, selectedColumn);
+	return;
       }
 
       // close all opened dialogs
       document.querySelectorAll("dialog").forEach(dialog => dialog.remove());
+
+      /** @type {import("./task.js").TaskType} */
+      const receivedTaskData = await response.json();
+      if (sendingTaskData.columnID !== state.columnID) {
+	// move task from one Column to another
+	columnFrom.dispatchEvent(new CustomEvent("task:deleted", { detail: receivedTaskData.id }));
+	columnTo.dispatchEvent(new CustomEvent("task:created", { detail: receivedTaskData }));
+      } else {
+	// update task without moving
+	columnFrom.dispatchEvent(new CustomEvent("task:updated", { detail: receivedTaskData }));
+      }
     });
 
-    revertBtn.addEventListener("click", function() {
+    revertBtn.addEventListener("click", () => {
       /** @type {HTMLInputElement|null} */
       const taskNameInput    = component.querySelector("#task_name");
       /** @type {HTMLTextAreaElement|null} */
       const descriptionInput = component.querySelector("#task_description");
       const select           = component.querySelector("select"); // contains column id
       const listOfSubtasks   = component.querySelector("ul");
-      if (!taskNameInput)    throw new Error("Missing <input id=\"task_name\">");
-      if (!descriptionInput) throw new Error("Missing <textarea id=\"task_description\">");
-      if (!select)           throw new Error("Can't find <select>");
-      if (!listOfSubtasks)   throw new Error("Missing <ul>");
+      const dynamicList      = component.querySelector("[data-id]");
+      if (!taskNameInput)    throw new Error(`<input id="task_name"> is missing`);
+      if (!descriptionInput) throw new Error(`<textarea id="task_description"> is missing`);
+      if (!select)           throw new Error("<select> is missing");
+      if (!listOfSubtasks)   throw new Error("<ul> is missing");
+      if (!dynamicList)      throw new Error("DynamicList is missing");
 
       const state = EditTaskDialog.#getState();
 
@@ -271,30 +288,26 @@ export class EditTaskDialog {
       taskNameInput.removeAttribute("style");
       descriptionInput.value = state.task.description;
       // @ts-ignore
-      const elem = [...select.children].find(item => item.value === state.column_id);
+      const elem = [...select.children].find(item => item.value === state.columnID);
+      if (!elem) throw new Error(`<option> with ${state.columnID} is missing`);
 
-      if (!elem) throw new Error(`Can't find <option> with ${state.column_id} value`);
       select.querySelector("option[selected]")?.removeAttribute("selected");
       elem.setAttribute("selected", "");
 
-      insert(
+      dynamicList.replaceWith(
 	DynamicList.init({
 	  title: "Subtasks",
 	  items: state.task.subtasks.map(subtask => {
-	    /** @type {import("./dynamic_list_item.js").DynamicListItemType} */
-	    const item = {
+	    return {
 	      id: subtask.id,
 	      placeholder: "e.g. Make a coffee",
-	      value: subtask.title	      
+	      value: subtask.title
 	    };
-	    return item;
 	  }),
 	  btnText: "+ Add New Subtask",
 	  min: 0,
 	  max: 8
-	}),
-	`[id^=${DynamicList.prefix}-]`,
-	component
+	})
       );
 
       saveBtn.setAttribute("disabled", "");
@@ -302,7 +315,7 @@ export class EditTaskDialog {
     });
 
     const closeDialogBtn = component.querySelector('button[aria-label="close"]');
-    if (!closeDialogBtn) throw new Error("Can't find <button aria-label=\"close\">");
+    if (!closeDialogBtn) throw new Error(`<button aria-label="close"> is missing`);
     closeDialogBtn.addEventListener("click", () => component.remove());
 
     // *** ADDITIONAL LISTENERS ***
@@ -313,6 +326,7 @@ export class EditTaskDialog {
 
     // *** ADDITIONAL FUNCTIONS ***
 
+    /** @returns {void} */
     function checkEditTaskDialogState() {
       if (getDifferences()) {
 	saveBtn.removeAttribute("disabled");
@@ -327,9 +341,8 @@ export class EditTaskDialog {
     function validation() {
       const inputTaskName = component.querySelector("#task_name");
       const subtasksList  = component.querySelector("ul");
-
-      if (!inputTaskName) throw new Error("Can't find <input id=\"task_name\">");
-      if (!subtasksList)  throw new Error("Can't find <ul>");
+      if (!inputTaskName) throw new Error(`<input id="task_name"> is missing`);
+      if (!subtasksList)  throw new Error("<ul> is missing");
 
       let isValid = true;
 
@@ -349,7 +362,7 @@ export class EditTaskDialog {
       return isValid;
     }
 
-    /** @returns {{task:import("./task.js").TaskType, column_id:string}|null} Returns differences or null (no differences) */
+    /** @returns {{task:import("./task.js").TaskType, columnID:string} | null} Returns differences or null (no differences) */
     function getDifferences() {
       /** @type {HTMLInputElement|null} */
       const taskNameInput    = component.querySelector("#task_name");
@@ -357,10 +370,10 @@ export class EditTaskDialog {
       const descriptionInput = component.querySelector("#task_description");
       const select           = component.querySelector("select"); // contains column id
       const listOfSubtasks   = component.querySelector("ul");
-      if (!taskNameInput)    throw new Error("Missing <input id=\"task_name\">");
-      if (!descriptionInput) throw new Error("Missing <textarea id=\"task_description\">");
-      if (!select)           throw new Error("Can't find <select>");
-      if (!listOfSubtasks)   throw new Error("Missing <ul>");
+      if (!taskNameInput)    throw new Error(`<input id="task_name"> is missing`);
+      if (!descriptionInput) throw new Error(`<textarea id="task_description"> is missing`);
+      if (!select)           throw new Error("<select> is missing");
+      if (!listOfSubtasks)   throw new Error("<ul>(subtasks) is missing");
 
       let   flag      = false;
       let   addings   = [];
@@ -376,18 +389,18 @@ export class EditTaskDialog {
 	stateData.task.description = descriptionInput.value.trim();
       }
 
-      if (stateData.column_id !== select.value) {
+      if (stateData.columnID !== select.value) {
 	flag = true;
-	stateData.column_id = select.value;
+	stateData.columnID = select.value;
       }
 
       if (stateData.task.subtasks.length === 0 && [...listOfSubtasks.children].length > 0) {
 	[...listOfSubtasks.children].forEach(item => {
 	  const input = item.querySelector("input");
-	  if (!input) throw new Error("Missing <input> in <li> element");
+	  if (!input) throw new Error("<input>(subtasks) is missing");
 
 	  addings.push({ id: "", title: input.value.trim(), isCompleted: false }); // ADD
-	});	
+	});
 
 	flag = true;
       }
@@ -396,13 +409,11 @@ export class EditTaskDialog {
 	let isDelete = true;
 	for (let j = 0; j < [...listOfSubtasks.children].length; j++) {
 	  const input = [...listOfSubtasks.children][j].querySelector("input");
-	  if (!input) throw new Error("Missing <input> in <li> element");
-	  const idAttr = input.getAttribute("id");
-	  if (!idAttr) throw new Error("Missing ID attribute in <input>");
+	  if (!input) throw new Error("<input>(subtasks) is missing");
 
-	  const id = idAttr.slice(`x-`.length);
+	  const id = input.getAttribute("data-id");
 
-	  if (i === 0 && id.length !== 36) { // i === 0 it's helps push only once
+	  if (i === 0 && !id) { // i === 0 it's helps push only once
 	    addings.push({ id: "", title: input.value.trim(), isCompleted: false }); // ADD
 	    flag = true;
 	  };
