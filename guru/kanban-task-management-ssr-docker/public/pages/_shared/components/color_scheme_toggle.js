@@ -1,15 +1,13 @@
 // @ts-check
 
 export class ColorSchemeToggle {
-
-  static prefix   = "color_scheme_toggle";  
-  static selector = `#${this.prefix}`;
+  static prefix = "color-scheme-toggle";
 
   /** @returns {string} HTML string */
   static template() {
-    const path = `data-path="http://localhost:3000/pages/_shared/components/color_scheme_toggle.js"`;
-    
-    return `<div id="${this.prefix}" class="row gap-m main-axis-center cross-axis-center border-radius-m pad-m bg-n-100-900" ${path}">
+    globalThis.paths[this.prefix] = "/pages/_shared/components/color_scheme_toggle.js";
+
+    return `<div class="row gap-m main-axis-center cross-axis-center border-radius-m pad-m bg-n-100-900" data-prefix="${this.prefix}">
               <img src="images/svg/icon-light-theme.svg" width="19" height="19" alt="">
               <label class="toggle" for="toggle_btn">
                 <span class="sr-only">Toggle</span>
