@@ -17,7 +17,7 @@ export class LoaderRipple {
     const template     = document.createElement("template");
     template.innerHTML = this.#template();
     const component    = template.content.firstElementChild;
-    if (!component)    throw new Error("Can't create \"LoaderRipple\" component");    
+    if (!component)    throw new Error(`Can't create ${this.name} component`);
 
     return component;
   }
