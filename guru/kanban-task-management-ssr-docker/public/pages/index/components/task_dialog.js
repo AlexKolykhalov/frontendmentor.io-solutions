@@ -1,54 +1,47 @@
 // @ts-check
 
-import { Task }                        from "./task.js";
-import { Board }                       from "./board.js";
-import { Column }                      from "./column.js";
-import { CheckList }                   from "./check_list.js";
-import { CheckListItem }               from "./check_list_item.js";
-import { generateRandomSymbols, insert } from "./_helpers.js";
+import { Board }                 from "./board.js";
+import { Column }                from "./column.js";
+import { CheckList }             from "./check_list.js";
+import { generateRandomSymbols } from "../functions.js";
 
-// listens to [check-list-item:changed]
-export class TaskDialog {
-  /** @type { {task:import("./task.js").TaskType, column_id:string} } */
+export class TaskDialog { // listens to [check-list-item:changed]
+  /** @type {import("./task.js").TaskType} */
   static #state = {
-    task: {
-      id: "",
-      title: "",
-      description: "",
-      // subtasks: [{ id: "", title: "", isCompleted: false }]
-      subtasks: []
-    },
-    column_id: ""
+    id: "",
+    title: "",
+    description: "",
+    subtasks: []
   };
 
-  /** @returns { {task:import("./task.js").TaskType, column_id:string} } */
+  /** @returns {import("./task.js").TaskType} */
   static #getState() {
     return JSON.parse(JSON.stringify(this.#state));
   }
 
-  /** @param { {task:import("./task.js").TaskType, column_id:string} } value */
+  /** @param {import("./task.js").TaskType} value */
   static #setState(value) {
-    return this.#state = value;
+    this.#state = value;
   }
 
   /** @returns {string} HTML string */
   static #template() {
-    const state = this.#getState();
+    const task        = this.#getState();
+    const columnID    = document.querySelector(`[data-id="${task.id}"]`)?.closest(`[data-prefix="${Column.prefix}"]`)?.getAttribute("data-id");
+    const columnsList = document.querySelector(`[data-prefix="${Board.prefix}"] ul`);
+    if (!columnsList) throw new Error(`[data-prefix="${Board.prefix}"] <ul> is missing`);
+    if (!columnID)    throw new Error(`[data-prefix="${Column.prefix}"] is missing`);
 
-    const ul = document.querySelector(`#${Board.prefix} ul`);
-    if (!ul) throw new Error(`Missing #${Board.prefix} <ul>`);
-    const columns = [...ul.children].map(
+    const options = [...columnsList.children].map(
       column=> {
-	const id = column.getAttribute("id");
 	const h3 = column.querySelector("h3");
+	const id = column.getAttribute("data-id");
+	if (!id) throw new Error(`[data-prefix="${Column.prefix}"] [data-id] is missing`);
+	if (!h3) throw new Error(`[data-prefix="${Column.prefix}"] <h3> is missing`);
 
-	if (!id) throw new Error(`Missing "id" attribute in "Column" template`);
-	if (!h3) throw new Error(`Missing li id="${Column.prefix}-" <h3>`);
+	const name = h3.textContent?.slice(0, h3.textContent.lastIndexOf("(")).trim();
 
-	const idValue = id.slice(`${Column.prefix}-`.length);
-	const name    = h3.textContent?.slice(0, h3.textContent.lastIndexOf("(")).trim();
-
-	return `<option value="${idValue}" ${idValue === state.column_id ? "selected" : ""}>${name}</option>`;
+	return `<option value="${id}" ${id === columnID ? "selected" : ""}>${name}</option>`;
       }
     ).join("");
 
@@ -57,14 +50,14 @@ export class TaskDialog {
     return `<dialog class="bg-n-000-800">
               <div class="column gap-l">
                 <div class="row gap-m no-wrap main-axis-space-between cross-axis-start">
-                  <h2 class="fs-900 clr-n-900-000" style="max-width: 80%">${state.task.title}</h2>
+                  <h2 class="fs-900 clr-n-900-000" style="max-width: 80%">${task.title}</h2>
                   <button class="close-btn" aria-label="close"></button>
                 </div>
-                <p class="fs-300 clr-n-600">${state.task.description}</p>
+                <p class="fs-300 clr-n-600">${task.description}</p>
                 <check-list></check-list>
                 <div class="column gap-sm">
                   <label class="fw-bold fs-200 clr-n-600-000" for="${selectID}">Current Status</label>
-                  <select class="pad-sm fs-300 fw-medium" id="${selectID}" disabled>${columns}</select>
+                  <select class="pad-sm fs-300 fw-medium" id="${selectID}" disabled>${options}</select>
                 </div>
                 <div class="row gap-l main-axis-end">
                   <button class="fw-bold fs-300 pad-h-m clr-n-000 pad-v-sm border-radius-l bg-p-purple">Edit</button>
@@ -76,24 +69,15 @@ export class TaskDialog {
 
   /**
    * @param {import("./task.js").TaskType} task
-   *
    * @returns {Element}
    */
   static init(task) {
-
-    const columnID = document
-      .querySelector(`#${Task.prefix}-${task.id}`) // gets clicked task
-      ?.closest(`[id^='${Column.prefix}-']`)       // find the closest column for this task
-      ?.getAttribute("id")
-      ?.slice(`${Column.prefix}-`.length);         // gets column id
-
-    if (!columnID) throw new Error(`Missing column ID`);
-
-    this.#setState({ task: task, column_id: columnID });
-
+    this.#setState(task);
     const component = this.#create();
+    const checkList = component.querySelector("check-list");
+    if (!checkList) throw new Error("<check-list> is missing");
 
-    insert(
+    checkList.replaceWith(
       CheckList.init(
 	{
 	  title: "Subtasks",
@@ -103,9 +87,7 @@ export class TaskDialog {
 	    return item;
 	  })
 	}
-      ),
-      "check-list",
-      component
+      )
     );
 
     return component;
@@ -116,7 +98,7 @@ export class TaskDialog {
     const template     = document.createElement("template");
     template.innerHTML = this.#template();
     const component    = template.content.firstElementChild;
-    if (!component)    throw new Error("Can't create \"CreateNewBoardDialog\" component");
+    if (!component)    throw new Error(`Can't create ${this.name} component`);
 
     this.#handleEvents(component);
 
@@ -125,20 +107,19 @@ export class TaskDialog {
 
   /**
    * @param {Element} component
-   *
    * @returns {void}
    */
   static #handleEvents(component) {
-    const closeDialogBtn = component.querySelector('button[aria-label="close"]');
-    if (!closeDialogBtn) throw new Error("Missing <button aria-label=\"close\">");
-    closeDialogBtn.addEventListener("click", () => component.remove());
-
     const controlBtns = component.querySelectorAll("button");
     const editBtn     = controlBtns[1];
     const deleteBtn   = controlBtns[2];
 
+    const closeDialogBtn = component.querySelector('button[aria-label="close"]');
+    if (!closeDialogBtn) throw new Error(`<button aria-label="close"> is missing`);
+    closeDialogBtn.addEventListener("click", () => component.remove());
+
     editBtn.addEventListener("click", async () => {
-      const { EditTaskDialog } = await import("../components/edit_task_dialog.js");
+      const { EditTaskDialog } = await import("./edit_task_dialog.js");
       const dialog = EditTaskDialog.init(TaskDialog.#getState());
       document.querySelector("body")?.appendChild(dialog);
       // @ts-ignore
@@ -146,108 +127,33 @@ export class TaskDialog {
     });
 
     deleteBtn.addEventListener("click", async () => {
-      const { DeleteTaskDialog } = await import("../components/delete_task_dialog.js");
+      const { DeleteTaskDialog } = await import("./delete_task_dialog.js");
       const dialog = DeleteTaskDialog.init(TaskDialog.#getState());
       document.querySelector("body")?.appendChild(dialog);
       // @ts-ignore
       dialog.showModal();
     });
 
-    component.addEventListener("check-list-item:changed", async (event) => {
-      /** @type {import("./task.js").SubtaskType} */
+    // *** ADDITIONAL LISTENERS ***
+
+    component.addEventListener("check-list-item:changed", (event) => {
       // @ts-ignore
-      const subtask = event.detail;      
+      const updatedSubtask = event.detail;
+      const task = this.#getState();
+      const column = document.querySelector(`[data-id="${task.id}"]`)?.closest(`[data-prefix="${Column.prefix}"]`);
+      if (!column) throw new Error(`Column containing the Task [data-id="${task.id}"] is missing`);
 
-      //find subtask and set previous value (what was before click)
-      const subtaskElement = component.querySelector(`#${CheckListItem.prefix}-${subtask.id}`);
-      if (!subtaskElement) throw new Error(`Missing <li id="${CheckListItem.prefix}-${subtask.id}">`);
-      const input        = subtaskElement.querySelector("input");
-      const listSubtasks = subtaskElement.closest("ul");
-      if (!input)        throw new Error(`Missing <input>`);
-      if (!listSubtasks) throw new Error(`Missing <ul>`);
+      const subtask = task.subtasks.find(item => item.id === updatedSubtask.id);
+      if (!subtask) throw new Error(`${updatedSubtask.id} subtask is missing`);
 
-      const checkList = listSubtasks.parentElement;
-      if (!checkList) throw new Error(`Can't find parent element for <ul>`);
+      subtask.isCompleted = updatedSubtask.isCompleted;
+      column.dispatchEvent(new CustomEvent("task:updated", { detail: task }));
 
-      // set the same status what was before checkbox click
-      // if will be fetch error than status of the checkbox will be the same
-      input.checked = !subtask.isCompleted;      
-      
-      if (globalThis.role === "anonymous") {
-	const { openAuthzDialog } = await import("./_helpers.js");
-	openAuthzDialog();
+      this.#setState(task);
+    });
 
-	return;
-      }
-
-      const state = TaskDialog.#getState();      
-      const index = state.task.subtasks.findIndex(item => item.id === subtask.id);      
-      if (index === -1) throw new Error(`Can't find subtask with ${subtask.id} ID">`);
-
-      state.task.subtasks[index].isCompleted = subtask.isCompleted;
-
-      const url     = "http://localhost:4000/rpc/update_task";
-      const options = {
-	method: "POST",
-	headers: {
-	  "Content-Type": "application/json",
-	  "Authorization": `Bearer ${ localStorage.getItem("bearer") }`,
-	},
-	body: JSON.stringify({
-	  p_task:      state.task,
-	  p_column_id: state.column_id
-	}),
-      };
-      // [Errors 401, 403] [Success 200]
-      let response = await fetch(url, options);
-
-      if (response.status === 401) {
-	// [Errors 400, 401, 500] [Success 201]
-	const resAuthz = await fetch("http://localhost:3000/api/generate_authz_token", { method: "POST" });
-	if (resAuthz.status === 401) {
-	  const { openRedirectDialog } = await import("./_helpers.js");
-	  openRedirectDialog();
-
-	  return;
-	}
-
-	if (resAuthz.status !== 201) {
-	  const { PopUp } = await import("../../_shared/components/pop_up.js");
-	  document.body.appendChild(
-	    PopUp.init({ title: "Authentication token error", message: "Something went wrong. Try again." })
-	  );
-
-	  return;
-	}
-
-	localStorage.setItem("bearer", await resAuthz.json());
-	options.headers.Authorization = `Bearer ${ localStorage.getItem("bearer") }`;
-	response = await fetch(url, options);
-      }
-
-      if (response.status !== 200) {
-	const { PopUp } = await import("../../_shared/components/pop_up.js");
-	document.body.appendChild(
-	  PopUp.init({ title: "Server error", message: "Something went wrong. Try again." })
-	);
-
-	return;
-      }
-
-      const receivingTaskData = await response.json();
-
-      // @ts-ignore
-      input.checked = event.detail.isCompleted; // change checkbox status (if success)
-      TaskDialog.#setState({ task: receivingTaskData, column_id: state.column_id}); // set a new state
-
-      const selectedColumn = document.querySelector(`#${Column.prefix}-${state.column_id}`);
-      if (!selectedColumn) throw new Error(`Can't find <li id="${state.column_id}">`);
-
-      const { emit } = await import("./_helpers.js");
-      // update Task component (change the number of completed subtasks)
-      emit("task:updated", receivingTaskData, selectedColumn);
-      // update "title" of the CheckList component (change the number of completed subtasks)
-      emit("check-list-item:changed", {}, checkList);
+    component.addEventListener("check-list-item:error", () => {
+      component.remove()
     });
   }
 }
