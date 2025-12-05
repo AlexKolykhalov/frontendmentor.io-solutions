@@ -1,0 +1,90 @@
+services:
+  postgres:
+    image:          postgres:17-alpine
+    container_name: postgres
+    environment:
+      POSTGRES_DB:                  kanban
+      POSTGRES_USER:                owner
+      POSTGRES_PASSWORD:            111111
+      DEFAULT_USER_LOGIN:           ${DEFAULT_USER_LOGIN}           # using in init.sh
+      DEFAULT_USER_PASSWORD:        ${DEFAULT_USER_PASSWORD}        # using in init.sh
+      PGRST_AUTHENTICATOR_ROLE:     ${PGRST_AUTHENTICATOR_ROLE}     # using in roles.sql
+      PGRST_AUTHENTICATOR_PASSWORD: ${PGRST_AUTHENTICATOR_PASSWORD} # using in roles.sql
+    ports:
+      - "5432:5432"
+    command: bash -c "apk add build-base && \
+                      cd /docker-entrypoint-initdb.d/db/extentions/pgjwt && \
+                      make && \
+                      make install && \
+                      docker-entrypoint.sh postgres"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data                      # Persist database data
+      - ./src/db/:/docker-entrypoint-initdb.d/db
+      - ./src/db/scripts/init.sh:/docker-entrypoint-initdb.d/init.sh
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U owner -d kanban"]
+      interval: 20s
+      timeout: 5s
+      retries: 15
+      start_period: 5s
+    networks:
+      - app-network
+
+  postgREST:
+    image: postgrest/postgrest
+    container_name: postgREST
+    environment:
+      PGRST_DB_URI:                  ${PGRST_DB_URI}
+      PGRST_DB_SCHEMAS:              "api,auth"
+      PGRST_JWT_SECRET:              ${PGRST_JWT_SECRET}
+      PGRST_APP_SETTINGS_JWT_SECRET: ${PGRST_JWT_SECRET}
+      PGRST_DB_ANON_ROLE:            guest
+      PGRST_SERVER_PORT:             4000
+      PGRST_LOG_LEVEL:               info
+    ports:
+      - "4000:4000"
+    networks:
+      - app-network
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  express:
+    image: node:alpine
+    container_name: express
+    environment:
+      DEFAULT_USER_LOGIN:    ${DEFAULT_USER_LOGIN}    # using in /v1/signin.js
+      DEFAULT_USER_PASSWORD: ${DEFAULT_USER_PASSWORD} # using in /v1/signin.js
+    working_dir: /app
+    volumes:
+      - ./package.json:/app/package.json
+      - ./public:/app/public
+      - ./src/web_server:/app/src/web_server
+    ports:
+      - "3000:3000"
+    command: sh -c "npm install && node ./src/web_server/app.js"
+    networks:
+      - app-network
+    depends_on:
+      - postgREST
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    volumes:
+      - ./docker-nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./public:/usr/share/nginx/html
+    ports:
+      - "80:80"
+    networks:
+      - app-network
+    depends_on:
+      - postgREST
+      - express
+
+volumes:
+  postgres_data:    # Volume to persist Postgres data
+
+networks:
+  app-network:
+    driver: bridge  # Use bridge network driver
