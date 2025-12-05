@@ -1,7 +1,5 @@
 // @ts-check
 
-import { openRedirectDialog } from "./_helpers.js";
-
 export class DeleteUserDialog {
   /** @returns {string} HTML string */
   static #template() {
@@ -29,7 +27,7 @@ export class DeleteUserDialog {
     const template     = document.createElement("template");
     template.innerHTML = this.#template();
     const component    = template.content.firstElementChild;
-    if (!component)    throw new Error("Can't create \"DeleteUserDialog\" component");
+    if (!component)    throw new Error(`Can't create ${this.name} component`);
 
     this.#handleEvents(component);
 
@@ -38,13 +36,12 @@ export class DeleteUserDialog {
 
   /**
    * @param {Element} component
-   *
    * @returns {void}
    */
   static #handleEvents(component) {
     // delete btn
     component.querySelectorAll("button")[1].addEventListener("click", async function() {
-      this.setAttribute("disabled", "");
+      this.setAttribute("disabled", ""); // disable deleteUserBtn
       // add indicator
       const { LoaderRipple } = await import("../../_shared/components/loader_ripple.js");
       const loader = LoaderRipple.init();
@@ -52,54 +49,44 @@ export class DeleteUserDialog {
       loader.setAttribute("style", "--size: 25px; right: 5%;");
       this.appendChild(loader);
 
-      const url     = "http://localhost:3000/api/delete_user";
+      const url     = "/v1/users/delete_current";
       const options = {
 	method: "POST",
-	headers: {
-	  "Content-Type": "application/json",
-	  "Authorization": `Bearer ${ localStorage.getItem("bearer") }`,
-	}
+	headers: { "Authorization": `Bearer ${ localStorage.getItem("bearer") }` }
       };
-      // [Errors 400, 401, 403, 500] [Success 204]
+      // [Errors 400, 401, 403, 500] [Success 200]
       let response = await fetch(url, options);
 
       if (response.status === 401) {
-	const resAuthz = await fetch("http://localhost:3000/api/generate_authz_token", { method: "POST" });
-	if (resAuthz.status === 401) {
-	  await openRedirectDialog();
+	// [Errors 400, 401, 500] [Success 201]
+	const responseBearer = await fetch("/v1/bearers/generate", { method: "POST" });
+
+	if (responseBearer.status !== 201) {
+	  component.remove(); // close this dialog
+	  
+	  if (responseBearer.status === 401) {
+	    const { openSessionExpiredDialog } = await import("../functions.js");
+	    await openSessionExpiredDialog();
+	  } else {
+	    const { openPopUp } = await import("../../_shared/functions.js");
+	    await openPopUp("Authentication token error", "Something went wrong. Try again.");
+	  }
 
 	  return;
 	}
 
-	if (resAuthz.status !== 201) {
-	  const { PopUp } = await import("../../_shared/components/pop_up.js");
-	  document.body.appendChild(
-	    PopUp.init({
-	      title: "Authentication token error",
-	      message: "Something went wrong. Try again."
-	    })
-	  );
-	  this.removeAttribute("disabled");
-	  loader.remove();
+	const bearer = await responseBearer.json();
 
-	  return;
-	}
-
-	localStorage.setItem("bearer", await resAuthz.json());
-	options.headers.Authorization = `Bearer ${ localStorage.getItem("bearer") }`;
+	localStorage.setItem("bearer", bearer);
+	options.headers.Authorization = `Bearer ${ bearer }`;
 	response = await fetch(url, options);
-      }
+      };
 
-      if (response.status !== 204) {	
-	const { PopUp } = await import("../../_shared/components/pop_up.js");
-	document.body.appendChild(
-	  PopUp.init({
-	    title: "Server error",
-	    message: "Something went wrong. Try again."
-	  })
-	);
-	this.removeAttribute("disabled");
-	loader.remove();
+      if (response.status !== 200) {
+	component.remove(); // close this dialog
+	
+	const { openPopUp } = await import("../../_shared/functions.js");
+	await openPopUp("Server error", "Something went wrong. Try again.");
 
 	return;
       }
@@ -109,7 +96,7 @@ export class DeleteUserDialog {
     });
 
     const closeDialogBtn = component.querySelector('button[aria-label="close"]');
-    if (!closeDialogBtn) throw new Error("Can't find <button aria-label=\"close\">");
+    if (!closeDialogBtn) throw new Error(`Can't <button aria-label="close"> is missing`);
     closeDialogBtn.addEventListener("click", () => component.remove());
   }
 }
