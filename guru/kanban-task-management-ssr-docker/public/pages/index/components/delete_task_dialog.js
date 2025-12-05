@@ -1,28 +1,23 @@
 // @ts-check
 
-import { emit, openRedirectDialog } from "./_helpers.js";
-
 export class DeleteTaskDialog {
 
-  /** @type { {task:import("./task.js").TaskType, column_id:string} } */
+  /** @type {import("./task.js").TaskType} */
   static #state = {
-    task: {
-      id: "",
-      title: "",
-      description: "",
-      subtasks: [{ id: "", title: "", isCompleted: false }]
-    },
-    column_id: ""
+    id: "",
+    title: "",
+    description: "",
+    subtasks: [{ id: "", title: "", isCompleted: false }]
   };
 
-  /** @returns { {task:import("./task.js").TaskType, column_id:string} } */
+  /** @returns {import("./task.js").TaskType} */
   static #getState() {
     return JSON.parse(JSON.stringify(this.#state));
   }
 
-  /** @param { {task:import("./task.js").TaskType, column_id:string} } value */
+  /** @param {import("./task.js").TaskType} value */
   static #setState(value) {
-    return this.#state = value;
+    this.#state = value;
   }
 
   /** @returns {string} HTML string */
@@ -33,7 +28,7 @@ export class DeleteTaskDialog {
                   <h2 class="fs-900 clr-n-900-000">Delete this task?</h2>
                   <button class="close-btn" aria-label="close"></button>
                 </div>
-                <p class="fs-300 clr-n-600">Are you sure you want to delete the <strong class="clr-n-900-000">"${this.#getState().task.title}"</strong> task and its subtasks? This action cannot be reversed.</p>
+                <p class="fs-300 clr-n-600">Are you sure you want to delete the <strong class="clr-n-900-000">"${this.#getState().title}"</strong> task and its subtasks? This action cannot be reversed.</p>
                 <div class="row gap-l main-axis-end">
                   <button class="[ relative ] fw-bold fs-300 pad-h-l clr-n-000 pad-v-sm border-radius-l bg-p-red">Delete</button>
                 </div>
@@ -42,13 +37,12 @@ export class DeleteTaskDialog {
   }
 
   /**
-   * @param { {task:import("./task.js").TaskType, column_id:string} } dataTask
-   *
+   * @param {import("./task.js").TaskType} task
    * @returns { Element }
    */
-  static init(dataTask) {
-    this.#setState(dataTask);
-    
+  static init(task) {
+    this.#setState(task);
+
     return this.#create();
   }
 
@@ -57,7 +51,7 @@ export class DeleteTaskDialog {
     const template     = document.createElement("template");
     template.innerHTML = this.#template();
     const component    = template.content.firstElementChild;
-    if (!component)    throw new Error("Can't create \"DeleteTaskDialog\" component");
+    if (!component)    throw new Error(`Can't create ${this.name} component`);
 
     this.#handleEvents(component);
 
@@ -71,20 +65,20 @@ export class DeleteTaskDialog {
   static #handleEvents(component) {
     // delete btn
     component.querySelectorAll("button")[1].addEventListener("click", async function() {
-      const state = DeleteTaskDialog.#getState();
-      const selectedColumn = document.querySelector(`#column-${state.column_id}`);
-      if (!selectedColumn) throw new Error(`Can't find <li id="${state.column_id}">`);      
-      
-      if (globalThis.role === "anonymous") {
-	emit("task:deleted", { id: state.task.id }, selectedColumn);
+      const { Column } = await import("./column.js");
+      const task   = DeleteTaskDialog.#getState();
+      const column = document.querySelector(`[data-id="${task.id}"]`)?.closest(`[data-prefix="${Column.prefix}"]`);
+      if (!column) throw new Error(`Column with Task [data-id="${task.id}"] is missing`);
 
-	// close all opened dialogs
-	document.querySelectorAll("dialog").forEach(dialog => dialog.remove());
+      if (globalThis.client_variables.is_anonymous) {
+	document.querySelectorAll("dialog").forEach(dialog => dialog.remove()); // close all opened dialogs
+	column.dispatchEvent(new CustomEvent("task:deleted", { detail: task.id }));
 
 	return;
       }
 
-      this.setAttribute("disabled", "");
+      this.setAttribute("disabled", ""); // disable deleteBtn
+
       // add indicator
       const { LoaderRipple } = await import("../../_shared/components/loader_ripple.js");
       const loader = LoaderRipple.init();
@@ -92,67 +86,68 @@ export class DeleteTaskDialog {
       loader.setAttribute("style", "--size: 25px; right: 5%;");
       this.appendChild(loader);
 
-      const url     = "http://localhost:4000/rpc/delete_task";
+      const url     = `/v1/tasks/${task.id}`;
       const options = {
-	method: "POST",
-	headers: {
-	  "Content-Type": "application/json",
-	  "Authorization": `Bearer ${ localStorage.getItem("bearer") }`,
-	},
-	body: JSON.stringify({ p_id: state.task.id }),
+	method: "DELETE",
+	headers: { "Authorization": `Bearer ${ localStorage.getItem("bearer") }` }
       };
-      // [Errors 401, 403] [Success 204]
+
+      // [Errors 401, 403, 404, 405, 500] [Success 204]
       let response = await fetch(url, options);
 
       if (response.status === 401) {
-	const resAuthz = await fetch("http://localhost:3000/api/generate_authz_token", { method: "POST" });
-	if (resAuthz.status === 401) {
-	  await openRedirectDialog();
+	// [Errors 400, 401, 500] [Success 201]
+	const responseBearer = await fetch("/v1/bearers/generate", { method: "POST" });
+
+	if (responseBearer.status !== 201) {
+	  // close all opened dialogs
+	  document.querySelectorAll("dialog").forEach(dialog => dialog.remove());
+	  if (responseBearer.status === 401) {
+	    const { openSessionExpiredDialog } = await import("../functions.js");
+	    await openSessionExpiredDialog();
+	  } else {
+	    const { openPopUp } = await import("../../_shared/functions.js");
+	    await openPopUp("Authentication token error", "Something went wrong. Try again.");
+	  }
 
 	  return;
 	}
 
-	if (resAuthz.status !== 201) {
-	  const { PopUp } = await import("../../_shared/components/pop_up.js");
-	  document.body.appendChild(
-	    PopUp.init({
-	      title: "Authentication token error",
-	      message: "Something went wrong. Try again."
-	    })
-	  );
-	  this.removeAttribute("disabled");
-	  loader.remove();
+	const bearer = await responseBearer.json();
 
-	  return;
-	}
+	localStorage.setItem("bearer", bearer);
+	options.headers.Authorization = `Bearer ${ bearer }`;
+	response = await fetch(url, options);
+      };
 
-	localStorage.setItem("bearer", await resAuthz.json());
-	options.headers.Authorization = `Bearer ${ localStorage.getItem("bearer") }`;
-	response = await fetch(url, options);	
+      if (response.status === 403) {
+	// close all opened dialogs
+	document.querySelectorAll("dialog").forEach(dialog => dialog.remove());
+	const { openAuthzDialog } = await import("../functions.js");
+	await openAuthzDialog();
+
+	return;
       }
-      
-      if (response.status !== 204) {
-	const { PopUp } = await import("../../_shared/components/pop_up.js");
-	document.body.appendChild(
-	  PopUp.init({
-	    title: "Server error",
-	    message: "Something went wrong. Try again."
-	  })
+
+      if (response.status === 404 || response.status !== 204) {
+	// close all opened dialogs
+	document.querySelectorAll("dialog").forEach(dialog => dialog.remove());
+	const { openPopUp } = await import("../../_shared/functions.js");
+	await openPopUp(
+	  response.status === 404 ? "Search error" : "Server error",
+	  response.status === 404 ? "Task not found" : "Something went wrong. Try again"
 	);
-	this.removeAttribute("disabled");
-	loader.remove();
 
-	return;	
+	return;
       }
-
-      emit("task:deleted", { id: state.task.id }, selectedColumn);
 
       // close all opened dialogs
       document.querySelectorAll("dialog").forEach(dialog => dialog.remove());
+      column.dispatchEvent(new CustomEvent("task:deleted", { detail: task.id }));
     });
 
     const closeDialogBtn = component.querySelector('button[aria-label="close"]');
-    if (!closeDialogBtn) throw new Error("Can't find <button aria-label=\"close\">");
+    if (!closeDialogBtn) throw new Error(`<button aria-label="close"> is missing`);
     closeDialogBtn.addEventListener("click", () => component.remove());
   }
 }
