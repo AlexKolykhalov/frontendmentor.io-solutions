@@ -222,6 +222,10 @@ button[disabled]:hover {
   opacity: 60%;
 }
 
+li[disabled] {
+  cursor: none;
+}
+
 input, textarea, select {
   border: 1px solid var(--clr-transparent-n-600);
   border-radius: 0.5rem;
@@ -253,14 +257,6 @@ label:has(input:checked) {
   flex-direction: column;
   min-height: 100vh;
 }
-
-/* .box-v-80vh { */
-/*   min-height: 80vh; */
-/* } */
-
-/* .box-v-90vh { */
-/*   min-height: 90vh; */
-/* } */
 
 .center-v>* {
   margin-top: auto;
@@ -346,6 +342,12 @@ label:has(input:checked) {
   scroll-snap-align: start;
 }
 
+@media (max-width: 48em) { /* mobile view */
+  .reel {
+    grid-auto-flow: row;
+  }
+}
+
 /* ************************* */
 /*          Blocks           */
 /* ************************* */
@@ -417,24 +419,6 @@ label:has(input:checked) {
   }
 }
 
-/* .create-new-board-btn, */
-/* /\* .edit-board-btn, *\/ */
-/* .add-new-task-btn { */
-/*   border-top-right-radius: 2rem; */
-/*   border-bottom-right-radius: 2rem; */
-
-/*   padding-left: 2rem; */
-/*   user-select: none; /\* whether user can select text *\/ */
-
-/*   width: 95%; */
-/* } */
-
-/* .create-new-board-btn:hover, */
-/* /\* .edit-board-btn:hover, *\/ */
-/* .add-new-task-btn:hover { */
-/*   background: var(--bg-p-light-purple-n-000); */
-/* } */
-
 .hide-sidebar-btn {
   font-weight: 700;
 
@@ -499,30 +483,6 @@ label:has(input:checked) {
   color: var(--clr-primary-purple);
 }
 
-
-
-
-/* .create-new-board-btn, */
-/* /\* .edit-board-btn, *\/ */
-/* .add-new-task-btn { */
-/*   border-top-right-radius: 2rem; */
-/*   border-bottom-right-radius: 2rem; */
-
-/*   padding-left: 2rem; */
-/*   user-select: none; /\* whether user can select text *\/ */
-
-/*   width: 95%; */
-/* } */
-
-/* .create-new-board-btn:hover, */
-/* /\* .edit-board-btn:hover, *\/ */
-/* .add-new-task-btn:hover { */
-/*   background: var(--bg-p-light-purple-n-000); */
-/* } */
-
-
-
-
 .boards-list-btn {
   border-top-right-radius: 2rem;
   border-bottom-right-radius: 2rem;
@@ -542,7 +502,6 @@ label:has(input:checked) {
 .boards-list-btn:hover {
   background: var(--bg-p-light-purple-n-000);
 }
-
 
 .task-item {
   background-color: var(--bg-n-000-800);
@@ -575,8 +534,8 @@ label:has(input:checked) {
   width: var(--width);
   height: var(--height);
 }
-/* Hide default HTML checkbox */
-.toggle input {
+
+.toggle input { /* Hide default HTML checkbox */
   opacity: 0;
   width: 0;
   height: 0;
@@ -665,8 +624,13 @@ input:checked+.toggle-background:before {
 }
 
 .dropdown-list-toggle-btn {
+  width: 30px;
+  height: 30px;
   background-color: transparent;
   border-width: 0;
+
+  display: grid;
+  place-items: center;
 }
 
 .dropdown-list-toggle-btn[aria-expanded="true"] {
@@ -676,13 +640,34 @@ input:checked+.toggle-background:before {
 .close-btn {
   background: no-repeat url("./images/svg/icon-cross.svg") center;
 
-  width:  35px;
-  height: 35px;
+  width:  30px;
+  height: 30px;
   border-radius: 50%;
 }
 
 .close-btn:not([disabled]):hover {
   background-color: var(--bg-n-100-900);
+}
+
+.pop-up {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0.5rem;
+  justify-content: space-between;
+  align-items: center;
+
+  padding-inline: 0.5rem;
+  padding-block: 1rem;
+
+  opacity: 0;
+  max-width: 300px;
+  width: 80vw;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%) translateY(5%);
+  box-shadow: 0 0 6px var(--clr-primary-red);
+  background-color: var(--bg-n-000-800);
+  border-radius: 1.5rem;
 }
 
 /* ************************* */
@@ -813,10 +798,6 @@ input:checked+.toggle-background:before {
   border-radius: 1.5rem;
 }
 
-/* .border-radius-max { */
-/*   border-radius: 50%; */
-/* } */
-
 .cursor-pointer {
   cursor: pointer;
 }
@@ -877,10 +858,6 @@ input:checked+.toggle-background:before {
   color: var(--clr-n-900-000);
 }
 
-/* .clr-p-light-purple { */
-/*   color: var(--clr-primary-light-purple); */
-/* } */
-
 .clr-p-purple {
   color: var(--clr-primary-purple);
 }
@@ -896,18 +873,6 @@ input:checked+.toggle-background:before {
 .bg-n-100 {
   background-color: var(--clr-neutral-100);
 }
-
-/* .bg-n-600 { */
-/*   background-color: var(--clr-neutral-600); */
-/* } */
-
-/* .bg-n-800 { */
-/*   background-color: var(--clr-neutral-800); */
-/* } */
-
-/* .bg-n-900 { */
-/*   background-color: var(--clr-neutral-900); */
-/* } */
 
 .bg-p-red {
   opacity: 85%;
