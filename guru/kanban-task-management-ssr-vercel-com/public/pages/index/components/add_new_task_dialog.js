@@ -138,6 +138,9 @@ export class AddNewTaskDialog {
 	const { Task } = await import("./task.js");
 	taskList.appendChild(Task.init({ task: sendingTaskData, locked: true }));
 	component.remove();
+	// @ts-ignore (mob-view click dropdownListToggleBtn)
+	document.querySelector(".dropdown-list-toggle-btn")?.click();
+
 	selectedColumn.dispatchEvent(new CustomEvent("column:updated"));
 
 	return;
@@ -158,7 +161,7 @@ export class AddNewTaskDialog {
 	headers: { "Content-Type": "application/json" },
 	body: JSON.stringify({
 	  task:      sendingTaskData,
-	  column_id: select.value
+	  columnID: select.value
 	}),
       };
       // [Errors 401, 403, 405, 500] [Success 201]
@@ -166,6 +169,8 @@ export class AddNewTaskDialog {
 
       if (response.status === 401 || response.status === 403) {
 	component.remove(); // close this dialog
+	// @ts-ignore (mob-view click dropdownListToggleBtn)
+	document.querySelector(".dropdown-list-toggle-btn")?.click();
 
 	if (response.status === 401) {
 	  const { openAuthzDialog } = await import("../functions.js");
@@ -182,6 +187,8 @@ export class AddNewTaskDialog {
 
       if (response.status !== 201) {
 	component.remove();
+	// @ts-ignore (mob-view click dropdownListToggleBtn)
+	document.querySelector(".dropdown-list-toggle-btn")?.click();
 	const { openPopUp } = await import("../../_shared/functions.js");
 	await openPopUp("Server error", "Something went wrong. Try again");
 
@@ -189,6 +196,8 @@ export class AddNewTaskDialog {
       }
 
       component.remove();
+      // @ts-ignore (mob-view click dropdownListToggleBtn)
+      document.querySelector(".dropdown-list-toggle-btn")?.click();
 
       const receivedTaskData = await response.json();
       selectedColumn.dispatchEvent(new CustomEvent("task:created", { detail: receivedTaskData }));

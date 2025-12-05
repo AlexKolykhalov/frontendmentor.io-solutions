@@ -88,6 +88,8 @@ export class BoardsListItem {
 	    await openSessionExpiredDialog();
 	  }
 	  loader.remove();
+	  // @ts-ignore (mob-view click dropdownListToggleBtn)
+	  document.querySelector(".dropdown-list-toggle-btn")?.click();
 
 	  return;
 	}
@@ -99,6 +101,8 @@ export class BoardsListItem {
 	    response.status === 404 ? "Board not found" : "Something went wrong. Try again"
 	  );
 	  loader.remove();
+	  // @ts-ignore (mob-view click dropdownListToggleBtn)
+	  document.querySelector(".dropdown-list-toggle-btn")?.click();
 
 	  return;
 	}
@@ -110,12 +114,14 @@ export class BoardsListItem {
 	const { MainHeader } = await import("./main_header.js");
 	const board      = document.querySelector(`[data-prefix="${Board.prefix}"]`);
 	const mainHeader = document.querySelector(`[data-prefix="${MainHeader.prefix}"]`);
-	if (!board)      throw new Error(`[data-prefix="${Board.prefix}]" is missing`);
+	if (!board)      throw new Error(`[data-prefix="${Board.prefix}"] is missing`);
 	if (!mainHeader) throw new Error(`[data-prefix="${MainHeader.prefix}"] is missing`);
 
 	this.parentElement.querySelector("li.selected")?.classList.remove("selected");
 	this.classList.add("selected");
 	loader.remove();
+	// @ts-ignore (mob-view click dropdownListToggleBtn)
+	document.querySelector(".dropdown-list-toggle-btn")?.click();
 
 	[board, mainHeader].forEach(item => {
 	  item.dispatchEvent(new CustomEvent("board:selected", { detail: receivedBoardData }));

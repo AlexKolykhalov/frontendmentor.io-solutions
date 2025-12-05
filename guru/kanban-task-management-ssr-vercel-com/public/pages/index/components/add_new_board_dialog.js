@@ -98,6 +98,8 @@ export class AddNewBoardDialog {
 	sendingBoardData.columns.forEach(column => column.id = crypto.randomUUID());
 
 	component.remove(); // close this dialog
+	// @ts-ignore (mob-view click dropdownListToggleBtn)
+	document.querySelector(".dropdown-list-toggle-btn")?.click();
 
 	[board, boardsList, mainHeader].forEach(item => {
 	  item.dispatchEvent(new CustomEvent("board:created", { detail: sendingBoardData }));
@@ -136,14 +138,18 @@ export class AddNewBoardDialog {
 	  await openSessionExpiredDialog();
 	}
 
-	this.removeAttribute("disabled"); // enabled createNewBoardBtn
-	loader.remove();
+	component.remove(); // close this dialog
+	// @ts-ignore (mob-view click dropdownListToggleBtn)
+	document.querySelector(".dropdown-list-toggle-btn")?.click();
 
 	return;
       }
 
       if (response.status !== 201) {
 	component.remove();
+	// @ts-ignore (mob-view click dropdownListToggleBtn)
+	document.querySelector(".dropdown-list-toggle-btn")?.click();
+
 	const { openPopUp } = await import("../../_shared/functions.js");
 	await openPopUp("Server error", "Something went wrong. Try again");
 
@@ -151,6 +157,8 @@ export class AddNewBoardDialog {
       };
 
       component.remove(); // close this dialog
+      // @ts-ignore (mob-view click dropdownListToggleBtn)
+      document.querySelector(".dropdown-list-toggle-btn")?.click();
 
       const receivedBoardData = await response.json();
       [board, boardsList, mainHeader].forEach(item => {

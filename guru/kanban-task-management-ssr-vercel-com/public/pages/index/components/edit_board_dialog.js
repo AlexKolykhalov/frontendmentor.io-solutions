@@ -1,10 +1,10 @@
 // @ts-check
 
-import { Board }          from "./board.js";
-import { Column }         from "./column.js";
-import { BoardsList }     from "./boards_list.js";
-import { DynamicList }    from "./dynamic_list.js";
-import { MainHeader }     from "./main_header.js";
+import { Board }       from "./board.js";
+import { Column }      from "./column.js";
+import { BoardsList }  from "./boards_list.js";
+import { DynamicList } from "./dynamic_list.js";
+import { MainHeader }  from "./main_header.js";
 
 export class EditBoardDialog { // listens to [dynamic-list-item:changed, added, removed]
   /** @type { import("./board.js").BoardType } */
@@ -158,9 +158,10 @@ export class EditBoardDialog { // listens to [dynamic-list-item:changed, added, 
 	  column => { if (column.id === "") column.id = crypto.randomUUID() }
 	);
 
-	// console.log(sendingBoardData);
-
 	component.remove(); // close this dialog
+	// @ts-ignore (mob-view click dropdownListToggleBtn)
+	document.querySelector(".dropdown-list-toggle-btn")?.click();
+
 	[board, boardsList, mainHeader].forEach(item => {
 	  item.dispatchEvent(new CustomEvent("board:updated", { detail: sendingBoardData }))
 	});
@@ -188,6 +189,10 @@ export class EditBoardDialog { // listens to [dynamic-list-item:changed, added, 
       const response = await fetch(url, options);
 
       if (response.status === 401 || response.status === 403) {
+	component.remove(); // close this dialog
+	// @ts-ignore (mob-view click dropdownListToggleBtn)
+	document.querySelector(".dropdown-list-toggle-btn")?.click();
+
 	if (response.status === 401) {
 	  const { openAuthzDialog } = await import("../functions.js");
 	  await openAuthzDialog();
@@ -198,14 +203,14 @@ export class EditBoardDialog { // listens to [dynamic-list-item:changed, added, 
 	  await openSessionExpiredDialog();
 	}
 
-	this.removeAttribute("disabled"); // enable saveBtn
-	loader.remove();
-
 	return;
       };
 
       if (response.status === 404 || response.status !== 200) {
-	component.remove();
+	component.remove(); // close this dialog
+	// @ts-ignore (mob-view click dropdownListToggleBtn)
+	document.querySelector(".dropdown-list-toggle-btn")?.click();
+
 	const { openPopUp } = await import("../../_shared/functions.js");
 	await openPopUp(
 	  response.status === 404 ? "Search error" : "Server error",
@@ -216,6 +221,8 @@ export class EditBoardDialog { // listens to [dynamic-list-item:changed, added, 
       }
 
       component.remove();
+      // @ts-ignore (mob-view click dropdownListToggleBtn)
+      document.querySelector(".dropdown-list-toggle-btn")?.click();
 
       const receivedBoardData = await response.json();
       [board, boardsList, mainHeader].forEach(item => {
@@ -334,8 +341,8 @@ export class EditBoardDialog { // listens to [dynamic-list-item:changed, added, 
 
     /** @returns {boolean} */
     function validation() {
-      const inputBoardName  = component.querySelector("#board_name");
-      const listOfColumns   = component.querySelector("ul");
+      const inputBoardName = component.querySelector("#board_name");
+      const listOfColumns  = component.querySelector("ul");
       if (!inputBoardName) throw new Error(`<input id="board_name"> is missing`);
       if (!listOfColumns)  throw new Error("<ul> is missing");
 
@@ -358,4 +365,3 @@ export class EditBoardDialog { // listens to [dynamic-list-item:changed, added, 
     }
   }
 }
-
