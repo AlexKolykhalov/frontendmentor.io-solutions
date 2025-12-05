@@ -1,6 +1,7 @@
-/src
 /node_modules
+/scripts
 
-.env
+nginx.conf
 package-lock.json
-
+postgrest.conf
+worker.js
