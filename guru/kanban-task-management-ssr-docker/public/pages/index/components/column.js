@@ -1,39 +1,34 @@
 // @ts-check
 
-import { Task }         from "./task.js";
-import { emit, insert } from "./_helpers.js";
+import { Task } from "./task.js";
 
 /**
  * @typedef {Object} ColumnType
- * @property {string}                         id
- * @property {string}                         name
+ * @property {string} id
+ * @property {string} name
  * @property {import("./task.js").TaskType[]} tasks
  */
 
 /**
- * @typedef {Object} ColumnComponentType
+ * @typedef  {Object}     ColumnComponentType
  * @property {ColumnType} column
  */
 
-// listens to [column:updated, task:created, updated, deleted]
-export class Column {
-
-  static prefix   = "column"; // using in edit_board_dialog.js
-  static selector = `[id^=${this.prefix}-]`;
+export class Column { // listens to [column:updated, task:created, updated, deleted]
+  static prefix = "column"; // using in edit_board_dialog.js
 
   /**
    * @param {ColumnComponentType} props
-   *
    * @returns {string} HTML string
    */
   static template(props) {
     const isSSR = typeof window === "undefined" && typeof document === "undefined";
-    const path  = isSSR ? `data-path="http://localhost:3000/pages/index/components/column.js"` : "";
     const tasks = isSSR ?
 	  props.column.tasks.map(task => Task.template({ task: task })).join("") :
 	  "<tasks></tasks>";
+    if (isSSR) globalThis.paths[this.prefix] = "/pages/index/components/column.js";
 
-    return `<li id="${this.prefix}-${props.column.id}" ${path}>
+    return `<li data-prefix="${this.prefix}" data-id="${props.column.id}">
               <article class="pad-h-m">
                 <h3 class="fs-300 clr-n-600 letter-spacing-m pad-v-m">${props.column.name} (${props.column.tasks.length})</h3>
                 <ul class="column gap-m">${tasks}</ul>
@@ -43,16 +38,16 @@ export class Column {
 
   /**
    * @param {ColumnComponentType} props
-   *
    * @returns {Element}
    */
   static init(props) {
     const component = this.#create(props);
+    const fragment  = document.createDocumentFragment();
+    const tasks     = component.querySelector("tasks");
+    if (!tasks)     throw new Error("<tasks> is missing");
 
-    const fragment = document.createDocumentFragment();
     props.column.tasks.forEach(task => { fragment.appendChild(Task.init({ task: task })) });
-
-    insert(fragment, "tasks", component);
+    tasks.replaceWith(fragment)
 
     return component;
   }
@@ -65,7 +60,7 @@ export class Column {
     const template     = document.createElement("template");
     template.innerHTML = this.template(props);
     const component    = template.content.firstElementChild;
-    if (!component)    throw new Error(`Can't create "Column" component`);
+    if (!component)    throw new Error(`Can't create ${this.name} component`);
 
     this.handleEvents(component);
 
@@ -77,114 +72,122 @@ export class Column {
    * @returns {void}
    */
   static handleEvents(component) {
-    component.addEventListener("dragover", (e) => e.preventDefault());
+    component.addEventListener("dragover", (event) => event.preventDefault());
 
-    component.addEventListener("drop", async (e) => {
-      if (!e.currentTarget) return;
-
+    component.addEventListener("drop", async (event) => {
+      if (!event.currentTarget) return;
       const moving = document.querySelector(".moving");
-      if (!moving) throw new Error('Missing element with "moving" class');
+      if (!moving) throw new Error("Task element with .moving class is missing");
 
-      const taskIDAttr = moving.getAttribute("id");
-      if (!taskIDAttr) throw new Error("Missing ID attribute in <li> task");
+      const columnFrom = moving.closest(`[data-prefix="${Column.prefix}"]`);
+      const columnTo   = component;
 
-      const columnFrom = moving.closest(`[id^="${Column.prefix}-"]`);
-      if (!columnFrom) throw new Error(`Missing [id="${Column.prefix}-"]`);
-      const columnFromIDAttr = columnFrom.getAttribute("id");
-      if (!columnFromIDAttr) throw new Error("Missing ID attribute in <li> column");
-      // @ts-ignore
-      const columnToIDAttr = e.currentTarget.getAttribute("id");
-      if (!columnToIDAttr) throw new Error("Missing ID attribute in <li> column");
-
-      e.stopPropagation();
-      e.stopImmediatePropagation();
-      e.preventDefault();
-
-      const taskID       = taskIDAttr.slice(`${Task.prefix}-`.length);
-      const columnIDFrom = columnFromIDAttr.slice(`${Column.prefix}-`.length);
-      const columnIDTo   = columnToIDAttr.slice(`${Column.prefix}-`.length);
-
-      // move task from one column to another
-      const increasedColumn = document.querySelector(`#column-${columnIDTo}`);
-      const reducedColumn   = document.querySelector(`#column-${columnIDFrom}`);
-      if (!increasedColumn) throw new Error(`Can't find <li id="${columnIDTo}">`);
-      if (!reducedColumn)   throw new Error(`Can't find <li id="${columnIDFrom}">`);
+      event.stopPropagation();
+      event.stopImmediatePropagation();
+      event.preventDefault();
 
       moving.classList.remove("moving");
 
-      if (columnIDFrom !== columnIDTo) {	
-	if (globalThis.role === "anonymous") {
-	  increasedColumn.querySelector("ul")?.appendChild(moving);
+      if (columnFrom === columnTo) return;
 
-	  emit("column:updated", {}, increasedColumn);
-	  emit("column:updated", {}, reducedColumn);
+      if (globalThis.client_variables.is_anonymous) {
+	columnTo.querySelector("ul")?.appendChild(moving);
 
-	  return;
-	}
+	[columnFrom, columnTo].forEach(item => {
+	  item?.dispatchEvent(new CustomEvent("column:updated"));
+	});
 
-	const url     = "http://localhost:4000/rpc/update_task_column_id";
-	const options = {
-	  method: "POST",
-	  headers: {
-	    "Content-Type": "application/json",
-	    "Authorization": `Bearer ${ localStorage.getItem("bearer") }`,
-	  },
-	  body: JSON.stringify({
-	    p_task_id:   taskID,
-	    p_column_id: columnIDTo,
-	  }),
-	};
-
-	// [Errors 401, 403] [Success 204]
-	let response = await fetch(url, options);
-
-	if (response.status === 401) {
-	  // [Errors 400, 401, 500] [Success 201]
-	  const resAuthz = await fetch("http://localhost:3000/api/generate_authz_token", { method: "POST" });
-	  if (resAuthz.status === 401) {
-	    const { openRedirectDialog } = await import("./_helpers.js");
-	    openRedirectDialog();
-
-	    return;
-	  }
-
-	  if (resAuthz.status !== 201) {
-	    const { PopUp } = await import("../../_shared/components/pop_up.js");
-	    document.body.appendChild(
-	      PopUp.init({ title: "Authentication token error", message: "Something went wrong. Try again." })
-	    );
-
-	    return;
-	  }
-
-	  localStorage.setItem("bearer", await resAuthz.json());
-	  options.headers.Authorization = `Bearer ${ localStorage.getItem("bearer") }`;
-	  response = await fetch(url, options);
-	}
-
-	if (response.status !== 204) {
-	  const { PopUp } = await import("../../_shared/components/pop_up.js");
-	  document.body.appendChild(
-	    PopUp.init({ title: "Server error", message: "Something went wrong. Try again." })
-	  );
-
-	  return;
-	}
-
-	increasedColumn.querySelector("ul")?.appendChild(moving);
-
-	emit("column:updated", {}, increasedColumn);
-	emit("column:updated", {}, reducedColumn);
+	return;
       }
+
+      const taskID   = moving.getAttribute("data-id");
+      const columnID = columnTo.getAttribute("data-id");
+      if (!taskID)   throw new Error(`${Task.prefix} [data-id] is missing`);
+      if (!columnID) throw new Error(`${Column.prefix} [data-id] is missing`);
+
+      const url      = `/v1/tasks/${taskID}`;
+      const options  = {
+	method: "PATCH",
+	headers: {
+	  "Content-Type":  "application/json",
+	  "Authorization": `Bearer ${ localStorage.getItem("bearer") }`,
+	},
+	body: JSON.stringify({ columnID: columnID })
+      };
+
+      // append a Task placeholder
+      // add indicator
+      const { LoaderRipple } = await import("../../_shared/components/loader_ripple.js");
+      const loader = LoaderRipple.init();
+      loader.setAttribute("style", "top: 5%; right: 2.5%"); // customize position inside task component
+      moving.appendChild(loader);
+      moving.setAttribute("style", "background-color: var(--bg-n-100-900); color: var(--clr-neutral-600)");
+      columnTo.querySelector("ul")?.appendChild(moving);
+
+      // [Errors 401, 403, 404, 405, 500] [Success 200]
+      let response = await fetch(url, options);
+
+      if (response.status === 401) {
+	// [Errors 400, 401, 500] [Success 201]
+	const responseBearer = await fetch("/v1/bearers/generate", { method: "POST" });
+
+	if (responseBearer.status !== 201) {
+	  // rollback
+	  moving.removeAttribute("style");
+	  loader.remove();
+	  columnFrom?.querySelector("ul")?.appendChild(moving);
+
+	  if (responseBearer.status === 401) {
+	    const { openSessionExpiredDialog } = await import("../functions.js");
+	    await openSessionExpiredDialog();
+	  } else {
+	    const { openPopUp } = await import("../../_shared/functions.js");
+	    await openPopUp("Authentication token error", "Something went wrong. Try again.");
+	  }
+
+	  return;
+	}
+
+	const bearer = await responseBearer.json();
+
+	localStorage.setItem("bearer", bearer);
+	options.headers.Authorization = `Bearer ${ bearer }`;
+	response = await fetch(url, options);
+      }
+
+      if (response.status !== 200) {
+	// rollback
+	moving.removeAttribute("style");
+	loader.remove();
+	columnFrom?.querySelector("ul")?.appendChild(moving);
+
+	if (response.status === 403) {
+	  const { openAuthzDialog } = await import("../functions.js");
+	  await openAuthzDialog();
+	} else { // 404 or 500
+	  const { openPopUp } = await import("../../_shared/functions.js");
+	  await openPopUp(
+	    response.status === 404 ? "Search error"   : "Server error",
+	    response.status === 404 ? "Task not found" : "Something went wrong. Try again"
+	  );
+	}
+
+	return;
+      }
+
+      moving.removeAttribute("style");
+      loader.remove();
+      [columnFrom, columnTo].forEach(item => {
+	item?.dispatchEvent(new CustomEvent("column:updated"));
+      });
     });
 
     component.addEventListener("column:updated", () => {
       const h3 = component.querySelector("h3");
       const ul = component.querySelector("ul");
-      if (!h3) throw new Error("Missing <h3> tag");
-      if (!ul) throw new Error("Missing <ul> tag");
+      if (!h3) throw new Error("<h3> is missing");
+      if (!ul) throw new Error("<ul> is missing");
 
-      // changes a <h3> (count of the tasks)
       const name = h3.textContent?.slice(0, h3.textContent.lastIndexOf("(") - 1);
       h3.textContent = `${name} (${ul.children.length})`;
 
@@ -193,38 +196,43 @@ export class Column {
 
     component.addEventListener("task:created", (event) => {
       const ul = component.querySelector("ul");
-      if (!ul) throw new Error("Missing <ul> tag");
+      if (!ul) throw new Error("<ul> is missing");
 
       // @ts-ignore
-      const task = event.detail;
-      // insert new task
-      ul.appendChild( Task.init({ task: task, locked: globalThis.role === "anonymous" }) );
-
-      emit("column:updated", {}, component);
-
+      const task   = event.detail;
+      const locked = globalThis.client_variables.is_anonymous;
+      ul.appendChild(Task.init({ task: task, locked: locked }));
       console.log("task:created");
+
+      component.dispatchEvent(new CustomEvent("column:updated"));
     });
 
     component.addEventListener("task:updated", (event) => {
       // @ts-ignore
-      const task = event.detail;
-      insert(Task.init({ task: task }), `#${Task.prefix}-${task.id}`, component);
+      const task    = event.detail;
+      const element = component.querySelector(`[data-id="${task.id}"]`);
+      if (!element) throw new Error(`${Task.prefix} [data-id="${task.id}"] is missing`);
+
+      element.replaceWith(
+	Task.init({
+	  task: task,
+	  locked: globalThis.client_variables.is_anonymous
+	})
+      );
 
       console.log("task:updated");
     });
 
     component.addEventListener("task:deleted", (event) => {
       const ul = component.querySelector("ul");
-      if (!ul) throw new Error("Missing <ul> tag");
+      if (!ul) throw new Error("<ul> is missing");
 
       // @ts-ignore
-      const task = event.detail;
-      // delete task
-      ul.querySelector(`#${Task.prefix}-${task.id}`)?.remove();
-
-      emit("column:updated", {}, component);
-
+      const taskID = event.detail;
+      ul.querySelector(`[data-id="${taskID}"]`)?.remove();
       console.log("task:deleted");
+
+      component.dispatchEvent(new CustomEvent("column:updated"));
     });
   }
 }
